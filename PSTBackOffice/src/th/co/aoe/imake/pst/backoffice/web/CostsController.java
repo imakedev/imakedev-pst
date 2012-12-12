@@ -108,12 +108,23 @@ public class CostsController {
 	                id = costForm.getPstCost().getPcId();
 	                message = "Update success !";
 	            }
-	       PstCost pstCost = pstService.findPstCostById(id);
+	      /* PstCost pstCost = pstService.findPstCostById(id);
 	       costForm.setPstCost(pstCost);
 	        model.addAttribute("message", message);
 	        model.addAttribute("display", "display: block");
-	        model.addAttribute("costForm", costForm);
-	        return "backoffice/template/costs_management";
+	        model.addAttribute("costForm", costForm);*/
+	        costForm =  new CostForm();
+			 costForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
+			 costForm.getPstCost().setPagging(costForm.getPaging());
+		        VResultMessage vresultMessage = pstService.searchPstCost(costForm.getPstCost());
+		        logger.debug("vresultMessage="+vresultMessage);
+		        logger.debug("getResultListObj="+vresultMessage.getResultListObj());
+		        model.addAttribute("pstCosts", vresultMessage.getResultListObj());
+		        costForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
+		        costForm.setPageCount(IMakeDevUtils.calculatePage(costForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
+		        model.addAttribute("costForm", costForm);
+		        return "backoffice/template/costs_search";
+	       // return "backoffice/template/costs_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)

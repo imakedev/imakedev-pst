@@ -87,7 +87,7 @@ public class RoadPumpController {
 	        	roadPumpForm = (RoadPumpForm)model.asMap().get("roadPumpForm");
 	        else
 	        	roadPumpForm = new RoadPumpForm();
-	        roadPumpForm.setMode(IMakeDevUtils.MODE_EDIT);
+	       /* roadPumpForm.setMode(IMakeDevUtils.MODE_EDIT);
 	        PstRoadPump pstRoadPump = pstService.findPstRoadPumpById(Long.parseLong(maId));
 	        roadPumpForm.setPstRoadPump(pstRoadPump);
 	        PstRoadPump pstRoadPumpMaster= pstService.listPstRoadPumpMaster();
@@ -99,8 +99,20 @@ public class RoadPumpController {
 	        model.addAttribute("pstModelRoadList", pstRoadPumpMaster.getPstModelRoadList());
 	        model.addAttribute("pstModelPumpList", pstRoadPumpMaster.getPstModelPumpList());
 	        model.addAttribute("roadPumpForm", roadPumpForm);
-	        model.addAttribute("display", "display: none");
-	        return "backoffice/template/road_pump_management";
+	        model.addAttribute("display", "display: none");*/
+	          roadPumpForm =  new RoadPumpForm();
+			 roadPumpForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
+			 roadPumpForm.getPstRoadPump().setPagging(roadPumpForm.getPaging());
+		        VResultMessage vresultMessage = pstService.searchPstRoadPump(roadPumpForm.getPstRoadPump()); 
+		        model.addAttribute("pstRoadPumps", vresultMessage.getResultListObj());
+		        roadPumpForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
+		        roadPumpForm.setPageCount(IMakeDevUtils.calculatePage(roadPumpForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
+		      
+		        model.addAttribute("pstRoadPumpStatuses",pstService.listPstRoadPumpStatuses());
+		     
+		        model.addAttribute("roadPumpForm", roadPumpForm);
+		        return "backoffice/template/road_pump_search";
+	        //return "backoffice/template/road_pump_management";
 	    }
 	  @RequestMapping(value={"/action/{section}"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
 	    public String doAction(HttpServletRequest request, @PathVariable String section, @ModelAttribute(value="roadPumpForm") RoadPumpForm roadPumpForm, BindingResult result, Model model)

@@ -113,12 +113,24 @@ public class BreakDownController {
 	                id = breakdownForm.getPstBreakDown().getPbdId();
 	                message = "Update success !";
 	            }
-	       PstBreakDown pstBreakDown = pstService.findPstBreakDownById(id);
+	        /*PstBreakDown pstBreakDown = pstService.findPstBreakDownById(id);
 	        breakdownForm.setPstBreakDown(pstBreakDown);
 	        model.addAttribute("message", message);
 	        model.addAttribute("display", "display: block");
-	        model.addAttribute("breakdownForm", breakdownForm);
-	        return "backoffice/template/break_down_management";
+	        model.addAttribute("breakdownForm", breakdownForm);*/
+	       // BreakdownForm breakdownForm = null; 
+		        	breakdownForm = new BreakdownForm(); 
+		        breakdownForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
+		        breakdownForm.getPstBreakDown().setPagging(breakdownForm.getPaging());
+		        VResultMessage vresultMessage = pstService.searchPstBreakDown(breakdownForm.getPstBreakDown());
+		        logger.debug("vresultMessage="+vresultMessage);
+		        logger.debug("getResultListObj="+vresultMessage.getResultListObj());
+		        model.addAttribute("pstBreakDowns", vresultMessage.getResultListObj());
+		        breakdownForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
+		        breakdownForm.setPageCount(IMakeDevUtils.calculatePage(breakdownForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
+		        model.addAttribute("breakdownForm", breakdownForm);
+		        return "backoffice/template/break_down_search";
+	        // return "backoffice/template/break_down_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)
