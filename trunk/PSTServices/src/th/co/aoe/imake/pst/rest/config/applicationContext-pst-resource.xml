@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+ 
+  <!--  
+    missExamResource
+    missExamGroupResource
+ 	missAccountResource
+ 	missAccountSeriesMapResource
+ 	missCandidateResource
+ 	missChoiceResource
+ 	missEvaluationTemplateResource
+ 	missExamTypeResource
+ 	missQuestionResource
+ 	missSeriesMapResource
+ 	missSeryResource
+ 	missSurveySendResource
+ 	missTemplateResource
+ 	missTestResource
+ 	missTestResultResource
+ 	missTodoResource 
+ 	-->
+ 	<!-- BreakDown -->
+ 	<bean id="pstBreakDownResource"
+		class="th.co.aoe.imake.pst.rest.resource.PstBreakDownResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstBreakDownService" ref="pstBreakDownService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>  
+	
+	<!-- Cost -->
+	<bean id="pstCostResource"
+		class="th.co.aoe.imake.pst.rest.resource.PstCostResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstCostService" ref="pstCostService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>  
+
+	<!-- RoadPump -->
+	<bean id="pstRoadPumpResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstRoadPumpResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstRoadPumpService" ref="pstRoadPumpService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean> 
+	<bean id="pstRoadPumpStatusResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstRoadPumpStatusResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstRoadPumpStatusService" ref="pstRoadPumpStatusService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean> 
+	<bean id="pstRoadPumpDeactiveMappingResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstRoadPumpDeactiveMappingResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstRoadPumpDeactiveMappingService" ref="pstRoadPumpDeactiveMappingService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>
+	
+	<!-- Employee -->
+	<bean id="pstEmployeeResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstEmployeeResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstEmployeeService" ref="pstEmployeeService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>
+	<bean id="pstEmployeeStatusResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstEmployeeStatusResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstEmployeeStatusService" ref="pstEmployeeStatusService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>
+	<bean id="pstEmployeeWorkMappingResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstEmployeeWorkMappingResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstEmployeeWorkMappingService" ref="pstEmployeeWorkMappingService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>
+</beans>
