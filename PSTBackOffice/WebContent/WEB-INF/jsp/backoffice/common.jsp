@@ -26,6 +26,7 @@
 <link rel="icon" href="<c:url value='/resources/images/favicon.ico'/>" type="image/x-icon" />
 <link rel="shortcut icon" href="<c:url value='/resources/images/favicon.ico'/>" type="image/x-icon" />   <script  src="<c:url value='/resources/js/jquery-1.8.3.min.js'/>" type="text/javascript"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/smoothness/jquery-ui-1.9.1.custom.min.js'/>"></script>
+ <script type="text/javascript" src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
 <script src="<c:url value='/resources/bootstrap/js/bootstrap.min.js'/>" type="text/javascript"></script>
 <link href="<c:url value='/resources/css/smoothness/jquery-ui-1.9.1.custom.css'/>" type="text/css"  rel="stylesheet" /> 
 <link href="<c:url value='/resources/bootstrap/css/bootstrap.min.css'/>" rel="stylesheet"  type="text/css"/> 
@@ -74,6 +75,8 @@ $(document).ready(function() {
 	togle_page('employee/init','employee_link');
 });
 function loadDynamicPage(pageId){
+	//alert(pageId)
+
 	//	var id="1";
 		//$.get('ajax/search', function(data) {
 	 /* 	$.get(pageId, function(data) {

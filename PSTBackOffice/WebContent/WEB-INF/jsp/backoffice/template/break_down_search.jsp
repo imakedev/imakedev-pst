@@ -3,6 +3,11 @@
 <script>
 $(document).ready(function() {
 	renderPageSelect();
+	if($("#message_element > strong").html().length>0){
+		 $('html, body').animate({ scrollTop: 0 }, 'slow'); 
+		 $("#message_element").slideDown("slow"); 
+		 setTimeout(function(){$("#message_element").slideUp("slow")},5000);
+	 }
 });
 function goPrev(){
 	if($("#pageNo").val()!='1'){
@@ -74,6 +79,10 @@ function doAction(mode,id){
 <div id="dialog-confirmDelete" title="Delete Breakdown" style="display: none;background: ('images/ui-bg_highlight-soft_75_cccccc_1x100.png') repeat-x scroll 50% 50% rgb(204, 204, 204)">
 	Are you sure you want to delete Breakdown ?
 </div>
+  <div id="message_element" class="alert alert-${message_class}" style="display: none;padding-top:10px">
+    <button class="close" data-dismiss="alert"><span style="font-size: 12px">x</span></button>
+    <strong>${message}</strong> 
+  </div>
 <fieldset style="font-family: sans-serif;padding-top:5px">
 	         
            <!-- <legend  style="font-size: 13px">Criteria</legend> -->

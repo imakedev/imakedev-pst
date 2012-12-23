@@ -3,6 +3,11 @@
 <script>
 $(document).ready(function() {
 	renderPageSelect();
+	 if($("#message_element > strong").html().length>0){
+		 $('html, body').animate({ scrollTop: 0 }, 'slow'); 
+		 $("#message_element").slideDown("slow"); 
+		 setTimeout(function(){$("#message_element").slideUp("slow")},5000);
+	 }
 });
 function goPrev(){
 	if($("#pageNo").val()!='1'){
@@ -71,6 +76,18 @@ function doAction(mode,id){
 		});
 }
 </script>
+<%--
+<div style="${display};padding-top:10px">
+ <div class="alert alert-success" style="${display}">    
+    <button class="close" data-dismiss="alert"><span style="font-size: 12px">x</span></button>
+    <strong>${message}</strong> 
+  </div>
+  </div>
+   --%>
+  <div id="message_element" class="alert alert-${message_class}" style="display: none;padding-top:10px">
+    <button class="close" data-dismiss="alert"><span style="font-size: 12px">x</span></button>
+    <strong>${message}</strong> 
+  </div>
 <div id="dialog-confirmDelete" title="Delete Costs" style="display: none;background: ('images/ui-bg_highlight-soft_75_cccccc_1x100.png') repeat-x scroll 50% 50% rgb(204, 204, 204)">
 	Are you sure you want to delete Road pump ?
 </div>
