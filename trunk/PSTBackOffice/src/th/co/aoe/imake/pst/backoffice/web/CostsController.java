@@ -40,6 +40,7 @@ public class CostsController {
 	        costForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	        costForm.setPageCount(IMakeDevUtils.calculatePage(costForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 	        model.addAttribute("costForm", costForm);
+	        model.addAttribute("message", ""); 
 	        return "backoffice/template/costs_search";
 	    }
 	 @RequestMapping(value={"/search"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
@@ -71,6 +72,7 @@ public class CostsController {
 	        costForm.setPageCount(IMakeDevUtils.calculatePage(costForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 	        model.addAttribute("pstCosts", vresultMessage.getResultListObj());
 	        model.addAttribute("costForm", costForm);
+	        model.addAttribute("message", ""); 
 	        return "backoffice/template/costs_search";
 	    }
 	  @RequestMapping(value={"/item/{maId}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
@@ -93,6 +95,7 @@ public class CostsController {
 	    {
 	        String mode = costForm.getMode();
 	        String message = "";
+	        String  message_class="";
 	        Long id = null;
 	       if(mode != null)
 	            if(mode.equals(IMakeDevUtils.MODE_NEW))
@@ -101,12 +104,14 @@ public class CostsController {
 	                costForm.getPstCost().setPcId(id);
 	                costForm.setMode(IMakeDevUtils.MODE_EDIT);
 	                message = "Save success !";
+	                message_class="success";
 	            } else
 	            if(mode.equals(IMakeDevUtils.MODE_EDIT))
 	            {
 	            	pstService.updatePstCost(costForm.getPstCost());
 	                id = costForm.getPstCost().getPcId();
 	                message = "Update success !";
+	                message_class="success";
 	            }
 	      /* PstCost pstCost = pstService.findPstCostById(id);
 	       costForm.setPstCost(pstCost);
@@ -123,6 +128,8 @@ public class CostsController {
 		        costForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 		        costForm.setPageCount(IMakeDevUtils.calculatePage(costForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 		        model.addAttribute("costForm", costForm);
+		        model.addAttribute("message", message);
+		        model.addAttribute("message_class", message_class);
 		        return "backoffice/template/costs_search";
 	       // return "backoffice/template/costs_management";
 	    }
