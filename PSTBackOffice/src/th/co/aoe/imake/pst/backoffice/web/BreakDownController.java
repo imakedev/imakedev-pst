@@ -45,6 +45,7 @@ public class BreakDownController {
 	        breakdownForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	        breakdownForm.setPageCount(IMakeDevUtils.calculatePage(breakdownForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 	        model.addAttribute("breakdownForm", breakdownForm);
+	        model.addAttribute("message", ""); 
 	        return "backoffice/template/break_down_search";
 	    }
 	 @RequestMapping(value={"/search"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
@@ -76,6 +77,7 @@ public class BreakDownController {
 	        breakdownForm.setPageCount(IMakeDevUtils.calculatePage(breakdownForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 	        model.addAttribute("pstBreakDowns", vresultMessage.getResultListObj());
 	        model.addAttribute("breakdownForm", breakdownForm);
+	        model.addAttribute("message", ""); 
 	        return "backoffice/template/break_down_search";
 	    }
 	  @RequestMapping(value={"/item/{maId}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
@@ -98,6 +100,7 @@ public class BreakDownController {
 	    {
 	        String mode = breakdownForm.getMode();
 	        String message = "";
+	        String  message_class="";
 	        Long id = null;
 	       if(mode != null)
 	            if(mode.equals(IMakeDevUtils.MODE_NEW))
@@ -106,12 +109,14 @@ public class BreakDownController {
 	                breakdownForm.getPstBreakDown().setPbdId(id);
 	                breakdownForm.setMode(IMakeDevUtils.MODE_EDIT);
 	                message = "Save success !";
+	                message_class="success";
 	            } else
 	            if(mode.equals(IMakeDevUtils.MODE_EDIT))
 	            {
 	            	pstService.updatePstBreakDown(breakdownForm.getPstBreakDown());
 	                id = breakdownForm.getPstBreakDown().getPbdId();
 	                message = "Update success !";
+	                message_class="success";
 	            }
 	        /*PstBreakDown pstBreakDown = pstService.findPstBreakDownById(id);
 	        breakdownForm.setPstBreakDown(pstBreakDown);
@@ -129,6 +134,8 @@ public class BreakDownController {
 		        breakdownForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 		        breakdownForm.setPageCount(IMakeDevUtils.calculatePage(breakdownForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 		        model.addAttribute("breakdownForm", breakdownForm);
+		        model.addAttribute("message", message); 
+		        model.addAttribute("message_class", message_class);
 		        return "backoffice/template/break_down_search";
 	        // return "backoffice/template/break_down_management";
 	    }
