@@ -2,7 +2,23 @@
 <%@ include file="/WEB-INF/jsp/includes.jsp" %> 
 <script type="text/javascript">
 $(document).ready(function() {
- 
+	$("#prpTaxDate" ).datepicker({
+		showOn: "button",
+		buttonImage: _path+"resources/images/calendar.gif",
+		buttonImageOnly: true,
+		dateFormat:"dd/mm/yy" ,
+		changeMonth: true,
+		changeYear: true
+	});
+	$("#prpExpireDate2" ).datepicker({
+		showOn: "button",
+		buttonImage: _path+"resources/images/calendar.gif",
+		buttonImageOnly: true,
+		dateFormat:"dd/mm/yy" ,
+		changeMonth: true,
+		changeYear: true
+	});
+	
 });
 function goBackRoadPump(){
  
@@ -19,7 +35,8 @@ function goBackRoadPump(){
 		});
 }
 function doRoadPumpAction(action,mode,id){
-	   
+	 
+	$("#prpDetail").val(CKEDITOR.instances["prpDetail"].getData());
 	var target="roadpump"; 
  	$.post(target+"/action/roadpump",$("#roadPumpForm").serialize(), function(data) {
 		  // alert(data);
@@ -130,11 +147,11 @@ function doRoadPumpAction(action,mode,id){
     				</tr>
     				<tr valign="top">
     					<td width="30%" align="right" valign="top">
-    					<span style="font-size: 13px;padding: 15px">วันต่อภาษีรถประจำปี :</span>
+    					<span style="font-size: 13px;padding: 10px">วันต่อภาษีรถประจำปี :</span>
     					<form:input path="pstRoadPump.prpTaxDate" id="prpTaxDate" cssStyle="height: 30;width:85px"/>
     					</td> 
     					<td width="40%" align="center" valign="top">
-    					<span style="font-size: 13px;padding: 15px">วันหมดอายุ :</span>
+    					<span style="font-size: 13px;padding: 10px">วันหมดอายุ :</span>
     					<form:input path="pstRoadPump.prpExpireDate2" id="prpExpireDate2" cssStyle="height: 30;width:85px"/>
     					</td>
     					<td width="30%" align="left" valign="top">
@@ -144,7 +161,17 @@ function doRoadPumpAction(action,mode,id){
     				<tr valign="top">
     					<td width="100%" align="left" colspan="3" valign="top">
     					<span style="font-size: 13px;padding: 15px">รายละเอียด :</span>
-    					<form:textarea path="pstRoadPump.prpDetail" id="prpDetail" rows="4" cols="10"></form:textarea>
+    					<form:textarea path="pstRoadPump.prpDetail" id="prpDetail" rows="4" cols="4"></form:textarea>
+    					<script>
+    					if (CKEDITOR.instances['prpDetail']) {
+    			            CKEDITOR.remove(CKEDITOR.instances['prpDetail']);
+    			         }
+    					CKEDITOR.replace( 'prpDetail',
+    						    { 
+    						        toolbar : 'Basic',
+    						      //  uiColor : '#9AB8F3'
+    						    });
+    					</script>
     				<%-- 	<form:input path="pstRoadPump.prpDetail" id="prpDetail" cssStyle="height: 30;width:450px"/> --%>
     					</td> 
     				</tr>
