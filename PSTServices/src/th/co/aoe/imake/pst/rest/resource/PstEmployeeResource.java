@@ -23,7 +23,8 @@ public class PstEmployeeResource  extends BaseResource {
 	private static final Logger logger = Logger.getLogger(ServiceConstant.LOG_APPENDER);  
 	private PSTCommonService pstCommonService;
 	private PstEmployeeService pstEmployeeService; 
-	private com.thoughtworks.xstream.XStream xstream; 
+	private com.thoughtworks.xstream.XStream xstream;  
+	private static final String[] ignore=	 {"pstPosition","pstTitle"};
 	public PstEmployeeResource() {
 		super();
 		logger.debug("into constructor PstEmployeeResource");
@@ -59,12 +60,37 @@ public class PstEmployeeResource  extends BaseResource {
 								+ xbpsTerm.getServiceName());
 						String serviceName = xbpsTerm.getServiceName();
 						th.co.aoe.imake.pst.hibernate.bean.PstEmployee bpsTerm = new th.co.aoe.imake.pst.hibernate.bean.PstEmployee();
-						BeanUtils.copyProperties(xbpsTerm,bpsTerm); 
+						BeanUtils.copyProperties(xbpsTerm,bpsTerm,ignore); 
+						if(xbpsTerm.getPstPosition()!=null && xbpsTerm.getPstPosition().getPpId()!=null && xbpsTerm.getPstPosition().getPpId().intValue()!=0)
+						{
+							th.co.aoe.imake.pst.hibernate.bean.PstPosition pstPosition = new th.co.aoe.imake.pst.hibernate.bean.PstPosition(); 
+							BeanUtils.copyProperties(xbpsTerm.getPstPosition(),pstPosition); 	
+							bpsTerm.setPstPosition(pstPosition);
+						}
+						
+						if(xbpsTerm.getPstTitle()!=null && xbpsTerm.getPstTitle().getPtId()!=null && xbpsTerm.getPstTitle().getPtId().intValue()!=0)
+						{
+							th.co.aoe.imake.pst.hibernate.bean.PstTitle pstTitle = new th.co.aoe.imake.pst.hibernate.bean.PstTitle(); 
+							BeanUtils.copyProperties(xbpsTerm.getPstTitle(),pstTitle); 	
+							bpsTerm.setPstTitle(pstTitle);
+						}
 						if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_FIND_BY_ID)){
 							Object obj= pstCommonService.findById(bpsTerm.getClass(), xbpsTerm.getPeId());
 							if(obj!=null){
 								th.co.aoe.imake.pst.hibernate.bean.PstEmployee pstEmployee = (th.co.aoe.imake.pst.hibernate.bean.PstEmployee)obj;
-								BeanUtils.copyProperties(pstEmployee, xbpsTerm) ;
+								BeanUtils.copyProperties(pstEmployee, xbpsTerm,ignore) ;
+								if(pstEmployee.getPstPosition()!=null && pstEmployee.getPstPosition().getPpId()!=null && pstEmployee.getPstPosition().getPpId().intValue()!=0)
+								{
+									th.co.aoe.imake.pst.xstream.PstPosition pstPosition = new th.co.aoe.imake.pst.xstream.PstPosition(); 
+									BeanUtils.copyProperties(pstEmployee.getPstPosition(),pstPosition); 	
+									xbpsTerm.setPstPosition(pstPosition);
+								}
+								if(pstEmployee.getPstTitle()!=null && pstEmployee.getPstTitle().getPtId()!=null && pstEmployee.getPstTitle().getPtId().intValue()!=0)
+								{
+									th.co.aoe.imake.pst.xstream.PstTitle pstTitle = new th.co.aoe.imake.pst.xstream.PstTitle(); 
+									BeanUtils.copyProperties(pstEmployee.getPstTitle(),pstTitle); 	
+									xbpsTerm.setPstTitle(pstTitle);
+								}
 							}
 						//logger.debug(" object return ="+ntcCalendarReturn);
 						VResultMessage vresultMessage = new VResultMessage();
@@ -83,6 +109,11 @@ public class PstEmployeeResource  extends BaseResource {
 							return returnUpdateRecord(entity,xbpsTerm,peId.intValue());
 						} else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_UPDATE)){
 							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							if(!(bpsTerm.getPstPosition()!=null && bpsTerm.getPstPosition().getPpId()!=null && bpsTerm.getPstPosition().getPpId().intValue()!=-1))
+								bpsTerm.setPstPosition(null);
+							if(!(bpsTerm.getPstTitle()!=null && bpsTerm.getPstTitle().getPtId()!=null && bpsTerm.getPstTitle().getPtId().intValue()!=-1))
+								bpsTerm.setPstTitle(null);
+							System.out.println(bpsTerm.getPstPosition());
 							int updateRecord=pstCommonService.update(bpsTerm);
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 							
@@ -161,7 +192,19 @@ public class PstEmployeeResource  extends BaseResource {
 				ntcCalendars.size());
 		for (th.co.aoe.imake.pst.hibernate.bean.PstEmployee missManual : ntcCalendars) {
 			th.co.aoe.imake.pst.xstream.PstEmployee xmissManual =new th.co.aoe.imake.pst.xstream.PstEmployee ();
-			BeanUtils.copyProperties(missManual, xmissManual);
+			BeanUtils.copyProperties(missManual, xmissManual,ignore);
+			if(missManual.getPstPosition()!=null && missManual.getPstPosition().getPpId()!=null && missManual.getPstPosition().getPpId().intValue()!=0)
+			{
+				th.co.aoe.imake.pst.xstream.PstPosition pstPosition = new th.co.aoe.imake.pst.xstream.PstPosition(); 
+				BeanUtils.copyProperties(missManual.getPstPosition(),pstPosition); 	
+				xmissManual.setPstPosition(pstPosition);
+			}
+			if(missManual.getPstTitle()!=null && missManual.getPstTitle().getPtId()!=null && missManual.getPstTitle().getPtId().intValue()!=0)
+			{
+				th.co.aoe.imake.pst.xstream.PstTitle pstTitle = new th.co.aoe.imake.pst.xstream.PstTitle(); 
+				BeanUtils.copyProperties(missManual.getPstTitle(),pstTitle); 	
+				xmissManual.setPstTitle(pstTitle);
+			}
 			xmissManual.setPagging(null);
 			xntcCalendars.add(xmissManual);
 		}

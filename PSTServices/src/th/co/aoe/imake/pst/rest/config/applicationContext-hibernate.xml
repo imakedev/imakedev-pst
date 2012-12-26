@@ -48,15 +48,15 @@
 		for the required JAR files. Alternatively you can use another connection pool
 		such as C3P0, similarly configured using Spring.
 	-->
-	<!--  	
+	<!--  	  -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
 			p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}" p:username="${jdbc.username}"
 			p:password="${jdbc.password}"/>
-		 --> 
-	<!--  --> 
+		
+	<!-- 
 	      
      <jee:jndi-lookup id="dataSource" resource-ref="true" jndi-name="jdbc/pstdb"/>
-      
+       --> 
 	<!-- JNDI DataSource for JEE environments -->
        <!--
          
@@ -305,6 +305,13 @@
 		<property name="sessionAnnotationFactory" ref="sessionFactory"></property>	 
 	</bean>
 	<bean id="pstEmployeeWorkMappingService" class="th.co.aoe.imake.pst.hibernate.HibernatePstEmployeeWorkMapping">
+		<property name="sessionAnnotationFactory" ref="sessionFactory"></property>	 
+	</bean>
+	
+	<bean id="pstPositionService" class="th.co.aoe.imake.pst.hibernate.HibernatePstPosition">
+		<property name="sessionAnnotationFactory" ref="sessionFactory"></property>	 
+	</bean>
+	<bean id="pstTitleService" class="th.co.aoe.imake.pst.hibernate.HibernatePstTitle">
 		<property name="sessionAnnotationFactory" ref="sessionFactory"></property>	 
 	</bean>
 </beans>

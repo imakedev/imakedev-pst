@@ -30,25 +30,36 @@ public class HibernatePstEmployee  extends HibernateCommon implements PstEmploye
 	}
 	private int getSize(Session session, PstEmployee instance) throws Exception{
 		try {
-			/*String pcUid=instance.getPcUid();
-			String pcName=instance.getPcName();*/
-			
+			String peUid=instance.getPeUid();
+			String peFirstName=instance.getPeFirstName();
+			String peLastName=instance.getPeLastName();
+			Long ppId=(instance.getPstPosition()!=null && instance.getPstPosition().getPpId()!=null && 
+					instance.getPstPosition().getPpId().intValue()!=-1)?instance.getPstPosition().getPpId():null;
 			Query query=null;
 			
 			StringBuffer sb =new StringBuffer(" select count(pstEmployee) from PstEmployee pstEmployee ");
-			/*
 			boolean iscriteria = false;
-			
-			if(pcUid !=null && pcUid.trim().length()> 0){  
+
+			if(ppId !=null){  
 				//criteria.add(Expression.eq("megId", megId));	
-				sb.append(iscriteria?(" and lcase(pstEmployee.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"):(" where lcase(pstEmployee.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"));
+				sb.append(iscriteria?(" and pstEmployee.pstPosition.ppId="+ppId.intValue()+""):(" where pstEmployee.pstPosition.ppId="+ppId.intValue()+""));
 				  iscriteria = true;
 			}
-			if(pcName !=null && pcName.trim().length() > 0){  
+			if(peUid !=null && peUid.trim().length()> 0){  
 				//criteria.add(Expression.eq("megId", megId));	
-				sb.append(iscriteria?(" and lcase(pstEmployee.pcName) like '%"+pcName.trim().toLowerCase()+"%'"):(" where lcase(pstEmployee.pcName) like '%"+pcName.trim().toLowerCase()+"%'"));
+				sb.append(iscriteria?(" and lcase(pstEmployee.peUid) like '%"+peUid.trim().toLowerCase()+"%'"):(" where lcase(pstEmployee.peUid) like '%"+peUid.trim().toLowerCase()+"%'"));
 				  iscriteria = true;
-			}*/
+			}
+			if(peFirstName !=null && peFirstName.trim().length() > 0){  
+				//criteria.add(Expression.eq("megId", megId));	
+				sb.append(iscriteria?(" and lcase(pstEmployee.peFirstName) like '%"+peFirstName.trim().toLowerCase()+"%'"):(" where lcase(pstEmployee.peFirstName) like '%"+peFirstName.trim().toLowerCase()+"%'"));
+				  iscriteria = true;
+			}
+			if(peLastName !=null && peLastName.trim().length() > 0){  
+				//criteria.add(Expression.eq("megId", megId));	
+				sb.append(iscriteria?(" and lcase(pstEmployee.peLastName) like '%"+peLastName.trim().toLowerCase()+"%'"):(" where lcase(pstEmployee.peLastName) like '%"+peLastName.trim().toLowerCase()+"%'"));
+				  iscriteria = true;
+			}
 			
 			
 			  query =session.createQuery(sb.toString());
@@ -68,24 +79,37 @@ public class HibernatePstEmployee  extends HibernateCommon implements PstEmploye
 			ArrayList  transList = new ArrayList ();
 			Session session = sessionAnnotationFactory.getCurrentSession();
 			try {
-				/*String pcUid=instance.getPcUid();
-				String pcName=instance.getPcName();*/
+				String peUid=instance.getPeUid();
+				String peFirstName=instance.getPeFirstName();
+				String peLastName=instance.getPeLastName();
+				Long ppId=(instance.getPstPosition()!=null && instance.getPstPosition().getPpId()!=null && 
+						instance.getPstPosition().getPpId().intValue()!=-1)?instance.getPstPosition().getPpId():null;
 				Query query = null;
 			
 				StringBuffer sb =new StringBuffer(" select pstEmployee from PstEmployee pstEmployee ");
 				
-				/*boolean iscriteria = false;
-				
-				if(pcUid !=null && pcUid.trim().length()> 0){  
+				boolean iscriteria = false;
+
+				if(ppId !=null){  
 					//criteria.add(Expression.eq("megId", megId));	
-					sb.append(iscriteria?(" and lcase(pstEmployee.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"):(" where lcase(pstEmployee.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"));
+					sb.append(iscriteria?(" and pstEmployee.pstPosition.ppId="+ppId.intValue()+""):(" where pstEmployee.pstPosition.ppId="+ppId.intValue()+""));
 					  iscriteria = true;
 				}
-				if(pcName !=null && pcName.trim().length() > 0){  
+				if(peUid !=null && peUid.trim().length()> 0){  
 					//criteria.add(Expression.eq("megId", megId));	
-					sb.append(iscriteria?(" and lcase(pstEmployee.pcName) like '%"+pcName.trim().toLowerCase()+"%'"):(" where lcase(pstEmployee.pcName) like '%"+pcName.trim().toLowerCase()+"%'"));
+					sb.append(iscriteria?(" and lcase(pstEmployee.peUid) like '%"+peUid.trim().toLowerCase()+"%'"):(" where lcase(pstEmployee.peUid) like '%"+peUid.trim().toLowerCase()+"%'"));
 					  iscriteria = true;
-				}*/
+				}
+				if(peFirstName !=null && peFirstName.trim().length() > 0){  
+					//criteria.add(Expression.eq("megId", megId));	
+					sb.append(iscriteria?(" and lcase(pstEmployee.peFirstName) like '%"+peFirstName.trim().toLowerCase()+"%'"):(" where lcase(pstEmployee.peFirstName) like '%"+peFirstName.trim().toLowerCase()+"%'"));
+					  iscriteria = true;
+				}
+				if(peLastName !=null && peLastName.trim().length() > 0){  
+					//criteria.add(Expression.eq("megId", megId));	
+					sb.append(iscriteria?(" and lcase(pstEmployee.peLastName) like '%"+peLastName.trim().toLowerCase()+"%'"):(" where lcase(pstEmployee.peLastName) like '%"+peLastName.trim().toLowerCase()+"%'"));
+					  iscriteria = true;
+				}
 				if(pagging.getSortBy()!=null && pagging.getSortBy().length()>0){
 						sb.append( " order by pstEmployee."+pagging.getOrderBy()+" "+pagging.getSortBy().toLowerCase());
 				}			

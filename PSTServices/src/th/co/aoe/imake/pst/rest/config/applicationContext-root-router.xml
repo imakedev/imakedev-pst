@@ -64,6 +64,20 @@
 							bean="pstEmployeeWorkMappingResource" />
 					</bean>
 				</entry>
+				
+				<entry key="/pstPosition">
+				 <bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create"
+							bean="pstPositionResource" />
+					</bean>
+				</entry>
+				
+				<entry key="/pstTitle">
+				 <bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create"
+							bean="pstTitleResource" />
+					</bean>
+				</entry>
 			</map>
 		</property>
 		<!--<property name="routes[2].template.variables[URI]">

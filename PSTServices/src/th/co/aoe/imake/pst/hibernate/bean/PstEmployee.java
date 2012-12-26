@@ -44,12 +44,12 @@ public class PstEmployee implements Serializable {
 
 	//bi-directional many-to-one association to PstPosition
 	@ManyToOne
-	@JoinColumn(name="PP_ID")
+	@JoinColumn(name="PP_ID",nullable=true)
 	private PstPosition pstPosition;
 
 	//bi-directional many-to-one association to PstTitle
 	@ManyToOne
-	@JoinColumn(name="PT_ID")
+	@JoinColumn(name="PT_ID",nullable=true)
 	private PstTitle pstTitle;
 
 	//bi-directional many-to-one association to PstEmployeeWorkMapping
