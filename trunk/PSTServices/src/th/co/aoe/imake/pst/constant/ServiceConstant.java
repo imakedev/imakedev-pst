@@ -81,7 +81,25 @@ public class ServiceConstant {
 	public static final String PST_EMPLOYEE_WORK_MAPPING_ITEMS_DELETE ="deletePstEmployeeWorkMappingItems";
 	public static final String PST_EMPLOYEE_WORK_MAPPING_SEARCH = "searchPstEmployeeWorkMapping";
 	public static final String PST_EMPLOYEE_WORK_MAPPING_FIND_BY_ID = "findPstEmployeeWorkMappingById";
-		
+	
+	 
+	// PST_POSITION
+	public static final String PST_POSITION_SAVE = "savePstPosition";
+	public static final String PST_POSITION_UPDATE = "updatePstPosition";
+	public static final String PST_POSITION_DELETE = "deletePstPosition";
+	public static final String PST_POSITION_ITEMS_DELETE ="deletePstPositionItems";
+	public static final String PST_POSITION_SEARCH = "searchPstPosition";
+	public static final String PST_POSITION_FIND_BY_ID = "findPstPositionById";
+	public static final String PST_POSITION_LIST = "listPstPostion";
+	
+	// PST_TITLE
+	public static final String PST_TITLE_SAVE = "savePstTitle";
+	public static final String PST_TITLE_UPDATE = "updatePstTitle";
+	public static final String PST_TITLE_DELETE = "deletePstTitle";
+	public static final String PST_TITLE_ITEMS_DELETE ="deletePstTitleItems";
+	public static final String PST_TITLE_SEARCH = "searchPstTitle";
+	public static final String PST_TITLE_FIND_BY_ID = "findPstTitleById";
+	public static final String PST_TITLE_LIST = "listPstTitle";
 	// role_contact
 		public static final String ROLE_CONTACT_SAVE = "saveRoleContact";
 		public static final String ROLE_CONTACT_UPDATE = "updateRoleContact";

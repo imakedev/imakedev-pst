@@ -86,4 +86,20 @@
 		<property name="pstEmployeeWorkMappingService" ref="pstEmployeeWorkMappingService"></property>  
 		<property name="xstream" ref="xstream"></property>
 	</bean>
+	
+	<bean id="pstPositionResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstPositionResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstPositionService" ref="pstPositionService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>
+	
+	<bean id="pstTitleResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstTitleResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstTitleService" ref="pstTitleService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>
 </beans>
