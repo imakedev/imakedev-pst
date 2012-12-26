@@ -72,7 +72,7 @@ $(document).ready(function() {
 	$('#tabs > ul > li > a').css("width","70px"); 
 		 
 	//loadDynamicPage("employee/init");
-	togle_page('employee/init','employee_link');
+	togle_page('employeeWorkMapping/init','employee_link');
 });
 function loadDynamicPage(pageId){
 	//alert(pageId)
@@ -227,7 +227,7 @@ function openMailDialog(todo_id,todo_ref){
                  <!--  <a class="brand" href="#">Title</a> -->
                   <div class="nav-collapse collapse navbar-responsive-collapse">
                     <ul class="nav"> 
-                      <li id="employee_link"><a onclick="togle_page('employee/init','employee_link')">Employee</a></li>
+                      <li id="employee_link"><a onclick="togle_page('employeeWorkMapping/init','employee_link')">Employee</a></li>
                       <li  id="job_link"><a onclick="togle_page('job/init','job_link')">Job</a></li>
                       <li id="breakdown_link"><a onclick="togle_page('breakdown/init','breakdown_link')">Break down</a></li>
                       <li id="costs_link"><a onclick="togle_page('costs/init','costs_link')">Costs</a></li>
