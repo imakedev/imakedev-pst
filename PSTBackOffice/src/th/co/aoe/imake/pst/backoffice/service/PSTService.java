@@ -9,6 +9,8 @@ import java.util.List;
 
 import th.co.aoe.imake.pst.xstream.PstBreakDown;
 import th.co.aoe.imake.pst.xstream.PstCost;
+import th.co.aoe.imake.pst.xstream.PstEmployee;
+import th.co.aoe.imake.pst.xstream.PstEmployeeStatus;
 import th.co.aoe.imake.pst.xstream.PstRoadPump;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
@@ -73,7 +75,7 @@ public interface PSTService {
 
 	public abstract PstCost findPstCostById(Long long1);
 	
-	// PstCost
+	// PstRoadPump
 	public abstract VResultMessage searchPstRoadPump(
 				PstRoadPump pstRoadPump);
 	public abstract Long savePstRoadPump(PstRoadPump pstRoadPump);
@@ -86,6 +88,32 @@ public interface PSTService {
 	
 	public abstract List listPstRoadPumpStatuses();
 	public abstract PstRoadPump listPstRoadPumpMaster();
+	
+	// PstEmployeeStatus
+	public abstract VResultMessage searchPstEmployeeStatus(
+					PstEmployeeStatus pstEmployeeStatus);
+	public abstract Long savePstEmployeeStatus(PstEmployeeStatus pstEmployeeStatus);
+
+	public abstract int updatePstEmployeeStatus(PstEmployeeStatus pstEmployeeStatus);
+
+	public abstract int deletePstEmployeeStatus(PstEmployeeStatus pstEmployeeStatus, String service);
+
+	public abstract PstEmployeeStatus findPstEmployeeStatusById(Long long1);
+	
+	
+	// PstEmployee
+	public abstract VResultMessage searchPstEmployee(
+					PstEmployee pstEmployee);
+	public abstract Long savePstEmployee(PstEmployee pstEmployee);
+
+	public abstract int updatePstEmployee(PstEmployee pstEmployee);
+
+	public abstract int deletePstEmployee(PstEmployee pstEmployee, String service);
+
+	public abstract PstEmployee findPstEmployeeById(Long long1); 
+	
+	public abstract List listPstPositions();
+	public abstract List listPstTitles();
 	/*	public abstract Long saveMissExamGroup(MissExamGroup missexamgroup);
 
 	public abstract int deleteMissExamGroup(MissExamGroup missexamgroup);

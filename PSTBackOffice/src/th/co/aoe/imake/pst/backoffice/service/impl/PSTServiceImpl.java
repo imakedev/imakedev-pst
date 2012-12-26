@@ -11,8 +11,12 @@ import th.co.aoe.imake.pst.backoffice.service.PSTService;
 import th.co.aoe.imake.pst.constant.ServiceConstant;
 import th.co.aoe.imake.pst.xstream.PstBreakDown;
 import th.co.aoe.imake.pst.xstream.PstCost;
+import th.co.aoe.imake.pst.xstream.PstEmployee;
+import th.co.aoe.imake.pst.xstream.PstEmployeeStatus;
+import th.co.aoe.imake.pst.xstream.PstPosition;
 import th.co.aoe.imake.pst.xstream.PstRoadPump;
 import th.co.aoe.imake.pst.xstream.PstRoadPumpStatus;
+import th.co.aoe.imake.pst.xstream.PstTitle;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
 // Referenced classes of package th.co.aoe.imake.pst.exam.service.impl:
@@ -1905,6 +1909,114 @@ public class PSTServiceImpl extends PostCommon
 	    	pstRoadPump.setServiceName(ServiceConstant.PST_ROAD_PUMP_LIST_MASTER);
 	        VResultMessage resultMessage = postMessage(pstRoadPump, pstRoadPump.getClass().getName(), "pstRoadPump", true);
 	        return (PstRoadPump)resultMessage.getResultListObj().get(0);
+		}
+
+		@Override
+		public VResultMessage searchPstEmployeeStatus(
+				PstEmployeeStatus pstEmployeeStatus) {
+			// TODO Auto-generated method stub
+			pstEmployeeStatus.setServiceName(ServiceConstant.PST_EMPLOYEE_STATUS_SEARCH);
+		    return postMessage(pstEmployeeStatus, pstEmployeeStatus.getClass().getName(), "pstEmployeeStatus", true);
+		}
+
+		@Override
+		public Long savePstEmployeeStatus(PstEmployeeStatus pstEmployeeStatus) {
+			// TODO Auto-generated method stub
+			pstEmployeeStatus.setServiceName(ServiceConstant.PST_EMPLOYEE_STATUS_SAVE);
+		        VResultMessage resultMessage = postMessage(pstEmployeeStatus, pstEmployeeStatus.getClass().getName(), "pstEmployeeStatus", true);
+		        pstEmployeeStatus = (PstEmployeeStatus)resultMessage.getResultListObj().get(0);
+		        return pstEmployeeStatus.getPesId();
+		}
+
+		@Override
+		public int updatePstEmployeeStatus(PstEmployeeStatus pstEmployeeStatus) {
+			// TODO Auto-generated method stub
+			pstEmployeeStatus.setServiceName(ServiceConstant.PST_EMPLOYEE_STATUS_UPDATE);
+	        VResultMessage resultMessage = postMessage(pstEmployeeStatus, pstEmployeeStatus.getClass().getName(), "pstEmployeeStatus", true);
+	        pstEmployeeStatus = (PstEmployeeStatus)resultMessage.getResultListObj().get(0);
+	        return pstEmployeeStatus.getUpdateRecord().intValue();
+		}
+
+		@Override
+		public int deletePstEmployeeStatus(PstEmployeeStatus pstEmployeeStatus,
+				String service) {
+			// TODO Auto-generated method stub
+			pstEmployeeStatus.setServiceName(service);
+	        VResultMessage resultMessage = postMessage(pstEmployeeStatus, pstEmployeeStatus.getClass().getName(), "pstEmployeeStatus", true);
+	        pstEmployeeStatus = (PstEmployeeStatus)resultMessage.getResultListObj().get(0);
+	        return pstEmployeeStatus.getUpdateRecord().intValue();
+		}
+
+		@Override
+		public PstEmployeeStatus findPstEmployeeStatusById(Long long1) {
+			// TODO Auto-generated method stub
+			PstEmployeeStatus pstEmployeeStatus = new PstEmployeeStatus();
+			pstEmployeeStatus.setPesId(long1);
+			pstEmployeeStatus.setServiceName(ServiceConstant.PST_EMPLOYEE_STATUS_FIND_BY_ID);
+	        VResultMessage resultMessage = postMessage(pstEmployeeStatus, pstEmployeeStatus.getClass().getName(), "pstEmployeeStatus", true);
+	        return (PstEmployeeStatus)resultMessage.getResultListObj().get(0);
+		}
+
+		@Override
+		public VResultMessage searchPstEmployee(PstEmployee pstEmployee) {
+			// TODO Auto-generated method stub
+			pstEmployee.setServiceName(ServiceConstant.PST_EMPLOYEE_SEARCH);
+		    return postMessage(pstEmployee, pstEmployee.getClass().getName(), "pstEmployee", true);
+		}
+
+		@Override
+		public Long savePstEmployee(PstEmployee pstEmployee) {
+			// TODO Auto-generated method stub
+			pstEmployee.setServiceName(ServiceConstant.PST_EMPLOYEE_SAVE);
+	        VResultMessage resultMessage = postMessage(pstEmployee, pstEmployee.getClass().getName(), "pstEmployee", true);
+	        pstEmployee = (PstEmployee)resultMessage.getResultListObj().get(0);
+	        return pstEmployee.getPeId();
+		}
+
+		@Override
+		public int updatePstEmployee(PstEmployee pstEmployee) {
+			// TODO Auto-generated method stub
+			pstEmployee.setServiceName(ServiceConstant.PST_EMPLOYEE_UPDATE);
+	        VResultMessage resultMessage = postMessage(pstEmployee, pstEmployee.getClass().getName(), "pstEmployee", true);
+	        pstEmployee = (PstEmployee)resultMessage.getResultListObj().get(0);
+	        return pstEmployee.getUpdateRecord().intValue();
+		}
+
+		@Override
+		public int deletePstEmployee(PstEmployee pstEmployee, String service) {
+			// TODO Auto-generated method stub
+			pstEmployee.setServiceName(service);
+	        VResultMessage resultMessage = postMessage(pstEmployee, pstEmployee.getClass().getName(), "pstEmployee", true);
+	        pstEmployee = (PstEmployee)resultMessage.getResultListObj().get(0);
+	        return pstEmployee.getUpdateRecord().intValue();
+		}
+
+		@Override
+		public PstEmployee findPstEmployeeById(Long long1) {
+			// TODO Auto-generated method stub
+			PstEmployee pstEmployee = new PstEmployee();
+			pstEmployee.setPeId(long1);
+			pstEmployee.setServiceName(ServiceConstant.PST_EMPLOYEE_FIND_BY_ID);
+	        VResultMessage resultMessage = postMessage(pstEmployee, pstEmployee.getClass().getName(), "pstEmployee", true);
+	        return (PstEmployee)resultMessage.getResultListObj().get(0);
+		}
+
+		@Override
+		public List listPstPositions() {
+			// TODO Auto-generated method stub
+			PstPosition pstPosition = new PstPosition();
+			pstPosition.setServiceName(ServiceConstant.PST_POSITION_LIST);
+		        VResultMessage resultMessage = postMessage(pstPosition, pstPosition.getClass().getName(), "pstPosition", true);
+		        return resultMessage.getResultListObj();
+		}
+
+		@Override
+		public List listPstTitles() {
+			// TODO Auto-generated method stub
+			PstTitle pstTitle = new PstTitle();
+			pstTitle.setServiceName(ServiceConstant.PST_TITLE_LIST);
+		        VResultMessage resultMessage = postMessage(pstTitle, pstTitle.getClass().getName(), "pstTitle", true);
+		        return resultMessage.getResultListObj();
 		}
 
 }
