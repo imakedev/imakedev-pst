@@ -11,6 +11,7 @@ import th.co.aoe.imake.pst.xstream.PstBreakDown;
 import th.co.aoe.imake.pst.xstream.PstCost;
 import th.co.aoe.imake.pst.xstream.PstEmployee;
 import th.co.aoe.imake.pst.xstream.PstEmployeeStatus;
+import th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping;
 import th.co.aoe.imake.pst.xstream.PstRoadPump;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
@@ -114,6 +115,21 @@ public interface PSTService {
 	
 	public abstract List listPstPositions();
 	public abstract List listPstTitles();
+	
+	// PstEmployeeWorkMapping
+	public abstract VResultMessage searchPstEmployeeWorkMapping(
+			PstEmployeeWorkMapping pstEmployeeWorkMapping);
+	public abstract int setPstEmployeeWorkMapping(PstEmployeeWorkMapping pstEmployeeWorkMapping);
+	public abstract List listPstEmployeeStatuses();
+	public abstract List listPstRoadPumpNo();
+
+	//public abstract int updatePstEmployeeWorkMapping(PstEmployeeWorkMapping pstEmployeeWorkMapping);
+
+	//public abstract int deletePstEmployeeWorkMapping(PstEmployeeWorkMapping pstEmployeeWorkMapping, String service);
+
+	//public abstract PstEmployeeWorkMapping findPstEmployeeWorkMappingById(Long long1);
+	
+	
 	/*	public abstract Long saveMissExamGroup(MissExamGroup missexamgroup);
 
 	public abstract int deleteMissExamGroup(MissExamGroup missexamgroup);

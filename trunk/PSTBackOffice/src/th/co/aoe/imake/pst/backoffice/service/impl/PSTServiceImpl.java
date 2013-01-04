@@ -13,6 +13,7 @@ import th.co.aoe.imake.pst.xstream.PstBreakDown;
 import th.co.aoe.imake.pst.xstream.PstCost;
 import th.co.aoe.imake.pst.xstream.PstEmployee;
 import th.co.aoe.imake.pst.xstream.PstEmployeeStatus;
+import th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping;
 import th.co.aoe.imake.pst.xstream.PstPosition;
 import th.co.aoe.imake.pst.xstream.PstRoadPump;
 import th.co.aoe.imake.pst.xstream.PstRoadPumpStatus;
@@ -2016,6 +2017,42 @@ public class PSTServiceImpl extends PostCommon
 			PstTitle pstTitle = new PstTitle();
 			pstTitle.setServiceName(ServiceConstant.PST_TITLE_LIST);
 		        VResultMessage resultMessage = postMessage(pstTitle, pstTitle.getClass().getName(), "pstTitle", true);
+		        return resultMessage.getResultListObj();
+		}
+
+		@Override
+		public VResultMessage searchPstEmployeeWorkMapping(
+				PstEmployeeWorkMapping pstEmployeeWorkMapping) {
+			// TODO Auto-generated method stub
+			pstEmployeeWorkMapping.setServiceName(ServiceConstant.PST_EMPLOYEE_WORK_MAPPING_SEARCH);
+		    return postMessage(pstEmployeeWorkMapping, pstEmployeeWorkMapping.getClass().getName(), "pstEmployeeWorkMapping", true);
+		}
+
+		@Override
+		public int setPstEmployeeWorkMapping(
+				PstEmployeeWorkMapping pstEmployeeWorkMapping) {
+			// TODO Auto-generated method stub
+			pstEmployeeWorkMapping.setServiceName(ServiceConstant.PST_EMPLOYEE_WORK_MAPPING_SET);
+	        VResultMessage resultMessage = postMessage(pstEmployeeWorkMapping, pstEmployeeWorkMapping.getClass().getName(), "pstEmployeeWorkMapping", true);
+	        pstEmployeeWorkMapping = (PstEmployeeWorkMapping)resultMessage.getResultListObj().get(0);
+	        return pstEmployeeWorkMapping.getUpdateRecord();
+		}
+
+		@Override
+		public List listPstEmployeeStatuses() {
+			// TODO Auto-generated method stub
+			PstEmployeeStatus pstEmployeeStatus = new PstEmployeeStatus();
+			pstEmployeeStatus.setServiceName(ServiceConstant.PST_EMPLOYEE_STATUS_LIST);
+		        VResultMessage resultMessage = postMessage(pstEmployeeStatus, pstEmployeeStatus.getClass().getName(), "pstEmployeeStatus", true);
+		        return resultMessage.getResultListObj();
+		}
+
+		@Override
+		public List listPstRoadPumpNo() {
+			// TODO Auto-generated method stub
+			PstRoadPump pstRoadPump = new PstRoadPump();
+			pstRoadPump.setServiceName(ServiceConstant.PST_ROAD_PUMP_NO_LIST);
+		        VResultMessage resultMessage = postMessage(pstRoadPump, pstRoadPump.getClass().getName(), "pstRoadPump", true);
 		        return resultMessage.getResultListObj();
 		}
 
