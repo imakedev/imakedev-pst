@@ -221,6 +221,17 @@ public class PstRoadPumpResource extends BaseResource {
 								//logger.error("xbpsTerm-"+xbpsTerm);
 								vresultMessage.setResultListObj(xntcCalendars);
 								return getRepresentation(entity, vresultMessage, xstream);
+						}else  if(serviceName.equals(ServiceConstant.PST_ROAD_PUMP_NO_LIST)){
+							List result = pstRoadPumpService.listPstRoadPumpNo();
+							java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstRoadPump> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstRoadPump>) result;
+									
+							VResultMessage vresultMessage = new VResultMessage();
+							List<th.co.aoe.imake.pst.xstream.PstRoadPump> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstRoadPump>();
+							if (ntcCalendars != null && ntcCalendars.size() > 0) {
+								xntcCalendars = getxPstRoadPumpObject(ntcCalendars);
+							}
+							vresultMessage.setResultListObj(xntcCalendars);
+							return getRepresentation(entity, vresultMessage, xstream);
 						}
 					} else {
 					}

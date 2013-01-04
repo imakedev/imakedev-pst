@@ -123,5 +123,24 @@ public class HibernatePstRoadPump  extends HibernateCommon implements PstRoadPum
 			}
 			return transList;
 		}
+	@Override
+	public List listPstRoadPumpNo() {
+		// TODO Auto-generated method stub
+		Session session = sessionAnnotationFactory.getCurrentSession();
+		try {
+			Query query = null;
+			StringBuffer sb =new StringBuffer(" select pstRoadPump from PstRoadPump pstRoadPump ");
+			 query =session.createQuery(sb.toString());
+			// set pagging.
+			 
+			 List l = query.list();   
+			return l;
+		} catch (Exception re) {
+			//re.printStackTrace();
+			logger.error("find by property name failed", re);
+			 
+		}
+		return null;
+	}
 
 }

@@ -10,4 +10,6 @@ import th.co.aoe.imake.pst.xstream.common.Pagging;
 public interface PstRoadPumpService {
 	@SuppressWarnings("rawtypes")
 	public  List searchPstRoadPump(PstRoadPump persistentInstance,	Pagging pagging)throws DataAccessException  ;
+	@SuppressWarnings("rawtypes")
+	public  List listPstRoadPumpNo();
 }

@@ -110,19 +110,26 @@ public class PstEmployeeWorkMappingResource  extends BaseResource {
 							
 							List result = (List) pstEmployeeWorkMappingService.searchPstEmployeeWorkMapping(bpsTerm, page);
 							if (result != null && result.size() == 2) {
-								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping>) result
+								java.util.ArrayList<th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping> xntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping>) result
 										.get(0);
 								String faqs_size = (String) result.get(1);
 								VResultMessage vresultMessage = new VResultMessage();
-								List<th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping>();
+							//	List<th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping>();
 								if (faqs_size != null && !faqs_size.equals(""))
 									vresultMessage.setMaxRow(faqs_size);
-								if (ntcCalendars != null && ntcCalendars.size() > 0) {
+								/*if (ntcCalendars != null && ntcCalendars.size() > 0) {
 									xntcCalendars = getxPstEmployeeWorkMappingObject(ntcCalendars);
-								}
+								}*/
 								vresultMessage.setResultListObj(xntcCalendars);
 								return getRepresentation(entity, vresultMessage, xstream);
 							}
+						}else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_WORK_MAPPING_SET)){
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							int updatedRecord=pstEmployeeWorkMappingService.setPstEmployeeWorkMapping(xbpsTerm.getPeIds(), xbpsTerm.getPesIds(), xbpsTerm.getPrpNos(),
+									xbpsTerm.getPewmDateTime());
+							 
+							//xbpsTerm.setPcId(pcId);
+							return returnUpdateRecord(entity,xbpsTerm,updatedRecord);
 						}
 					} else {
 					}

@@ -11,4 +11,5 @@ public interface PstEmployeeWorkMappingService {
 	@SuppressWarnings("rawtypes")
 	public  List searchPstEmployeeWorkMapping(PstEmployeeWorkMapping persistentInstance,	Pagging pagging)throws DataAccessException  ;
 	
+	public  int setPstEmployeeWorkMapping( Long[] peIds ,Long[] pesIds,String[] prpNos,java.util.Date pewmDateTime);
 }
