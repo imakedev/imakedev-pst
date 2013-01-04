@@ -10,5 +10,6 @@ import th.co.aoe.imake.pst.xstream.common.Pagging;
 public interface PstEmployeeStatusService {
 	@SuppressWarnings("rawtypes")
 	public  List searchPstEmployeeStatus(PstEmployeeStatus persistentInstance,	Pagging pagging)throws DataAccessException  ;
-	
+	@SuppressWarnings("rawtypes")
+	public  List listPstEmployeeStatuses();
 }

@@ -40,6 +40,8 @@ public class ServiceConstant {
 	public static final String PST_ROAD_PUMP_SEARCH = "searchPstRoadPump";
 	public static final String PST_ROAD_PUMP_FIND_BY_ID = "findPstRoadPumpById";
 	public static final String PST_ROAD_PUMP_LIST_MASTER = "listMasterPstRoadPump";
+	public static final String PST_ROAD_PUMP_NO_LIST = "listPstRoadPumpNo";
+	
 	
 	// PST_ROAD_PUMP_STATUS
 	public static final String PST_ROAD_PUMP_STATUS_SAVE = "savePstRoadPumpStatus";
@@ -65,6 +67,8 @@ public class ServiceConstant {
 	public static final String PST_EMPLOYEE_STATUS_ITEMS_DELETE ="deletePstEmployeeStatusItems";
 	public static final String PST_EMPLOYEE_STATUS_SEARCH = "searchPstEmployeeStatus";
 	public static final String PST_EMPLOYEE_STATUS_FIND_BY_ID = "findPstEmployeeStatusById";
+	public static final String PST_EMPLOYEE_STATUS_LIST = "listPstEmployeeStatus";
+	
 	
 	// PST_EMPLOYEE
 	public static final String PST_EMPLOYEE_SAVE = "savePstEmployee";
@@ -81,6 +85,8 @@ public class ServiceConstant {
 	public static final String PST_EMPLOYEE_WORK_MAPPING_ITEMS_DELETE ="deletePstEmployeeWorkMappingItems";
 	public static final String PST_EMPLOYEE_WORK_MAPPING_SEARCH = "searchPstEmployeeWorkMapping";
 	public static final String PST_EMPLOYEE_WORK_MAPPING_FIND_BY_ID = "findPstEmployeeWorkMappingById";
+	public static final String PST_EMPLOYEE_WORK_MAPPING_SET = "setPstEmployeeWorkMapping";
+	
 	
 	 
 	// PST_POSITION

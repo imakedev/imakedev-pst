@@ -108,6 +108,25 @@ public class HibernatePstEmployeeStatus  extends HibernateCommon implements PstE
 			}
 			return transList;
 		}
+	@Override
+	public List listPstEmployeeStatuses() {
+		// TODO Auto-generated method stub
+		Session session = sessionAnnotationFactory.getCurrentSession();
+		try {
+			Query query = null;
+			StringBuffer sb =new StringBuffer(" select pstEmployeeStatus from PstEmployeeStatus pstEmployeeStatus ");
+			 query =session.createQuery(sb.toString());
+			// set pagging.
+			 
+			 List l = query.list();   
+			return l;
+		} catch (Exception re) {
+			//re.printStackTrace();
+			logger.error("find by property name failed", re);
+			 
+		}
+		return null;
+	}
 
 
 }

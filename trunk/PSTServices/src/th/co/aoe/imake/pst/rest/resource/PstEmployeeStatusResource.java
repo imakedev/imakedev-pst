@@ -123,6 +123,17 @@ public class PstEmployeeStatusResource  extends BaseResource {
 								vresultMessage.setResultListObj(xntcCalendars);
 								return getRepresentation(entity, vresultMessage, xstream);
 							}
+						}else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_STATUS_LIST)){
+							List result = pstEmployeeStatusService.listPstEmployeeStatuses();
+							java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstEmployeeStatus> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstEmployeeStatus>) result;
+									
+							VResultMessage vresultMessage = new VResultMessage();
+							List<th.co.aoe.imake.pst.xstream.PstEmployeeStatus> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstEmployeeStatus>();
+							if (ntcCalendars != null && ntcCalendars.size() > 0) {
+								xntcCalendars = getxPstEmployeeStatusObject(ntcCalendars);
+							}
+							vresultMessage.setResultListObj(xntcCalendars);
+							return getRepresentation(entity, vresultMessage, xstream);
 						}
 					} else {
 					}

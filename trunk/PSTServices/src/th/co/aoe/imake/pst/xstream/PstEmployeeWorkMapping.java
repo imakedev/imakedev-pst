@@ -22,6 +22,11 @@ public class PstEmployeeWorkMapping extends VServiceXML implements Serializable 
 
 	private String prpNo;
 
+	private Long[] peIds;
+
+	private Long[] pesIds;
+
+	private String[] prpNos;
 	
 	private java.util.Date pewmDateTime;
 
@@ -112,6 +117,42 @@ public class PstEmployeeWorkMapping extends VServiceXML implements Serializable 
 
 	public void setPewmDateTime(java.util.Date pewmDateTime) {
 		this.pewmDateTime = pewmDateTime;
+	}
+
+
+
+	public Long[] getPeIds() {
+		return peIds;
+	}
+
+
+
+	public void setPeIds(Long[] peIds) {
+		this.peIds = peIds;
+	}
+
+
+
+	public Long[] getPesIds() {
+		return pesIds;
+	}
+
+
+
+	public void setPesIds(Long[] pesIds) {
+		this.pesIds = pesIds;
+	}
+
+
+
+	public String[] getPrpNos() {
+		return prpNos;
+	}
+
+
+
+	public void setPrpNos(String[] prpNos) {
+		this.prpNos = prpNos;
 	}
 
 }
