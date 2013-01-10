@@ -1,6 +1,7 @@
 package th.co.aoe.imake.pst.hibernate.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -19,11 +20,7 @@ public class PstEmployeeWorkMappingPK implements Serializable {
 	@Column(name="PE_ID")
 	private Long peId;
 
-	@Column(name="PES_ID")
-	private Long pesId;
-
-	@Column(name="PRP_NO")
-	private String prpNo;
+	
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="PEWM_DATE_TIME")
@@ -37,22 +34,18 @@ public class PstEmployeeWorkMappingPK implements Serializable {
 	public void setPeId(Long peId) {
 		this.peId = peId;
 	}
-	public Long getPesId() {
-		return this.pesId;
-	}
-	public void setPesId(Long pesId) {
-		this.pesId = pesId;
-	}
-	public String getPrpNo() {
-		return this.prpNo;
-	}
-	public void setPrpNo(String prpNo) {
-		this.prpNo = prpNo;
-	}
+	 
 	public java.util.Date getPewmDateTime() {
 		return this.pewmDateTime;
 	}
 	public void setPewmDateTime(java.util.Date pewmDateTime) {
+		this.pewmDateTime = pewmDateTime;
+	}
+	public PstEmployeeWorkMappingPK(Long peId, 
+			Date pewmDateTime) {
+		super();
+		this.peId = peId;
+	 
 		this.pewmDateTime = pewmDateTime;
 	}
 

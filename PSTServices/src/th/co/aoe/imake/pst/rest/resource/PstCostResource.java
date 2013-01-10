@@ -170,7 +170,7 @@ public class PstCostResource  extends BaseResource {
 	@Override
 	protected Representation get(Variant variant) throws ResourceException {
 		// TODO Auto-generated method stub
-		System.out.println("sss");
+		//System.out.println("sss");
 		th.co.aoe.imake.pst.xstream.PstCost  xbpsTerm =new th.co.aoe.imake.pst.xstream.PstCost();
 		th.co.aoe.imake.pst.hibernate.bean.PstCost pstCost =new  th.co.aoe.imake.pst.hibernate.bean.PstCost();
 		xbpsTerm.setPcId(1l);

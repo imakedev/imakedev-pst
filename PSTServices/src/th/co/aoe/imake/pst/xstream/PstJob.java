@@ -2,6 +2,7 @@ package th.co.aoe.imake.pst.xstream;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 import th.co.aoe.imake.pst.xstream.common.VServiceXML;
 
@@ -23,7 +24,7 @@ public class PstJob  extends VServiceXML implements Serializable {
 
 	private String pjContractName;
 
-	private Timestamp pjCreatedTime;
+	private Date pjCreatedTime;
 
 	private String pjCustomerDepartment;
 
@@ -32,19 +33,21 @@ public class PstJob  extends VServiceXML implements Serializable {
 	private String pjCustomerNo;
 
 	private String pjJobNo;
-
+	private String pjRemark;
 	
-	private Timestamp pjUpdatedTime;
+	private Date pjUpdatedTime;
 
 	//bi-directional many-to-one association to PstConcrete
 	@XStreamAlias("pstConcrete")
 	private PstConcrete pstConcrete;
+	
+	private String prpNo;
 
 	//bi-directional many-to-one association to PstJobEmployee
 	/*@OneToMany(mappedBy="pstJob")
 	private List<PstJobEmployee> pstJobEmployees;*/
 
-	//bi-directional one-to-one association to PstJobPay
+	/*//bi-directional one-to-one association to PstJobPay
 	@XStreamAlias("pstJobPay")
 	private PstJobPay pstJobPay;
 
@@ -54,7 +57,7 @@ public class PstJob  extends VServiceXML implements Serializable {
 
 	//bi-directional one-to-one association to PstJobWork
 	@XStreamAlias("pstJobWork")
-	private PstJobWork pstJobWork;
+	private PstJobWork pstJobWork;*/
 
 	public PstJob() {
 	}
@@ -62,9 +65,10 @@ public class PstJob  extends VServiceXML implements Serializable {
 	public PstJob(Long pjId, String pjContractMobileNo, String pjContractName,
 			Timestamp pjCreatedTime, String pjCustomerDepartment,
 			String pjCustomerName, String pjCustomerNo, String pjJobNo,
-			Timestamp pjUpdatedTime, PstConcrete pstConcrete,
-			PstJobPay pstJobPay, PstJobPayExt pstJobPayExt,
-			PstJobWork pstJobWork) {
+			Timestamp pjUpdatedTime, PstConcrete pstConcrete,String pjRemark
+			//PstJobPay pstJobPay, PstJobPayExt pstJobPayExt,
+			//PstJobWork pstJobWork
+			) {
 		super();
 		this.pjId = pjId;
 		this.pjContractMobileNo = pjContractMobileNo;
@@ -76,9 +80,17 @@ public class PstJob  extends VServiceXML implements Serializable {
 		this.pjJobNo = pjJobNo;
 		this.pjUpdatedTime = pjUpdatedTime;
 		this.pstConcrete = pstConcrete;
-		this.pstJobPay = pstJobPay;
-		this.pstJobPayExt = pstJobPayExt;
-		this.pstJobWork = pstJobWork;
+		this.pjRemark = pjRemark;
+		/*this.pstJobPayExt = pstJobPayExt;
+		this.pstJobWork = pstJobWork;*/
+	}
+
+	public String getPjRemark() {
+		return pjRemark;
+	}
+
+	public void setPjRemark(String pjRemark) {
+		this.pjRemark = pjRemark;
 	}
 
 	public Long getPjId() {
@@ -105,11 +117,11 @@ public class PstJob  extends VServiceXML implements Serializable {
 		this.pjContractName = pjContractName;
 	}
 
-	public Timestamp getPjCreatedTime() {
+	public Date getPjCreatedTime() {
 		return this.pjCreatedTime;
 	}
 
-	public void setPjCreatedTime(Timestamp pjCreatedTime) {
+	public void setPjCreatedTime(Date pjCreatedTime) {
 		this.pjCreatedTime = pjCreatedTime;
 	}
 
@@ -145,11 +157,11 @@ public class PstJob  extends VServiceXML implements Serializable {
 		this.pjJobNo = pjJobNo;
 	}
 
-	public Timestamp getPjUpdatedTime() {
+	public Date getPjUpdatedTime() {
 		return this.pjUpdatedTime;
 	}
 
-	public void setPjUpdatedTime(Timestamp pjUpdatedTime) {
+	public void setPjUpdatedTime(Date pjUpdatedTime) {
 		this.pjUpdatedTime = pjUpdatedTime;
 	}
 
@@ -161,6 +173,14 @@ public class PstJob  extends VServiceXML implements Serializable {
 		this.pstConcrete = pstConcrete;
 	}
 
+	public String getPrpNo() {
+		return prpNo;
+	}
+
+	public void setPrpNo(String prpNo) {
+		this.prpNo = prpNo;
+	}
+
 	/*public List<PstJobEmployee> getPstJobEmployees() {
 		return this.pstJobEmployees;
 	}
@@ -169,7 +189,7 @@ public class PstJob  extends VServiceXML implements Serializable {
 		this.pstJobEmployees = pstJobEmployees;
 	}*/
 
-	public PstJobPay getPstJobPay() {
+	/*public PstJobPay getPstJobPay() {
 		return this.pstJobPay;
 	}
 
@@ -191,6 +211,6 @@ public class PstJob  extends VServiceXML implements Serializable {
 
 	public void setPstJobWork(PstJobWork pstJobWork) {
 		this.pstJobWork = pstJobWork;
-	}
+	}*/
 
 }

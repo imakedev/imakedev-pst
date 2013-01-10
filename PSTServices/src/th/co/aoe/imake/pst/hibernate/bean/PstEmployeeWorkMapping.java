@@ -15,7 +15,11 @@ public class PstEmployeeWorkMapping implements Serializable {
 
 	@EmbeddedId
 	private PstEmployeeWorkMappingPK id;
+	@Column(name="PES_ID")
+	private Long pesId;
 
+	@Column(name="PRP_NO")
+	private String prpNo;
 	//bi-directional many-to-one association to PstEmployee
 	@ManyToOne
 	@JoinColumn(name="PE_ID",insertable=false,updatable=false)
@@ -51,6 +55,22 @@ public class PstEmployeeWorkMapping implements Serializable {
 
 	public void setPstEmployeeStatus(PstEmployeeStatus pstEmployeeStatus) {
 		this.pstEmployeeStatus = pstEmployeeStatus;
+	}
+
+	public Long getPesId() {
+		return pesId;
+	}
+
+	public void setPesId(Long pesId) {
+		this.pesId = pesId;
+	}
+
+	public String getPrpNo() {
+		return prpNo;
+	}
+
+	public void setPrpNo(String prpNo) {
+		this.prpNo = prpNo;
 	}
 
 }

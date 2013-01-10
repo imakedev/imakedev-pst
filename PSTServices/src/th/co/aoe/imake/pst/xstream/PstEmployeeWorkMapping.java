@@ -21,6 +21,8 @@ public class PstEmployeeWorkMapping extends VServiceXML implements Serializable 
 	private Long pesId;
 
 	private String prpNo;
+	
+	private String weekdayCollection;
 
 	private Long[] peIds;
 
@@ -153,6 +155,18 @@ public class PstEmployeeWorkMapping extends VServiceXML implements Serializable 
 
 	public void setPrpNos(String[] prpNos) {
 		this.prpNos = prpNos;
+	}
+
+
+
+	public String getWeekdayCollection() {
+		return weekdayCollection;
+	}
+
+
+
+	public void setWeekdayCollection(String weekdayCollection) {
+		this.weekdayCollection = weekdayCollection;
 	}
 
 }

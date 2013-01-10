@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.apache.log4j.Logger;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
@@ -60,6 +64,16 @@ public class PstEmployeeWorkMappingResource  extends BaseResource {
 						String serviceName = xbpsTerm.getServiceName();
 						th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping bpsTerm = new th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping();
 						BeanUtils.copyProperties(xbpsTerm,bpsTerm); 
+						//System.out.println(xbpsTerm.getPewmDateTime());
+						if(xbpsTerm.getPeId()!=null || xbpsTerm.getPesId()!=null ||
+								xbpsTerm.getPrpNo()!=null || xbpsTerm.getPewmDateTime()!=null){
+							th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMappingPK pk =
+									new th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMappingPK(xbpsTerm.getPeId(), 
+											 xbpsTerm.getPewmDateTime());
+							bpsTerm.setId(pk);
+						}
+						 
+ 
 						if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_WORK_MAPPING_FIND_BY_ID)){/*
 							Object obj= pstCommonService.findById(bpsTerm.getClass(), xbpsTerm.getPcId());
 							if(obj!=null){

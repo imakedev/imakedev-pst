@@ -1,5 +1,6 @@
 package th.co.aoe.imake.pst.hibernate;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,9 +10,11 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import th.co.aoe.imake.pst.constant.ServiceConstant;
@@ -25,20 +28,27 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 	private static final Logger logger = Logger.getLogger(ServiceConstant.LOG_APPENDER);
 	private SessionFactory sessionAnnotationFactory;
 	private static String[] emp_ignore={"pstPosition","pstTitle"}; 
+	private static SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 	public SessionFactory getSessionAnnotationFactory() {
 		return sessionAnnotationFactory;
 	}
 	public void setSessionAnnotationFactory(SessionFactory sessionAnnotationFactory) {
 		this.sessionAnnotationFactory = sessionAnnotationFactory;
 	}
-	private int getSize(Session session, PstEmployeeWorkMapping instance) throws Exception{
+	private int getSize(Session session, PstEmployeeWorkMapping instance,boolean setPrpNo,String date) throws Exception{
 		try {
 			/*String pcUid=instance.getPcUid();
 			String pcName=instance.getPcName();*/
 			
 			Query query=null;
+			StringBuffer sb =new StringBuffer();
+			if(setPrpNo)
+				sb.append(" select count(pstEmployee) from PstEmployeeWorkMapping as pstEmployeeWorkMapping   right join pstEmployeeWorkMapping.pstEmployee as pstEmployee  where pstEmployeeWorkMapping.prpNo='"+instance.getPrpNo().trim()+"'" +
+						" and pstEmployeeWorkMapping.id.pewmDateTime between '"+date+" 00:00:00' and '"+date+" 23:59:59'");
+			else
+				sb.append(" select count(pstEmployee) from  PstEmployee pstEmployee ");
 			
-			StringBuffer sb =new StringBuffer(" select count(pstEmployee) from PstEmployeeWorkMapping as pstEmployeeWorkMapping   right join pstEmployeeWorkMapping.pstEmployee as pstEmployee ");
+			//StringBuffer sb =new StringBuffer(" select count(pstEmployee) from PstEmployeeWorkMapping as pstEmployeeWorkMapping   right join pstEmployeeWorkMapping.pstEmployee as pstEmployee ");
 		//	select pstEmployee,pstEmployeeWorkMapping from  
 			boolean iscriteria = false;
 			
@@ -73,11 +83,40 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 			try {
 				/*String pcUid=instance.getPcUid();
 				String pcName=instance.getPcName();*/
+				Date pewmDateTime=instance.getId().getPewmDateTime();
+				String prpNo=instance.getPrpNo();
+				//System.out.println(prpNo);
+				boolean setPrpNo=false;
+				//System.out.println(pewmDateTime);
+				if(prpNo!=null && !prpNo.equals("-1")){
+					setPrpNo=true;
+				}
+				
 				Query query = null;
-			
-				StringBuffer sb =new StringBuffer(" select pstEmployee,pstEmployeeWorkMapping from PstEmployeeWorkMapping as pstEmployeeWorkMapping   right join pstEmployeeWorkMapping.pstEmployee as pstEmployee ");
-				
-				
+				String date=format1.format(pewmDateTime);
+				DateTime dt = new DateTime(pewmDateTime.getTime()).dayOfMonth().setCopy(1);
+				String date_start=format1.format(dt.toDate());
+				dt = dt.dayOfMonth().setCopy(dt.dayOfMonth().getMaximumValue());
+				String date_end=format1.format(dt.toDate());
+			    //System.out.println(dt.dayOfMonth().getMinimumValue());
+			    dt= dt.dayOfMonth().setCopy(dt.dayOfMonth().getMaximumValue());
+				//StringBuffer sb =new StringBuffer(" select pstEmployee,pstEmployeeWorkMapping from PstEmployeeWorkMapping as pstEmployeeWorkMapping   right join pstEmployeeWorkMapping.pstEmployee as pstEmployee ");
+				StringBuffer sb =new StringBuffer();
+				//System.out.println(setPrpNo);
+				if(setPrpNo){ 
+					sb.append(" select pstEmployee,pstEmployeeWorkMapping " +
+							", ( select count(map) from PstEmployeeWorkMapping as map where map.id.pewmDateTime  between '"+date_start+" 00:00:00' and '"+date_end+" 23:59:59' " +
+									 " and map.id.peId=pstEmployeeWorkMapping.id.peId and  map.pesId in(1,3) ) as xxxx "+
+							" from PstEmployeeWorkMapping as pstEmployeeWorkMapping   right join pstEmployeeWorkMapping.pstEmployee as pstEmployee  where pstEmployeeWorkMapping.prpNo='"+prpNo.trim()+"'" +
+							" and pstEmployeeWorkMapping.id.pewmDateTime between '"+date+" 00:00:00' and '"+date+" 23:59:59'");
+				}else{
+					sb.append(" select pstEmployee " +
+							" , ( select count(map) from PstEmployeeWorkMapping as map where map.id.pewmDateTime  between '"+date_start+" 00:00:00' and '"+date_end+" 23:59:59' " +
+							 " and map.id.peId=pstEmployee.peId and  map.pesId in(1,3) ) as xxxx "+
+							" from  PstEmployee  pstEmployee ");
+					   //  " , ( select count(map) from PstEmployeeWorkMapping as map where map.id.pewmDateTime  between '"+date_start+" 00:00:00' and '"+date_end+" 23:59:59' " +
+					//	 " and map.id.peId=pstEmployeeWorkMapping.id.peId ) as xxxx "+
+				}
 				 // sb =new StringBuffer(" select pstEmployeeWorkMapping from PstEmployeeWorkMapping pstEmployeeWorkMapping ");
 				
 				boolean iscriteria = false;
@@ -95,9 +134,10 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 				if(pagging.getSortBy()!=null && pagging.getSortBy().length()>0){
 						sb.append( " order by "+pagging.getOrderBy()+" "+pagging.getSortBy().toLowerCase());
 				}			
+				//System.out.println(sb.toString());
 				 query =session.createQuery(sb.toString());
 				// set pagging.
-				 String size = String.valueOf(getSize(session, instance)); 
+				 String size = String.valueOf(getSize(session, instance,setPrpNo,date)); 
 				 logger.debug(" first Result="+(pagging.getPageSize()* (pagging.getPageNo() - 1))); 
 				 
 				 query.setFirstResult(pagging.getPageSize() * (pagging.getPageNo() - 1));
@@ -112,9 +152,10 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 				// List<th.co.aoe.imake.pst.hibernate.bean.PstEmployee> l = query.list(); 
 					 List l = query.list();
 				 int sizeReturn=l.size();
-				System.out.println(sizeReturn);
+				//System.out.println(sizeReturn);
 				//Ljava.lang.Object;
 				List returnList=new ArrayList(sizeReturn);
+			if(setPrpNo)
 				for (int i = 0; i < sizeReturn; i++) { 
 					java.lang.Object[] l1= (java.lang.Object[])l.get(i);
 					th.co.aoe.imake.pst.hibernate.bean.PstEmployee employee=(th.co.aoe.imake.pst.hibernate.bean.PstEmployee)l1[0];
@@ -126,8 +167,8 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 						if(pstEmployeeWorkMapping!=null && pstEmployeeWorkMapping.getId()!=null){
 							th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMappingPK pk =pstEmployeeWorkMapping.getId();
 							xmapping.setPeId(pk.getPeId());
-							xmapping.setPesId(pk.getPesId());
-							xmapping.setPrpNo(pk.getPrpNo());
+							xmapping.setPesId(pstEmployeeWorkMapping.getPesId());
+							xmapping.setPrpNo(pstEmployeeWorkMapping.getPrpNo());
 							xmapping.setPewmDateTime(pk.getPewmDateTime());
 							th.co.aoe.imake.pst.hibernate.bean.PstEmployeeStatus pstEmployeeStatus=pstEmployeeWorkMapping.getPstEmployeeStatus();
 							 if(pstEmployeeStatus!=null){
@@ -151,14 +192,84 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 						 xemployee.setPstTitle(xpstTitle);
 					 }
 					 xmapping.setPstEmployee(xemployee);
-					 returnList.add(xmapping);
-					//System.out.println(l1.length);
-					//List l1=(List) l.get(i);
-					//System.out.println(l1[0].getClass());
-					//System.out.println(l.get(i).getClass());
-					
+					 xmapping.setWeekdayCollection(((java.lang.Long)l1[2]).intValue()+"");
+					 returnList.add(xmapping); 
 				}
-				 
+			else
+				for (int i = 0; i < sizeReturn; i++) { 
+					java.lang.Object[] l1= (java.lang.Object[])l.get(i);
+					th.co.aoe.imake.pst.hibernate.bean.PstEmployee employee=(th.co.aoe.imake.pst.hibernate.bean.PstEmployee)l1[0];
+					//th.co.aoe.imake.pst.hibernate.bean.PstEmployee employee=(th.co.aoe.imake.pst.hibernate.bean.PstEmployee)l1[0];
+					//th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping pstEmployeeWorkMapping=(th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping)l1[1]; 
+					
+					th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping xmapping=new th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping();
+					 th.co.aoe.imake.pst.xstream.PstEmployee xemployee= new th.co.aoe.imake.pst.xstream.PstEmployee();
+					 sb.setLength(0);
+					 sb.append(" select pstEmployeeWorkMapping " +
+					      //  " , ( select count(map) from PstEmployeeWorkMapping as map where map.id.pewmDateTime  between '"+date_start+" 00:00:00' and '"+date_end+" 23:59:59' " +
+						//	 " and map.id.peId=pstEmployeeWorkMapping.id.peId ) as xxxx "+
+					 		"  from PstEmployeeWorkMapping as pstEmployeeWorkMapping " +
+							  " "+	 
+							 " where pstEmployeeWorkMapping.id.pewmDateTime between '"+date+" 00:00:00' and '"+date+" 23:59:59' " +
+								" and pstEmployeeWorkMapping.id.peId="+employee.getPeId());
+					/* SELECT count(*) FROM PST_DB.PST_EMPLOYEE_WORK_MAPPING map 
+					 where map.PEWM_DATE_TIME between '2013-01-01 00:00:00' 
+					 and '2013-01-31 23:59:59'*/
+					 query =session.createQuery(sb.toString());
+					 Object obj=query.uniqueResult();
+					 if(obj!=null){
+						// java.lang.Object[] l1= (java.lang.Object[])obj;
+						// System.out.println("object length="+l1.length);
+							/*th.co.aoe.imake.pst.hibernate.bean.PstEmployee employee=(th.co.aoe.imake.pst.hibernate.bean.PstEmployee)l1[0];
+							th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping pstEmployeeWorkMapping=(th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping)l1[1]; 
+							*/
+							//System.out.println("l1[1]="+l1[1].getClass());
+						 th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping mapping =(th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping)obj;
+						 th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMappingPK pk =mapping.getId();
+						 
+							xmapping.setPeId(pk.getPeId());
+							xmapping.setPesId(mapping.getPesId());
+							xmapping.setPrpNo(mapping.getPrpNo());
+							xmapping.setPewmDateTime(pk.getPewmDateTime());
+							
+							th.co.aoe.imake.pst.hibernate.bean.PstEmployeeStatus pstEmployeeStatus=mapping.getPstEmployeeStatus();
+							 if(pstEmployeeStatus!=null){
+								 th.co.aoe.imake.pst.xstream.PstEmployeeStatus xpstEmployeeStatus = new th.co.aoe.imake.pst.xstream.PstEmployeeStatus();
+								 BeanUtils.copyProperties(pstEmployeeStatus, xpstEmployeeStatus);
+								 xmapping.setPstEmployeeStatus(xpstEmployeeStatus);
+							 }
+					 }
+						/*if(pstEmployeeWorkMapping!=null && pstEmployeeWorkMapping.getId()!=null){
+							th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMappingPK pk =pstEmployeeWorkMapping.getId();
+							xmapping.setPeId(pk.getPeId());
+							xmapping.setPesId(pk.getPesId());
+							xmapping.setPrpNo(pk.getPrpNo());
+							xmapping.setPewmDateTime(pk.getPewmDateTime());
+							th.co.aoe.imake.pst.hibernate.bean.PstEmployeeStatus pstEmployeeStatus=pstEmployeeWorkMapping.getPstEmployeeStatus();
+							 if(pstEmployeeStatus!=null){
+								 th.co.aoe.imake.pst.xstream.PstEmployeeStatus xpstEmployeeStatus = new th.co.aoe.imake.pst.xstream.PstEmployeeStatus();
+								 BeanUtils.copyProperties(pstEmployeeStatus, xpstEmployeeStatus);
+								 xmapping.setPstEmployeeStatus(xpstEmployeeStatus);
+							 }
+						}*/
+						
+					
+						 
+					 BeanUtils.copyProperties(employee, xemployee,emp_ignore);
+					 if(employee.getPstPosition()!=null){
+						 th.co.aoe.imake.pst.xstream.PstPosition xpstPosition= new th.co.aoe.imake.pst.xstream.PstPosition();
+						 BeanUtils.copyProperties(employee.getPstPosition(), xpstPosition);
+						 xemployee.setPstPosition(xpstPosition);
+					 }
+					 if(employee.getPstTitle()!=null){
+						 th.co.aoe.imake.pst.xstream.PstTitle xpstTitle= new th.co.aoe.imake.pst.xstream.PstTitle();
+						 BeanUtils.copyProperties(employee.getPstTitle(),xpstTitle);
+						 xemployee.setPstTitle(xpstTitle);
+					 }
+					 xmapping.setPstEmployee(xemployee);
+					 xmapping.setWeekdayCollection(((java.lang.Long)l1[1]).intValue()+"");
+					 returnList.add(xmapping); 
+				}
 				/* for (th.co.aoe.imake.pst.hibernate.bean.PstEmployee entry : l) {
 					 th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping mapping=new th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping();
 					 th.co.aoe.imake.pst.xstream.PstEmployee employee= new th.co.aoe.imake.pst.xstream.PstEmployee();
@@ -178,9 +289,81 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 			}
 			return transList;
 		}
+	 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor={RuntimeException.class})
 	public int setPstEmployeeWorkMapping(Long[] peIds, Long[] pesIds,
 			String[] prpNos, Date pewmDateTime) {
+		try{
+		if(peIds!=null && peIds.length>0){
+			//System.out.println("pewmDateTime xx="+pewmDateTime);
+			StringBuffer sb =new StringBuffer();
+			String date=format1.format(pewmDateTime);
+			Query query=null;
+			for (int i = 0; i < prpNos.length; i++) {
+				//System.out.println(" [ "+i+" ] "+peIds[i]+" , "+pesIds[i]+" , "+prpNos[i]);
+				Session session = sessionAnnotationFactory.getCurrentSession();
+				 sb.setLength(0);
+				sb.append(" select count(pstEmployeeWorkMapping) from PstEmployeeWorkMapping as pstEmployeeWorkMapping " +
+						" where pstEmployeeWorkMapping.id.pewmDateTime between '"+date+" 00:00:00' and '"+date+" 23:59:59' " +
+						" and pstEmployeeWorkMapping.id.peId="+peIds[i]);
+			 query =session.createQuery(sb.toString());
+			 //Object obj=query.uniqueResult();
+			 int obj=((Long)query.uniqueResult()).intValue();
+			// th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping mapping=null;
+			 if(obj==1){ // update
+				 //System.out.println(" updating");
+				 
+				// mapping=(th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping)obj;
+				 if(pesIds[i]!=null && pesIds[i].intValue()!=-1){
+					// mapping.setPesId(pesIds[i]);
+				 }else
+					 pesIds[i]=null;
+					// mapping.setPesId(null);
+				 if(prpNos[i]!=null && !prpNos[i].equals("-1")){
+					// mapping.setPrpNo(prpNos[i]);
+				 }else
+					 prpNos[i]=null;
+					// mapping.setPrpNo(null);
+				// mapping.getId().setPewmDateTime(pewmDateTime);
+				// System.out.println("getPewmDateTime="+mapping.getId().getPewmDateTime());
+				 sb.setLength(0); 
+					sb.append(" update PstEmployeeWorkMapping as pstEmployeeWorkMapping  set pesId=:pesId " +
+							" , prpNo=:prpNo , id.pewmDateTime=:pewmDateTime " +
+							" where pstEmployeeWorkMapping.id.pewmDateTime between '"+date+" 00:00:00' and '"+date+" 23:59:59' " +
+							" and pstEmployeeWorkMapping.id.peId="+peIds[i]);
+				 query =session.createQuery(sb.toString());
+				 query.setParameter("pesId", pesIds[i]);
+				 query.setParameter("prpNo", prpNos[i]);
+				 query.setParameter("pewmDateTime", pewmDateTime);
+				  query.executeUpdate();
+				 
+				// session.update(mapping);
+			 }else{ // save 
+				// System.out.println(" saving");
+				 th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping   mapping= new th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping();
+				 if(pesIds[i]!=null && pesIds[i].intValue()!=-1){
+					 mapping.setPesId(pesIds[i]);
+				 }else
+					 mapping.setPesId(null);
+				 if(prpNos[i]!=null && !prpNos[i].equals("-1")){
+					 mapping.setPrpNo(prpNos[i]);
+				 }else
+					 mapping.setPrpNo(null);
+				 //System.out.println("get getPrpNo="+mapping.getPrpNo());
+				 //System.out.println("get getPesId="+mapping.getPesId());
+				 th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMappingPK pk =
+						 new th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMappingPK(peIds[i],pewmDateTime);
+				 mapping.setId(pk);
+				 session.save(mapping);
+			 }
+			// Object obj=query.uniqueResult();
+				
+			}
+		}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		// TODO Auto-generated method stub
 		return 0;
 	}

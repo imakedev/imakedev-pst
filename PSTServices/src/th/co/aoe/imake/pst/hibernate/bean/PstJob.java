@@ -1,7 +1,7 @@
 package th.co.aoe.imake.pst.hibernate.bean;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -35,7 +34,7 @@ public class PstJob implements Serializable {
 	private String pjContractName;
 
 	@Column(name="PJ_CREATED_TIME")
-	private Timestamp pjCreatedTime;
+	private Date pjCreatedTime;
 
 	@Column(name="PJ_CUSTOMER_DEPARTMENT")
 	private String pjCustomerDepartment;
@@ -48,9 +47,12 @@ public class PstJob implements Serializable {
 
 	@Column(name="PJ_JOB_NO")
 	private String pjJobNo;
+	
+	@Column(name="PJ_REMARK")
+	private String pjRemark;
 
 	@Column(name="PJ_UPDATED_TIME")
-	private Timestamp pjUpdatedTime;
+	private Date pjUpdatedTime;
 
 	//bi-directional many-to-one association to PstConcrete
 	@ManyToOne
@@ -61,7 +63,7 @@ public class PstJob implements Serializable {
 	/*@OneToMany(mappedBy="pstJob")
 	private List<PstJobEmployee> pstJobEmployees;*/
 
-	//bi-directional one-to-one association to PstJobPay
+	/*//bi-directional one-to-one association to PstJobPay
 	@OneToOne(mappedBy="pstJob")
 	private PstJobPay pstJobPay;
 
@@ -71,7 +73,7 @@ public class PstJob implements Serializable {
 
 	//bi-directional one-to-one association to PstJobWork
 	@OneToOne(mappedBy="pstJob")
-	private PstJobWork pstJobWork;
+	private PstJobWork pstJobWork;*/
 
 	public PstJob() {
 	}
@@ -100,11 +102,11 @@ public class PstJob implements Serializable {
 		this.pjContractName = pjContractName;
 	}
 
-	public Timestamp getPjCreatedTime() {
+	public Date getPjCreatedTime() {
 		return this.pjCreatedTime;
 	}
 
-	public void setPjCreatedTime(Timestamp pjCreatedTime) {
+	public void setPjCreatedTime(Date pjCreatedTime) {
 		this.pjCreatedTime = pjCreatedTime;
 	}
 
@@ -140,11 +142,11 @@ public class PstJob implements Serializable {
 		this.pjJobNo = pjJobNo;
 	}
 
-	public Timestamp getPjUpdatedTime() {
+	public Date getPjUpdatedTime() {
 		return this.pjUpdatedTime;
 	}
 
-	public void setPjUpdatedTime(Timestamp pjUpdatedTime) {
+	public void setPjUpdatedTime(Date pjUpdatedTime) {
 		this.pjUpdatedTime = pjUpdatedTime;
 	}
 
@@ -156,6 +158,14 @@ public class PstJob implements Serializable {
 		this.pstConcrete = pstConcrete;
 	}
 
+	public String getPjRemark() {
+		return pjRemark;
+	}
+
+	public void setPjRemark(String pjRemark) {
+		this.pjRemark = pjRemark;
+	}
+
 	/*public List<PstJobEmployee> getPstJobEmployees() {
 		return this.pstJobEmployees;
 	}
@@ -164,7 +174,7 @@ public class PstJob implements Serializable {
 		this.pstJobEmployees = pstJobEmployees;
 	}*/
 
-	public PstJobPay getPstJobPay() {
+/*	public PstJobPay getPstJobPay() {
 		return this.pstJobPay;
 	}
 
@@ -186,6 +196,6 @@ public class PstJob implements Serializable {
 
 	public void setPstJobWork(PstJobWork pstJobWork) {
 		this.pstJobWork = pstJobWork;
-	}
+	}*/
 
 }

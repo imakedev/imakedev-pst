@@ -135,4 +135,21 @@ public class ServiceConstant {
 		public static final String ROLE_TYPE_LIST_BY_RC_ID ="listRoleTypeByRcId";
 		public static final String ROLE_TYPE_LIST ="listRoleTypes";
 		
+		// PST_CONCRETE
+		public static final String PST_CONCRETE_SAVE = "savePstConcrete";
+		public static final String PST_CONCRETE_UPDATE = "updatePstConcrete";
+		public static final String PST_CONCRETE_DELETE = "deletePstConcrete";
+		public static final String PST_CONCRETE_ITEMS_DELETE ="deletePstConcreteItems";
+		public static final String PST_CONCRETE_SEARCH = "searchPstConcrete";
+		public static final String PST_CONCRETE_FIND_BY_ID = "findPstConcreteById";
+		public static final String PST_CONCRETE_LIST = "listPstConcrete";
+		
+		// PST_JOB
+		public static final String PST_JOB_SAVE = "savePstJob";
+		public static final String PST_JOB_UPDATE = "updatePstJob";
+		public static final String PST_JOB_DELETE = "deletePstJob";
+		public static final String PST_JOB_ITEMS_DELETE ="deletePstJobItems";
+		public static final String PST_JOB_SEARCH = "searchPstJob";
+		public static final String PST_JOB_FIND_BY_ID = "findPstJobById";
+		
 }

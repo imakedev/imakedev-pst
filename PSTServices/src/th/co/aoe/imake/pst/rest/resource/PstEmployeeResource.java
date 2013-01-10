@@ -113,7 +113,7 @@ public class PstEmployeeResource  extends BaseResource {
 								bpsTerm.setPstPosition(null);
 							if(!(bpsTerm.getPstTitle()!=null && bpsTerm.getPstTitle().getPtId()!=null && bpsTerm.getPstTitle().getPtId().intValue()!=-1))
 								bpsTerm.setPstTitle(null);
-							System.out.println(bpsTerm.getPstPosition());
+							//System.out.println(bpsTerm.getPstPosition());
 							int updateRecord=pstCommonService.update(bpsTerm);
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 							
@@ -213,7 +213,7 @@ public class PstEmployeeResource  extends BaseResource {
 	@Override
 	protected Representation get(Variant variant) throws ResourceException {
 		// TODO Auto-generated method stub
-		System.out.println("sss");
+		//System.out.println("sss");
 		th.co.aoe.imake.pst.xstream.PstEmployee  xbpsTerm =new th.co.aoe.imake.pst.xstream.PstEmployee();
 		th.co.aoe.imake.pst.hibernate.bean.PstEmployee pstEmployee =new  th.co.aoe.imake.pst.hibernate.bean.PstEmployee();
 		xbpsTerm.setPeId(1l);

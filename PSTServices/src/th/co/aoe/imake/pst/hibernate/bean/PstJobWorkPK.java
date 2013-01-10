@@ -20,8 +20,7 @@ public class PstJobWorkPK implements Serializable {
 	@Column(name="PRP_ID")
 	private Long prpId;
 
-	@Column(name="PBD_ID")
-	private Long pbdId;
+	
 
 	public PstJobWorkPK() {
 	}
@@ -37,12 +36,12 @@ public class PstJobWorkPK implements Serializable {
 	public void setPrpId(Long prpId) {
 		this.prpId = prpId;
 	}
-	public Long getPbdId() {
+	/*public Long getPbdId() {
 		return this.pbdId;
 	}
 	public void setPbdId(Long pbdId) {
 		this.pbdId = pbdId;
-	}
+	}*/
 
 	/*public boolean equals(Object other) {
 		if (this == other) {
