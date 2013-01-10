@@ -10,10 +10,12 @@ import java.util.List;
 import th.co.aoe.imake.pst.backoffice.service.PSTService;
 import th.co.aoe.imake.pst.constant.ServiceConstant;
 import th.co.aoe.imake.pst.xstream.PstBreakDown;
+import th.co.aoe.imake.pst.xstream.PstConcrete;
 import th.co.aoe.imake.pst.xstream.PstCost;
 import th.co.aoe.imake.pst.xstream.PstEmployee;
 import th.co.aoe.imake.pst.xstream.PstEmployeeStatus;
 import th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping;
+import th.co.aoe.imake.pst.xstream.PstJob;
 import th.co.aoe.imake.pst.xstream.PstPosition;
 import th.co.aoe.imake.pst.xstream.PstRoadPump;
 import th.co.aoe.imake.pst.xstream.PstRoadPumpStatus;
@@ -2055,5 +2057,56 @@ public class PSTServiceImpl extends PostCommon
 		        VResultMessage resultMessage = postMessage(pstRoadPump, pstRoadPump.getClass().getName(), "pstRoadPump", true);
 		        return resultMessage.getResultListObj();
 		}
+		@Override
+		public List listPstConcretes() {
+			// TODO Auto-generated method stub
+			PstConcrete pstConcrete = new PstConcrete();
+			pstConcrete.setServiceName(ServiceConstant.PST_CONCRETE_LIST);
+		        VResultMessage resultMessage = postMessage(pstConcrete, pstConcrete.getClass().getName(), "pstConcrete", true);
+		        return resultMessage.getResultListObj();
+		}
 
+		@Override
+		public VResultMessage searchPstJob(PstJob pstJob) {
+			// TODO Auto-generated method stub
+			pstJob.setServiceName(ServiceConstant.PST_JOB_SEARCH);
+		    return postMessage(pstJob, pstJob.getClass().getName(), "pstJob", true);
+		}
+
+		@Override
+		public Long savePstJob(PstJob pstJob) {
+			// TODO Auto-generated method stub
+			pstJob.setServiceName(ServiceConstant.PST_JOB_SAVE);
+	        VResultMessage resultMessage = postMessage(pstJob, pstJob.getClass().getName(), "pstJob", true);
+	        pstJob = (PstJob)resultMessage.getResultListObj().get(0);
+	        return pstJob.getPjId();
+		}
+
+		@Override
+		public int updatePstJob(PstJob pstJob) {
+			// TODO Auto-generated method stub
+			pstJob.setServiceName(ServiceConstant.PST_JOB_UPDATE);
+	        VResultMessage resultMessage = postMessage(pstJob, pstJob.getClass().getName(), "pstJob", true);
+	        pstJob = (PstJob)resultMessage.getResultListObj().get(0);
+	        return pstJob.getUpdateRecord().intValue();
+		}
+
+		@Override
+		public int deletePstJob(PstJob pstJob, String service) {
+			// TODO Auto-generated method stub
+			pstJob.setServiceName(service);
+	        VResultMessage resultMessage = postMessage(pstJob, pstJob.getClass().getName(), "pstJob", true);
+	        pstJob = (PstJob)resultMessage.getResultListObj().get(0);
+	        return pstJob.getUpdateRecord().intValue();
+		}
+
+		@Override
+		public PstJob findPstJobById(Long long1) {
+			// TODO Auto-generated method stub
+			PstJob pstJob = new PstJob();
+			pstJob.setPjId(long1);
+			pstJob.setServiceName(ServiceConstant.PST_JOB_FIND_BY_ID);
+	        VResultMessage resultMessage = postMessage(pstJob, pstJob.getClass().getName(), "pstJob", true);
+	        return (PstJob)resultMessage.getResultListObj().get(0);
+		}
 }

@@ -26,7 +26,7 @@ public class InternationalizationFilter extends OncePerRequestFilter {
 		// TODO Auto-generated method stub
 		
 		final String newLocale = request.getParameter("language");
-		System.out.println("into doFilter="+newLocale);
+		//System.out.println("into doFilter="+newLocale);
 	    if (newLocale != null) {
 	       /* final Locale locale = StringUtils.parseLocaleString(newLocale
 	                .toLowerCase());
