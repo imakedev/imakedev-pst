@@ -1,56 +1,164 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ include file="/WEB-INF/jsp/includes.jsp" %>
+<style>
+.ui-datepicker-trigger{cursor: pointer;}
+</style>
+<script>
+$(document).ready(function() {
+	renderPageSelect();
+	if($("#message_element > strong").html().length>0){
+		 $('html, body').animate({ scrollTop: 0 }, 'slow'); 
+		 $("#message_element").slideDown("slow"); 
+		 setTimeout(function(){$("#message_element").slideUp("slow")},5000);
+	 }
+	$("#pjCreatedTime" ).datepicker({
+		showOn: "button",
+		buttonImage: _path+"resources/images/calendar.gif",
+		buttonImageOnly: true,
+		dateFormat:"dd/mm/yy" ,
+		changeMonth: true,
+		changeYear: true
+	});
+});
+function goPrev(){
+	if($("#pageNo").val()!='1'){
+		var prev=parseInt($("#pageNo").val())-1;
+		$("#pageNo").val(prev);
+		doAction('search','0');
+	}
+}
+function goNext(){
+	var next=parseInt($("#pageNo").val());
+	if(next<parseInt($("#pageCount").val())){
+		next=next+1;
+		$("#pageNo").val(next);
+		doAction('search','0');
+	}
+} 
+function goToPage(){ 
+	$("#pageNo").val(document.getElementById("jobPageSelect").value);
+	doAction('search','0');
+}
+function renderPageSelect(){
+	 
+	var pageStr="<select name=\"jobPageSelect\" id=\"jobPageSelect\" onchange=\"goToPage()\" style=\"width: 50px\">";
+//	var pageCount=parseInt($("#pageCount").val());
+	var pageCount=$("#pageCount").val();
+	for(var i=1;i<=pageCount;i++){
+		pageStr=pageStr+"<option value=\""+i+"\">"+i+"</option>";
+	}
+	pageStr=pageStr+"</select>"; 
+	$("#pageElement").html(pageStr);
+	document.getElementById("jobPageSelect").value=$("#pageNo").val();
+}
+function confirmDelete(mode,id){
+	$( "#dialog-confirmDelete" ).dialog({
+		/* height: 140, */
+		modal: true,
+		buttons: {
+			"Yes": function() { 
+				$( this ).dialog( "close" );
+				doAction(mode,id);
+			},
+			"No": function() {
+				$( this ).dialog( "close" );
+				return false;
+			}
+		}
+	});
+}
+function doSearch(mode,id){
+	$("#pageNo").val("1");
+	doAction(mode,id);
+}
+function doAction(mode,id){
+	$("#mode").val(mode);
+	if(mode=='deleteItems'){
+		$("#pjIdArray").val(id);
+	}else if(mode!='search'){
+		$("#pjId").val(id);
+	}else {
+		$("#pjId").val("0");
+	}
+	$.post("job/search",$("#jobForm").serialize(), function(data) {
+		  // alert(data);
+		    appendContent(data);
+		  // alert($("#_content").html());
+		});
+}
+</script>
+<div id="dialog-confirmDelete" title="Delete Job" style="display: none;background: ('images/ui-bg_highlight-soft_75_cccccc_1x100.png') repeat-x scroll 50% 50% rgb(204, 204, 204)">
+	Are you sure you want to delete Job ?
+</div>
+  <div id="message_element" class="alert alert-${message_class}" style="display: none;padding-top:10px">
+    <button class="close" data-dismiss="alert"><span style="font-size: 12px">x</span></button>
+    <strong>${message}</strong> 
+  </div>
 <fieldset style="font-family: sans-serif;padding-top:5px">
 	         
            <!-- <legend  style="font-size: 13px">Criteria</legend> -->
            <!-- <div style="position:relative;right:-94%;">  </div> --> 
            
-             
-            <form id="candidateForm" name="candidateForm" class="well" style="border:2px solid #B3D2EE;background: #F9F9F9" action="/MISSExamBackOffice/candidate/search?_=1353519467506" method="post">
-               
-            <input id="mode" name="mode" type="hidden" value="">
-            <input id="mcaId" name="missCandidate.mcaId" type="hidden" value="">
-            <input id="mcaIdArray" name="mcaIdArray" type="hidden" value="">
-            <input id="pageNo" name="paging.pageNo" type="hidden" value="1">
-            <input id="pageSize" name="paging.pageSize" type="hidden" value="20"> 
-            <input id="pageCount" name="pageCount" type="hidden" value="8"> 
+             <form:form id="jobForm" name="jobForm" modelAttribute="jobForm"  cssClass="well" cssStyle="border:2px solid #B3D2EE;background: #F9F9F9" action="" method="post">
+           
+             <form:hidden path="mode"/>
+            <form:hidden path="pjIdArray"/>
+             <form:hidden path="pstJob.pjId" id="pjId"/>
+             <form:hidden path="paging.pageNo" id="pageNo"/>
+              <form:hidden path="paging.pageSize" id="pageSize"/>
+              <form:hidden path="pageCount"/>
+           
             <div align="left">
             <strong>Job</strong>
             </div>
             <div align="left" style="padding: 10px 60px">
             	<span style="font-size: 13px;">เลขที่งาน</span> 
             	<span style="padding: 20px">
-            	<input type="text" style="height: 30px;width:80px"> 
+            	 <form:input path="pstJob.pjJobNo" cssStyle="height: 30;width:80px"/>
+            	<!-- <input type="text" style="height: 30px;width:80px">  -->
             	</span>  
 	    		<span style="font-size: 13px;">วันที่</span> 
-            	<span style="padding: 20px"><input type="text" style="height: 30px;width:150px"> </span>  
+            	<span style="padding: 20px">            	
+            	<!-- <input type="text" style="height: 30px;width:150px"> --> 
+            	<form:input path="pjCreatedTime" id="pjCreatedTime" cssStyle="height: 30;width:85px" readonly="true"/>
+            	
+            	</span>  
             </div>
              <div align="left" style="padding: 10px 60px">
             	<span style="font-size: 13px;">รหัสลูกค้า</span> 
             	<span style="padding: 20px">
-            	<input type="text" style="height: 30px;width:80px"> 
+            	<!-- <input type="text" style="height: 30px;width:80px">  -->
+            	 <form:input path="pstJob.pjCustomerNo" cssStyle="height: 30;width:80px"/>
             	</span>  
 	    		<span style="font-size: 13px;">ชื่อลูกค้า</span> 
             	<span style="padding: 20px">
-            	<input type="text" style="height: 30px;width:150px"> 
+            	<!-- <input type="text" style="height: 30px;width:150px">  -->
+            	 <form:input path="pstJob.pjCustomerName" cssStyle="height: 30;"/>
             	</span>  
             	<span style="font-size: 13px;">หน่วยงาน</span> 
-            	<span style="padding: 20px">
-            	<input type="text" style="height: 30px;width:150px"> 
+            	<span style="padding: 20px"> 
+	 			<form:input path="pstJob.pjCustomerDepartment" cssStyle="height: 30px;width:150px"/>
+            	<!-- <input type="text" style="height: 30px;width:150px">  -->
+            	 
             	</span>
             </div>
              <div align="left" style="padding: 10px 60px">
             	<span style="font-size: 13px;">คอนกรีตที่ใช้</span> 
-            	<span style="padding: 20px">
-            	<select id="mcaStatus" name="mcaStatus">
+            	<span style="padding: 20px"> 
+            	<form:select path="pstJob.pstConcrete.pconcreteId" cssStyle="width:100px">
+	    						      <form:option value="-1">---</form:option>
+	    					      	  <form:options itemValue="pconcreteId" itemLabel="pconcreteName" items="${pstConcretes}"/> 
+	    	    </form:select>	
+            	<!-- <select id="mcaStatus" name="mcaStatus">
 	    					      <option value="-1">-- เลือก --</option>
 	    					      <option value="1">1</option>
 	    					      <option value="2">2</option>
-	    		</select>
+	    		</select> -->
             	</span>  
 	    		<span style="font-size: 13px;">หมายเลขรถที่ใช้</span> 
 	    		<span style="padding: 20px">
-            	<input type="text" style="height: 30px;width:150px"/>  
+	    		 <form:input path="pstJob.prpNo" cssStyle="height: 30;width:80px"/>
+            	<!-- <input type="text" style="height: 30px;width:150px"/> -->  
             	</span>
             </div>
             <!-- 
@@ -101,15 +209,16 @@
 	    					</tr> 
 	    					</tbody></table> 
 	    					-->
-	    					</form> 
+	    					</form:form> 
 	    					<table border="0" width="100%" style="font-size: 13px">
 	    					<tbody><tr>
 	    					<td align="left" width="50%">
 	    					
-	    					<a class="btn btn-primary" onclick="loadDynamicPage('series/new')"><i class="icon-plus-sign icon-white"></i>&nbsp;Create</a>&nbsp;
-	    					<a class="btn btn-danger" onclick="doDeleteItems()"><i class="icon-trash icon-white"></i>&nbsp;Delete</a></td>
+	    					<a class="btn btn-primary" onclick="loadDynamicPage('job/new')"><i class="icon-plus-sign icon-white"></i>&nbsp;Create</a>&nbsp;
+	    					</td>
 	    					<td align="right" width="50%">  
-	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;<span id="pageElement"><select name="seriesPageSelect" id="seriesPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select></span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;<a class="btn btn-primary" onclick="doAction('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a></td>
+	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;<span id="pageElement">
+	    					<select name="seriesPageSelect" id="seriesPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select></span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;<a class="btn btn-primary" onclick="doAction('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a></td>
 	    					</tr>
 	    					</tbody></table>
 	    					<!-- 
@@ -122,7 +231,7 @@
 	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;<span id="pageElement"><select name="candidatePageSelect" id="candidatePageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select></span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;<a class="btn btn-primary" onclick="doSearch('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a></td>
 	    					</tr>
 	    					</tbody></table>  
-	    					 -->
+	    					 --> 
 		<table class="table table-striped table-bordered table-condensed" border="1" style="font-size: 12px">
         	<thead>
           		<tr> 
@@ -136,19 +245,31 @@
           		</tr>
         	</thead>
         	<tbody>  
+        	<c:if test="${not empty pstJobs}"> 
+        	 <c:forEach items="${pstJobs}" var="pstJob" varStatus="loop">  
           	<tr>  
-            	<td>3701</td>
-            	<td>20/12/2012</td> 
-            	<td>บมจ.ปูนซีเมนต์ นครหลวง</td>
-            	<td></td>
-            	<td>cpac</td>
-            	<td>192
+            	<td>&nbsp;${pstJob.pjJobNo}</td>
+            	
+            	<td>&nbsp;<fmt:formatDate pattern="dd/MM/yyyy" value="${pstJob.pjCreatedTime}"/></td> 
+            	<td>&nbsp;${pstJob.pjCustomerName}</td>
+            	<td>&nbsp;${pstJob.pjCustomerDepartment}</td>
+            	<td>&nbsp;${pstJob.pstConcrete.pconcreteName}</td>
+            	<td>xxx
             	</td> 
             	<td style="text-align: center;"> 
-            	 <i title="Edit" onclick="loadDynamicPage('series/item/15')" style="cursor: pointer;" class="icon-edit"></i>&nbsp;&nbsp;
-            	 <i title="Delete" onclick="confirmDelete('delete','15')" style="cursor: pointer;" class="icon-trash"></i>
+            	 <i title="Edit" onclick="loadDynamicPage('job/item/${pstJob.pjId}')" style="cursor: pointer;" class="icon-edit"></i>&nbsp;&nbsp;
+            	 <i title="Delete" onclick="confirmDelete('delete','${pstJob.pjId}')" style="cursor: pointer;" class="icon-trash"></i>
             	</td>
           	</tr> 
+          	</c:forEach>
+          	</c:if>
+          	<c:if test="${empty pstJobs}"> 
+          	<tr>
+          		<td colspan="7" style="text-align: center;">&nbsp;Not Found&nbsp;</td>
+          	</tr>
+          </c:if>
+          
+          	<%--
           	 <tr>  
             	<td>3701</td>
             	<td>20/12/2012</td> 
@@ -396,6 +517,7 @@
             	 <i title="Delete" onclick="confirmDelete('delete','15')" style="cursor: pointer;" class="icon-trash"></i>
             	</td>
           	</tr> 
+          	 --%>
         	</tbody>
       </table> 
       </fieldset> 

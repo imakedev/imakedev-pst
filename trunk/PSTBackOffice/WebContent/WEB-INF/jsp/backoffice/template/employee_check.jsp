@@ -151,18 +151,25 @@ function doAction(mode,id){
         	<c:if test="${not empty pstEmployeeWorkMappings}"> 
         	 <c:forEach items="${pstEmployeeWorkMappings}" var="pstEmployeeWorkMapping" varStatus="loop">  
           	<tr>  
-            	<td>${pstEmployeeWorkMapping.pstEmployee.peUid}</td>
+            	<td>${pstEmployeeWorkMapping.pstEmployee.peUid}  	 
+            	 <input type="hidden" name="peIds" value="${pstEmployeeWorkMapping.pstEmployee.peId}" />
+            	</td>
             	<td>${pstEmployeeWorkMapping.pstEmployee.pstTitle.ptName} ${pstEmployeeWorkMapping.pstEmployee.peFirstName} ${pstEmployeeWorkMapping.pstEmployee.peLastName}</td>
             	 
 	
             	<td>${pstEmployeeWorkMapping.pstEmployee.pstPosition.ppName}</td>
-            	<td>26</td>
+            	<td>${pstEmployeeWorkMapping.weekdayCollection}</td>
             	<td>
             <%-- 	<form:select path="prpNos" cssStyle="width:80px"> --%>
-            	<select style="width:80px">
+            	<select name="prpNos" style="width:80px">
             		<option value="-1">---</option>
             		 <c:forEach items="${pstRoadPumpNos}" var="pstRoadPumpNo" varStatus="loop1">  
-            		 	<option value="${pstRoadPumpNo.prpNo}">${pstRoadPumpNo.prpNo}</option>
+            		 	 <c:if test="${pstRoadPumpNo.prpNo==pstEmployeeWorkMapping.prpNo}">
+            		 	 	<option value="${pstRoadPumpNo.prpNo}" selected="selected">${pstRoadPumpNo.prpNo}</option>
+            		 	 </c:if>
+            		 	 <c:if test="${pstRoadPumpNo.prpNo!=pstEmployeeWorkMapping.prpNo}">
+            		 	 	<option value="${pstRoadPumpNo.prpNo}">${pstRoadPumpNo.prpNo}</option>
+            		 	 </c:if>
             		 </c:forEach>
     						  <%-- 	<form:option value="-1">---</form:option> 
     						 	<form:options items="${pstRoadPumpNos}" itemLabel="prpNo" itemValue="prpNo"></form:options>  --%>
@@ -170,10 +177,15 @@ function doAction(mode,id){
     			</select>
     						 </td>
             	<td>
-            	<select style="width:130px">
+            	<select  name="pesIds"  style="width:130px">
             		<option value="-1">---</option>
-            		 <c:forEach items="${pstEmployeeStatuses}" var="pstEmployeeStatus" varStatus="loop2">  
-            		 	<option value="${pstEmployeeStatus.pesId}">${pstEmployeeStatus.pesName}</option>
+            		 <c:forEach items="${pstEmployeeStatuses}" var="pstEmployeeStatus" varStatus="loop2"> 
+            		    <c:if test="${pstEmployeeStatus.pesId==pstEmployeeWorkMapping.pesId}">
+            		    	<option value="${pstEmployeeStatus.pesId}" selected="selected">${pstEmployeeStatus.pesName}</option>
+            		    </c:if> 
+            		 	 <c:if test="${pstEmployeeStatus.pesId!=pstEmployeeWorkMapping.pesId}">
+            		 	 	<option value="${pstEmployeeStatus.pesId}">${pstEmployeeStatus.pesName}</option>
+            		 	 </c:if>
             		 </c:forEach> 
     			</select>
     			
@@ -192,6 +204,6 @@ function doAction(mode,id){
           </c:if> 
         	</tbody>
       </table> 
-      <div align="center"><a class="btn btn-primary" onclick="doSearch('search','0')"><i class="icon-search icon-white"></i>&nbsp;Submit</a></div>
+      <div align="center"><a class="btn btn-primary" onclick="doAction('edit','0')">&nbsp;save&nbsp;</a></div>
       </form:form>
       </fieldset> 

@@ -90,8 +90,8 @@ function doAction(mode,id){
 		});
 }
 </script>
-<div id="dialog-confirmDelete" title="Delete Employee Status" style="display: none;background: ('images/ui-bg_highlight-soft_75_cccccc_1x100.png') repeat-x scroll 50% 50% rgb(204, 204, 204)">
-	Are you sure you want to delete Employee Status ?
+<div id="dialog-confirmDelete" title="Delete Employee" style="display: none;background: ('images/ui-bg_highlight-soft_75_cccccc_1x100.png') repeat-x scroll 50% 50% rgb(204, 204, 204)">
+	Are you sure you want to delete Employee ?
 </div>
   <div id="message_element" class="alert alert-${message_class}" style="display: none;padding-top:10px">
     <button class="close" data-dismiss="alert"><span style="font-size: 12px">x</span></button>
