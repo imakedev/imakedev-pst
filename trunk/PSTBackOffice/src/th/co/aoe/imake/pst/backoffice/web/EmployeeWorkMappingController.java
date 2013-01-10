@@ -43,6 +43,7 @@ public class EmployeeWorkMappingController {
 	        
 		 employeeWorkMappingForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 		 employeeWorkMappingForm.getPstEmployeeWorkMapping().setPagging(employeeWorkMappingForm.getPaging());
+		 employeeWorkMappingForm.getPstEmployeeWorkMapping().setPewmDateTime(new Date());
 	        VResultMessage vresultMessage = pstService.searchPstEmployeeWorkMapping(employeeWorkMappingForm.getPstEmployeeWorkMapping());
 	        logger.debug("vresultMessage="+vresultMessage);
 	        logger.debug("getResultListObj="+vresultMessage.getResultListObj());
@@ -63,6 +64,8 @@ public class EmployeeWorkMappingController {
 	    public String doSearch(HttpServletRequest request, @ModelAttribute(value="employeeWorkMappingForm") EmployeeWorkMappingForm employeeWorkMappingForm, BindingResult result, Model model)
 	    {
 	        String mode = employeeWorkMappingForm.getMode();
+	        String message = "";
+	        String  message_class="";
 	        /*if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE_ITEMS))
 	        {
 	        	employeeWorkMappingForm.getPstEmployeeWorkMapping().setIds(employeeWorkMappingForm.getPbdIdArray());
@@ -73,6 +76,7 @@ public class EmployeeWorkMappingController {
 	        	pstService.deletePstEmployeeWorkMapping(employeeWorkMappingForm.getPstEmployeeWorkMapping(),  ServiceConstant.PST_BREAK_DOWN_DELETE);
 	        	employeeWorkMappingForm.getPaging().setPageNo(1);
 	        }*/
+	      
 	          if(mode != null && mode.equals(IMakeDevUtils.MODE_DO_BACK))
 	        {
 	            if(model.containsAttribute("employeeWorkMappingForm"))
@@ -80,16 +84,28 @@ public class EmployeeWorkMappingController {
 	            else
 	            	employeeWorkMappingForm = new EmployeeWorkMappingForm();
 	        }
+	          employeeWorkMappingForm.getPstEmployeeWorkMapping().setPagging(employeeWorkMappingForm.getPaging());
+		        if(employeeWorkMappingForm != null && employeeWorkMappingForm.getPewmDateTime() != null
+		        		&& employeeWorkMappingForm.getPewmDateTime().length()>0)
+					try {
+						employeeWorkMappingForm.getPstEmployeeWorkMapping().setPewmDateTime(format1.parse(employeeWorkMappingForm.getPewmDateTime()));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		        
+	         if(mode.equals(IMakeDevUtils.MODE_EDIT))
+            { 
+	  	  employeeWorkMappingForm.getPstEmployeeWorkMapping().setPeIds(employeeWorkMappingForm.getPeIds());
+	  	  employeeWorkMappingForm.getPstEmployeeWorkMapping().setPrpNos(employeeWorkMappingForm.getPrpNos());
+	  	  employeeWorkMappingForm.getPstEmployeeWorkMapping().setPesIds(employeeWorkMappingForm.getPesIds());
+            	pstService.setPstEmployeeWorkMapping(employeeWorkMappingForm.getPstEmployeeWorkMapping());
+               // id = employeeWorkMappingForm.getPstEmployeeWorkMapping().getUpdateRecord();
+                message = "Update success !";
+                message_class="success";
+            }
 	        employeeWorkMappingForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
-	        employeeWorkMappingForm.getPstEmployeeWorkMapping().setPagging(employeeWorkMappingForm.getPaging());
-	        if(employeeWorkMappingForm != null && employeeWorkMappingForm.getPewmDateTime() != null
-	        		&& employeeWorkMappingForm.getPewmDateTime().length()>0)
-				try {
-					employeeWorkMappingForm.getPstEmployeeWorkMapping().setPewmDateTime(format1.parse(employeeWorkMappingForm.getPewmDateTime()));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+	        
 	        
 	        VResultMessage vresultMessage = pstService.searchPstEmployeeWorkMapping(employeeWorkMappingForm.getPstEmployeeWorkMapping());
 	       
@@ -99,7 +115,8 @@ public class EmployeeWorkMappingController {
 	        model.addAttribute("employeeWorkMappingForm", employeeWorkMappingForm);
 	        model.addAttribute("pstRoadPumpNos", pstService.listPstRoadPumpNo());
 	        model.addAttribute("pstEmployeeStatuses", pstService.listPstEmployeeStatuses()); 
-	        model.addAttribute("message", ""); 
+	        model.addAttribute("message", message); 
+	        model.addAttribute("message_class", message_class);
 	        return "backoffice/template/employee_check";
 	    }
 	  /*@RequestMapping(value={"/item/{maId}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
@@ -123,7 +140,9 @@ public class EmployeeWorkMappingController {
 	        String mode = employeeWorkMappingForm.getMode();
 	        String message = "";
 	        String  message_class="";
+	        mode="edit";
 	       // Long id = null;
+	       
 	       if(mode != null)
 	          /*  if(mode.equals(IMakeDevUtils.MODE_NEW))
 	            {
@@ -135,11 +154,20 @@ public class EmployeeWorkMappingController {
 	            } else*/
 	            if(mode.equals(IMakeDevUtils.MODE_EDIT))
 	            {
+	            	if(employeeWorkMappingForm != null && employeeWorkMappingForm.getPewmDateTime() != null
+			        		&& employeeWorkMappingForm.getPewmDateTime().length()>0)
+						try {
+							employeeWorkMappingForm.getPstEmployeeWorkMapping().setPewmDateTime(format1.parse(employeeWorkMappingForm.getPewmDateTime()));
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        
 	            	pstService.setPstEmployeeWorkMapping(employeeWorkMappingForm.getPstEmployeeWorkMapping());
 	               // id = employeeWorkMappingForm.getPstEmployeeWorkMapping().getUpdateRecord();
 	                message = "Update success !";
 	                message_class="success";
-	            }
+	            } 
 	        /*PstEmployeeWorkMapping pstEmployeeWorkMapping = pstService.findPstEmployeeWorkMappingById(id);
 	        employeeWorkMappingForm.setPstEmployeeWorkMapping(pstEmployeeWorkMapping);
 	        model.addAttribute("message", message);
