@@ -102,4 +102,21 @@
 		<property name="pstTitleService" ref="pstTitleService"></property>  
 		<property name="xstream" ref="xstream"></property>
 	</bean>
+	
+	<bean id="pstConcreteResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstConcreteResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstConcreteService" ref="pstConcreteService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>
+	
+	<bean id="pstJobResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstJobResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstJobService" ref="pstJobService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>
+	
 </beans>

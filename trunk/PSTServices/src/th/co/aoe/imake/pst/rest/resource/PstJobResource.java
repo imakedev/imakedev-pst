@@ -14,19 +14,22 @@ import org.springframework.beans.BeanUtils;
 
 import th.co.aoe.imake.pst.constant.ServiceConstant;
 import th.co.aoe.imake.pst.managers.PSTCommonService;
-import th.co.aoe.imake.pst.managers.PstBreakDownService;
+import th.co.aoe.imake.pst.managers.PstJobService;
 import th.co.aoe.imake.pst.xstream.common.Pagging;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
-public class PstBreakDownResource  extends BaseResource {
+public class PstJobResource  extends BaseResource {
+ 
 
-	private static final Logger logger = Logger.getLogger(ServiceConstant.LOG_APPENDER);  
+	private static final Logger logger = Logger.getLogger(ServiceConstant.LOG_APPENDER);
+	private static String[] ignore={"pstConcrete"};  
+	
 	private PSTCommonService pstCommonService;
-	private PstBreakDownService pstBreakDownService; 
+	private PstJobService pstJobService; 
 	private com.thoughtworks.xstream.XStream xstream; 
-	public PstBreakDownResource() {
+	public PstJobResource() {
 		super();
-		logger.debug("into constructor PstBreakDownResource");
+		logger.debug("into constructor PstJobResource");
 		// TODO Auto-generated constructor stub
 	}
 
@@ -47,8 +50,8 @@ public class PstBreakDownResource  extends BaseResource {
 		InputStream in = null;
 		try {
 			in = entity.getStream();
-			xstream.processAnnotations(th.co.aoe.imake.pst.xstream.PstBreakDown.class);// or xstream.autodetectAnnotations(true); (Auto-detect  Annotations)
-			th.co.aoe.imake.pst.xstream.PstBreakDown xbpsTerm = new th.co.aoe.imake.pst.xstream.PstBreakDown();
+			xstream.processAnnotations(th.co.aoe.imake.pst.xstream.PstJob.class);// or xstream.autodetectAnnotations(true); (Auto-detect  Annotations)
+			th.co.aoe.imake.pst.xstream.PstJob xbpsTerm = new th.co.aoe.imake.pst.xstream.PstJob();
 			Object ntcCalendarObj = xstream.fromXML(in);
 			if (ntcCalendarObj != null) {
 				//String className=ntcCalendarObj.getClass().toString();
@@ -57,43 +60,53 @@ public class PstBreakDownResource  extends BaseResource {
 				}else if(){
 					
 				}*/
-				xbpsTerm = (th.co.aoe.imake.pst.xstream.PstBreakDown) ntcCalendarObj;
+				xbpsTerm = (th.co.aoe.imake.pst.xstream.PstJob) ntcCalendarObj;
 				if (xbpsTerm != null) { 
 					if (xbpsTerm.getServiceName() != null
 							&& !xbpsTerm.getServiceName().equals("")) {
 						logger.debug(" BPS servicename = "
 								+ xbpsTerm.getServiceName());
 						String serviceName = xbpsTerm.getServiceName();
-						th.co.aoe.imake.pst.hibernate.bean.PstBreakDown bpsTerm = new th.co.aoe.imake.pst.hibernate.bean.PstBreakDown();
-						BeanUtils.copyProperties(xbpsTerm,bpsTerm); 
-						if(serviceName.equals(ServiceConstant.PST_BREAK_DOWN_FIND_BY_ID)){
-							Object obj= pstCommonService.findById(bpsTerm.getClass(), xbpsTerm.getPbdId());
+						th.co.aoe.imake.pst.hibernate.bean.PstJob bpsTerm = new th.co.aoe.imake.pst.hibernate.bean.PstJob();
+						BeanUtils.copyProperties(xbpsTerm,bpsTerm,ignore); 
+						if(xbpsTerm.getPstConcrete()!=null && xbpsTerm.getPstConcrete().getPconcreteId()!=null &&  xbpsTerm.getPstConcrete().getPconcreteId().intValue()!=-1){
+							th.co.aoe.imake.pst.hibernate.bean.PstConcrete pstConcrete = new th.co.aoe.imake.pst.hibernate.bean.PstConcrete();
+							BeanUtils.copyProperties(xbpsTerm.getPstConcrete(),pstConcrete); 
+							bpsTerm.setPstConcrete(pstConcrete);
+						}
+						if(serviceName.equals(ServiceConstant.PST_JOB_FIND_BY_ID)){
+							Object obj= pstCommonService.findById(bpsTerm.getClass(), xbpsTerm.getPjId());
 							if(obj!=null){
-								th.co.aoe.imake.pst.hibernate.bean.PstBreakDown pstBreakDown = (th.co.aoe.imake.pst.hibernate.bean.PstBreakDown)obj;
-								BeanUtils.copyProperties(pstBreakDown, xbpsTerm) ;
+								th.co.aoe.imake.pst.hibernate.bean.PstJob pstJob = (th.co.aoe.imake.pst.hibernate.bean.PstJob)obj;
+								BeanUtils.copyProperties(pstJob, xbpsTerm,ignore) ;
+								if(pstJob.getPstConcrete()!=null && pstJob.getPstConcrete().getPconcreteId()!=null ){
+									th.co.aoe.imake.pst.xstream.PstConcrete pstConcrete = new th.co.aoe.imake.pst.xstream.PstConcrete();
+									BeanUtils.copyProperties(pstJob.getPstConcrete(),pstConcrete); 
+									xbpsTerm.setPstConcrete(pstConcrete);
+								}
 							}
 						//logger.debug(" object return ="+ntcCalendarReturn);
 						VResultMessage vresultMessage = new VResultMessage();
 							if(xbpsTerm!=null){
-								List<th.co.aoe.imake.pst.xstream.PstBreakDown> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstBreakDown>(1);
+								List<th.co.aoe.imake.pst.xstream.PstJob> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstJob>(1);
 								xbpsTerm.setPagging(null);							 
 								xntcCalendars.add(xbpsTerm);
 								vresultMessage.setResultListObj(xntcCalendars);
 							}
 							return getRepresentation(entity, vresultMessage, xstream);
-						}else if(serviceName.equals(ServiceConstant.PST_BREAK_DOWN_SAVE)){
+						}else if(serviceName.equals(ServiceConstant.PST_JOB_SAVE)){
 							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
-							Long pbdId=0l;
-							pbdId=(Long) (pstCommonService.save(bpsTerm));
-							xbpsTerm.setPbdId(pbdId);
-							return returnUpdateRecord(entity,xbpsTerm,pbdId.intValue());
-						} else if(serviceName.equals(ServiceConstant.PST_BREAK_DOWN_UPDATE)){
+							Long pjId=0l;
+							pjId=(Long) (pstCommonService.save(bpsTerm));
+							xbpsTerm.setPjId(pjId);
+							return returnUpdateRecord(entity,xbpsTerm,pjId.intValue());
+						} else if(serviceName.equals(ServiceConstant.PST_JOB_UPDATE)){
 							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							int updateRecord=pstCommonService.update(bpsTerm);
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 							
 						}
-						else if(serviceName.equals(ServiceConstant.PST_BREAK_DOWN_ITEMS_DELETE)){
+						else if(serviceName.equals(ServiceConstant.PST_JOB_ITEMS_DELETE)){
 							/*int updateRecord=missAccountService.deleteMissAccount(bpsTerm);
 							returnUpdateRecord(entity,xbpsTerm,updateRecord);*/
 							
@@ -101,29 +114,29 @@ public class PstBreakDownResource  extends BaseResource {
 							//logger.debug("xbpsTerm.getMsIds()="+xbpsTerm.getMsIds());
 							int updateRecord=0;
 							for (int i = 0; i <ids.length; i++) {
-								th.co.aoe.imake.pst.hibernate.bean.PstBreakDown item = new th.co.aoe.imake.pst.hibernate.bean.PstBreakDown();
-								item.setPbdId(Long.parseLong(ids[i]));
+								th.co.aoe.imake.pst.hibernate.bean.PstJob item = new th.co.aoe.imake.pst.hibernate.bean.PstJob();
+								item.setPjId(Long.parseLong(ids[i]));
 								updateRecord=pstCommonService.delete(item);
 							}
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}
-						else if(serviceName.equals(ServiceConstant.PST_BREAK_DOWN_DELETE)){
+						else if(serviceName.equals(ServiceConstant.PST_JOB_DELETE)){
 								java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 								int updateRecord=pstCommonService.delete(bpsTerm);
 								return returnUpdateRecord(entity,xbpsTerm,updateRecord);
-						}else if(serviceName.equals(ServiceConstant.PST_BREAK_DOWN_SEARCH)){
+						}else if(serviceName.equals(ServiceConstant.PST_JOB_SEARCH)){
 							Pagging page = xbpsTerm.getPagging(); 
-							List result = (List) pstBreakDownService.searchPstBreakDown(bpsTerm, page);
+							List result = (List) pstJobService.searchPstJob(bpsTerm,xbpsTerm.getPrpNo(), page);
 							if (result != null && result.size() == 2) {
-								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstBreakDown> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstBreakDown>) result
+								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJob> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJob>) result
 										.get(0);
 								String faqs_size = (String) result.get(1);
 								VResultMessage vresultMessage = new VResultMessage();
-								List<th.co.aoe.imake.pst.xstream.PstBreakDown> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstBreakDown>();
+								List<th.co.aoe.imake.pst.xstream.PstJob> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstJob>();
 								if (faqs_size != null && !faqs_size.equals(""))
 									vresultMessage.setMaxRow(faqs_size);
 								if (ntcCalendars != null && ntcCalendars.size() > 0) {
-									xntcCalendars = getxPstBreakDownObject(ntcCalendars);
+									xntcCalendars = getxPstJobObject(ntcCalendars);
 								}
 								vresultMessage.setResultListObj(xntcCalendars);
 								return getRepresentation(entity, vresultMessage, xstream);
@@ -151,22 +164,27 @@ public class PstBreakDownResource  extends BaseResource {
 		return null;
 	
 	}
-	private Representation returnUpdateRecord(Representation entity,th.co.aoe.imake.pst.xstream.PstBreakDown xbpsTerm,int updateRecord){
+	private Representation returnUpdateRecord(Representation entity,th.co.aoe.imake.pst.xstream.PstJob xbpsTerm,int updateRecord){
 		VResultMessage vresultMessage = new VResultMessage();
-		List<th.co.aoe.imake.pst.xstream.PstBreakDown> xbpsTerms = new ArrayList<th.co.aoe.imake.pst.xstream.PstBreakDown>(1);
+		List<th.co.aoe.imake.pst.xstream.PstJob> xbpsTerms = new ArrayList<th.co.aoe.imake.pst.xstream.PstJob>(1);
 		xbpsTerm.setUpdateRecord(updateRecord);
 		xbpsTerms.add(xbpsTerm);
 		vresultMessage.setResultListObj(xbpsTerms);
 		//export(entity, vresultMessage, xstream);	
 		return getRepresentation(entity, vresultMessage, xstream);
 	}
-	private List<th.co.aoe.imake.pst.xstream.PstBreakDown> getxPstBreakDownObject(
-			java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstBreakDown> ntcCalendars) {
-		List<th.co.aoe.imake.pst.xstream.PstBreakDown> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstBreakDown>(
+	private List<th.co.aoe.imake.pst.xstream.PstJob> getxPstJobObject(
+			java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJob> ntcCalendars) {
+		List<th.co.aoe.imake.pst.xstream.PstJob> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstJob>(
 				ntcCalendars.size());
-		for (th.co.aoe.imake.pst.hibernate.bean.PstBreakDown missManual : ntcCalendars) {
-			th.co.aoe.imake.pst.xstream.PstBreakDown xmissManual =new th.co.aoe.imake.pst.xstream.PstBreakDown ();
-			BeanUtils.copyProperties(missManual, xmissManual);
+		for (th.co.aoe.imake.pst.hibernate.bean.PstJob missManual : ntcCalendars) {
+			th.co.aoe.imake.pst.xstream.PstJob xmissManual =new th.co.aoe.imake.pst.xstream.PstJob ();
+			BeanUtils.copyProperties(missManual, xmissManual,ignore);
+			if(missManual.getPstConcrete()!=null && missManual.getPstConcrete().getPconcreteId()!=null ){
+				th.co.aoe.imake.pst.xstream.PstConcrete pstConcrete = new th.co.aoe.imake.pst.xstream.PstConcrete();
+				BeanUtils.copyProperties(missManual.getPstConcrete(),pstConcrete); 
+				xmissManual.setPstConcrete(pstConcrete);
+			}
 			xmissManual.setPagging(null);
 			xntcCalendars.add(xmissManual);
 		}
@@ -175,44 +193,44 @@ public class PstBreakDownResource  extends BaseResource {
 	@Override
 	protected Representation get(Variant variant) throws ResourceException {
 		// TODO Auto-generated method stub
-		//System.out.println("sss");
-		th.co.aoe.imake.pst.xstream.PstBreakDown  xbpsTerm =new th.co.aoe.imake.pst.xstream.PstBreakDown();
-		th.co.aoe.imake.pst.hibernate.bean.PstBreakDown pstBreakDown =new  th.co.aoe.imake.pst.hibernate.bean.PstBreakDown();
-		xbpsTerm.setPbdId(1l);
-		Object obj= pstCommonService.findById(pstBreakDown.getClass(), xbpsTerm.getPbdId());
+		System.out.println("sss");
+		th.co.aoe.imake.pst.xstream.PstJob  xbpsTerm =new th.co.aoe.imake.pst.xstream.PstJob();
+		th.co.aoe.imake.pst.hibernate.bean.PstJob pstJob =new  th.co.aoe.imake.pst.hibernate.bean.PstJob();
+		xbpsTerm.setPjId(1l);
+		Object obj= pstCommonService.findById(pstJob.getClass(), xbpsTerm.getPjId());
 		if(obj!=null){
-			 pstBreakDown = (th.co.aoe.imake.pst.hibernate.bean.PstBreakDown)obj;
-			BeanUtils.copyProperties(pstBreakDown, xbpsTerm) ;
+			 pstJob = (th.co.aoe.imake.pst.hibernate.bean.PstJob)obj;
+			BeanUtils.copyProperties(pstJob, xbpsTerm,ignore) ;
 		}
 	//logger.debug(" object return ="+ntcCalendarReturn);
 	VResultMessage vresultMessage = new VResultMessage();
 		if(xbpsTerm!=null){
-			List<th.co.aoe.imake.pst.xstream.PstBreakDown> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstBreakDown>(1);
+			List<th.co.aoe.imake.pst.xstream.PstJob> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstJob>(1);
 			xbpsTerm.setPagging(null);							 
 			xntcCalendars.add(xbpsTerm);
 			vresultMessage.setResultListObj(xntcCalendars);
 		}
 		//save
-		//Long pbdId=(Long) (pstCommonService.save(pstBreakDown));
+		//Long pjId=(Long) (pstCommonService.save(pstJob));
 		
 		//update
-		/*pstBreakDown.setPbdUid("updated");
-		pstCommonService.update(pstBreakDown);*/
+		/*pstJob.setPbdUid("updated");
+		pstCommonService.update(pstJob);*/
 		
 		// delete
-		//pstCommonService.delete(pstBreakDown);
+		//pstCommonService.delete(pstJob);
 		return getRepresentation(null, vresultMessage, xstream);
 		// return null;
 	} 
 	
 
 
-	public PstBreakDownService getPstBreakDownService() {
-		return pstBreakDownService;
+	public PstJobService getPstJobService() {
+		return pstJobService;
 	}
 
-	public void setPstBreakDownService(PstBreakDownService pstBreakDownService) {
-		this.pstBreakDownService = pstBreakDownService;
+	public void setPstJobService(PstJobService pstJobService) {
+		this.pstJobService = pstJobService;
 	}
 
 	public PSTCommonService getPstCommonService() {
