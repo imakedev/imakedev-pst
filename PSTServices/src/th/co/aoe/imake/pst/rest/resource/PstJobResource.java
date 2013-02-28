@@ -141,6 +141,22 @@ public class PstJobResource  extends BaseResource {
 								vresultMessage.setResultListObj(xntcCalendars);
 								return getRepresentation(entity, vresultMessage, xstream);
 							}
+						}else if(serviceName.equals(ServiceConstant.PST_JOB_LIST_MASTER)){
+							 
+							List pstBreakDownList= getxPstBreakDownObject(pstCommonService.listObject(" select pstBreakDown from PstBreakDown pstBreakDown "));
+							List pstEmployeeList= getxPstEmployeeObject(pstCommonService.listObject(" select pstEmployee from PstEmployee pstEmployee "));
+							 
+							List pstCostList= getxPstCostObject(pstCommonService.listObject(" select pstCost from PstCost pstCost "));
+							
+							VResultMessage vresultMessage = new VResultMessage();
+							xbpsTerm.setPstBreakDownList(pstBreakDownList);
+							xbpsTerm.setPstEmployeeList(pstEmployeeList);
+							xbpsTerm.setPstCostList(pstCostList); 
+							List<th.co.aoe.imake.pst.xstream.PstJob> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstJob>();
+							xntcCalendars.add(xbpsTerm);
+							//logger.error("xbpsTerm-"+xbpsTerm);
+							vresultMessage.setResultListObj(xntcCalendars);
+							return getRepresentation(entity, vresultMessage, xstream);
 						}
 					} else {
 					}
@@ -222,7 +238,41 @@ public class PstJobResource  extends BaseResource {
 		return getRepresentation(null, vresultMessage, xstream);
 		// return null;
 	} 
-	
+	private List<th.co.aoe.imake.pst.xstream.PstBreakDown> getxPstBreakDownObject(
+			java.util.List<th.co.aoe.imake.pst.hibernate.bean.PstBreakDown> pstBreakDowns){
+		List<th.co.aoe.imake.pst.xstream.PstBreakDown> xpstBreakDowns = new ArrayList<th.co.aoe.imake.pst.xstream.PstBreakDown>(
+				pstBreakDowns.size());
+		for (th.co.aoe.imake.pst.hibernate.bean.PstBreakDown pstBreakDown : pstBreakDowns) {
+			th.co.aoe.imake.pst.xstream.PstBreakDown xpstBreakDown =new th.co.aoe.imake.pst.xstream.PstBreakDown ();
+			BeanUtils.copyProperties(pstBreakDown, xpstBreakDown);
+			xpstBreakDowns.add(xpstBreakDown);
+		}
+		return xpstBreakDowns;
+	}
+	private List<th.co.aoe.imake.pst.xstream.PstEmployee> getxPstEmployeeObject(
+			java.util.List<th.co.aoe.imake.pst.hibernate.bean.PstEmployee> pstEmployees){
+		List<th.co.aoe.imake.pst.xstream.PstEmployee> xpstEmployees = new ArrayList<th.co.aoe.imake.pst.xstream.PstEmployee>(
+				pstEmployees.size());
+		for (th.co.aoe.imake.pst.hibernate.bean.PstEmployee pstEmployee : pstEmployees) {
+			th.co.aoe.imake.pst.xstream.PstEmployee xpstEmployee =new th.co.aoe.imake.pst.xstream.PstEmployee (); 
+			pstEmployee.setPstPosition(null);
+			pstEmployee.setPstTitle(null);
+			BeanUtils.copyProperties(pstEmployee, xpstEmployee);
+			xpstEmployees.add(xpstEmployee);
+		}
+		return xpstEmployees;
+	}
+	private List<th.co.aoe.imake.pst.xstream.PstCost> getxPstCostObject(
+			java.util.List<th.co.aoe.imake.pst.hibernate.bean.PstCost> pstCosts){
+		List<th.co.aoe.imake.pst.xstream.PstCost> xpstCosts = new ArrayList<th.co.aoe.imake.pst.xstream.PstCost>(
+				pstCosts.size());
+		for (th.co.aoe.imake.pst.hibernate.bean.PstCost pstCost : pstCosts) {
+			th.co.aoe.imake.pst.xstream.PstCost xpstCost =new th.co.aoe.imake.pst.xstream.PstCost ();
+			BeanUtils.copyProperties(pstCost, xpstCost);
+			xpstCosts.add(xpstCost);
+		}
+		return xpstCosts;
+	}
 
 
 	public PstJobService getPstJobService() {
