@@ -151,5 +151,28 @@ public class ServiceConstant {
 		public static final String PST_JOB_ITEMS_DELETE ="deletePstJobItems";
 		public static final String PST_JOB_SEARCH = "searchPstJob";
 		public static final String PST_JOB_FIND_BY_ID = "findPstJobById";
+		public static final String PST_JOB_LIST_MASTER = "listMasterPstJob";
 		
+		//PST_JOB_PAY_EXT
+		public static final String PST_JOB_PAY_EXT_SAVE = "savePstJobPayExt"; 
+		public static final String PST_JOB_PAY_EXT_DELETE = "deletePstJobPayExt";
+		public static final String PST_JOB_PAY_EXT_SEARCH = "searchPstJobPayExt";
+		
+		//PST_JOB_PAY
+		public static final String PST_JOB_PAY_SAVE = "savePstJobPay"; 
+		public static final String PST_JOB_PAY_DELETE = "deletePstJobPay";
+		public static final String PST_JOB_PAY_SEARCH = "searchPstJobPay";
+		
+		//PST_JOB_EMPLOYEE
+		public static final String PST_JOB_EMPLOYEE_SAVE = "savePstJobEmployee"; 
+		public static final String PST_JOB_EMPLOYEE_DELETE = "deletePstJobEmployee";
+		public static final String PST_JOB_EMPLOYEE_SEARCH = "searchPstJobEmployee";
+		
+		//PST_JOB_WORK
+		public static final String PST_JOB_WORK_SAVE = "savePstJobWork"; 
+		public static final String PST_JOB_WORK_DELETE = "deletePstJobWork";
+		public static final String PST_JOB_WORK_SEARCH = "searchPstJobWork";
+		
+		public static final String PST_OBJECT_SEARCH = "searchObject";
+		public static final String PST_OBJECT_EXECUTE = "executeQuery";
 }
