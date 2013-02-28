@@ -91,6 +91,36 @@
 						<lookup-method name="create"
 							bean="pstJobResource" />
 					</bean>
+				</entry> 	 
+				<entry key="/pstJobWork">
+				 <bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create"
+							bean="pstJobWorkResource" />
+					</bean>
+				</entry>
+				<entry key="/pstJobEmployee">
+				 <bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create"
+							bean="pstJobEmployeeResource" />
+					</bean>
+				</entry>
+				<entry key="/pstJobPay">
+				 <bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create"
+							bean="pstJobPayResource" />
+					</bean>
+				</entry>
+				<entry key="/pstJobPayExt">
+				 <bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create"
+							bean="pstJobPayExtResource" />
+					</bean>
+				</entry>
+				<entry key="/pstObject">
+				 <bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create"
+							bean="pstObjectResource" />
+					</bean>
 				</entry>
 			</map>
 		</property>
