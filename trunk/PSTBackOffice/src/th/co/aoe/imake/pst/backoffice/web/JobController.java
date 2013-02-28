@@ -2,6 +2,8 @@ package th.co.aoe.imake.pst.backoffice.web;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import th.co.aoe.imake.pst.backoffice.form.JobForm;
@@ -21,6 +24,10 @@ import th.co.aoe.imake.pst.backoffice.service.PSTService;
 import th.co.aoe.imake.pst.backoffice.utils.IMakeDevUtils;
 import th.co.aoe.imake.pst.constant.ServiceConstant;
 import th.co.aoe.imake.pst.xstream.PstJob;
+import th.co.aoe.imake.pst.xstream.PstJobEmployee;
+import th.co.aoe.imake.pst.xstream.PstJobPay;
+import th.co.aoe.imake.pst.xstream.PstJobPayExt;
+import th.co.aoe.imake.pst.xstream.PstJobWork;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
 @Controller
@@ -116,6 +123,16 @@ public class JobController {
 	        model.addAttribute("display", "display: none");
 	        model.addAttribute("pstConcretes", pstService.listPstConcretes());
 	        model.addAttribute("pstRoadPumpNos", pstService.listPstRoadPumpNo());
+	        try{
+	        PstJob pstJobMaster= pstService.listJobMaster();
+	        //logger.info("xxx"+pstRoadPumpMaster);
+	        model.addAttribute("pstBreakDownList", pstJobMaster.getPstBreakDownList());
+	        model.addAttribute("pstCostList", pstJobMaster.getPstCostList());
+	        model.addAttribute("pstEmployeeList", pstJobMaster.getPstEmployeeList()); 
+	        System.out.println(" pstJobMaster.getPstEmployeeList()="+ pstJobMaster.getPstEmployeeList());
+	        }catch(Exception ex){
+	        	ex.printStackTrace();
+	        }
 	        return "backoffice/template/job_manaement";
 	    }
 	  @RequestMapping(value={"/action/{section}"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
@@ -184,10 +201,112 @@ public class JobController {
 	    {
 		  JobForm jobForm = new JobForm(); 
 		  jobForm.setMode(IMakeDevUtils.MODE_NEW);
-		  model.addAttribute("jobForm", jobForm);
+		    model.addAttribute("jobForm", jobForm);
 	        model.addAttribute("display", "display: none");   
 	        model.addAttribute("pstConcretes", pstService.listPstConcretes());
 	        model.addAttribute("pstRoadPumpNos", pstService.listPstRoadPumpNo());
+	        
+	        PstJob pstJob= pstService.listJobMaster();
+	        //logger.info("xxx"+pstRoadPumpMaster);
+	        model.addAttribute("pstBreakDownList", pstJob.getPstBreakDownList());
+	        model.addAttribute("pstCostList", pstJob.getPstCostList());
+	        model.addAttribute("pstEmployeeList", pstJob.getPstEmployeeList()); 
+	       
 	        return "backoffice/template/job_manaement";
 	    }
+	  //PST_JOB_PAY_EXT 
+	  @RequestMapping(value={"/payext_save/{part}"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+	  public @ResponseBody String payext(HttpServletRequest request, @PathVariable String part, @ModelAttribute(value="jobForm") JobForm jobForm, BindingResult result, Model model)
+	    {
+		 List payext=null;
+		 System.out.println("part="+part);
+		  if(part.equals("1")){
+			//  jobForm.getPstJobWork();
+			  jobForm.getPstJobWork().setPjId(jobForm.getPstJob().getPjId());
+			  pstService.savePstJobWork(jobForm.getPstJobWork());
+			 // payext= pstService.listPstJobWorks(jobForm.getPstJob().getPjId(), jobForm.getPstJobWork().getPrpId());
+		  }else if(part.equals("2")){
+			  jobForm.getPstJobEmployee().setPjId(jobForm.getPstJob().getPjId());
+			  pstService.savePstJobEmployee(jobForm.getPstJobEmployee());
+			  //payext=pstService.listPstJobEmployees(jobForm.getPstJob().getPjId(), jobForm.getPstJobEmployee().getPeId());
+			//  jobForm.getPstJobEmployee();
+		  }else if(part.equals("3")){
+			  //jobForm.getPstJobPay();
+			  jobForm.getPstJobPay().setPjId(jobForm.getPstJob().getPjId());
+			  pstService.savePstJobPay(jobForm.getPstJobPay());
+			 // payext=pstService.listPstJobPays(jobForm.getPstJob().getPjId(), jobForm.getPstJobPay().getPcId());
+		  }else if(part.equals("4")){
+			//  jobForm.getPstJobPayExt();
+			 // System.out.println("jobForm.getPstJob().getPjId()="+jobForm.getPstJob().getPjId());
+			  jobForm.getPstJobPayExt().setPjId(jobForm.getPstJob().getPjId());
+			   pstService.savePstJobPayExt(jobForm.getPstJobPayExt());
+			 /* System.out.println(pjpeNo);
+			  payext=pstService.listPstJobPayExts(jobForm.getPstJob().getPjId(), jobForm.getPstJobPayExt().getPjpeNo());
+			  System.out.println(payext);*/
+		  }
+		  return part; 
+	    }
+	  @RequestMapping(value={"/payext_get/{part}/{pjId}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+	  public @ResponseBody List getPayExt(HttpServletRequest request, @PathVariable String part,
+			  @PathVariable Long pjId,Model model)
+	  //,@ModelAttribute(value="jobForm") JobForm jobForm, BindingResult result, 
+	    {
+		 List returnResult=new ArrayList(2);
+		 List payext=null;
+		 System.out.println("part="+part);
+		  if(part.equals("1")){
+			//  jobForm.getPstJobWork();
+			  
+			  payext= pstService.listPstJobWorks(pjId, null);
+		  }else if(part.equals("2")){
+			  payext=pstService.listPstJobEmployees(pjId, null);
+			//  jobForm.getPstJobEmployee();
+		  }else if(part.equals("3")){
+			  //jobForm.getPstJobPay();
+			  payext=pstService.listPstJobPays(pjId, null);
+		  }else if(part.equals("4")){
+			//  jobForm.getPstJobPayExt();   
+			  payext=pstService.listPstJobPayExts(pjId, null);
+			 // System.out.println(payext);
+		  }
+		  returnResult.add(part);
+		  returnResult.add(payext);
+		  return returnResult; 
+	    }
+	  @RequestMapping(value={"/payext_delete/{part}/{pjId}/{id}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+	  public @ResponseBody List deletePayExt(HttpServletRequest request, @PathVariable String part,
+			  @PathVariable Long pjId,@PathVariable Long id,Model model)
+	  //,@ModelAttribute(value="jobForm") JobForm jobForm, BindingResult result, 
+	    {
+		 List returnResult=new ArrayList(2);
+		 List payext=null;
+		 System.out.println("part="+part);
+		  if(part.equals("1")){
+			//  jobForm.getPstJobWork();
+			  PstJobWork work=new PstJobWork(pjId, id, null,
+					  null,null,null, null,null, null, null, null); 
+			  pstService.deletePstJobWork(work, ServiceConstant.PST_JOB_WORK_DELETE);
+			  payext= pstService.listPstJobWorks(pjId, null);
+		  }else if(part.equals("2")){ 
+			  PstJobEmployee employee=new PstJobEmployee(pjId, id,null,null,null,null,null);
+			  pstService.deletePstJobEmployee(employee, ServiceConstant.PST_JOB_EMPLOYEE_DELETE);
+			  payext=pstService.listPstJobEmployees(pjId, null);
+			//  jobForm.getPstJobEmployee();
+		  }else if(part.equals("3")){
+			  //jobForm.getPstJobPay();
+			  PstJobPay jobpay=new PstJobPay(pjId, id, null, null, null);
+			  pstService.deletePstJobPay(jobpay, ServiceConstant.PST_JOB_PAY_DELETE);
+			  payext=pstService.listPstJobPays(pjId, null);
+		  }else if(part.equals("4")){
+			//  jobForm.getPstJobPayExt();   
+			  PstJobPayExt ext=new PstJobPayExt(pjId, id, null, null, null);
+			  pstService.deletePstJobPayExt(ext, ServiceConstant.PST_JOB_PAY_EXT_DELETE);
+			  payext=pstService.listPstJobPayExts(pjId, null);
+			 // System.out.println(payext);
+		  }
+		  returnResult.add(part);
+		  returnResult.add(payext);
+		  return returnResult; 
+	    }
+	  
 }
