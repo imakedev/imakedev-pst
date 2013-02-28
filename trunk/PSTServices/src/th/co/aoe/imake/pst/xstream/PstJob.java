@@ -3,6 +3,7 @@ package th.co.aoe.imake.pst.xstream;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import th.co.aoe.imake.pst.xstream.common.VServiceXML;
 
@@ -42,6 +43,16 @@ public class PstJob  extends VServiceXML implements Serializable {
 	private PstConcrete pstConcrete;
 	
 	private String prpNo;
+	
+	
+	@XStreamAlias("pstBreakDownList")
+	private List<PstBreakDown> pstBreakDownList;
+	
+	@XStreamAlias("pstEmployeeList")
+	private List<PstEmployee> pstEmployeeList;
+	
+	@XStreamAlias("pstCostList")
+	private List<PstCost> pstCostList; 
 
 	//bi-directional many-to-one association to PstJobEmployee
 	/*@OneToMany(mappedBy="pstJob")
@@ -179,6 +190,30 @@ public class PstJob  extends VServiceXML implements Serializable {
 
 	public void setPrpNo(String prpNo) {
 		this.prpNo = prpNo;
+	}
+
+	public List<PstBreakDown> getPstBreakDownList() {
+		return pstBreakDownList;
+	}
+
+	public void setPstBreakDownList(List<PstBreakDown> pstBreakDownList) {
+		this.pstBreakDownList = pstBreakDownList;
+	}
+
+	public List<PstEmployee> getPstEmployeeList() {
+		return pstEmployeeList;
+	}
+
+	public void setPstEmployeeList(List<PstEmployee> pstEmployeeList) {
+		this.pstEmployeeList = pstEmployeeList;
+	}
+
+	public List<PstCost> getPstCostList() {
+		return pstCostList;
+	}
+
+	public void setPstCostList(List<PstCost> pstCostList) {
+		this.pstCostList = pstCostList;
 	}
 
 	/*public List<PstJobEmployee> getPstJobEmployees() {
