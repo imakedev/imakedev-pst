@@ -13,6 +13,10 @@ import th.co.aoe.imake.pst.xstream.PstEmployee;
 import th.co.aoe.imake.pst.xstream.PstEmployeeStatus;
 import th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping;
 import th.co.aoe.imake.pst.xstream.PstJob;
+import th.co.aoe.imake.pst.xstream.PstJobEmployee;
+import th.co.aoe.imake.pst.xstream.PstJobPay;
+import th.co.aoe.imake.pst.xstream.PstJobPayExt;
+import th.co.aoe.imake.pst.xstream.PstJobWork;
 import th.co.aoe.imake.pst.xstream.PstRoadPump;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
@@ -98,5 +102,24 @@ public interface PSTService {
 	public abstract int deletePstJob(PstJob pstJob, String service);
 
 	public abstract PstJob findPstJobById(Long long1);
+	public abstract PstJob listJobMaster(); 
+	
+	public abstract List listPstJobWorks(Long pjId,Long prpId);
+	public abstract Long savePstJobWork(PstJobWork pstJobWork); 
+	public abstract int deletePstJobWork(PstJobWork pstJobWork, String service);
+	
+	public abstract List listPstJobEmployees( Long pjId, Long peId);
+	public abstract Long savePstJobEmployee(PstJobEmployee pstJobEmployee); 
+	public abstract int deletePstJobEmployee(PstJobEmployee pstJobEmployee, String service);
+	
+	public abstract List listPstJobPays(Long pjId,Long pcId);
+	public abstract Long savePstJobPay(PstJobPay pstJobPay); 
+	public abstract int deletePstJobPay(PstJobPay pstJobPay, String service);
+	
+	public abstract List listPstJobPayExts( Long pjId,Long pjpeNo);
+	public abstract Long savePstJobPayExt(PstJobPayExt pstJobPayExt); 
+	public abstract int deletePstJobPayExt(PstJobPayExt pstJobPayExt, String service);
+	public List searchObject(String query);
+	public int executeQuery(String[] query);
 	
 }

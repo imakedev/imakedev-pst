@@ -3,6 +3,10 @@ package th.co.aoe.imake.pst.backoffice.form;
 import java.io.Serializable;
 
 import th.co.aoe.imake.pst.xstream.PstJob;
+import th.co.aoe.imake.pst.xstream.PstJobEmployee;
+import th.co.aoe.imake.pst.xstream.PstJobPay;
+import th.co.aoe.imake.pst.xstream.PstJobPayExt;
+import th.co.aoe.imake.pst.xstream.PstJobWork;
 
 public class JobForm extends CommonForm implements Serializable {
 
@@ -14,9 +18,18 @@ public class JobForm extends CommonForm implements Serializable {
 	private String pjIdArray;
 	private String prpNo;
 	private String pjCreatedTime;
+	private PstJobPayExt pstJobPayExt;
+	private PstJobPay pstJobPay;
+	private PstJobEmployee pstJobEmployee;
+	private PstJobWork pstJobWork;
+	private String part;
 	public JobForm() {
 		//super();
 		this.pstJob = new PstJob();
+		this.pstJobPayExt=new PstJobPayExt();
+		this.pstJobPay =new PstJobPay();
+		this.pstJobEmployee =new PstJobEmployee();
+		this.pstJobWork =new PstJobWork();
 	}
 	public PstJob getPstJob() {
 		return pstJob;
@@ -41,6 +54,36 @@ public class JobForm extends CommonForm implements Serializable {
 	}
 	public void setPjCreatedTime(String pjCreatedTime) {
 		this.pjCreatedTime = pjCreatedTime;
+	}
+	public PstJobPayExt getPstJobPayExt() {
+		return pstJobPayExt;
+	}
+	public void setPstJobPayExt(PstJobPayExt pstJobPayExt) {
+		this.pstJobPayExt = pstJobPayExt;
+	}
+	public PstJobPay getPstJobPay() {
+		return pstJobPay;
+	}
+	public void setPstJobPay(PstJobPay pstJobPay) {
+		this.pstJobPay = pstJobPay;
+	}
+	public PstJobEmployee getPstJobEmployee() {
+		return pstJobEmployee;
+	}
+	public void setPstJobEmployee(PstJobEmployee pstJobEmployee) {
+		this.pstJobEmployee = pstJobEmployee;
+	}
+	public PstJobWork getPstJobWork() {
+		return pstJobWork;
+	}
+	public void setPstJobWork(PstJobWork pstJobWork) {
+		this.pstJobWork = pstJobWork;
+	}
+	public String getPart() {
+		return part;
+	}
+	public void setPart(String part) {
+		this.part = part;
 	}
 	
 	//pstEmployeeStatus=new PstEmployeeStatus();
