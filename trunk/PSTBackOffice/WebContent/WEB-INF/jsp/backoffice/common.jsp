@@ -54,9 +54,9 @@
 a{cursor: pointer;}
 </style>
 <style type="text/css"> 
-th{ font-family:Tahoma; font-size:12px; font-weight:bold;
+/* th{ font-family:Tahoma; font-size:12px; font-weight:bold;
  color: #fff;background:url(/MISSExamBackOffice/resources/images/tr_back-theme1.gif) repeat-x scroll 0 0 #80838A;padding: 5px 8px;border:1px solid #fff; 
-} 
+}  */
 </style> 
 <c:set var="aoeTest">
   <spring:message code='navigation_home'/>
@@ -67,6 +67,10 @@ var mail_toG;
 var mail_subjectG;
 var mail_messageG;
 var mail_attachG; 
+var intRegex = /^\d+$/;
+//var floatRegex = /^((\d+(\.\d *)?)|((\d*\.)?\d+))$/;
+var floatRegex = /^((\d+(\.\d *)?)|((\d*\.)?\d+)|(-\d+(\.\d *)?)|((-\d*\.)?\d+))$/;
+
 $(document).ready(function() {
 	$('#tabs').tabs();
 	$('#tabs > ul > li > a').css("width","70px"); 
@@ -232,8 +236,26 @@ function openMailDialog(todo_id,todo_ref){
                       <li id="breakdown_link"><a onclick="togle_page('breakdown/init','breakdown_link')">Break down</a></li>
                       <li id="costs_link"><a onclick="togle_page('costs/init','costs_link')">Costs</a></li>
                       <li id="roadpump_link"><a onclick="togle_page('roadpump/init','roadpump_link')">Road pump</a></li>
-                      <li id="maintenance_link"><a onclick="togle_page('maintenance/init','maintenance_link')">Maintenance</a></li>
-                      <li  id="report_link"><a onclick="togle_page('report/init','report_link')">Report</a></li>
+                      <!--  <li id="maintenance_link"><a onclick="togle_page('maintenance/init','maintenance_link')">Maintenance</a></li> -->
+                      <li class="dropdown"> 
+                      	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Maintenance<b class="caret"></b></a>
+                      	<ul class="dropdown-menu">
+                          <li><a href="javascript:void(0);"  onclick="togle_page('maintenance/page/maintenance_roadpump_search','maintenance_link')" style="text-align: left;">ตรวจสภาพรถ</a></li>
+                          <li><a href="javascript:void(0);" onclick="togle_page('maintenance/page/maintenance_dept_search','maintenance_link')"  style="text-align: left;">จัดการแผนก</a></li>
+                          <li><a href="javascript:void(0);" onclick="togle_page('maintenance/page/maintenance_jobtype_search','maintenance_link')"  style="text-align: left;">จัดการประเภทงาน</a></li>
+                          <li><a href="javascript:void(0);" onclick="togle_page('maintenance/page/maintenance_check_search','maintenance_link')"  style="text-align: left;">จัดการตรวจเช็ค</a></li>
+                         </ul>
+                      </li>
+                     <!--  <li  id="report_link"><a onclick="togle_page('report/init','report_link')">Report</a></li> -->
+                     <li class="dropdown"> 
+                      	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Report<b class="caret"></b></a>
+                      	<ul class="dropdown-menu">
+                          <li><a  href="javascript:void(0);" style="text-align: left;">ค่าคิวรถออกงานประจำวัน</a></li>
+                          <li><a  href="javascript:void(0);" style="text-align: left;">รายงานการออกงานประจำวัน</a></li>
+                          <li><a  href="javascript:void(0);" style="text-align: left;">สถิติเบรคดาวน์ประจำเดือน</a></li>
+                          <li><a  href="javascript:void(0);" style="text-align: left;">รายงานสรุปค่าคิวออกงานประจำเดือน</a></li>
+                         </ul>
+                      </li>
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">นาย สมชาย รักงาน<b class="caret"></b></a>
                         <ul class="dropdown-menu">
