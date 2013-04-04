@@ -18,8 +18,20 @@ function goBackEmployeeStatus(){
 			  }
 		});
 }
+ 
 function doEmployeeStatusAction(action,mode,id){
-	   
+	var pesName=jQuery.trim($("#pesName").val());
+	if(pesName.length==0){
+		 alert('กรุณากรอก คำอธิบาย');  
+		 $("#pesName").focus();
+	        return false;
+	    } 
+	var pesWageRate=jQuery.trim($("#pesWageRate").val());
+	 if(!(intRegex.test(pesWageRate) || floatRegex.test(pesWageRate))) {
+	        alert('Please fill Number !!!');  
+	        $("#pesWageRate").focus();
+	        return false;
+	     }
 	var target="employeeStatus"; 
  	$.post(target+"/action/employeestatus",$("#employeeStatusForm").serialize(), function(data) {
 		  // alert(data);

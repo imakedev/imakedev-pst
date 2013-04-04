@@ -1,8 +1,10 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ include file="/WEB-INF/jsp/includes.jsp" %>
+
 <style>
 .ui-datepicker-trigger{cursor: pointer;}
 </style>
+ 
 <script>
 $(document).ready(function() {
 	renderPageSelect();
@@ -87,6 +89,26 @@ function doAction(mode,id){
 		  // alert($("#_content").html());
 		});
 }
+function test(){
+	var query="SELECT * FROM "+SCHEMA_G+".PST_BRAND";
+	PSTAjax.searchObject(query,{ 
+		callback:function(data){
+			alert(data); 
+			if(data!=null && data.length>0){
+				
+			}
+		}
+	});
+/* 	PSTAjax.executeQuery(query,{
+		callback:function(data){ 
+			if(data!=0){
+				distplayKPI(); 
+				$( "#dialog-form" ).dialog("close");
+			}
+		}
+	}); */
+	   
+}
 </script>
  <div id="message_element" class="alert alert-${message_class}" style="display: none;padding-top:10px">
     <button class="close" data-dismiss="alert"><span style="font-size: 12px">x</span></button>
@@ -127,7 +149,8 @@ function doAction(mode,id){
 	    					<tbody><tr>
 	    					<td align="left" width="50%">  
 	    					<a class="btn btn-info" onclick="loadDynamicPage('employee/init')"><i class="icon-circle-arrow-up icon-white"></i>&nbsp;Manage Employee</a>&nbsp;
-	    					<a class="btn btn-info" onclick="loadDynamicPage('employeeStatus/init')"><i class="icon-circle-arrow-up icon-white"></i>&nbsp;Manage Status</a>&nbsp; 
+	    					<a class="btn btn-info" onclick="loadDynamicPage('employeeStatus/init')"><i class="icon-circle-arrow-up icon-white"></i>&nbsp;Manage Status</a>&nbsp;
+	    				  <!-- <a class="btn btn-info" onclick="test()"><i class="icon-circle-arrow-up icon-white"></i>&nbsp;Ajax</a>&nbsp; -->
 	    					</td><td align="right" width="50%"> 
 	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;
 	    					<span id="pageElement">

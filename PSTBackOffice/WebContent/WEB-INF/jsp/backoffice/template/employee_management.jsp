@@ -19,7 +19,12 @@ function goBackEmployee(){
 		});
 }
 function doEmployeeAction(action,mode,id){
-	   
+	var peWage=jQuery.trim($("#peWage").val());
+	 if(!(intRegex.test(peWage) || floatRegex.test(peWage))) {
+	        alert('Please fill Number !!!');  
+	        $("#peWage").focus();
+	        return false;
+	     }
 	var target="employee"; 
  	$.post(target+"/action/employee",$("#employeeForm").serialize(), function(data) {
 		  // alert(data);
