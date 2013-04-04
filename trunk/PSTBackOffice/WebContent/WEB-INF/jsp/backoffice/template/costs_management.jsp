@@ -19,7 +19,30 @@ function goBackCost(){
 		});
 }
 function doCostAction(action,mode,id){
-	   
+	var pcUid=jQuery.trim($("#pcUid").val());
+	if(pcUid.length==0){
+		 alert('กรุณากรอก รหัสรายการ');  
+		 $("#pcUid").focus();
+	        return false;
+	    } 
+	var pcName=jQuery.trim($("#pcName").val());
+	if(pcName.length==0){
+		 alert('กรุณากรอก รายละเอียด');  
+		 $("#pcName").focus();
+	        return false;
+	    } 
+	var pcAmount=jQuery.trim($("#pcAmount").val());
+	 if(!(intRegex.test(pcAmount) || floatRegex.test(pcAmount))) {
+	        alert('Please fill Number !!!'); 
+	        $("#pcAmount").focus();
+	        return false;
+	     } 
+	var pcUnit=jQuery.trim($("#pcUnit").val());
+	if(pcUnit.length==0){
+		 alert('กรุณากรอก หน่วย');  
+		 $("#pcUnit").focus();
+	        return false;
+	    } 
 	var target="costs"; 
  	$.post(target+"/action/cost",$("#costForm").serialize(), function(data) {
 		  // alert(data);

@@ -19,7 +19,18 @@ function goBackBreakdown(){
 		});
 }
 function doBreakdownAction(action,mode,id){
-	   
+	var pbdUid=jQuery.trim($("#pbdUid").val());
+	if(pbdUid.length==0){
+		 alert('กรุณากรอก รหัสรายการ');  
+		 $("#pbdUid").focus();
+	        return false;
+	    } 
+	var pbdName=jQuery.trim($("#pbdName").val());
+	if(pbdName.length==0){
+		 alert('กรุณากรอก รายละเอียด');  
+		 $("#pbdName").focus();
+	        return false;
+	    } 
 	var target="breakdown"; 
  	$.post(target+"/action/breakdown",$("#breakdownForm").serialize(), function(data) {
 		  // alert(data);
