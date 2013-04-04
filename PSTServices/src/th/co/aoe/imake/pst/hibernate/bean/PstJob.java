@@ -1,6 +1,7 @@
 package th.co.aoe.imake.pst.hibernate.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -53,6 +54,9 @@ public class PstJob implements Serializable {
 
 	@Column(name="PJ_UPDATED_TIME")
 	private Date pjUpdatedTime;
+	
+	@Column(name="PJ_CUBIC_AMOUNT")
+	private BigDecimal pjCubicAmount;
 
 	//bi-directional many-to-one association to PstConcrete
 	@ManyToOne
@@ -164,6 +168,14 @@ public class PstJob implements Serializable {
 
 	public void setPjRemark(String pjRemark) {
 		this.pjRemark = pjRemark;
+	}
+
+	public BigDecimal getPjCubicAmount() {
+		return pjCubicAmount;
+	}
+
+	public void setPjCubicAmount(BigDecimal pjCubicAmount) {
+		this.pjCubicAmount = pjCubicAmount;
 	}
 
 	/*public List<PstJobEmployee> getPstJobEmployees() {
