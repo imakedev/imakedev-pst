@@ -1,6 +1,7 @@
 package th.co.aoe.imake.pst.xstream;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +38,7 @@ public class PstJob  extends VServiceXML implements Serializable {
 	private String pjRemark;
 	
 	private Date pjUpdatedTime;
+	private BigDecimal pjCubicAmount;
 
 	//bi-directional many-to-one association to PstConcrete
 	@XStreamAlias("pstConcrete")
@@ -71,12 +73,11 @@ public class PstJob  extends VServiceXML implements Serializable {
 	private PstJobWork pstJobWork;*/
 
 	public PstJob() {
-	}
-
+	} 
 	public PstJob(Long pjId, String pjContractMobileNo, String pjContractName,
 			Timestamp pjCreatedTime, String pjCustomerDepartment,
 			String pjCustomerName, String pjCustomerNo, String pjJobNo,
-			Timestamp pjUpdatedTime, PstConcrete pstConcrete,String pjRemark
+			Timestamp pjUpdatedTime, PstConcrete pstConcrete,String pjRemark,BigDecimal pjCubicAmount
 			//PstJobPay pstJobPay, PstJobPayExt pstJobPayExt,
 			//PstJobWork pstJobWork
 			) {
@@ -92,6 +93,7 @@ public class PstJob  extends VServiceXML implements Serializable {
 		this.pjUpdatedTime = pjUpdatedTime;
 		this.pstConcrete = pstConcrete;
 		this.pjRemark = pjRemark;
+		this.pjCubicAmount=pjCubicAmount;
 		/*this.pstJobPayExt = pstJobPayExt;
 		this.pstJobWork = pstJobWork;*/
 	}
@@ -214,6 +216,12 @@ public class PstJob  extends VServiceXML implements Serializable {
 
 	public void setPstCostList(List<PstCost> pstCostList) {
 		this.pstCostList = pstCostList;
+	}
+	public BigDecimal getPjCubicAmount() {
+		return pjCubicAmount;
+	}
+	public void setPjCubicAmount(BigDecimal pjCubicAmount) {
+		this.pjCubicAmount = pjCubicAmount;
 	}
 
 	/*public List<PstJobEmployee> getPstJobEmployees() {
