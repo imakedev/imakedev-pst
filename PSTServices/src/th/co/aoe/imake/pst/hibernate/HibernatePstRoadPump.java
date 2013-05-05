@@ -123,6 +123,7 @@ public class HibernatePstRoadPump  extends HibernateCommon implements PstRoadPum
 			}
 			return transList;
 		}
+	 @SuppressWarnings("rawtypes")
 	@Override
 	public List listPstRoadPumpNo() {
 		// TODO Auto-generated method stub

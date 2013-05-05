@@ -3,7 +3,6 @@ package th.co.aoe.imake.pst.rest.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -102,13 +101,13 @@ public class PstEmployeeResource  extends BaseResource {
 							}
 							return getRepresentation(entity, vresultMessage, xstream);
 						}else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_SAVE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							Long peId=0l;
 							peId=(Long) (pstCommonService.save(bpsTerm));
 							xbpsTerm.setPeId(peId);
 							return returnUpdateRecord(entity,xbpsTerm,peId.intValue());
 						} else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_UPDATE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+						//	java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							if(!(bpsTerm.getPstPosition()!=null && bpsTerm.getPstPosition().getPpId()!=null && bpsTerm.getPstPosition().getPpId().intValue()!=-1))
 								bpsTerm.setPstPosition(null);
 							if(!(bpsTerm.getPstTitle()!=null && bpsTerm.getPstTitle().getPtId()!=null && bpsTerm.getPstTitle().getPtId().intValue()!=-1))
@@ -133,14 +132,15 @@ public class PstEmployeeResource  extends BaseResource {
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}
 						else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_DELETE)){
-								java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+								//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 								int updateRecord=pstCommonService.delete(bpsTerm);
 								return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_SEARCH)){
 							Pagging page = xbpsTerm.getPagging(); 
-							
+							@SuppressWarnings("rawtypes")
 							List result = (List) pstEmployeeService.searchPstEmployee(bpsTerm, page);
 							if (result != null && result.size() == 2) {
+								@SuppressWarnings("unchecked")
 								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstEmployee> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstEmployee>) result
 										.get(0);
 								String faqs_size = (String) result.get(1);

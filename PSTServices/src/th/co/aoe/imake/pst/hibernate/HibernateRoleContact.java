@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -73,22 +72,9 @@ public class HibernateRoleContact  extends HibernateCommon implements RoleContac
 	
 	
 
-	private int getSize(Session session, RoleContact instance) throws Exception{
+	/*private int getSize(Session session, RoleContact instance) throws Exception{
 		try {
-			/*Long msId=(instance.getMissSery()!=null && instance.getMissSery().getMsId()!=null 
-					 && instance.getMissSery().getMsId().intValue()!=0 )?(instance.getMissSery().getMsId()):null;
-		
-		
-			StringBuffer sb =new StringBuffer(" select count(roleContact) from RoleContact roleContact ");
-			
-			boolean iscriteria = false;
-			if(msId !=null && msId.intValue()!=0){  
-				//criteria.add(Expression.eq("mcaStatus", mcaStatus));	
-				 sb.append(iscriteria?(" and roleContact.missSery.msId="+msId.intValue()+""):(" where roleContact.missSery.msId="+msId.intValue()+""));
-				  iscriteria = true;
-			}
-			Query query =session.createQuery(sb.toString());
-				 return ((Long)query.uniqueResult()).intValue(); */
+			 
 			return 0;
 				 
 		 
@@ -99,8 +85,8 @@ public class HibernateRoleContact  extends HibernateCommon implements RoleContac
 			logger.error("Exception",e);
 			throw e;
 		}
-	}
-	 @SuppressWarnings({ "rawtypes", "unchecked" })
+	}*/
+	 @SuppressWarnings({ "rawtypes"})
 	 @Transactional(readOnly=true)
 	 public List searchRoleContact(RoleContact instance,Pagging pagging) throws DataAccessException {
 			ArrayList  transList = new ArrayList ();
@@ -190,12 +176,14 @@ public class HibernateRoleContact  extends HibernateCommon implements RoleContac
 		// TODO Auto-generated method stub
 		return delete(sessionAnnotationFactory.getCurrentSession(), persistentInstance);
 	}
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List listRoleContactBymaId(Long maId) throws DataAccessException {
 		// TODO Auto-generated method stub
 		Session session=sessionAnnotationFactory.getCurrentSession(); 
 			Query query=session.createQuery(" select roleContact from RoleContact roleContact where roleContact.maId=:maId");
 			query.setParameter("maId", maId);
+			@SuppressWarnings("unchecked")
 			List<th.co.aoe.imake.pst.hibernate.bean.RoleContact> list=query.list();
 			List<th.co.aoe.imake.pst.xstream.RoleContact> roles=new ArrayList<th.co.aoe.imake.pst.xstream.RoleContact>(list.size());
 			for (th.co.aoe.imake.pst.hibernate.bean.RoleContact type : list) {

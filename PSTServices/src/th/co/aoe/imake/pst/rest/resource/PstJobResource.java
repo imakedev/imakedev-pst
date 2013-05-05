@@ -3,7 +3,6 @@ package th.co.aoe.imake.pst.rest.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -40,6 +39,7 @@ public class PstJobResource  extends BaseResource {
 		logger.debug("into doInit");
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected Representation post(Representation entity, Variant variant)
 			throws ResourceException {
@@ -95,13 +95,13 @@ public class PstJobResource  extends BaseResource {
 							}
 							return getRepresentation(entity, vresultMessage, xstream);
 						}else if(serviceName.equals(ServiceConstant.PST_JOB_SAVE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+						//	java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							Long pjId=0l;
 							pjId=(Long) (pstCommonService.save(bpsTerm));
 							xbpsTerm.setPjId(pjId);
 							return returnUpdateRecord(entity,xbpsTerm,pjId.intValue());
 						} else if(serviceName.equals(ServiceConstant.PST_JOB_UPDATE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							int updateRecord=pstCommonService.update(bpsTerm);
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 							
@@ -121,13 +121,14 @@ public class PstJobResource  extends BaseResource {
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}
 						else if(serviceName.equals(ServiceConstant.PST_JOB_DELETE)){
-								java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//	java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 								int updateRecord=pstCommonService.delete(bpsTerm);
 								return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}else if(serviceName.equals(ServiceConstant.PST_JOB_SEARCH)){
 							Pagging page = xbpsTerm.getPagging(); 
+							@SuppressWarnings("rawtypes")
 							List result = (List) pstJobService.searchPstJob(bpsTerm,xbpsTerm.getPrpNo(), page);
-							if (result != null && result.size() == 2) {
+							if (result != null && result.size() == 2) { 
 								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJob> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJob>) result
 										.get(0);
 								String faqs_size = (String) result.get(1);
@@ -142,10 +143,11 @@ public class PstJobResource  extends BaseResource {
 								return getRepresentation(entity, vresultMessage, xstream);
 							}
 						}else if(serviceName.equals(ServiceConstant.PST_JOB_LIST_MASTER)){
-							 
+							@SuppressWarnings({ "rawtypes"})
 							List pstBreakDownList= getxPstBreakDownObject(pstCommonService.listObject(" select pstBreakDown from PstBreakDown pstBreakDown "));
+							@SuppressWarnings({ "rawtypes"})
 							List pstEmployeeList= getxPstEmployeeObject(pstCommonService.listObject(" select pstEmployee from PstEmployee pstEmployee "));
-							 
+							@SuppressWarnings({ "rawtypes"})
 							List pstCostList= getxPstCostObject(pstCommonService.listObject(" select pstCost from PstCost pstCost "));
 							
 							VResultMessage vresultMessage = new VResultMessage();

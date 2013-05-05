@@ -37,7 +37,7 @@ public class HibernatePstEmployeeStatus  extends HibernateCommon implements PstE
 			
 			StringBuffer sb =new StringBuffer(" select count(pstEmployeeStatus) from PstEmployeeStatus pstEmployeeStatus ");
 			
-			boolean iscriteria = false;
+			//boolean iscriteria = false;
 			
 			/*if(pcUid !=null && pcUid.trim().length()> 0){  
 				//criteria.add(Expression.eq("megId", megId));	
@@ -108,6 +108,7 @@ public class HibernatePstEmployeeStatus  extends HibernateCommon implements PstE
 			}
 			return transList;
 		}
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List listPstEmployeeStatuses() {
 		// TODO Auto-generated method stub
@@ -116,8 +117,7 @@ public class HibernatePstEmployeeStatus  extends HibernateCommon implements PstE
 			Query query = null;
 			StringBuffer sb =new StringBuffer(" select pstEmployeeStatus from PstEmployeeStatus pstEmployeeStatus ");
 			 query =session.createQuery(sb.toString());
-			// set pagging.
-			 
+			// set pagging. 
 			 List l = query.list();   
 			return l;
 		} catch (Exception re) {

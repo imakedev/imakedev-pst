@@ -2,7 +2,6 @@ package th.co.aoe.imake.pst.hibernate;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,13 +10,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import th.co.aoe.imake.pst.constant.ServiceConstant;
 import th.co.aoe.imake.pst.managers.PstObjectService;
 @Repository
 @Transactional
 public class HibernatePstObject extends HibernateCommon implements PstObjectService {
 
-	private static final Logger logger = Logger.getLogger(ServiceConstant.LOG_APPENDER);
+//	private static final Logger logger = Logger.getLogger(ServiceConstant.LOG_APPENDER);
 	private SessionFactory sessionAnnotationFactory;
 	public SessionFactory getSessionAnnotationFactory() {
 		return sessionAnnotationFactory;
@@ -25,6 +23,7 @@ public class HibernatePstObject extends HibernateCommon implements PstObjectServ
 	public void setSessionAnnotationFactory(SessionFactory sessionAnnotationFactory) {
 		this.sessionAnnotationFactory = sessionAnnotationFactory;
 	}
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List searchObject(String query) throws DataAccessException {
 		// TODO Auto-generated method stub

@@ -3,7 +3,6 @@ package th.co.aoe.imake.pst.rest.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -15,7 +14,6 @@ import org.springframework.beans.BeanUtils;
 import th.co.aoe.imake.pst.constant.ServiceConstant;
 import th.co.aoe.imake.pst.managers.PSTCommonService;
 import th.co.aoe.imake.pst.managers.PstJobWorkService;
-import th.co.aoe.imake.pst.xstream.common.Pagging;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
 public class PstJobWorkResource  extends BaseResource {
@@ -76,7 +74,7 @@ public class PstJobWorkResource  extends BaseResource {
 					
 
 						if(serviceName.equals(ServiceConstant.PST_JOB_WORK_SAVE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							th.co.aoe.imake.pst.hibernate.bean.PstJobWorkPK  returnId=null;
 							returnId=(th.co.aoe.imake.pst.hibernate.bean.PstJobWorkPK) (pstCommonService.save(bpsTerm));
 							//xbpsTerm.setPesId(pesId);
@@ -84,14 +82,15 @@ public class PstJobWorkResource  extends BaseResource {
 							return returnUpdateRecord(entity,xbpsTerm,returnId.getPrpId().intValue());
 						} 
 						else if(serviceName.equals(ServiceConstant.PST_JOB_WORK_DELETE)){
-								java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//	java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 								int updateRecord=pstCommonService.delete(bpsTerm);
 								return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}else if(serviceName.equals(ServiceConstant.PST_JOB_WORK_SEARCH)){
-							Pagging page = xbpsTerm.getPagging(); 
-							
+							//Pagging page = xbpsTerm.getPagging(); 
+							@SuppressWarnings({ "rawtypes" })
 							List result = (List) pstJobWorkService.listPstJobWorks(xbpsTerm.getPjId(), xbpsTerm.getPrpId());
 					 
+								@SuppressWarnings("unchecked")
 								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJobWork> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJobWork>) result;
 										 
 								VResultMessage vresultMessage = new VResultMessage();

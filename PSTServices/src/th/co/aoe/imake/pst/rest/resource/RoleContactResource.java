@@ -3,7 +3,6 @@ package th.co.aoe.imake.pst.rest.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -89,7 +88,7 @@ public class RoleContactResource extends BaseResource {
 							return getRepresentation(entity, vresultMessage, xstream);
 						} 
 						if(serviceName.equals(ServiceConstant.ROLE_CONTACT_SAVE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+						//	java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							Long rcId=0l;
 							
 							rcId=(roleContactService.saveRoleContact(bpsTerm));
@@ -98,7 +97,7 @@ public class RoleContactResource extends BaseResource {
 							return returnUpdateRecord(entity,xbpsTerm,rcId.intValue());
 						}
 						else if(serviceName.equals(ServiceConstant.ROLE_CONTACT_UPDATE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							int updateRecord=roleContactService.updateRoleContact(bpsTerm);
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}
@@ -115,6 +114,7 @@ public class RoleContactResource extends BaseResource {
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}*/
 						else if(serviceName.equals(ServiceConstant.ROLE_CONTACT_LIST_BY_MA_ID)){
+							@SuppressWarnings("unchecked")
 							List<th.co.aoe.imake.pst.xstream.RoleContact> xntcCalendars = roleContactService.listRoleContactBymaId(xbpsTerm.getMaId());
 							
 							VResultMessage vresultMessage = new VResultMessage();
@@ -128,8 +128,10 @@ public class RoleContactResource extends BaseResource {
 						}
 						else if(serviceName.equals(ServiceConstant.ROLE_CONTACT_SEARCH)){
 							Pagging page = xbpsTerm.getPagging(); 
+							@SuppressWarnings({ "rawtypes" })
 							List result = (List) roleContactService.searchRoleContact(bpsTerm,page);
 							if (result != null && result.size() == 2) {
+								@SuppressWarnings("unchecked")
 								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.RoleContact> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.RoleContact>) result
 										.get(0);
 								String faqs_size = (String) result.get(1);
@@ -179,10 +181,12 @@ public class RoleContactResource extends BaseResource {
 		Pagging page =new Pagging(); 
 		th.co.aoe.imake.pst.hibernate.bean.RoleContact bpsTerm = new th.co.aoe.imake.pst.hibernate.bean.RoleContact();
 		//bpsTerm.setMegName("Aoe");
+		@SuppressWarnings({ "rawtypes" })
 		List result = (List) roleContactService.searchRoleContact(bpsTerm,page);
 		VResultMessage vresultMessage = new VResultMessage();
 		List<th.co.aoe.imake.pst.xstream.RoleContact> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.RoleContact>();
 		if (result != null && result.size() == 2) {
+			@SuppressWarnings("unchecked")
 			java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.RoleContact> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.RoleContact>) result
 					.get(0);
 			String faqs_size = (String) result.get(1);

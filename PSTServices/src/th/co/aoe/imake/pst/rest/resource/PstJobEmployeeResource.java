@@ -3,7 +3,6 @@ package th.co.aoe.imake.pst.rest.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -15,7 +14,6 @@ import org.springframework.beans.BeanUtils;
 import th.co.aoe.imake.pst.constant.ServiceConstant;
 import th.co.aoe.imake.pst.managers.PSTCommonService;
 import th.co.aoe.imake.pst.managers.PstJobEmployeeService;
-import th.co.aoe.imake.pst.xstream.common.Pagging;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
 public class PstJobEmployeeResource  extends BaseResource {
@@ -72,21 +70,22 @@ public class PstJobEmployeeResource  extends BaseResource {
 					
 
 						if(serviceName.equals(ServiceConstant.PST_JOB_EMPLOYEE_SAVE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							th.co.aoe.imake.pst.hibernate.bean.PstJobEmployeePK  returnId=null;
 							returnId=(th.co.aoe.imake.pst.hibernate.bean.PstJobEmployeePK) (pstCommonService.save(bpsTerm));
 							//xbpsTerm.setPesId(pesId);
 							return returnUpdateRecord(entity,xbpsTerm,returnId.getPeId().intValue());
 						} 
 						else if(serviceName.equals(ServiceConstant.PST_JOB_EMPLOYEE_DELETE)){
-								java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+								//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 								int updateRecord=pstCommonService.delete(bpsTerm);
 								return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}else if(serviceName.equals(ServiceConstant.PST_JOB_EMPLOYEE_SEARCH)){
-							Pagging page = xbpsTerm.getPagging(); 
-							
+						//	Pagging page = xbpsTerm.getPagging(); 
+							@SuppressWarnings("rawtypes")		
 							List result = (List) pstJobEmployeeService.listPstJobEmployees(xbpsTerm.getPjId(), xbpsTerm.getPeId());
 					 
+								@SuppressWarnings("unchecked")
 								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJobEmployee> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJobEmployee>) result;
 										 
 								VResultMessage vresultMessage = new VResultMessage();

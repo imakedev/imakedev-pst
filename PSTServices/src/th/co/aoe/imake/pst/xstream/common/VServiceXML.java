@@ -31,21 +31,25 @@ public class VServiceXML implements Serializable {
 	public void setFieldId(String fieldId) {
 		this.fieldId = fieldId;
 	}
+	@SuppressWarnings("rawtypes")
 	@XStreamAlias("likeExpression")
 	private Map likeExpression;
 	
+	@SuppressWarnings("rawtypes")
 	@XStreamAlias("likeFirstExpression")
 	private Map likeFirstExpression;
-	
+	@SuppressWarnings("rawtypes")
 	@XStreamAlias("likeEndExpression")
 	private Map likeEndExpression;
 	
+	@SuppressWarnings("rawtypes")
 	@XStreamAlias("leExpression")
 	private Map leExpression;
 	
+	@SuppressWarnings("rawtypes")
 	@XStreamAlias("geExpression")
 	private Map geExpression;
-	
+	@SuppressWarnings("rawtypes")
 	@XStreamAlias("neExpression")
 	private Map neExpression;
 	
@@ -78,40 +82,46 @@ public class VServiceXML implements Serializable {
 	public void setServiceName(String serviceName) {
 		this.serviceName = serviceName;
 	}
+	@SuppressWarnings("rawtypes")
 	public Map getLikeExpression() {
 		return likeExpression;
 	}
-	public void setLikeExpression(Map likeExpression) {
+	public void setLikeExpression(@SuppressWarnings("rawtypes") Map likeExpression) {
 		this.likeExpression = likeExpression;
 	}
+	@SuppressWarnings("rawtypes")
 	public Map getLeExpression() {
 		return leExpression;
 	}
-	public void setLeExpression(Map leExpression) {
+	public void setLeExpression(@SuppressWarnings("rawtypes") Map leExpression) {
 		this.leExpression = leExpression;
 	}
+	@SuppressWarnings("rawtypes")
 	public Map getGeExpression() {
 		return geExpression;
 	}
-	public void setGeExpression(Map geExpression) {
+	public void setGeExpression(@SuppressWarnings("rawtypes") Map geExpression) {
 		this.geExpression = geExpression;
 	}
+	@SuppressWarnings("rawtypes")
 	public Map getLikeFirstExpression() {
 		return likeFirstExpression;
 	}
-	public void setLikeFirstExpression(Map likeFirstExpression) {
+	public void setLikeFirstExpression(@SuppressWarnings("rawtypes") Map likeFirstExpression) {
 		this.likeFirstExpression = likeFirstExpression;
 	}
+	@SuppressWarnings("rawtypes")
 	public Map getLikeEndExpression() {
 		return likeEndExpression;
 	}
-	public void setLikeEndExpression(Map likeEndExpression) {
+	public void setLikeEndExpression(@SuppressWarnings("rawtypes") Map likeEndExpression) {
 		this.likeEndExpression = likeEndExpression;
 	}
+	@SuppressWarnings("rawtypes")
 	public Map getNeExpression() {
 		return neExpression;
 	}
-	public void setNeExpression(Map neExpression) {
+	public void setNeExpression(@SuppressWarnings("rawtypes") Map neExpression) {
 		this.neExpression = neExpression;
 	}
 	public Integer getUpdateRecord() {

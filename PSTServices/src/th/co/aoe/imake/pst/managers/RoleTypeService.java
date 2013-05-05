@@ -14,7 +14,9 @@ public interface RoleTypeService {
 	public RoleType findRoleTypeById(Long mmId)throws DataAccessException  ;
 	@SuppressWarnings("rawtypes")
 	public  List searchRoleType(RoleType persistentInstance,	Pagging pagging)throws DataAccessException  ;
+	@SuppressWarnings("rawtypes")
 	public  List listRoleTypeByRcId(Long rcId) throws DataAccessException ;
+	@SuppressWarnings("rawtypes")
 	public  List listRoleTypes(Long maId) throws DataAccessException ;	
 	
 }

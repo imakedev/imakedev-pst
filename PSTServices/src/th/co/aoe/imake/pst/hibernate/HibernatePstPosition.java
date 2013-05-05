@@ -9,13 +9,10 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import th.co.aoe.imake.pst.constant.ServiceConstant;
-import th.co.aoe.imake.pst.hibernate.bean.PstEmployeeStatus;
 import th.co.aoe.imake.pst.hibernate.bean.PstPosition;
-import th.co.aoe.imake.pst.managers.PstEmployeeStatusService;
 import th.co.aoe.imake.pst.managers.PstPositionService;
 import th.co.aoe.imake.pst.xstream.common.Pagging;
 
@@ -39,7 +36,7 @@ public class HibernatePstPosition  extends HibernateCommon implements PstPositio
 			
 			StringBuffer sb =new StringBuffer(" select count(pstPosition) from PstPosition pstPosition ");
 			
-			boolean iscriteria = false;
+			//boolean iscriteria = false;
 			
 			/*if(pcUid !=null && pcUid.trim().length()> 0){  
 				//criteria.add(Expression.eq("megId", megId));	
@@ -110,6 +107,7 @@ public class HibernatePstPosition  extends HibernateCommon implements PstPositio
 			}
 			return transList;
 		}
+	 @SuppressWarnings("rawtypes")
 	@Override
 	public List listPstPosition() throws DataAccessException {
 		// TODO Auto-generated method stub
