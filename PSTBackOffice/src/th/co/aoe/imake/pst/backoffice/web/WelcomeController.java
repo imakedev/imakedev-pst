@@ -6,7 +6,6 @@
 package th.co.aoe.imake.pst.backoffice.web;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,12 +26,12 @@ import th.co.aoe.imake.pst.backoffice.service.PSTService;
 @SessionAttributes(value={"UserMissContact"})
 public class WelcomeController
 {
-	private static int PAGE_SIZE=20;
-	private static ResourceBundle bundle;
+	//private static int PAGE_SIZE=20;
+	/*private static ResourceBundle bundle;
 	static{
 			bundle =  ResourceBundle.getBundle( "config" );		
 		
-	}
+	}*/
     @RequestMapping(value={"/"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
     public String getNewForm(HttpServletRequest request,HttpServletResponse response,  Model model)
     {

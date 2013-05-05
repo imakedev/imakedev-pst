@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.LocaleEditor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,12 +50,12 @@ public class AccessController {
 	}
 	@RequestMapping(value = "/checking")
    public String checking(Model model,HttpServletRequest request) {
-		String userid=SecurityContextHolder.getContext().getAuthentication().getName();
+		//String userid=SecurityContextHolder.getContext().getAuthentication().getName();
 		int result=0;//pstService.checkMissTestResult(missTest);
 		//0=not yet test finish, 1=  test finish
-		String	useragent = request.getHeader("User-Agent");
-		String user = useragent.toLowerCase();
-		String band="";
+		//String	useragent = request.getHeader("User-Agent");
+	//	String user = useragent.toLowerCase();
+		/*String band="";
 		 if(user.indexOf("firefox") != -1) {
 			band="Firefox"; 		
 		} else if(user.indexOf("chrome") != -1) {
@@ -67,7 +66,7 @@ public class AccessController {
 			band="Safari";
 		} else if(user.indexOf("msie") != -1) {
 			band="IE";
-		}  
+		} */ 
 		 
 		 
 		
@@ -104,7 +103,7 @@ public class AccessController {
 		}*/
 		return "redirect:/login?message="+message;
 	}
-	private String getVersionBrowser(String band,String fullAgent){
+	/*private String getVersionBrowser(String band,String fullAgent){
 		// mozilla/5.0 (x11; ubuntu; linux x86_64; rv:15.0) gecko/20100101 firefox/15.0
 		// mozilla/5.0 (x11; linux x86_64) applewebkit/537.1 (khtml, like gecko) chrome/21.0.1180.57 safari/537.1
 		// opera/9.80 (x11; linux x86_64; u; en) presto/2.10.289 version/12.01
@@ -157,5 +156,5 @@ public class AccessController {
 		}
 		//System.out.println("vvvvvvvvvvvvvv "+version);
 		return version;
-	}
+	}*/
 }

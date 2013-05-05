@@ -1900,7 +1900,7 @@ public class PSTServiceImpl extends PostCommon
 	        VResultMessage resultMessage = postMessage(pstRoadPump, pstRoadPump.getClass().getName(), "pstRoadPump", true);
 	        return (PstRoadPump)resultMessage.getResultListObj().get(0);
 		}
-
+		@SuppressWarnings("rawtypes")
 		@Override
 		public List listPstRoadPumpStatuses() {
 			// TODO Auto-generated method stub
@@ -2008,7 +2008,7 @@ public class PSTServiceImpl extends PostCommon
 	        VResultMessage resultMessage = postMessage(pstEmployee, pstEmployee.getClass().getName(), "pstEmployee", true);
 	        return (PstEmployee)resultMessage.getResultListObj().get(0);
 		}
-
+		@SuppressWarnings("rawtypes")
 		@Override
 		public List listPstPositions() {
 			// TODO Auto-generated method stub
@@ -2017,7 +2017,7 @@ public class PSTServiceImpl extends PostCommon
 		        VResultMessage resultMessage = postMessage(pstPosition, pstPosition.getClass().getName(), "pstPosition", true);
 		        return resultMessage.getResultListObj();
 		}
-
+		@SuppressWarnings("rawtypes")
 		@Override
 		public List listPstTitles() {
 			// TODO Auto-generated method stub
@@ -2044,7 +2044,7 @@ public class PSTServiceImpl extends PostCommon
 	        pstEmployeeWorkMapping = (PstEmployeeWorkMapping)resultMessage.getResultListObj().get(0);
 	        return pstEmployeeWorkMapping.getUpdateRecord();
 		}
-
+		@SuppressWarnings("rawtypes")
 		@Override
 		public List listPstEmployeeStatuses() {
 			// TODO Auto-generated method stub
@@ -2053,7 +2053,7 @@ public class PSTServiceImpl extends PostCommon
 		        VResultMessage resultMessage = postMessage(pstEmployeeStatus, pstEmployeeStatus.getClass().getName(), "pstEmployeeStatus", true);
 		        return resultMessage.getResultListObj();
 		}
-
+		@SuppressWarnings("rawtypes")
 		@Override
 		public List listPstRoadPumpNo() {
 			// TODO Auto-generated method stub
@@ -2062,6 +2062,7 @@ public class PSTServiceImpl extends PostCommon
 		        VResultMessage resultMessage = postMessage(pstRoadPump, pstRoadPump.getClass().getName(), "pstRoadPump", true);
 		        return resultMessage.getResultListObj();
 		}
+		@SuppressWarnings("rawtypes")
 		@Override
 		public List listPstConcretes() {
 			// TODO Auto-generated method stub
@@ -2188,7 +2189,7 @@ public class PSTServiceImpl extends PostCommon
 	        pstJobPayExt = (PstJobPayExt)resultMessage.getResultListObj().get(0);
 	        return pstJobPayExt.getUpdateRecord().intValue();
 		}
-
+		@SuppressWarnings("rawtypes")
 		@Override
 		public List listPstJobWorks(Long pjId, Long prpId) {
 			// TODO Auto-generated method stub
@@ -2198,7 +2199,7 @@ public class PSTServiceImpl extends PostCommon
 		        VResultMessage resultMessage = postMessage(pstJobWork, pstJobWork.getClass().getName(), "pstJobWork", true);
 		        return resultMessage.getResultListObj(); 
 		}
-
+		@SuppressWarnings("rawtypes")
 		@Override
 		public List listPstJobEmployees(Long pjId, Long peId) {
 			// TODO Auto-generated method stub
@@ -2208,7 +2209,7 @@ public class PSTServiceImpl extends PostCommon
 		        VResultMessage resultMessage = postMessage(pstJobEmployee, pstJobEmployee.getClass().getName(), "pstJobEmployee", true);
 		        return resultMessage.getResultListObj(); 
 		}
-
+		@SuppressWarnings("rawtypes")
 		@Override
 		public List listPstJobPays(Long pjId, Long pcId) {
 			// TODO Auto-generated method stub
@@ -2217,7 +2218,7 @@ public class PSTServiceImpl extends PostCommon
 		        VResultMessage resultMessage = postMessage(pstJobPay, pstJobPay.getClass().getName(), "pstJobPay", true);
 		        return resultMessage.getResultListObj(); 
 		}
-
+		@SuppressWarnings("rawtypes")
 		@Override
 		public List listPstJobPayExts(Long pjId, Long pjpeNo) {
 			// TODO Auto-generated method stub
@@ -2226,7 +2227,7 @@ public class PSTServiceImpl extends PostCommon
 		        VResultMessage resultMessage = postMessage(pstJobPayExt, pstJobPayExt.getClass().getName(), "pstJobPayExt", true);
 		        return resultMessage.getResultListObj(); 
 		}
-
+		@SuppressWarnings("rawtypes")
 		@Override
 		public List searchObject(String query) {
 			// TODO Auto-generated method stub 

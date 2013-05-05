@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Test { 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		/*public MailRunnable(String protocal_,String  host_,String email_ ,String  password_,String  useAuthen_,
 				List recipients
@@ -13,6 +14,7 @@ public class Test {
 			prop.put("protocol", "smtp");
 		}*/
 		//siripornp@
+		@SuppressWarnings("rawtypes")
 		List recipients =new ArrayList();
 		recipients.add("bangorns@pttep.com");
 		MailRunnable mailRunnable = new MailRunnable("smtp","SMTP-Relay.pttep.com","wpsadmin@pttep.com","password","0",

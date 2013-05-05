@@ -3,10 +3,7 @@ package th.co.aoe.imake.pst.backoffice.service.impl;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 
 public class FileRead {
 	public static void main(String args[])
@@ -18,9 +15,9 @@ public class FileRead {
 	  // Get the object of DataInputStream
 	  DataInputStream in = new DataInputStream(fstream);
 	  BufferedReader br = new BufferedReader(new InputStreamReader(in));
-	  String strLine;
+	  //String strLine;
 	  //Read File Line By Line
-	  String x="";
+	//  String x="";
       handleCharacters(br);
 	 /* StringBuffer buString=new StringBuffer();
 	  while ((strLine = br.readLine()) != null)   {

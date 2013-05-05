@@ -55,7 +55,7 @@ public interface PSTService {
 	public abstract int deletePstRoadPump(PstRoadPump pstRoadPump, String service);
 
 	public abstract PstRoadPump findPstRoadPumpById(Long long1);
-	
+	@SuppressWarnings("rawtypes")
 	public abstract List listPstRoadPumpStatuses();
 	public abstract PstRoadPump listPstRoadPumpMaster();
 	
@@ -81,17 +81,20 @@ public interface PSTService {
 	public abstract int deletePstEmployee(PstEmployee pstEmployee, String service);
 
 	public abstract PstEmployee findPstEmployeeById(Long long1); 
-	
+	@SuppressWarnings("rawtypes")
 	public abstract List listPstPositions();
+	@SuppressWarnings("rawtypes")
 	public abstract List listPstTitles();
 	
 	// PstEmployeeWorkMapping
 	public abstract VResultMessage searchPstEmployeeWorkMapping(
 			PstEmployeeWorkMapping pstEmployeeWorkMapping);
 	public abstract int setPstEmployeeWorkMapping(PstEmployeeWorkMapping pstEmployeeWorkMapping);
+	@SuppressWarnings("rawtypes")
 	public abstract List listPstEmployeeStatuses();
+	@SuppressWarnings("rawtypes")
 	public abstract List listPstRoadPumpNo();
-	
+	@SuppressWarnings("rawtypes")
 	public abstract List listPstConcretes();
 	public abstract VResultMessage searchPstJob(
 			PstJob pstJob);
@@ -103,22 +106,23 @@ public interface PSTService {
 
 	public abstract PstJob findPstJobById(Long long1);
 	public abstract PstJob listJobMaster(); 
-	
+	@SuppressWarnings("rawtypes")
 	public abstract List listPstJobWorks(Long pjId,Long prpId);
 	public abstract Long savePstJobWork(PstJobWork pstJobWork); 
 	public abstract int deletePstJobWork(PstJobWork pstJobWork, String service);
-	
+	@SuppressWarnings("rawtypes")
 	public abstract List listPstJobEmployees( Long pjId, Long peId);
 	public abstract Long savePstJobEmployee(PstJobEmployee pstJobEmployee); 
 	public abstract int deletePstJobEmployee(PstJobEmployee pstJobEmployee, String service);
-	
+	@SuppressWarnings("rawtypes")
 	public abstract List listPstJobPays(Long pjId,Long pcId);
 	public abstract Long savePstJobPay(PstJobPay pstJobPay); 
 	public abstract int deletePstJobPay(PstJobPay pstJobPay, String service);
-	
+	@SuppressWarnings("rawtypes")
 	public abstract List listPstJobPayExts( Long pjId,Long pjpeNo);
 	public abstract Long savePstJobPayExt(PstJobPayExt pstJobPayExt); 
 	public abstract int deletePstJobPayExt(PstJobPayExt pstJobPayExt, String service);
+	@SuppressWarnings("rawtypes")
 	public List searchObject(String query);
 	public int executeQuery(String[] query);
 	

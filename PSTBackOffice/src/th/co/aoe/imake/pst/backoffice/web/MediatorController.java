@@ -1,17 +1,12 @@
 package th.co.aoe.imake.pst.backoffice.web;
 
 
-import java.text.SimpleDateFormat;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import th.co.aoe.imake.pst.backoffice.service.PSTService;
-import th.co.aoe.imake.pst.constant.ServiceConstant;
 //import org.apache.log4j.Logger;
 
 @Controller
@@ -19,8 +14,8 @@ import th.co.aoe.imake.pst.constant.ServiceConstant;
 @SessionAttributes(value={"missExamForm","systemDate","timelimit"})
 public class MediatorController {
 	//private static final Logger logger = Logger.getLogger(ServiceConstant.LOG_APPENDER);
-	private static final Logger logger = LoggerFactory.getLogger(ServiceConstant.LOG_APPENDER);
-	 private static SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+	//private static final Logger logger = LoggerFactory.getLogger(ServiceConstant.LOG_APPENDER);
+	// private static SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
 	 //private static SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy/HH/mm/ss");
 	@Autowired
 	private PSTService missExamService;

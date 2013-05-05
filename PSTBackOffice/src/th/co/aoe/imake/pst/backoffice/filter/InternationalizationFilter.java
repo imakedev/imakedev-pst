@@ -1,21 +1,13 @@
 package th.co.aoe.imake.pst.backoffice.filter;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.propertyeditors.LocaleEditor;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import org.springframework.web.servlet.support.RequestContextUtils;
-import org.springframework.web.util.WebUtils;
 
 public class InternationalizationFilter extends OncePerRequestFilter {
 
