@@ -72,6 +72,7 @@ public class HibernatePstRoadPumpStatus  extends HibernateCommon implements PstR
 			}
 			return transList;
 		}
+	 @SuppressWarnings("rawtypes")
 	@Override
 	public List listPstRoadPumpStatus() throws DataAccessException {
 		// TODO Auto-generated method stub

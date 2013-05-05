@@ -3,7 +3,6 @@ package th.co.aoe.imake.pst.rest.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -76,13 +75,13 @@ public class PstCostResource  extends BaseResource {
 							}
 							return getRepresentation(entity, vresultMessage, xstream);
 						}else if(serviceName.equals(ServiceConstant.PST_COST_SAVE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							Long pcId=0l;
 							pcId=(Long) (pstCommonService.save(bpsTerm));
 							xbpsTerm.setPcId(pcId);
 							return returnUpdateRecord(entity,xbpsTerm,pcId.intValue());
 						} else if(serviceName.equals(ServiceConstant.PST_COST_UPDATE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							int updateRecord=pstCommonService.update(bpsTerm);
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 							
@@ -102,14 +101,16 @@ public class PstCostResource  extends BaseResource {
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}
 						else if(serviceName.equals(ServiceConstant.PST_COST_DELETE)){
-								java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//	java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 								int updateRecord=pstCommonService.delete(bpsTerm);
 								return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}else if(serviceName.equals(ServiceConstant.PST_COST_SEARCH)){
 							Pagging page = xbpsTerm.getPagging(); 
 							
+							@SuppressWarnings({ "rawtypes" })
 							List result = (List) pstCostService.searchPstCost(bpsTerm, page);
 							if (result != null && result.size() == 2) {
+								@SuppressWarnings({ "unchecked"})
 								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstCost> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstCost>) result
 										.get(0);
 								String faqs_size = (String) result.get(1);

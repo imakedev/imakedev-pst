@@ -3,7 +3,6 @@ package th.co.aoe.imake.pst.rest.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -40,6 +39,7 @@ public class PstRoadPumpResource extends BaseResource {
 		logger.debug("into doInit");
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	protected Representation post(Representation entity, Variant variant)
 			throws ResourceException {
@@ -152,13 +152,13 @@ public class PstRoadPumpResource extends BaseResource {
 							}
 							return getRepresentation(entity, vresultMessage, xstream);
 						}else if(serviceName.equals(ServiceConstant.PST_ROAD_PUMP_SAVE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+						//	java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							Long prpId=0l;
 							prpId=(Long) (pstCommonService.save(bpsTerm));
 							xbpsTerm.setPrpId(prpId);
 							return returnUpdateRecord(entity,xbpsTerm,prpId.intValue());
 						} else if(serviceName.equals(ServiceConstant.PST_ROAD_PUMP_UPDATE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							int updateRecord=pstCommonService.update(bpsTerm);
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 							
@@ -178,7 +178,7 @@ public class PstRoadPumpResource extends BaseResource {
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}
 						else if(serviceName.equals(ServiceConstant.PST_ROAD_PUMP_DELETE)){
-								java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+						//		java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 								int updateRecord=pstCommonService.delete(bpsTerm);
 								return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}else if(serviceName.equals(ServiceConstant.PST_ROAD_PUMP_SEARCH)){

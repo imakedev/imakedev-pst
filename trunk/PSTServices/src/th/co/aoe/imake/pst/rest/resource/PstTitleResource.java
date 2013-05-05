@@ -3,7 +3,6 @@ package th.co.aoe.imake.pst.rest.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -76,13 +75,13 @@ public class PstTitleResource  extends BaseResource {
 							}
 							return getRepresentation(entity, vresultMessage, xstream);
 						}else if(serviceName.equals(ServiceConstant.PST_TITLE_SAVE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							Long ptId=0l;
 							ptId=(Long) (pstCommonService.save(bpsTerm));
 							xbpsTerm.setPtId(ptId);
 							return returnUpdateRecord(entity,xbpsTerm,ptId.intValue());
 						} else if(serviceName.equals(ServiceConstant.PST_TITLE_UPDATE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							int updateRecord=pstCommonService.update(bpsTerm);
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 							
@@ -102,14 +101,15 @@ public class PstTitleResource  extends BaseResource {
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}
 						else if(serviceName.equals(ServiceConstant.PST_TITLE_DELETE)){
-								java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//	java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 								int updateRecord=pstCommonService.delete(bpsTerm);
 								return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}else if(serviceName.equals(ServiceConstant.PST_TITLE_SEARCH)){
 							Pagging page = xbpsTerm.getPagging(); 
-							
+							@SuppressWarnings({ "rawtypes" })
 							List result = (List) pstTitleService.searchPstTitle(bpsTerm, page);
 							if (result != null && result.size() == 2) {
+								@SuppressWarnings("unchecked")
 								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstTitle> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstTitle>) result
 										.get(0);
 								String faqs_size = (String) result.get(1);
@@ -124,7 +124,9 @@ public class PstTitleResource  extends BaseResource {
 								return getRepresentation(entity, vresultMessage, xstream);
 							}
 						}else if(serviceName.equals(ServiceConstant.PST_TITLE_LIST)){
+							@SuppressWarnings({ "rawtypes" })
 							List result = pstTitleService.listPstTitle();
+							@SuppressWarnings("unchecked")
 							java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstTitle> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstTitle>) result;
 									
 							VResultMessage vresultMessage = new VResultMessage();

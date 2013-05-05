@@ -3,7 +3,6 @@ package th.co.aoe.imake.pst.rest.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -76,13 +75,13 @@ public class PstRoadPumpStatusResource extends BaseResource {
 							}
 							return getRepresentation(entity, vresultMessage, xstream);
 						}else if(serviceName.equals(ServiceConstant.PST_ROAD_PUMP_STATUS_SAVE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							Long prpsId=0l;
 							prpsId=(Long) (pstCommonService.save(bpsTerm));
 							xbpsTerm.setPrpsId(prpsId);
 							return returnUpdateRecord(entity,xbpsTerm,prpsId.intValue());
 						} else if(serviceName.equals(ServiceConstant.PST_ROAD_PUMP_STATUS_UPDATE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+						//	java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							int updateRecord=pstCommonService.update(bpsTerm);
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 							
@@ -102,14 +101,16 @@ public class PstRoadPumpStatusResource extends BaseResource {
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}
 						else if(serviceName.equals(ServiceConstant.PST_ROAD_PUMP_STATUS_DELETE)){
-								java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//	java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 								int updateRecord=pstCommonService.delete(bpsTerm);
 								return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}else if(serviceName.equals(ServiceConstant.PST_ROAD_PUMP_STATUS_SEARCH)){
 							Pagging page = xbpsTerm.getPagging(); 
 							
+							@SuppressWarnings("rawtypes")
 							List result = (List) pstRoadPumpStatusService.searchPstRoadPumpStatus(bpsTerm, page);
 							if (result != null && result.size() == 2) {
+								@SuppressWarnings("unchecked")
 								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstRoadPumpStatus> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstRoadPumpStatus>) result
 										.get(0);
 								String faqs_size = (String) result.get(1);
@@ -124,7 +125,9 @@ public class PstRoadPumpStatusResource extends BaseResource {
 								return getRepresentation(entity, vresultMessage, xstream);
 							}
 						}else if(serviceName.equals(ServiceConstant.PST_ROAD_PUMP_STATUS_LIST)){
+							@SuppressWarnings({ "rawtypes" })
 							List result = pstRoadPumpStatusService.listPstRoadPumpStatus();
+								@SuppressWarnings("unchecked")
 								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstRoadPumpStatus> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstRoadPumpStatus>) result;
 										
 								VResultMessage vresultMessage = new VResultMessage();

@@ -14,5 +14,6 @@ public interface RoleContactService {
 	public RoleContact findRoleContactById(Long mmId)throws DataAccessException  ;
 	@SuppressWarnings("rawtypes")
 	public  List searchRoleContact(RoleContact persistentInstance,	Pagging pagging)throws DataAccessException  ;
+	@SuppressWarnings("rawtypes")
 	public  List listRoleContactBymaId(Long maId) throws DataAccessException ;
 }

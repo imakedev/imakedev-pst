@@ -18,6 +18,7 @@ public class VResultMessage implements Serializable {
 	private VMessage resultMessage;
 	
 	//@XStreamImplicit(itemFieldName="resultListObj")
+	@SuppressWarnings("rawtypes")
 	@XStreamAlias("resultListObj") 
 	private List resultListObj;
 	
@@ -43,10 +44,11 @@ public class VResultMessage implements Serializable {
 		this.resultMessage = resultMessage;
 	}
 	 
+	@SuppressWarnings("rawtypes")
 	public List getResultListObj() {
 		return resultListObj;
 	}
-	public void setResultListObj(List  resultListObj) {
+	public void setResultListObj(@SuppressWarnings("rawtypes") List  resultListObj) {
 		this.resultListObj = resultListObj;
 	}
 	public String getMaxRow() {

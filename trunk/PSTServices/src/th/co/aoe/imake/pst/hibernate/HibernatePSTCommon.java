@@ -40,10 +40,11 @@ public class HibernatePSTCommon extends HibernateCommon implements PSTCommonServ
 		return super.save(sessionAnnotationFactory.getCurrentSession(), transientInstance);
 	}
 	@Transactional(readOnly = true)
-	public Object findById( Class classType, Serializable id) {
+	public Object findById( @SuppressWarnings("rawtypes") Class classType, Serializable id) {
 		// TODO Auto-generated method stub
 		return super.findById(sessionAnnotationFactory.getCurrentSession(), classType, id);
 	}
+	@SuppressWarnings("rawtypes")
 	@Transactional(readOnly = true)
 	public List listObject(String queryStr) {
 		// TODO Auto-generated method stub

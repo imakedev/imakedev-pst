@@ -14,5 +14,6 @@ public interface RoleMappingService {
 	public RoleMapping findRoleMappingById(Long mmId)throws DataAccessException  ;
 	@SuppressWarnings("rawtypes")
 	public  List searchRoleMapping(RoleMapping persistentInstance,	Pagging pagging)throws DataAccessException  ;
+	@SuppressWarnings("rawtypes")
 	public  List listRoleMappingByrcId(Long rcId) throws DataAccessException ;
 }

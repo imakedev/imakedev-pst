@@ -24,6 +24,7 @@ public class HibernatePstConcrete   extends HibernateCommon implements PstConcre
 	public void setSessionAnnotationFactory(SessionFactory sessionAnnotationFactory) {
 		this.sessionAnnotationFactory = sessionAnnotationFactory;
 	}
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List listPstConcretes() throws DataAccessException {
 		// TODO Auto-generated method stub

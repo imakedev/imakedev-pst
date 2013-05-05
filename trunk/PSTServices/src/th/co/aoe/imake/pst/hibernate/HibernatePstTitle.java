@@ -38,7 +38,7 @@ public class HibernatePstTitle  extends HibernateCommon implements PstTitleServi
 			
 			StringBuffer sb =new StringBuffer(" select count(pstTitle) from PstTitle pstTitle ");
 			
-			boolean iscriteria = false;
+			//boolean iscriteria = false;
 			
 			/*if(pcUid !=null && pcUid.trim().length()> 0){  
 				//criteria.add(Expression.eq("megId", megId));	
@@ -109,6 +109,7 @@ public class HibernatePstTitle  extends HibernateCommon implements PstTitleServi
 			}
 			return transList;
 		}
+	 @SuppressWarnings("rawtypes")
 	@Override
 	public List listPstTitle() throws DataAccessException {
 		// TODO Auto-generated method stub

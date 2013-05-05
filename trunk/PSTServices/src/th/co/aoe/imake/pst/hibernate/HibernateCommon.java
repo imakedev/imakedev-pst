@@ -92,7 +92,7 @@ public class HibernateCommon {
 			return obj;
 	}
 	@Transactional(readOnly = true)
-	public Object findById(Session session, Class classType, Serializable id) {
+	public Object findById(Session session, @SuppressWarnings("rawtypes") Class classType, Serializable id) {
 		Object obj = null;
 		try {
 			//session.createQuery(arg0);

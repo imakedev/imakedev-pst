@@ -56,6 +56,7 @@ public class PstObjectResource extends BaseResource {
 								+ xbpsTerm.getServiceName());
 						String serviceName = xbpsTerm.getServiceName();  
 						if(serviceName.equals(ServiceConstant.PST_OBJECT_SEARCH)){
+							@SuppressWarnings({ "rawtypes" })
 							List list= pstObjectService.searchObject(xbpsTerm.getQuery()[0]);
 							VResultMessage vresultMessage = new VResultMessage();
 							vresultMessage.setResultListObj(list); 

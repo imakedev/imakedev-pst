@@ -24,6 +24,7 @@ public class HibernatePstJobPay  extends HibernateCommon implements PstJobPaySer
 	public void setSessionAnnotationFactory(SessionFactory sessionAnnotationFactory) {
 		this.sessionAnnotationFactory = sessionAnnotationFactory;
 	}
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List listPstJobPays(Long pjId, Long pcId) {
 		// TODO Auto-generated method stub

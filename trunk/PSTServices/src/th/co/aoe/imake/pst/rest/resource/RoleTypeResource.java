@@ -3,7 +3,6 @@ package th.co.aoe.imake.pst.rest.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -89,7 +88,7 @@ public class RoleTypeResource extends BaseResource {
 							return getRepresentation(entity, vresultMessage, xstream);
 						} 
 						if(serviceName.equals(ServiceConstant.ROLE_TYPE_SAVE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							Long rtId=0l;
 							
 							rtId=(roleTypeService.saveRoleType(bpsTerm));
@@ -98,7 +97,7 @@ public class RoleTypeResource extends BaseResource {
 							return returnUpdateRecord(entity,xbpsTerm,rtId.intValue());
 						}
 						else if(serviceName.equals(ServiceConstant.ROLE_TYPE_UPDATE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+						//	java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							int updateRecord=roleTypeService.updateRoleType(bpsTerm);
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}
@@ -118,12 +117,14 @@ public class RoleTypeResource extends BaseResource {
 							int updateRecord=roleTypeService.deleteRoleType(bpsTerm);
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}else if(serviceName.equals(ServiceConstant.ROLE_TYPE_LIST_BY_RC_ID)){
+							@SuppressWarnings("unchecked")
 							List<th.co.aoe.imake.pst.xstream.RoleType> xntcCalendars = roleTypeService.listRoleTypeByRcId(xbpsTerm.getRcId());
 								
 								VResultMessage vresultMessage = new VResultMessage();
 								vresultMessage.setResultListObj(xntcCalendars);
 								return getRepresentation(entity, vresultMessage, xstream);
 						}else if(serviceName.equals(ServiceConstant.ROLE_TYPE_LIST)){
+							@SuppressWarnings("unchecked")
 							List<th.co.aoe.imake.pst.xstream.RoleType> xntcCalendars = roleTypeService.listRoleTypes(xbpsTerm.getMaId());
 							
 							VResultMessage vresultMessage = new VResultMessage();
@@ -132,8 +133,10 @@ public class RoleTypeResource extends BaseResource {
 						}
 						else if(serviceName.equals(ServiceConstant.ROLE_TYPE_SEARCH)){
 							Pagging page = xbpsTerm.getPagging(); 
+							@SuppressWarnings({ "rawtypes" })
 							List result = (List) roleTypeService.searchRoleType(bpsTerm,page);
 							if (result != null && result.size() == 2) {
+								@SuppressWarnings("unchecked")
 								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.RoleType> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.RoleType>) result
 										.get(0);
 								String faqs_size = (String) result.get(1);
@@ -183,10 +186,12 @@ public class RoleTypeResource extends BaseResource {
 		Pagging page =new Pagging(); 
 		th.co.aoe.imake.pst.hibernate.bean.RoleType bpsTerm = new th.co.aoe.imake.pst.hibernate.bean.RoleType();
 		//bpsTerm.setMegName("Aoe");
+		@SuppressWarnings({ "rawtypes" })
 		List result = (List) roleTypeService.searchRoleType(bpsTerm,page);
 		VResultMessage vresultMessage = new VResultMessage();
 		List<th.co.aoe.imake.pst.xstream.RoleType> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.RoleType>();
 		if (result != null && result.size() == 2) {
+			@SuppressWarnings("unchecked")
 			java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.RoleType> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.RoleType>) result
 					.get(0);
 			String faqs_size = (String) result.get(1);

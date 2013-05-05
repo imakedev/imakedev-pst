@@ -50,7 +50,7 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 			
 			//StringBuffer sb =new StringBuffer(" select count(pstEmployee) from PstEmployeeWorkMapping as pstEmployeeWorkMapping   right join pstEmployeeWorkMapping.pstEmployee as pstEmployee ");
 		//	select pstEmployee,pstEmployeeWorkMapping from  
-			boolean iscriteria = false;
+			//boolean iscriteria = false;
 			
 		/*	if(pcUid !=null && pcUid.trim().length()> 0){  
 				//criteria.add(Expression.eq("megId", megId));	
@@ -119,7 +119,7 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 				}
 				 // sb =new StringBuffer(" select pstEmployeeWorkMapping from PstEmployeeWorkMapping pstEmployeeWorkMapping ");
 				
-				boolean iscriteria = false;
+			//	boolean iscriteria = false;
 				/*
 				if(pcUid !=null && pcUid.trim().length()> 0){  
 					//criteria.add(Expression.eq("megId", megId));	
@@ -367,6 +367,7 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	@SuppressWarnings("unused")
 	private List<th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping> getxPstEmployeeWorkMappingObject(
 			java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping> ntcCalendars) {
 		List<th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping>(

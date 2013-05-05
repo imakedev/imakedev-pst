@@ -3,12 +3,7 @@ package th.co.aoe.imake.pst.rest.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.apache.log4j.Logger;
 import org.restlet.representation.Representation;
@@ -90,13 +85,13 @@ public class PstEmployeeWorkMappingResource  extends BaseResource {
 							}
 							return getRepresentation(entity, vresultMessage, xstream);
 						*/}else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_WORK_MAPPING_SAVE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMappingPK pk=null;
 							pk=(th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMappingPK) (pstCommonService.save(bpsTerm));
 							//xbpsTerm.setPcId(pcId);
 							return returnUpdateRecord(entity,xbpsTerm,pk.getPeId().intValue());
 						} else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_WORK_MAPPING_UPDATE)){
-							java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							int updateRecord=pstCommonService.update(bpsTerm);
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 							
@@ -116,14 +111,15 @@ public class PstEmployeeWorkMappingResource  extends BaseResource {
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						*/}
 						else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_WORK_MAPPING_DELETE)){
-								java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+								//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 								int updateRecord=pstCommonService.delete(bpsTerm);
 								return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_WORK_MAPPING_SEARCH)){
 							Pagging page = xbpsTerm.getPagging(); 
-							
+							@SuppressWarnings("rawtypes")
 							List result = (List) pstEmployeeWorkMappingService.searchPstEmployeeWorkMapping(bpsTerm, page);
 							if (result != null && result.size() == 2) {
+								@SuppressWarnings("unchecked")
 								java.util.ArrayList<th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping> xntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping>) result
 										.get(0);
 								String faqs_size = (String) result.get(1);
@@ -176,6 +172,7 @@ public class PstEmployeeWorkMappingResource  extends BaseResource {
 		//export(entity, vresultMessage, xstream);	
 		return getRepresentation(entity, vresultMessage, xstream);
 	}
+	@SuppressWarnings("unused")
 	private List<th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping> getxPstEmployeeWorkMappingObject(
 			java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping> ntcCalendars) {
 		List<th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping>(

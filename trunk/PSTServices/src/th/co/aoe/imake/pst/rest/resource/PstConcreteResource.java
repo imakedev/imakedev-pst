@@ -121,7 +121,9 @@ public class PstConcreteResource extends BaseResource {
 								return getRepresentation(entity, vresultMessage, xstream);
 							}*/
 						}else if(serviceName.equals(ServiceConstant.PST_CONCRETE_LIST)){
+							@SuppressWarnings("rawtypes")
 							List result = pstConcreteService.listPstConcretes();
+							@SuppressWarnings("unchecked")
 							java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstConcrete> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstConcrete>) result;
 									
 							VResultMessage vresultMessage = new VResultMessage();
@@ -154,6 +156,7 @@ public class PstConcreteResource extends BaseResource {
 		return null;
 	
 	}
+	@SuppressWarnings("unused")
 	private Representation returnUpdateRecord(Representation entity,th.co.aoe.imake.pst.xstream.PstConcrete xbpsTerm,int updateRecord){
 		VResultMessage vresultMessage = new VResultMessage();
 		List<th.co.aoe.imake.pst.xstream.PstConcrete> xbpsTerms = new ArrayList<th.co.aoe.imake.pst.xstream.PstConcrete>(1);
