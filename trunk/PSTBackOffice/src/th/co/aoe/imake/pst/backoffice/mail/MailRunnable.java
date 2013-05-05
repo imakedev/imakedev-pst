@@ -22,16 +22,12 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import th.co.aoe.imake.pst.constant.ServiceConstant;
 
 import com.sun.mail.smtp.SMTPTransport;
 //import org.apache.log4j.Logger;
 
 public class MailRunnable implements Runnable {
-	private static final Logger logger = LoggerFactory.getLogger(ServiceConstant.LOG_APPENDER);
+//	private static final Logger logger = LoggerFactory.getLogger(ServiceConstant.LOG_APPENDER);
 	String subject = null;
 	String messagebody = null;
 	String sessionId= null;
@@ -40,13 +36,17 @@ public class MailRunnable implements Runnable {
 	String email =null;
 	String  password=null;
 	String  useAuthen=null;
+	@SuppressWarnings("rawtypes")
 	List recipients=null;
+	@SuppressWarnings("rawtypes")
 	List recipients_cc=null;
+	@SuppressWarnings("rawtypes")
 	List recipients_bcc=null;
 	byte[] fileSize=null;
 	String personal_name=null;
 	String port=null;
 	String tls=null;
+	@SuppressWarnings("rawtypes")
 	public MailRunnable(String protocal_,String  host_,String email_ ,String  password_,String  useAuthen_,
 			List recipients
 			,String subject,String messagebody,String sessionId,String personal_name,String port,

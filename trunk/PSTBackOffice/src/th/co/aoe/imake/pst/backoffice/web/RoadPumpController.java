@@ -41,6 +41,7 @@ public class RoadPumpController {
 	        model.addAttribute("pstRoadPumps", vresultMessage.getResultListObj());
 	        roadPumpForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	        roadPumpForm.setPageCount(IMakeDevUtils.calculatePage(roadPumpForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
+	        @SuppressWarnings("rawtypes")
 	        List list=pstService.listPstRoadPumpStatuses();
 	        model.addAttribute("pstRoadPumpStatuses",list);
 	        //logger.info("list==>"+list);

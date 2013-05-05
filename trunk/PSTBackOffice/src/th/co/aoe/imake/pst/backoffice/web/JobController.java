@@ -218,7 +218,7 @@ public class JobController {
 	  @RequestMapping(value={"/payext_save/{part}"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
 	  public @ResponseBody String payext(HttpServletRequest request, @PathVariable String part, @ModelAttribute(value="jobForm") JobForm jobForm, BindingResult result, Model model)
 	    {
-		 List payext=null;
+	//	 List payext=null;
 		 System.out.println("part="+part);
 		  if(part.equals("1")){
 			//  jobForm.getPstJobWork();
@@ -246,13 +246,14 @@ public class JobController {
 		  }
 		  return part; 
 	    }
-	  @RequestMapping(value={"/payext_get/{part}/{pjId}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+	  @SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(value={"/payext_get/{part}/{pjId}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	  public @ResponseBody List getPayExt(HttpServletRequest request, @PathVariable String part,
 			  @PathVariable Long pjId,Model model)
 	  //,@ModelAttribute(value="jobForm") JobForm jobForm, BindingResult result, 
-	    {
-		 List returnResult=new ArrayList(2);
-		 List payext=null;
+	    { 
+		 List returnResult=new ArrayList(2); 
+		  List payext=null;
 		 System.out.println("part="+part);
 		  if(part.equals("1")){
 			//  jobForm.getPstJobWork();
@@ -273,7 +274,8 @@ public class JobController {
 		  returnResult.add(payext);
 		  return returnResult; 
 	    }
-	  @RequestMapping(value={"/payext_delete/{part}/{pjId}/{id}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+	  @SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(value={"/payext_delete/{part}/{pjId}/{id}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	  public @ResponseBody List deletePayExt(HttpServletRequest request, @PathVariable String part,
 			  @PathVariable Long pjId,@PathVariable Long id,Model model)
 	  //,@ModelAttribute(value="jobForm") JobForm jobForm, BindingResult result, 

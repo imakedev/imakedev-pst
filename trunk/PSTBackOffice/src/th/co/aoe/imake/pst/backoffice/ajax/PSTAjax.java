@@ -20,6 +20,7 @@ public class PSTAjax {
     	getRequiredWebApplicationContext(servletContext);
     	pstService = (PSTService)wac.getBean("pstService"); 
 	}   
+	@SuppressWarnings("rawtypes")
 	public List searchObject(String query){
 		return pstService.searchObject(query);
 	}

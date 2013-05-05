@@ -49,6 +49,7 @@ public class EmployeeController {
 	        employeeForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	        employeeForm.setPageCount(IMakeDevUtils.calculatePage(employeeForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 	        model.addAttribute("employeeForm", employeeForm);
+	        @SuppressWarnings("rawtypes")
 	        List listPositions=pstService.listPstPositions();
 	     //   List listTitles=pstService.listPstTitles();
 	        model.addAttribute("positions",listPositions);
@@ -85,6 +86,7 @@ public class EmployeeController {
 	        employeeForm.setPageCount(IMakeDevUtils.calculatePage(employeeForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 	        model.addAttribute("pstEmployees", vresultMessage.getResultListObj());
 	        model.addAttribute("employeeForm", employeeForm);
+	        @SuppressWarnings("rawtypes")
 	        List listPositions=pstService.listPstPositions();
 	       // List listTitles=pstService.listPstTitles();
 	        model.addAttribute("positions",listPositions);
@@ -104,7 +106,9 @@ public class EmployeeController {
 	        PstEmployee pstBreakDown = pstService.findPstEmployeeById(Long.parseLong(maId));
 	        employeeForm.setPstEmployee(pstBreakDown);
 	        model.addAttribute("employeeForm", employeeForm);
+	        @SuppressWarnings("rawtypes")
 	        List listPositions=pstService.listPstPositions();
+	        @SuppressWarnings("rawtypes")
 	        List listTitles=pstService.listPstTitles();
 	        model.addAttribute("positions",listPositions);
 	        model.addAttribute("titles",listTitles);
@@ -151,6 +155,7 @@ public class EmployeeController {
 		        employeeForm.setPageCount(IMakeDevUtils.calculatePage(employeeForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 		        model.addAttribute("employeeForm", employeeForm);
 		        model.addAttribute("message", message); 
+		        @SuppressWarnings("rawtypes")
 		        List listPositions=pstService.listPstPositions();
 		       // List listTitles=pstService.listPstTitles();
 		        model.addAttribute("positions",listPositions);
@@ -165,7 +170,9 @@ public class EmployeeController {
 		  EmployeeForm employeeForm = new EmployeeForm(); 
 		  employeeForm.setMode(IMakeDevUtils.MODE_NEW);
 		  model.addAttribute("employeeForm", employeeForm);
+		  @SuppressWarnings("rawtypes")
 		  List listPositions=pstService.listPstPositions();
+		  @SuppressWarnings("rawtypes")
 	        List listTitles=pstService.listPstTitles();
 	        model.addAttribute("positions",listPositions);
 	        model.addAttribute("titles",listTitles);

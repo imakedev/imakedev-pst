@@ -25,10 +25,10 @@ import th.co.vlink.xstream.common.VServiceXML;
  
 public class PostCommon {
 	public static final int PAGE_SIZE = 5; 
-	public VResultMessage postMessage(VServiceXML vserviceXML,Class[] className,String endPoint,boolean isReturn) {
+	public VResultMessage postMessage(VServiceXML vserviceXML,@SuppressWarnings("rawtypes") Class[] className,String endPoint,boolean isReturn) {
 	 
-		//HttpPost httppost = new HttpPost("http://localhost:3000/v1/"+endPoint);
-		HttpPost httppost = new HttpPost("http://localhost:8080/PSTServices/rest/"+endPoint);
+		HttpPost httppost = new HttpPost("http://localhost:3000/v1/"+endPoint);
+		//HttpPost httppost = new HttpPost("http://localhost:8080/PSTServices/rest/"+endPoint);
 		
 				//HttpPost httppost = new HttpPost("http://10.0.20.27:3000/v1/"+endPoint);
 				//Test
@@ -115,12 +115,14 @@ public class PostCommon {
 				return    vresultMessage ;
 	}
 	public VResultMessage postMessage(VServiceXML vserviceXML,String className,String endPoint,boolean isReturn) {
+		@SuppressWarnings("rawtypes")
 		Class c  = null;
 		try {
 			  c = Class.forName(className);
 		} catch (ClassNotFoundException e2) {
 			e2.printStackTrace();
 		}
+		@SuppressWarnings("rawtypes")
 		Class[] classArray=new Class[]{c};
 		//classArray[0]=c;
 		return postMessage(vserviceXML,classArray,endPoint,isReturn);
