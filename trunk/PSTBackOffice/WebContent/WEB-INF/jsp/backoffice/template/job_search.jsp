@@ -278,7 +278,7 @@ function doAction(mode,id){
           	</c:if>
           	<c:if test="${empty pstJobs}"> 
           	<tr>
-          		<td colspan="7" style="text-align: center;">&nbsp;Not Found&nbsp;</td>
+          		<td colspan="8" style="text-align: center;">&nbsp;Not Found&nbsp;</td>
           	</tr>
           </c:if>
           

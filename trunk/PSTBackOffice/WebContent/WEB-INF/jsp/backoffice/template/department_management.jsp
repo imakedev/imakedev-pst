@@ -4,7 +4,7 @@
 $(document).ready(function() {
  
 });
-function goBackPosition(){
+function goBackDepartment(){
  
 	  $.ajax({
 		  type: "get",
@@ -19,7 +19,7 @@ function goBackPosition(){
 		});
 }
  
-function doPositionAction(action,mode,id){
+function doDepartmentAction(action,mode,id){
 	var pdName=jQuery.trim($("#pdName").val());
 	if(pdName.length==0){
 		 alert('กรุณากรอก แผนก');  
@@ -54,14 +54,14 @@ function doPositionAction(action,mode,id){
 			  <fieldset style="font-family: sans-serif;">   
 			 <!--  <pre  class="prettyprint" style="font-family: sans-serif;font-size:12px:;margin-top: 0px"> -->
 			  <div align="left">
-           	 <strong>แผนก</strong><br></br>
+           	 <strong>จัดการแผนก</strong><br></br>
             	</div>
 			    <table border="0" width="100%" style="font-size: 12px">
 			    	<tr>
     					<td width="100%" colspan="3"></td>
     				</tr>
     				<tr valign="middle">
-    					<td width="25%" align="right"><span style="font-size: 13px;padding: 15px">ตำแหน่ง :</span></td>
+    					<td width="25%" align="right"><span style="font-size: 13px;padding: 15px">แผนก :</span></td>
     					<td width="75%" colspan="2"> 
     						<form:input path="pstDepartment.pdName" id="pdName" cssStyle="height: 30;"/>
     					</td> 
@@ -77,7 +77,7 @@ function doPositionAction(action,mode,id){
     			</fieldset> 
 			  </form:form>  
 			<div align="center">
-			<!-- <a class="btn btn-info"  onclick="goBackPosition()"><i class="icon-chevron-left icon-white"></i>&nbsp;<span style="color: white;font-weight: bold;">Back</span></a> -->	
-    					 <a class="btn btn-primary"  onclick="doPositionAction('action','${departmentForm.mode}','${departmentForm.pstDepartment.pdId}')"><i class="icon-ok icon-white"></i>&nbsp;<span style="color: white;font-weight: bold;">Save</span></a>
+			 <a class="btn btn-info"  onclick="goBackDepartment()"><i class="icon-chevron-left icon-white"></i>&nbsp;<span style="color: white;font-weight: bold;">Back</span></a> 	
+    					 <a class="btn btn-primary"  onclick="doDepartmentAction('action','${departmentForm.mode}','${departmentForm.pstDepartment.pdId}')"><i class="icon-ok icon-white"></i>&nbsp;<span style="color: white;font-weight: bold;">Save</span></a>
 			</div>
 </fieldset>
