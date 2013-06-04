@@ -111,7 +111,7 @@ function doAction(mode,id){
             <div align="left">
             <strong>Job</strong>
             </div>
-            <div align="left" style="padding: 10px 60px">
+            <div align="left" style="padding: 10px 10px">
             	<span style="font-size: 13px;">เลขที่งาน</span> 
             	<span style="padding: 20px">
             	 <form:input path="pstJob.pjJobNo" cssStyle="height: 30;width:80px"/>
@@ -124,7 +124,7 @@ function doAction(mode,id){
             	
             	</span>  
             </div>
-             <div align="left" style="padding: 10px 60px">
+             <div align="left" style="padding: 10px 10px">
             	<span style="font-size: 13px;">รหัสลูกค้า</span> 
             	<span style="padding: 20px">
             	<!-- <input type="text" style="height: 30px;width:80px">  -->
@@ -136,16 +136,16 @@ function doAction(mode,id){
             	 <form:input path="pstJob.pjCustomerName" cssStyle="height: 30;"/>
             	</span>  
             	<span style="font-size: 13px;">หน่วยงาน</span> 
-            	<span style="padding: 20px"> 
+            	<span style="padding-left: 10px"> 
 	 			<form:input path="pstJob.pjCustomerDepartment" cssStyle="height: 30px;width:150px"/>
             	<!-- <input type="text" style="height: 30px;width:150px">  -->
             	 
             	</span>
             </div>
-             <div align="left" style="padding: 10px 60px">
+             <div align="left" style="padding: 10px 10px">
             	<span style="font-size: 13px;">คอนกรีตที่ใช้</span> 
             	<span style="padding: 20px"> 
-            	<form:select path="pstJob.pstConcrete.pconcreteId" cssStyle="width:100px">
+            	<form:select path="pstJob.pstConcrete.pconcreteId" cssStyle="width:170px">
 	    						      <form:option value="-1">---</form:option>
 	    					      	  <form:options itemValue="pconcreteId" itemLabel="pconcreteName" items="${pstConcretes}"/> 
 	    	    </form:select>	
@@ -157,7 +157,14 @@ function doAction(mode,id){
             	</span>  
 	    		<span style="font-size: 13px;">หมายเลขรถที่ใช้</span> 
 	    		<span style="padding: 20px">
-	    		 <form:input path="pstJob.prpNo" cssStyle="height: 30;width:80px"/>
+	    		<%--  <form:input path="pstJob.prpNo" cssStyle="height: 30;width:80px"/> --%>
+	    		 <form:select path="pstJob.prpNo"  cssStyle="width:100px">
+								  		 <option value="">---</option>
+								  		   <form:options itemValue="prpNo" itemLabel="prpNo" items="${pstRoadPumpNos}"/> 
+								  		<%--  <c:forEach items="${pstRoadPumpNos}" var="pstRoadPumpNo" varStatus="loop"> 
+								  		 	<option value="${pstRoadPumpNo.prpNo}">${pstRoadPumpNo.prpNo}</option>  
+								  		 </c:forEach>  --%>
+	    	        </form:select>
             	<!-- <input type="text" style="height: 30px;width:150px"/> -->  
             	</span>
             </div>
@@ -215,6 +222,7 @@ function doAction(mode,id){
 	    					<td align="left" width="50%">
 	    					
 	    					<a class="btn btn-primary" onclick="loadDynamicPage('job/new')"><i class="icon-plus-sign icon-white"></i>&nbsp;Create</a>&nbsp;
+	    					<a class="btn btn-info" onclick="loadDynamicPage('concrete/init')"><i class="icon-circle-arrow-up icon-white"></i>&nbsp;Manage คอนกรีต</a>&nbsp;
 	    					</td>
 	    					<td align="right" width="50%">  
 	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;<span id="pageElement">
@@ -237,14 +245,15 @@ function doAction(mode,id){
           		<tr> 
             		<th width="7%"><div class="th_class">เลขที่</div></th>
             		<th width="8%"><div class="th_class">วันที่</div></th> 
-            		<th width="25%"><div class="th_class">ชื่อลูกค้า</div></th> 
+            		<th width="15%"><div class="th_class">ชื่อลูกค้า</div></th> 
             		<th width="25%"><div class="th_class">หน่วยงาน</div></th>
             		<th width="10%"><div class="th_class">คอนกรีตที่ใช้</div></th> 
             		<th width="10%"><div class="th_class">จำนวนคิว</div></th> 
+            		<th width="10%"><div class="th_class">ยอดรวมสุทธิ</div></th> 
             		<th width="8%"><div class="th_class">Action</div></th> 
           		</tr>
         	</thead>
-        	<tbody>  
+        	<tbody>   
         	<c:if test="${not empty pstJobs}"> 
         	 <c:forEach items="${pstJobs}" var="pstJob" varStatus="loop">  
           	<tr>  
@@ -254,8 +263,12 @@ function doAction(mode,id){
             	<td>&nbsp;${pstJob.pjCustomerName}</td>
             	<td>&nbsp;${pstJob.pjCustomerDepartment}</td>
             	<td>&nbsp;${pstJob.pstConcrete.pconcreteName}</td>
-            	<td>xxx
-            	</td> 
+            	<td style="text-align: right;">&nbsp;<fmt:formatNumber  pattern="#,###,###,###.##"  
+     value="${pstJob.cubicAmount}" /> 
+            	</td>
+            	<td style="text-align: right;">&nbsp;<fmt:formatNumber   pattern="#,###,###,###.##"  
+     value="${pstJob.payAll}" />
+            	</td>
             	<td style="text-align: center;"> 
             	 <i title="Edit" onclick="loadDynamicPage('job/item/${pstJob.pjId}')" style="cursor: pointer;" class="icon-edit"></i>&nbsp;&nbsp;
             	 <i title="Delete" onclick="confirmDelete('delete','${pstJob.pjId}')" style="cursor: pointer;" class="icon-trash"></i>

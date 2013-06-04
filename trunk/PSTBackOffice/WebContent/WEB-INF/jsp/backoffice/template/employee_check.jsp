@@ -138,7 +138,7 @@ function test(){
             	</span>  
 	    		<span style="font-size: 13px;">เลือกเบอร์รถ</span> 
             	<span style="padding: 20px">
-            				<form:select path="pstEmployeeWorkMapping.prpNo" cssStyle="width:80px">
+            				<form:select path="pstEmployeeWorkMapping.prpNo" cssStyle="width:120px">
     						 	<form:option value="-1">---</form:option> 
     						 	<form:options items="${pstRoadPumpNos}" itemLabel="prpNo" itemValue="prpNo"></form:options> 
     						 </form:select> 
@@ -147,11 +147,12 @@ function test(){
 			 
 	    					<table border="0" width="100%" style="font-size: 13px">
 	    					<tbody><tr>
-	    					<td align="left" width="50%">  
+	    					<td align="left" width="70%">  
 	    					<a class="btn btn-info" onclick="loadDynamicPage('employee/init')"><i class="icon-circle-arrow-up icon-white"></i>&nbsp;Manage Employee</a>&nbsp;
 	    					<a class="btn btn-info" onclick="loadDynamicPage('employeeStatus/init')"><i class="icon-circle-arrow-up icon-white"></i>&nbsp;Manage Status</a>&nbsp;
+	    				<a class="btn btn-info" onclick="loadDynamicPage('position/init')"><i class="icon-circle-arrow-up icon-white"></i>&nbsp;Manage Position</a>&nbsp;
 	    				  <!-- <a class="btn btn-info" onclick="test()"><i class="icon-circle-arrow-up icon-white"></i>&nbsp;Ajax</a>&nbsp; -->
-	    					</td><td align="right" width="50%"> 
+	    					</td><td align="right" width="30%"> 
 	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;
 	    					<span id="pageElement">
 	    					<select name="employeeWorkMappingPageSelect" id="employeeWorkMappingPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select>
@@ -184,7 +185,7 @@ function test(){
             	<td>${pstEmployeeWorkMapping.weekdayCollection}</td>
             	<td>
             <%-- 	<form:select path="prpNos" cssStyle="width:80px"> --%>
-            	<select name="prpNos" style="width:80px">
+            	<select name="prpNos" style="width:120px">
             		<option value="-1">---</option>
             		 <c:forEach items="${pstRoadPumpNos}" var="pstRoadPumpNo" varStatus="loop1">  
             		 	 <c:if test="${pstRoadPumpNo.prpNo==pstEmployeeWorkMapping.prpNo}">

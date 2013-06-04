@@ -166,11 +166,6 @@ function searchPstDepartMent(){
             	<%-- <form:input path="pstBreakDown.pbdUid" cssStyle="height: 30;width:80px"/> --%>
             	 <input type="text" id="pdName" style="height: 30;width:300px">  
             	</span>  
-	    		<%-- <span style="font-size: 13px;">รายละเอียด</span> 
-            	<span style="padding: 20px">
-            	<form:input path="pstBreakDown.pbdName" cssStyle="height: 30;"/>
-            	  <input type="text" style="height: 30;"> 
-            	</span>   --%>
             </div>
 			</form>
 	    					<table border="0" width="100%" style="font-size: 13px">

@@ -21,6 +21,7 @@
 <title>PST BackOffice</title>
  <meta charset="UTF-8" />
         <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  -->
+<meta http-equiv="X-UA-Compatible" content="IE=7, IE=9"/>        
 <c:url var="url" value="/" />
 <c:url value="/logout" var="logoutUrl"/>
 <link rel="icon" href="<c:url value='/resources/images/favicon.ico'/>" type="image/x-icon" />
@@ -237,7 +238,7 @@ function openMailDialog(todo_id,todo_ref){
                       <li id="costs_link"><a onclick="togle_page('costs/init','costs_link')">Costs</a></li>
                       <li id="roadpump_link"><a onclick="togle_page('roadpump/init','roadpump_link')">Road pump</a></li>
                       <!--  <li id="maintenance_link"><a onclick="togle_page('maintenance/init','maintenance_link')">Maintenance</a></li> -->
-                      <li class="dropdown"> 
+                      <li class="dropdown" id="maintenance_link"> 
                       	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Maintenance<b class="caret"></b></a>
                       	<ul class="dropdown-menu">
                           <li><a href="javascript:void(0);"  onclick="togle_page('maintenance/page/maintenance_roadpump_search','maintenance_link')" style="text-align: left;">ตรวจสภาพรถ</a></li>
@@ -247,13 +248,20 @@ function openMailDialog(todo_id,todo_ref){
                          </ul>
                       </li>
                      <!--  <li  id="report_link"><a onclick="togle_page('report/init','report_link')">Report</a></li> -->
-                     <li class="dropdown"> 
+                     <li class="dropdown" id="report_link"> 
                       	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Report<b class="caret"></b></a>
                       	<ul class="dropdown-menu">
+                      	 <!--  <li><a  href="javascript:void(0);"  onclick="togle_page('report/page/report1','report_link')"  style="text-align: left;">สรุปบันทึกการขาด ลา มาสาย พนง.</a></li>
                           <li><a  href="javascript:void(0);" style="text-align: left;">ค่าคิวรถออกงานประจำวัน</a></li>
                           <li><a  href="javascript:void(0);" style="text-align: left;">รายงานการออกงานประจำวัน</a></li>
                           <li><a  href="javascript:void(0);" style="text-align: left;">สถิติเบรคดาวน์ประจำเดือน</a></li>
-                          <li><a  href="javascript:void(0);" style="text-align: left;">รายงานสรุปค่าคิวออกงานประจำเดือน</a></li>
+                          <li><a  href="javascript:void(0);" style="text-align: left;">รายงานสรุปค่าคิวออกงานประจำเดือน</a></li> -->
+                           <li><a  href="javascript:void(0);"  onclick="togle_page('report/page/report1','report_link')"  style="text-align: left;">สรุปค่าแรงพนักงานรายวัน</a></li>
+                          <li><a  href="javascript:void(0);"  onclick="togle_page('report/page/report2','report_link')"  style="text-align: left;">สรุปค่าคิวรถออกงานประจำเดือน</a></li>
+                          <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report3','report_link')"  style="text-align: left;">รายงานการออกงานประจำวัน</a></li>
+                          <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report4','report_link')"  style="text-align: left;">สถิติเบรคดาวน์ประจำเดือน</a></li>
+                         <!--  <li><a  href="javascript:void(0);" style="text-align: left;">รายงานสรุปค่าคิวออกงานประจำเดือน</a></li> -->
+                          
                          </ul>
                       </li>
                       <li class="dropdown">
