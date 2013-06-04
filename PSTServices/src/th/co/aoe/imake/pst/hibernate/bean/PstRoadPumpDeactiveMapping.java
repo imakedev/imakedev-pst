@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="PST_ROAD_PUMP_DEACTIVE_MAPPING")
+@Table(name="PST_ROAD_PUMP_DEACTIVE_MAPPING",schema="PST_DB")
 public class PstRoadPumpDeactiveMapping implements Serializable {
 	private static final long serialVersionUID = 1L;
 

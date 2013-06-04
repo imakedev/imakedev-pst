@@ -183,7 +183,7 @@ public class PstTitleResource  extends BaseResource {
 	@Override
 	protected Representation get(Variant variant) throws ResourceException {
 		// TODO Auto-generated method stub
-		System.out.println("sss");
+		//System.out.println("sss");
 		th.co.aoe.imake.pst.xstream.PstTitle  xbpsTerm =new th.co.aoe.imake.pst.xstream.PstTitle();
 		th.co.aoe.imake.pst.hibernate.bean.PstTitle pstTitle =new  th.co.aoe.imake.pst.hibernate.bean.PstTitle();
 		xbpsTerm.setPtId(1l);

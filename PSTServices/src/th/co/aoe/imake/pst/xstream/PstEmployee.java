@@ -35,6 +35,9 @@ public class PstEmployee extends VServiceXML implements Serializable {
 	//bi-directional many-to-one association to PstTitle
 	@XStreamAlias("pstTitle")
 	private PstTitle pstTitle;
+	
+	@XStreamAlias("pstRoadPump")
+	private PstRoadPump pstRoadPump;
 
 	//bi-directional many-to-one association to PstEmployeeWorkMapping
 	/*@OneToMany(mappedBy="pstEmployee")
@@ -123,6 +126,14 @@ public class PstEmployee extends VServiceXML implements Serializable {
 
 	public void setPstTitle(PstTitle pstTitle) {
 		this.pstTitle = pstTitle;
+	}
+
+	public PstRoadPump getPstRoadPump() {
+		return pstRoadPump;
+	}
+
+	public void setPstRoadPump(PstRoadPump pstRoadPump) {
+		this.pstRoadPump = pstRoadPump;
 	}
 
 	/*public List<PstEmployeeWorkMapping> getPstEmployeeWorkMappings() {

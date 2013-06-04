@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * 
  */
 @Entity
-@Table(name="PST_JOB_PAY")
+@Table(name="PST_JOB_PAY",schema="PST_DB")
 public class PstJobPay implements Serializable {
 	private static final long serialVersionUID = 1L;
 

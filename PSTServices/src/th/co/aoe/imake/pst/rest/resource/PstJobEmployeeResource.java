@@ -11,9 +11,15 @@ import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.springframework.beans.BeanUtils;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import th.co.aoe.imake.pst.constant.ServiceConstant;
 import th.co.aoe.imake.pst.managers.PSTCommonService;
 import th.co.aoe.imake.pst.managers.PstJobEmployeeService;
+import th.co.aoe.imake.pst.xstream.PstBrand;
+import th.co.aoe.imake.pst.xstream.PstModel;
+import th.co.aoe.imake.pst.xstream.PstRoadPumpStatus;
+import th.co.aoe.imake.pst.xstream.PstRoadPumpType;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
 public class PstJobEmployeeResource  extends BaseResource {
@@ -22,10 +28,15 @@ public class PstJobEmployeeResource  extends BaseResource {
 	private PSTCommonService pstCommonService;
 	private PstJobEmployeeService pstJobEmployeeService; 
 	private com.thoughtworks.xstream.XStream xstream; 
-	private String[] ignore_id={"id","pstEmployee","pstJob"};  
-	private String[] ignore_employee_id={"pstPosition","pstTitle"};
+	private String[] ignore_id={"id","pstEmployee","pstJob","pstRoadPump"};  
+	private String[] ignore_employee_id={"pstPosition","pstTitle","pstRoadPump"};
 	private String[] ignore_job_id={"pstConcrete"};
+	private String[] ignore_roadpump_id={"pstBrandRoad","pstBrandPump","pstModelRoad","pstModelPump","pstRoadPumpStatus","pstRoadPumpType",
+			"pstBrandRoadList","pstRoadPumpType","pstBrandRoadList","pstBrandPumpList","pstModelRoadList","pstModelPumpList","pstRoadPumpStatusList",
+			"pstRoadPumpTypeList"};
 	 
+ 
+	
 	public PstJobEmployeeResource() {
 		super();
 		logger.debug("into constructor PstJobEmployeeResource");
@@ -66,8 +77,8 @@ public class PstJobEmployeeResource  extends BaseResource {
 						th.co.aoe.imake.pst.hibernate.bean.PstJobEmployeePK pk =new th.co.aoe.imake.pst.hibernate.bean.PstJobEmployeePK();
 						pk.setPeId((xbpsTerm.getPeId()!=null && xbpsTerm.getPeId().intValue()!=0 && xbpsTerm.getPeId().intValue()!=-1)?xbpsTerm.getPeId():null);
 						pk.setPjId((xbpsTerm.getPjId()!=null && xbpsTerm.getPjId().intValue()!=0 && xbpsTerm.getPjId().intValue()!=-1)?xbpsTerm.getPjId():null);
+						pk.setPrpId((xbpsTerm.getPrpId()!=null && xbpsTerm.getPrpId().intValue()!=0 && xbpsTerm.getPrpId().intValue()!=-1)?xbpsTerm.getPrpId():null);
 						bpsTerm.setId(pk);
-					
 
 						if(serviceName.equals(ServiceConstant.PST_JOB_EMPLOYEE_SAVE)){
 							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
@@ -83,7 +94,7 @@ public class PstJobEmployeeResource  extends BaseResource {
 						}else if(serviceName.equals(ServiceConstant.PST_JOB_EMPLOYEE_SEARCH)){
 						//	Pagging page = xbpsTerm.getPagging(); 
 							@SuppressWarnings("rawtypes")		
-							List result = (List) pstJobEmployeeService.listPstJobEmployees(xbpsTerm.getPjId(), xbpsTerm.getPeId());
+							List result = (List) pstJobEmployeeService.listPstJobEmployees(xbpsTerm.getPjId(), xbpsTerm.getPeId(),xbpsTerm.getPrpId());
 					 
 								@SuppressWarnings("unchecked")
 								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJobEmployee> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJobEmployee>) result;
@@ -138,6 +149,7 @@ public class PstJobEmployeeResource  extends BaseResource {
 			if(missManual.getId()!=null){
 				xmissManual.setPeId(missManual.getId().getPeId());
 				xmissManual.setPjId(missManual.getId().getPjId());
+				xmissManual.setPrpId(missManual.getId().getPrpId());
 			}  
 			if(missManual.getPstEmployee()!=null){
 				th.co.aoe.imake.pst.xstream.PstEmployee xpstEmployee =new th.co.aoe.imake.pst.xstream.PstEmployee (); 
@@ -153,6 +165,13 @@ public class PstJobEmployeeResource  extends BaseResource {
 					BeanUtils.copyProperties(missManual.getPstEmployee().getPstTitle(),xpstTitle);
 					xpstEmployee.setPstTitle(xpstTitle);
 				}
+				if(missManual.getPstEmployee().getPstRoadPump()!=null){
+					th.co.aoe.imake.pst.xstream.PstRoadPump xpstRoadPump =new th.co.aoe.imake.pst.xstream.PstRoadPump (); 
+					xpstRoadPump.setPrpId(missManual.getPstEmployee().getPstRoadPump().getPrpId());
+					xpstRoadPump.setPrpNo(missManual.getPstEmployee().getPstRoadPump().getPrpNo());
+					//BeanUtils.copyProperties(missManual.getPstEmployee().getPstRoadPump(),xpstRoadPump);
+					xpstEmployee.setPstRoadPump(xpstRoadPump);
+				}
 				xmissManual.setPstEmployee(xpstEmployee);
 			}
 			if(missManual.getPstJob()!=null){
@@ -160,6 +179,13 @@ public class PstJobEmployeeResource  extends BaseResource {
 				BeanUtils.copyProperties(missManual.getPstJob(), xpstJob,ignore_job_id); 
 				xmissManual.setPstJob(xpstJob);
 			} 
+			if(missManual.getPstRoadPump()!=null){
+				th.co.aoe.imake.pst.xstream.PstRoadPump xpstRoadPump =new th.co.aoe.imake.pst.xstream.PstRoadPump(); 
+				BeanUtils.copyProperties(missManual.getPstRoadPump(), xpstRoadPump,ignore_roadpump_id); 
+				xmissManual.setPstRoadPump(xpstRoadPump);
+				
+			}
+				
 			xmissManual.setPagging(null);
 			xntcCalendars.add(xmissManual);
 		} 

@@ -6,7 +6,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="role") 
+@Table(name="role",schema="PST_DB") 
 public class Role {
 	
 	@Id

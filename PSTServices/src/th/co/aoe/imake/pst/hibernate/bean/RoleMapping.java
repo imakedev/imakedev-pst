@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="role_mapping")
+@Table(name="role_mapping",schema="PST_DB")
 public class RoleMapping  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/*@Column(name="rc_id")

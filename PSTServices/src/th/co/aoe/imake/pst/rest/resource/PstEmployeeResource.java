@@ -23,7 +23,7 @@ public class PstEmployeeResource  extends BaseResource {
 	private PSTCommonService pstCommonService;
 	private PstEmployeeService pstEmployeeService; 
 	private com.thoughtworks.xstream.XStream xstream;  
-	private static final String[] ignore=	 {"pstPosition","pstTitle"};
+	private static final String[] ignore=	 {"pstPosition","pstTitle","pstRoadPump"};
 	public PstEmployeeResource() {
 		super();
 		logger.debug("into constructor PstEmployeeResource");
@@ -67,6 +67,14 @@ public class PstEmployeeResource  extends BaseResource {
 							bpsTerm.setPstPosition(pstPosition);
 						}
 						
+						if(xbpsTerm.getPstRoadPump()!=null && xbpsTerm.getPstRoadPump().getPrpId()!=null && xbpsTerm.getPstRoadPump().getPrpId().intValue()!=0)
+						{
+							th.co.aoe.imake.pst.hibernate.bean.PstRoadPump pstRoadPump = new th.co.aoe.imake.pst.hibernate.bean.PstRoadPump(); 
+							pstRoadPump.setPrpId(xbpsTerm.getPstRoadPump().getPrpId());
+							//BeanUtils.copyProperties(xbpsTerm.getPstRoadPump(),pstRoadPump); 	
+							bpsTerm.setPstRoadPump(pstRoadPump);
+						}
+						System.out.println("bpsTerm.getPstRoadPump()->"+bpsTerm.getPstRoadPump());
 						if(xbpsTerm.getPstTitle()!=null && xbpsTerm.getPstTitle().getPtId()!=null && xbpsTerm.getPstTitle().getPtId().intValue()!=0)
 						{
 							th.co.aoe.imake.pst.hibernate.bean.PstTitle pstTitle = new th.co.aoe.imake.pst.hibernate.bean.PstTitle(); 
@@ -90,6 +98,14 @@ public class PstEmployeeResource  extends BaseResource {
 									BeanUtils.copyProperties(pstEmployee.getPstTitle(),pstTitle); 	
 									xbpsTerm.setPstTitle(pstTitle);
 								}
+								if(pstEmployee.getPstRoadPump()!=null && pstEmployee.getPstRoadPump().getPrpId()!=null && pstEmployee.getPstRoadPump().getPrpId().intValue()!=0)
+								{
+									th.co.aoe.imake.pst.xstream.PstRoadPump pstRoadPump = new th.co.aoe.imake.pst.xstream.PstRoadPump(); 
+									//BeanUtils.copyProperties(pstEmployee.getPstRoadPump(),pstRoadPump); 	
+									pstRoadPump.setPrpId(pstEmployee.getPstRoadPump().getPrpId());
+									pstRoadPump.setPrpNo(pstEmployee.getPstRoadPump().getPrpNo());
+									xbpsTerm.setPstRoadPump(pstRoadPump);
+								}
 							}
 						//logger.debug(" object return ="+ntcCalendarReturn);
 						VResultMessage vresultMessage = new VResultMessage();
@@ -108,10 +124,12 @@ public class PstEmployeeResource  extends BaseResource {
 							return returnUpdateRecord(entity,xbpsTerm,peId.intValue());
 						} else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_UPDATE)){
 						//	java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
-							if(!(bpsTerm.getPstPosition()!=null && bpsTerm.getPstPosition().getPpId()!=null && bpsTerm.getPstPosition().getPpId().intValue()!=-1))
+							if(!(bpsTerm.getPstPosition()!=null && bpsTerm.getPstPosition().getPpId()!=null && bpsTerm.getPstPosition().getPpId().intValue()!=0))
 								bpsTerm.setPstPosition(null);
-							if(!(bpsTerm.getPstTitle()!=null && bpsTerm.getPstTitle().getPtId()!=null && bpsTerm.getPstTitle().getPtId().intValue()!=-1))
+							if(!(bpsTerm.getPstTitle()!=null && bpsTerm.getPstTitle().getPtId()!=null && bpsTerm.getPstTitle().getPtId().intValue()!=0))
 								bpsTerm.setPstTitle(null);
+							if(!(bpsTerm.getPstRoadPump()!=null && bpsTerm.getPstRoadPump().getPrpId()!=null && bpsTerm.getPstRoadPump().getPrpId().intValue()!=0))
+								bpsTerm.setPstRoadPump(null);
 							//System.out.println(bpsTerm.getPstPosition());
 							int updateRecord=pstCommonService.update(bpsTerm);
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
@@ -204,6 +222,13 @@ public class PstEmployeeResource  extends BaseResource {
 				th.co.aoe.imake.pst.xstream.PstTitle pstTitle = new th.co.aoe.imake.pst.xstream.PstTitle(); 
 				BeanUtils.copyProperties(missManual.getPstTitle(),pstTitle); 	
 				xmissManual.setPstTitle(pstTitle);
+			}
+			if(missManual.getPstRoadPump()!=null && missManual.getPstRoadPump().getPrpId()!=null && missManual.getPstRoadPump().getPrpId().intValue()!=0)
+			{
+				th.co.aoe.imake.pst.xstream.PstRoadPump pstRoadPump = new th.co.aoe.imake.pst.xstream.PstRoadPump(); 
+				pstRoadPump.setPrpId(missManual.getPstRoadPump().getPrpId());
+				//BeanUtils.copyProperties(missManual.getPstRoadPump(),pstRoadPump); 	
+				xmissManual.setPstRoadPump(pstRoadPump);
 			}
 			xmissManual.setPagging(null);
 			xntcCalendars.add(xmissManual);

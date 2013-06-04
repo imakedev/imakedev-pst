@@ -78,6 +78,7 @@
 		<property name="pstCommonService" ref="pstCommonService"></property>
 		<property name="pstEmployeeStatusService" ref="pstEmployeeStatusService"></property>  
 		<property name="xstream" ref="xstream"></property>
+		<property name="jsonXstream" ref="jsonXstream"></property>
 	</bean>
 	<bean id="pstEmployeeWorkMappingResource" 
 		class="th.co.aoe.imake.pst.rest.resource.PstEmployeeWorkMappingResource"
@@ -94,7 +95,21 @@
 		<property name="pstPositionService" ref="pstPositionService"></property>  
 		<property name="xstream" ref="xstream"></property>
 	</bean>
-	
+	<bean id="pstDepartmentResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstDepartmentResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstDepartmentService" ref="pstDepartmentService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>
+	<bean id="pstWorkTypeResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstWorkTypeResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstWorkTypeService" ref="pstWorkTypeService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>
+	 
 	<bean id="pstTitleResource" 
 		class="th.co.aoe.imake.pst.rest.resource.PstTitleResource"
 		scope="prototype"> 

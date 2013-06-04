@@ -19,6 +19,8 @@ public class PstJobEmployee extends VServiceXML implements Serializable {
 	private Long pjId;
 
 	private Long peId;
+	
+	private Long prpId;
 
 	private BigDecimal pjeAmount;
 
@@ -33,18 +35,22 @@ public class PstJobEmployee extends VServiceXML implements Serializable {
 	//bi-directional many-to-one association to PstJob
 	@XStreamAlias("pstJob")
 	private PstJob pstJob;
+	
+	@XStreamAlias("pstRoadPump")
+	private PstRoadPump pstRoadPump;
 
 	public PstJobEmployee() {
 	}
 
 	 
 
-	public PstJobEmployee(Long pjId, Long peId, BigDecimal pjeAmount,
+	public PstJobEmployee(Long pjId, Long peId, Long prpId,BigDecimal pjeAmount,
 			String pjeExcInc, BigDecimal pjePercentCubic,
 			PstEmployee pstEmployee, PstJob pstJob) {
 		super();
 		this.pjId = pjId;
 		this.peId = peId;
+		this.prpId = prpId;
 		this.pjeAmount = pjeAmount;
 		this.pjeExcInc = pjeExcInc;
 		this.pjePercentCubic = pjePercentCubic;
@@ -116,6 +122,30 @@ public class PstJobEmployee extends VServiceXML implements Serializable {
 
 	public void setPeId(Long peId) {
 		this.peId = peId;
+	}
+
+
+
+	public PstRoadPump getPstRoadPump() {
+		return pstRoadPump;
+	}
+
+
+
+	public void setPstRoadPump(PstRoadPump pstRoadPump) {
+		this.pstRoadPump = pstRoadPump;
+	}
+
+
+
+	public Long getPrpId() {
+		return prpId;
+	}
+
+
+
+	public void setPrpId(Long prpId) {
+		this.prpId = prpId;
 	}
 
 }

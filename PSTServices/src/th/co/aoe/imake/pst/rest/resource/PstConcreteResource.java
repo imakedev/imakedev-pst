@@ -14,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import th.co.aoe.imake.pst.constant.ServiceConstant;
 import th.co.aoe.imake.pst.managers.PSTCommonService;
 import th.co.aoe.imake.pst.managers.PstConcreteService;
+import th.co.aoe.imake.pst.xstream.common.Pagging;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
 public class PstConcreteResource extends BaseResource {
@@ -59,7 +60,7 @@ public class PstConcreteResource extends BaseResource {
 						th.co.aoe.imake.pst.hibernate.bean.PstConcrete bpsTerm = new th.co.aoe.imake.pst.hibernate.bean.PstConcrete();
 						BeanUtils.copyProperties(xbpsTerm,bpsTerm); 
 						if(serviceName.equals(ServiceConstant.PST_CONCRETE_FIND_BY_ID)){
-							/*Object obj= pstCommonService.findById(bpsTerm.getClass(), xbpsTerm.getPtId());
+							Object obj= pstCommonService.findById(bpsTerm.getClass(), xbpsTerm.getPconcreteId());
 							if(obj!=null){
 								th.co.aoe.imake.pst.hibernate.bean.PstConcrete pstConcrete = (th.co.aoe.imake.pst.hibernate.bean.PstConcrete)obj;
 								BeanUtils.copyProperties(pstConcrete, xbpsTerm) ;
@@ -72,17 +73,15 @@ public class PstConcreteResource extends BaseResource {
 								xntcCalendars.add(xbpsTerm);
 								vresultMessage.setResultListObj(xntcCalendars);
 							}
-							return getRepresentation(entity, vresultMessage, xstream);*/
+							return getRepresentation(entity, vresultMessage, xstream);
 						}else if(serviceName.equals(ServiceConstant.PST_CONCRETE_SAVE)){
-							/*java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
-							Long ptId=0l;
-							ptId=(Long) (pstCommonService.save(bpsTerm));
-							xbpsTerm.setPtId(ptId);
-							return returnUpdateRecord(entity,xbpsTerm,ptId.intValue());*/
+							Long pconcreteId=0l;
+							pconcreteId=(Long) (pstCommonService.save(bpsTerm));
+							xbpsTerm.setPconcreteId(pconcreteId);
+							return returnUpdateRecord(entity,xbpsTerm,pconcreteId.intValue());
 						} else if(serviceName.equals(ServiceConstant.PST_CONCRETE_UPDATE)){
-							/*java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							int updateRecord=pstCommonService.update(bpsTerm);
-							return returnUpdateRecord(entity,xbpsTerm,updateRecord);*/
+							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 							
 						}
 						else if(serviceName.equals(ServiceConstant.PST_CONCRETE_ITEMS_DELETE)){
@@ -99,14 +98,15 @@ public class PstConcreteResource extends BaseResource {
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);*/
 						}
 						else if(serviceName.equals(ServiceConstant.PST_CONCRETE_DELETE)){
-								/*java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
-								int updateRecord=pstCommonService.delete(bpsTerm);
-								return returnUpdateRecord(entity,xbpsTerm,updateRecord);*/
+							int updateRecord=pstCommonService.delete(bpsTerm);
+							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}else if(serviceName.equals(ServiceConstant.PST_CONCRETE_SEARCH)){
-							/*Pagging page = xbpsTerm.getPagging(); 
-							
+							Pagging page = xbpsTerm.getPagging(); 
+							System.out.println(" into search");
+							//@SuppressWarnings({ "rawtypes" })
 							List result = (List) pstConcreteService.searchPstConcrete(bpsTerm, page);
 							if (result != null && result.size() == 2) {
+								@SuppressWarnings("unchecked")
 								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstConcrete> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstConcrete>) result
 										.get(0);
 								String faqs_size = (String) result.get(1);
@@ -119,7 +119,7 @@ public class PstConcreteResource extends BaseResource {
 								}
 								vresultMessage.setResultListObj(xntcCalendars);
 								return getRepresentation(entity, vresultMessage, xstream);
-							}*/
+							}
 						}else if(serviceName.equals(ServiceConstant.PST_CONCRETE_LIST)){
 							@SuppressWarnings("rawtypes")
 							List result = pstConcreteService.listPstConcretes();

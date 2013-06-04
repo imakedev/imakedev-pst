@@ -22,7 +22,7 @@ public class PstJobResource  extends BaseResource {
 
 	private static final Logger logger = Logger.getLogger(ServiceConstant.LOG_APPENDER);
 	private static String[] ignore={"pstConcrete"};  
-	
+	private static final String[] ignore_employee=	 {"pstPosition","pstTitle","pstRoadPump"};
 	private PSTCommonService pstCommonService;
 	private PstJobService pstJobService; 
 	private com.thoughtworks.xstream.XStream xstream; 
@@ -129,16 +129,18 @@ public class PstJobResource  extends BaseResource {
 							@SuppressWarnings("rawtypes")
 							List result = (List) pstJobService.searchPstJob(bpsTerm,xbpsTerm.getPrpNo(), page);
 							if (result != null && result.size() == 2) { 
-								java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJob> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJob>) result
+								/*java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJob> ntcCalendars = (java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstJob>) result
+										.get(0);*/
+								List<th.co.aoe.imake.pst.xstream.PstJob> xntcCalendars  = (java.util.ArrayList<th.co.aoe.imake.pst.xstream.PstJob>) result
 										.get(0);
 								String faqs_size = (String) result.get(1);
 								VResultMessage vresultMessage = new VResultMessage();
-								List<th.co.aoe.imake.pst.xstream.PstJob> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstJob>();
+							//	List<th.co.aoe.imake.pst.xstream.PstJob> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstJob>();
 								if (faqs_size != null && !faqs_size.equals(""))
 									vresultMessage.setMaxRow(faqs_size);
-								if (ntcCalendars != null && ntcCalendars.size() > 0) {
-									xntcCalendars = getxPstJobObject(ntcCalendars);
-								}
+								//if (ntcCalendars != null && ntcCalendars.size() > 0) {
+								//	xntcCalendars = getxPstJobObject(ntcCalendars);
+								//}
 								vresultMessage.setResultListObj(xntcCalendars);
 								return getRepresentation(entity, vresultMessage, xstream);
 							}
@@ -211,7 +213,7 @@ public class PstJobResource  extends BaseResource {
 	@Override
 	protected Representation get(Variant variant) throws ResourceException {
 		// TODO Auto-generated method stub
-		System.out.println("sss");
+		//System.out.println("sss");
 		th.co.aoe.imake.pst.xstream.PstJob  xbpsTerm =new th.co.aoe.imake.pst.xstream.PstJob();
 		th.co.aoe.imake.pst.hibernate.bean.PstJob pstJob =new  th.co.aoe.imake.pst.hibernate.bean.PstJob();
 		xbpsTerm.setPjId(1l);
@@ -259,7 +261,28 @@ public class PstJobResource  extends BaseResource {
 			th.co.aoe.imake.pst.xstream.PstEmployee xpstEmployee =new th.co.aoe.imake.pst.xstream.PstEmployee (); 
 			pstEmployee.setPstPosition(null);
 			pstEmployee.setPstTitle(null);
-			BeanUtils.copyProperties(pstEmployee, xpstEmployee);
+			//BeanUtils.copyProperties(pstEmployee, xpstEmployee);
+			BeanUtils.copyProperties(pstEmployee, xpstEmployee,ignore_employee) ;
+			if(pstEmployee.getPstPosition()!=null && pstEmployee.getPstPosition().getPpId()!=null && pstEmployee.getPstPosition().getPpId().intValue()!=0)
+			{
+				th.co.aoe.imake.pst.xstream.PstPosition pstPosition = new th.co.aoe.imake.pst.xstream.PstPosition(); 
+				BeanUtils.copyProperties(pstEmployee.getPstPosition(),pstPosition); 	
+				xpstEmployee.setPstPosition(pstPosition);
+			}
+			if(pstEmployee.getPstTitle()!=null && pstEmployee.getPstTitle().getPtId()!=null && pstEmployee.getPstTitle().getPtId().intValue()!=0)
+			{
+				th.co.aoe.imake.pst.xstream.PstTitle pstTitle = new th.co.aoe.imake.pst.xstream.PstTitle(); 
+				BeanUtils.copyProperties(pstEmployee.getPstTitle(),pstTitle); 	
+				xpstEmployee.setPstTitle(pstTitle);
+			}
+			if(pstEmployee.getPstRoadPump()!=null && pstEmployee.getPstRoadPump().getPrpId()!=null && pstEmployee.getPstRoadPump().getPrpId().intValue()!=0)
+			{
+				th.co.aoe.imake.pst.xstream.PstRoadPump pstRoadPump = new th.co.aoe.imake.pst.xstream.PstRoadPump(); 
+				//BeanUtils.copyProperties(pstEmployee.getPstRoadPump(),pstRoadPump); 	
+				pstRoadPump.setPrpId(pstEmployee.getPstRoadPump().getPrpId());
+				pstRoadPump.setPrpNo(pstEmployee.getPstRoadPump().getPrpNo());
+				xpstEmployee.setPstRoadPump(pstRoadPump);
+			}
 			xpstEmployees.add(xpstEmployee);
 		}
 		return xpstEmployees;

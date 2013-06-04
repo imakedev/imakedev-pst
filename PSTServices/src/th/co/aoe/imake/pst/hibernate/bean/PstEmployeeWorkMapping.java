@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="PST_EMPLOYEE_WORK_MAPPING")
+@Table(name="PST_EMPLOYEE_WORK_MAPPING",schema="PST_DB")
 public class PstEmployeeWorkMapping implements Serializable {
 	private static final long serialVersionUID = 1L;
 
