@@ -17,11 +17,25 @@ public class PstObject extends VServiceXML implements Serializable {
 		this.query = query;
 	}
 	private String[] query;
+	private String[] queryUpdate;
+	private String[] queryDelete;
 	public String[] getQuery() {
 		return query;
 	}
 	public void setQuery(String[] query) {
 		this.query = query;
+	}
+	public String[] getQueryUpdate() {
+		return queryUpdate;
+	}
+	public void setQueryUpdate(String[] queryUpdate) {
+		this.queryUpdate = queryUpdate;
+	}
+	public String[] getQueryDelete() {
+		return queryDelete;
+	}
+	public void setQueryDelete(String[] queryDelete) {
+		this.queryDelete = queryDelete;
 	}
 	
 

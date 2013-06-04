@@ -60,7 +60,7 @@ public class PstWorkTypeResource extends BaseResource {
 						String serviceName = xbpsTerm.getServiceName();
 						th.co.aoe.imake.pst.hibernate.bean.PstWorkType bpsTerm = new th.co.aoe.imake.pst.hibernate.bean.PstWorkType();
 						BeanUtils.copyProperties(xbpsTerm,bpsTerm,ignored); 
-						if(xbpsTerm.getPstDepartment()!=null){
+						if(xbpsTerm.getPstDepartment()!=null && xbpsTerm.getPstDepartment().getPdId()!=null && xbpsTerm.getPstDepartment().getPdId().intValue()!=-1){
 							th.co.aoe.imake.pst.hibernate.bean.PstDepartment pstDepartment = new th.co.aoe.imake.pst.hibernate.bean.PstDepartment();
 							BeanUtils.copyProperties(xbpsTerm.getPstDepartment(),pstDepartment); 
 							bpsTerm.setPstDepartment(pstDepartment);

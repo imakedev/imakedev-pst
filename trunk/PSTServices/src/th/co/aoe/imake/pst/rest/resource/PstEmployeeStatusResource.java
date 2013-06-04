@@ -47,7 +47,7 @@ public class PstEmployeeStatusResource  extends BaseResource {
 			throws ResourceException {
 		// TODO Auto-generated method stub
 		
-		 System.out.println("getMediaType->"+entity.getMediaType());
+		 //System.out.println("getMediaType->"+entity.getMediaType());
 		logger.debug("into Post PSTCommonResource 2"); 
 		String mediaType=entity.getMediaType().toString();
 		 if(mediaType.indexOf("json")!=-1)
@@ -63,7 +63,7 @@ public class PstEmployeeStatusResource  extends BaseResource {
 			if (ntcCalendarObj != null) {
 				xbpsTerm = (th.co.aoe.imake.pst.xstream.PstEmployeeStatus) ntcCalendarObj;
 				if (xbpsTerm != null) { 
-					System.out.println("x->"+xbpsTerm);
+					//System.out.println("x->"+xbpsTerm);
 					if (xbpsTerm.getServiceName() != null
 							&& !xbpsTerm.getServiceName().equals("")) {
 						
@@ -197,7 +197,7 @@ public class PstEmployeeStatusResource  extends BaseResource {
 	protected Representation get(Variant variant) throws ResourceException {
 		// TODO Auto-generated method stub
 		//System.out.println("sss");
-		System.out.println("getMediaType get->"+variant.getMediaType());
+		//System.out.println("getMediaType get->"+variant.getMediaType());
 		th.co.aoe.imake.pst.xstream.PstEmployeeStatus  xbpsTerm =new th.co.aoe.imake.pst.xstream.PstEmployeeStatus();
 		th.co.aoe.imake.pst.hibernate.bean.PstEmployeeStatus pstEmployeeStatus =new  th.co.aoe.imake.pst.hibernate.bean.PstEmployeeStatus();
 		xbpsTerm.setPesId(1l);

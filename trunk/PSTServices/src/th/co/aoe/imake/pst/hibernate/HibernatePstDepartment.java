@@ -30,25 +30,26 @@ public class HibernatePstDepartment  extends HibernateCommon implements PstDepar
 	}
 	private int getSize(Session session, PstDepartment instance) throws Exception{
 		try {
-			/*String pcUid=instance.getPcUid();
-			String pcName=instance.getPcName();*/
+			/*String pcUid=instance.getPcUid(); */
+			String pdName=instance.getPdName();
 			
 			Query query=null;
 			
 			StringBuffer sb =new StringBuffer(" select count(pstDepartment) from PstDepartment pstDepartment ");
 			
-			//boolean iscriteria = false;
+			boolean iscriteria = false;
 			
 			/*if(pcUid !=null && pcUid.trim().length()> 0){  
 				//criteria.add(Expression.eq("megId", megId));	
 				sb.append(iscriteria?(" and lcase(pstDepartment.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"):(" where lcase(pstDepartment.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"));
 				  iscriteria = true;
 			}
-			if(pcName !=null && pcName.trim().length() > 0){  
-				//criteria.add(Expression.eq("megId", megId));	
-				sb.append(iscriteria?(" and lcase(pstDepartment.pcName) like '%"+pcName.trim().toLowerCase()+"%'"):(" where lcase(pstDepartment.pcName) like '%"+pcName.trim().toLowerCase()+"%'"));
-				  iscriteria = true;
-			}*/
+			*/
+			if(pdName !=null && pdName.trim().length() > 0){  
+					//criteria.add(Expression.eq("megId", megId));	
+					sb.append(iscriteria?(" and lcase(pstDepartment.pdName) like '%"+pdName.trim().toLowerCase()+"%'"):(" where lcase(pstDepartment.pdName) like '%"+pdName.trim().toLowerCase()+"%'"));
+					  iscriteria = true;
+				}
 			
 			
 			  query =session.createQuery(sb.toString());
@@ -73,19 +74,19 @@ public class HibernatePstDepartment  extends HibernateCommon implements PstDepar
 				Query query = null;
 			
 				StringBuffer sb =new StringBuffer(" select pstDepartment from PstDepartment pstDepartment ");
+				String pdName=instance.getPdName();
+				/* */boolean iscriteria = false;
 				
-				/*boolean iscriteria = false;
-				
-				if(pcUid !=null && pcUid.trim().length()> 0){  
+				/*if(pcUid !=null && pcUid.trim().length()> 0){  
 					//criteria.add(Expression.eq("megId", megId));	
 					sb.append(iscriteria?(" and lcase(pstDepartment.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"):(" where lcase(pstDepartment.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"));
 					  iscriteria = true;
-				}
-				if(pcName !=null && pcName.trim().length() > 0){  
-					//criteria.add(Expression.eq("megId", megId));	
-					sb.append(iscriteria?(" and lcase(pstDepartment.pcName) like '%"+pcName.trim().toLowerCase()+"%'"):(" where lcase(pstDepartment.pcName) like '%"+pcName.trim().toLowerCase()+"%'"));
-					  iscriteria = true;
 				}*/
+				if(pdName !=null && pdName.trim().length() > 0){  
+					//criteria.add(Expression.eq("megId", megId));	
+					sb.append(iscriteria?(" and lcase(pstDepartment.pdName) like '%"+pdName.trim().toLowerCase()+"%'"):(" where lcase(pstDepartment.pdName) like '%"+pdName.trim().toLowerCase()+"%'"));
+					  iscriteria = true;
+				}
 				if(pagging.getSortBy()!=null && pagging.getSortBy().length()>0){
 						sb.append( " order by pstDepartment."+pagging.getOrderBy()+" "+pagging.getSortBy().toLowerCase());
 				}			

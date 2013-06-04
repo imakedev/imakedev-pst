@@ -59,6 +59,7 @@ public class PstWorkType extends VServiceXML implements Serializable {
 	private PstDepartment pstDepartment;
 
 	public PstWorkType() {
+		pstDepartment=new PstDepartment(-1l,null);
 	}
 
 	public Long getPwtId() {

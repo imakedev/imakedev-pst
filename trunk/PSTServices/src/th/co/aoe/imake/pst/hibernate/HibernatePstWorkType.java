@@ -31,25 +31,24 @@ public class HibernatePstWorkType  extends HibernateCommon implements PstWorkTyp
 	}
 	private int getSize(Session session, PstWorkType instance) throws Exception{
 		try {
-			/*String pcUid=instance.getPcUid();
-			String pcName=instance.getPcName();*/
-			
+			Long pdId=(instance.getPstDepartment()!=null && instance.getPstDepartment().getPdId()!=null && 
+					instance.getPstDepartment().getPdId().intValue()!=-1)?instance.getPstDepartment().getPdId():null;
+			String pwtName=instance.getPwtName();
 			Query query=null;
 			
 			StringBuffer sb =new StringBuffer(" select count(pstWorkType) from PstWorkType pstWorkType ");
 			
-			//boolean iscriteria = false;
-			
-			/*if(pcUid !=null && pcUid.trim().length()> 0){  
+			boolean iscriteria = false;
+			if(pdId !=null ){  
 				//criteria.add(Expression.eq("megId", megId));	
-				sb.append(iscriteria?(" and lcase(pstWorkType.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"):(" where lcase(pstWorkType.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"));
+				sb.append(iscriteria?(" and pstWorkType.pstDepartment.pdId="+pdId+""):(" where pstWorkType.pstDepartment.pdId="+pdId+""));
 				  iscriteria = true;
 			}
-			if(pcName !=null && pcName.trim().length() > 0){  
+			if(pwtName !=null && pwtName.trim().length() > 0){  
 				//criteria.add(Expression.eq("megId", megId));	
-				sb.append(iscriteria?(" and lcase(pstWorkType.pcName) like '%"+pcName.trim().toLowerCase()+"%'"):(" where lcase(pstWorkType.pcName) like '%"+pcName.trim().toLowerCase()+"%'"));
+				sb.append(iscriteria?(" and lcase(pstWorkType.pwtName) like '%"+pwtName.trim().toLowerCase()+"%'"):(" where lcase(pstWorkType.pwtName) like '%"+pwtName.trim().toLowerCase()+"%'"));
 				  iscriteria = true;
-			}*/
+			}
 			
 			
 			  query =session.createQuery(sb.toString());
@@ -69,24 +68,25 @@ public class HibernatePstWorkType  extends HibernateCommon implements PstWorkTyp
 			ArrayList  transList = new ArrayList ();
 			Session session = sessionAnnotationFactory.getCurrentSession();
 			try {
-				/*String pcUid=instance.getPcUid();
-				String pcName=instance.getPcName();*/
+				Long pdId=(instance.getPstDepartment()!=null && instance.getPstDepartment().getPdId()!=null && 
+						instance.getPstDepartment().getPdId().intValue()!=-1)?instance.getPstDepartment().getPdId():null;
+				String pwtName=instance.getPwtName();
 				Query query = null;
 			
 				StringBuffer sb =new StringBuffer(" select pstWorkType from PstWorkType pstWorkType ");
 				
-				/*boolean iscriteria = false;
+				boolean iscriteria = false;
 				
-				if(pcUid !=null && pcUid.trim().length()> 0){  
+				if(pdId !=null ){  
 					//criteria.add(Expression.eq("megId", megId));	
-					sb.append(iscriteria?(" and lcase(pstWorkType.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"):(" where lcase(pstWorkType.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"));
+					sb.append(iscriteria?(" and pstWorkType.pstDepartment.pdId="+pdId+""):(" where pstWorkType.pstDepartment.pdId="+pdId+""));
 					  iscriteria = true;
 				}
-				if(pcName !=null && pcName.trim().length() > 0){  
+				if(pwtName !=null && pwtName.trim().length() > 0){  
 					//criteria.add(Expression.eq("megId", megId));	
-					sb.append(iscriteria?(" and lcase(pstWorkType.pcName) like '%"+pcName.trim().toLowerCase()+"%'"):(" where lcase(pstWorkType.pcName) like '%"+pcName.trim().toLowerCase()+"%'"));
+					sb.append(iscriteria?(" and lcase(pstWorkType.pwtName) like '%"+pwtName.trim().toLowerCase()+"%'"):(" where lcase(pstWorkType.pwtName) like '%"+pwtName.trim().toLowerCase()+"%'"));
 					  iscriteria = true;
-				}*/
+				}
 				if(pagging.getSortBy()!=null && pagging.getSortBy().length()>0){
 						sb.append( " order by pstWorkType."+pagging.getOrderBy()+" "+pagging.getSortBy().toLowerCase());
 				}			
