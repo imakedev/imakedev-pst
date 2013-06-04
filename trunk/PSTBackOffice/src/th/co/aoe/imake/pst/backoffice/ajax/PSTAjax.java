@@ -27,4 +27,10 @@ public class PSTAjax {
 	public int executeQuery(String[] query){
 		return pstService.executeQuery(query);
 	} 
+	public int executeQueryUpdate(String[] queryDelete,String[] queryUpdate){
+		return pstService.executeQueryUpdate(queryDelete,queryUpdate);
+	} 
+	/*public int executeQueryDelete(String[] queryUpdate){
+		return pstService.executeQueryDelete(queryUpdate);
+	}*/
 }

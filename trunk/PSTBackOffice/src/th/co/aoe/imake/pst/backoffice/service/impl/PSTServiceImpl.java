@@ -2250,7 +2250,27 @@ public class PSTServiceImpl extends PostCommon
 		        return pstObject.getUpdateRecord().intValue(); 
 		 
 		}
-
+		@Override
+		public int executeQueryUpdate(String[] queryDelete,String[] queryUpdate) {
+			// TODO Auto-generated method stub
+			PstObject pstObject = new PstObject(); 
+			pstObject.setQueryDelete(queryDelete);
+			pstObject.setQueryUpdate(queryUpdate);
+			pstObject.setServiceName(ServiceConstant.PST_OBJECT_UPDATE);
+		        VResultMessage resultMessage = postMessage(pstObject, pstObject.getClass().getName(), "pstObject", true); 
+		        pstObject = (PstObject)resultMessage.getResultListObj().get(0);
+		        return pstObject.getUpdateRecord().intValue(); 
+		 
+		}
+		/*@Override
+		public int executeQueryDelete(String[] query) {
+			// TODO Auto-generated method stub
+			PstObject pstObject = new PstObject(query); 
+			pstObject.setServiceName(ServiceConstant.PST_OBJECT_DELETE);
+		        VResultMessage resultMessage = postMessage(pstObject, pstObject.getClass().getName(), "pstObject", true); 
+		        pstObject = (PstObject)resultMessage.getResultListObj().get(0);
+		        return pstObject.getUpdateRecord().intValue(); 
+		}*/
 		@Override
 		public VResultMessage searchPstPosition(PstPosition pstPosition) {
 			// TODO Auto-generated method stub
@@ -2349,10 +2369,10 @@ public class PSTServiceImpl extends PostCommon
 		}
 
 		@Override
-		public VResultMessage searchPstDepartment(PstDepartment pstConcrete) {
+		public VResultMessage searchPstDepartment(PstDepartment pstDepartment) {
 			// TODO Auto-generated method stub
-			pstConcrete.setServiceName(ServiceConstant.PST_DEPARTMENT_SEARCH);
-		    return postMessage(pstConcrete, pstConcrete.getClass().getName(), "pstConcrete", true);
+			pstDepartment.setServiceName(ServiceConstant.PST_DEPARTMENT_SEARCH);
+		    return postMessage(pstDepartment, pstDepartment.getClass().getName(), "pstDepartment", true);
 		}
 
 		@Override
@@ -2436,4 +2456,6 @@ public class PSTServiceImpl extends PostCommon
 	        VResultMessage resultMessage = postMessage(pstWorkType, pstWorkType.getClass().getName(), "pstWorkType", true);
 	        return (PstWorkType)resultMessage.getResultListObj().get(0);
 		}
+
+	
 }

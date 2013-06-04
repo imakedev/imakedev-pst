@@ -129,6 +129,8 @@ public interface PSTService {
 	@SuppressWarnings("rawtypes")
 	public List searchObject(String query);
 	public int executeQuery(String[] query);
+	public int executeQueryUpdate(String[] queryDelete,String[] queryUpdate);
+	//public int executeQueryDelete(String[] query);
 	
 	// PstPosition
 	public abstract VResultMessage searchPstPosition(

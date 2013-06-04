@@ -42,7 +42,8 @@ public class WorkTypeController {
 	        workTypeForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	        workTypeForm.setPageCount(IMakeDevUtils.calculatePage(workTypeForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 	        model.addAttribute("workTypeForm", workTypeForm);
-	        model.addAttribute("message", ""); 
+	        model.addAttribute("message", "");  
+	        model.addAttribute("pstDepartments",  pstService.listPstDepartments());
 	        return "backoffice/template/workType_search";
 	    }
 	 @RequestMapping(value={"/search"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
@@ -75,6 +76,7 @@ public class WorkTypeController {
 	        model.addAttribute("pstWorkTypes", vresultMessage.getResultListObj());
 	        model.addAttribute("workTypeForm", workTypeForm);
 	        model.addAttribute("message", ""); 
+	        model.addAttribute("pstDepartments",  pstService.listPstDepartments());
 	        return "backoffice/template/workType_search";
 	    }
 	  @RequestMapping(value={"/item/{maId}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
@@ -90,6 +92,7 @@ public class WorkTypeController {
 	        workTypeForm.setPstWorkType(pstWorkType);
 	        model.addAttribute("workTypeForm", workTypeForm);
 	        model.addAttribute("display", "display: none");
+	        model.addAttribute("pstDepartments",  pstService.listPstDepartments());
 	        return "backoffice/template/workType_management";
 	    }
 	  @RequestMapping(value={"/action/{section}"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
@@ -131,6 +134,7 @@ public class WorkTypeController {
 		        model.addAttribute("workTypeForm", workTypeForm);
 		        model.addAttribute("message", message); 
 		        model.addAttribute("message_class", message_class);
+		        model.addAttribute("pstDepartments",  pstService.listPstDepartments());
 		        return "backoffice/template/workType_search";
 	        // return "backoffice/template/employee_status_management";
 	    }
@@ -141,6 +145,7 @@ public class WorkTypeController {
 		  workTypeForm.setMode(IMakeDevUtils.MODE_NEW);
 		  model.addAttribute("workTypeForm", workTypeForm);
 	        model.addAttribute("display", "display: none");
+	        model.addAttribute("pstDepartments",  pstService.listPstDepartments());
 	        return "backoffice/template/workType_management";
 	    }
 
