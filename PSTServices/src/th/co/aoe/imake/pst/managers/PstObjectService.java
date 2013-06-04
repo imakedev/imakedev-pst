@@ -9,4 +9,7 @@ public interface PstObjectService {
 	public  List searchObject(String query)throws DataAccessException  ;
 
 	public  int executeQuery(String[] query)throws DataAccessException  ;
+	public  int executeQueryUpdate(String[] queryDelete,String[] queryUpdate)throws DataAccessException  ;
+	//public  int executeQueryDelete(String[] query)throws DataAccessException  ;
+	
 }

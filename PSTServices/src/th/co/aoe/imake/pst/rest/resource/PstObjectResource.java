@@ -64,7 +64,15 @@ public class PstObjectResource extends BaseResource {
 						}else if(serviceName.equals(ServiceConstant.PST_OBJECT_EXECUTE)){
 							int updateRecord=pstObjectService.executeQuery(xbpsTerm.getQuery()); 
 							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
-						}  
+						}else if(serviceName.equals(ServiceConstant.PST_OBJECT_UPDATE)){
+							int updateRecord=pstObjectService.executeQueryUpdate(xbpsTerm.getQueryDelete(),xbpsTerm.getQueryUpdate()); 
+							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
+						} 
+						/*else if(serviceName.equals(ServiceConstant.PST_OBJECT_DELETE)){
+							int updateRecord=pstObjectService.executeQueryDelete(xbpsTerm.getQuery()); 
+							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
+						}*/
+						
 					} else {
 					}
 				}
