@@ -20,6 +20,7 @@ import th.co.aoe.imake.pst.backoffice.service.PSTService;
 import th.co.aoe.imake.pst.backoffice.utils.IMakeDevUtils;
 import th.co.aoe.imake.pst.constant.ServiceConstant;
 import th.co.aoe.imake.pst.xstream.PstEmployee;
+import th.co.aoe.imake.pst.xstream.PstPosition;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
 @Controller
@@ -81,6 +82,12 @@ public class EmployeeController {
 	        }
 	        employeeForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	        employeeForm.getPstEmployee().setPagging(employeeForm.getPaging());
+	        if(employeeForm.getPpId().intValue()!=-1){
+	        	PstPosition position= new PstPosition(employeeForm.getPpId(),null);
+	        	 employeeForm.getPstEmployee().setPstPosition(position);
+	        }else
+	        	employeeForm.getPstEmployee().setPstPosition(null);
+	        	
 	        VResultMessage vresultMessage = pstService.searchPstEmployee(employeeForm.getPstEmployee());
 	       
 	        employeeForm.setPageCount(IMakeDevUtils.calculatePage(employeeForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
@@ -113,6 +120,7 @@ public class EmployeeController {
 	        model.addAttribute("positions",listPositions);
 	        model.addAttribute("titles",listTitles);
 	        model.addAttribute("display", "display: none");
+	        model.addAttribute("pstRoadPumpNos", pstService.listPstRoadPumpNo());
 	        return "backoffice/template/employee_management";
 	    }
 	  @RequestMapping(value={"/action/{section}"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
@@ -177,6 +185,7 @@ public class EmployeeController {
 	        model.addAttribute("positions",listPositions);
 	        model.addAttribute("titles",listTitles);
 	        model.addAttribute("display", "display: none");
+	        model.addAttribute("pstRoadPumpNos", pstService.listPstRoadPumpNo());
 	        return "backoffice/template/employee_management";
 	    }
 

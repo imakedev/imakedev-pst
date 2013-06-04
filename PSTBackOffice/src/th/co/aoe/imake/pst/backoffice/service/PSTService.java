@@ -8,7 +8,9 @@ package th.co.aoe.imake.pst.backoffice.service;
 import java.util.List;
 
 import th.co.aoe.imake.pst.xstream.PstBreakDown;
+import th.co.aoe.imake.pst.xstream.PstConcrete;
 import th.co.aoe.imake.pst.xstream.PstCost;
+import th.co.aoe.imake.pst.xstream.PstDepartment;
 import th.co.aoe.imake.pst.xstream.PstEmployee;
 import th.co.aoe.imake.pst.xstream.PstEmployeeStatus;
 import th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping;
@@ -17,7 +19,9 @@ import th.co.aoe.imake.pst.xstream.PstJobEmployee;
 import th.co.aoe.imake.pst.xstream.PstJobPay;
 import th.co.aoe.imake.pst.xstream.PstJobPayExt;
 import th.co.aoe.imake.pst.xstream.PstJobWork;
+import th.co.aoe.imake.pst.xstream.PstPosition;
 import th.co.aoe.imake.pst.xstream.PstRoadPump;
+import th.co.aoe.imake.pst.xstream.PstWorkType;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
 
@@ -111,7 +115,7 @@ public interface PSTService {
 	public abstract Long savePstJobWork(PstJobWork pstJobWork); 
 	public abstract int deletePstJobWork(PstJobWork pstJobWork, String service);
 	@SuppressWarnings("rawtypes")
-	public abstract List listPstJobEmployees( Long pjId, Long peId);
+	public abstract List listPstJobEmployees( Long pjId, Long peId, Long prpId);
 	public abstract Long savePstJobEmployee(PstJobEmployee pstJobEmployee); 
 	public abstract int deletePstJobEmployee(PstJobEmployee pstJobEmployee, String service);
 	@SuppressWarnings("rawtypes")
@@ -126,4 +130,52 @@ public interface PSTService {
 	public List searchObject(String query);
 	public int executeQuery(String[] query);
 	
+	// PstPosition
+	public abstract VResultMessage searchPstPosition(
+			PstPosition pstPosition);
+	public abstract Long savePstPosition(PstPosition pstPosition);
+
+	public abstract int updatePstPosition(PstPosition pstPosition);
+
+	public abstract int deletePstPosition(PstPosition pstPosition, String service);
+
+	public abstract PstPosition findPstPositionById(Long long1);
+	
+	// PstConcrete
+	public abstract VResultMessage searchPstConcrete(
+				PstConcrete pstConcrete);
+	public abstract Long savePstConcrete(PstConcrete pstConcrete);
+
+	public abstract int updatePstConcrete(PstConcrete pstConcrete);
+
+	public abstract int deletePstConcrete(PstConcrete pstConcrete, String service);
+
+	public abstract PstConcrete findPstConcreteById(Long long1);
+	
+	// PstConcrete
+	@SuppressWarnings("rawtypes")
+	public abstract List listPstDepartments();
+	
+	public abstract VResultMessage searchPstDepartment(
+					PstDepartment pstConcrete);
+	public abstract Long savePstDepartment(PstDepartment pstDepartment);
+
+	public abstract int updatePstDepartment(PstDepartment pstDepartment);
+
+	public abstract int deletePstDepartment(PstDepartment pstDepartment, String service);
+
+	public abstract PstDepartment findPstDepartmentById(Long long1);
+		
+	// PstConcrete
+		
+	public abstract VResultMessage searchPstWorkType(
+						PstWorkType pstConcrete);
+	public abstract Long savePstWorkType(PstWorkType pstWorkType);
+
+	public abstract int updatePstWorkType(PstWorkType pstWorkType);
+
+	public abstract int deletePstWorkType(PstWorkType pstWorkType, String service);
+
+	public abstract PstWorkType findPstWorkTypeById(Long long1);
+		
 }
