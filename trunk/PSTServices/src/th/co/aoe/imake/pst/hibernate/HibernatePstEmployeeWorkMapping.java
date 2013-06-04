@@ -27,7 +27,7 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 
 	private static final Logger logger = Logger.getLogger(ServiceConstant.LOG_APPENDER);
 	private SessionFactory sessionAnnotationFactory;
-	private static String[] emp_ignore={"pstPosition","pstTitle"}; 
+	private static String[] emp_ignore={"pstPosition","pstTitle","pstRoadPump"}; 
 	private static SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 	public SessionFactory getSessionAnnotationFactory() {
 		return sessionAnnotationFactory;
@@ -106,13 +106,13 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 				if(setPrpNo){ 
 					sb.append(" select pstEmployee,pstEmployeeWorkMapping " +
 							", ( select count(map) from PstEmployeeWorkMapping as map where map.id.pewmDateTime  between '"+date_start+" 00:00:00' and '"+date_end+" 23:59:59' " +
-									 " and map.id.peId=pstEmployeeWorkMapping.id.peId and  map.pesId in(1,3) ) as xxxx "+
+									 " and map.id.peId=pstEmployeeWorkMapping.id.peId and  map.pesId in(1,2) ) as xxxx "+
 							" from PstEmployeeWorkMapping as pstEmployeeWorkMapping   right join pstEmployeeWorkMapping.pstEmployee as pstEmployee  where pstEmployeeWorkMapping.prpNo='"+prpNo.trim()+"'" +
 							" and pstEmployeeWorkMapping.id.pewmDateTime between '"+date+" 00:00:00' and '"+date+" 23:59:59'");
 				}else{
 					sb.append(" select pstEmployee " +
 							" , ( select count(map) from PstEmployeeWorkMapping as map where map.id.pewmDateTime  between '"+date_start+" 00:00:00' and '"+date_end+" 23:59:59' " +
-							 " and map.id.peId=pstEmployee.peId and  map.pesId in(1,3) ) as xxxx "+
+							 " and map.id.peId=pstEmployee.peId and  map.pesId in(1,2) ) as xxxx "+
 							" from  PstEmployee  pstEmployee ");
 					   //  " , ( select count(map) from PstEmployeeWorkMapping as map where map.id.pewmDateTime  between '"+date_start+" 00:00:00' and '"+date_end+" 23:59:59' " +
 					//	 " and map.id.peId=pstEmployeeWorkMapping.id.peId ) as xxxx "+
@@ -191,6 +191,13 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 						 BeanUtils.copyProperties(employee.getPstTitle(),xpstTitle);
 						 xemployee.setPstTitle(xpstTitle);
 					 }
+					 if(employee.getPstRoadPump()!=null){
+						 th.co.aoe.imake.pst.xstream.PstRoadPump xpstRoadPump= new th.co.aoe.imake.pst.xstream.PstRoadPump();
+						 xpstRoadPump.setPrpId(employee.getPstRoadPump().getPrpId());
+						 xpstRoadPump.setPrpNo(employee.getPstRoadPump().getPrpNo());
+						// BeanUtils.copyProperties(employee.getPstRoadPump(),xpstRoadPump);
+						 xemployee.setPstRoadPump(xpstRoadPump);
+					 }
 					 xmapping.setPstEmployee(xemployee);
 					 xmapping.setWeekdayCollection(((java.lang.Long)l1[2]).intValue()+"");
 					 returnList.add(xmapping); 
@@ -265,6 +272,13 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 						 th.co.aoe.imake.pst.xstream.PstTitle xpstTitle= new th.co.aoe.imake.pst.xstream.PstTitle();
 						 BeanUtils.copyProperties(employee.getPstTitle(),xpstTitle);
 						 xemployee.setPstTitle(xpstTitle);
+					 }
+					 if(employee.getPstRoadPump()!=null){
+						 th.co.aoe.imake.pst.xstream.PstRoadPump xpstRoadPump= new th.co.aoe.imake.pst.xstream.PstRoadPump();
+						 xpstRoadPump.setPrpId(employee.getPstRoadPump().getPrpId());
+						 xpstRoadPump.setPrpNo(employee.getPstRoadPump().getPrpNo());
+						// BeanUtils.copyProperties(employee.getPstRoadPump(),xpstRoadPump);
+						 xemployee.setPstRoadPump(xpstRoadPump);
 					 }
 					 xmapping.setPstEmployee(xemployee);
 					 xmapping.setWeekdayCollection(((java.lang.Long)l1[1]).intValue()+"");

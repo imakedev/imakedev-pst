@@ -56,6 +56,13 @@ public class PstJob  extends VServiceXML implements Serializable {
 	@XStreamAlias("pstCostList")
 	private List<PstCost> pstCostList; 
 
+	//ext
+	private String cubicAmount;
+	private String payAmount;
+	private String payExtAmount;
+	private String payAll;
+	
+	
 	//bi-directional many-to-one association to PstJobEmployee
 	/*@OneToMany(mappedBy="pstJob")
 	private List<PstJobEmployee> pstJobEmployees;*/
@@ -72,6 +79,30 @@ public class PstJob  extends VServiceXML implements Serializable {
 	@XStreamAlias("pstJobWork")
 	private PstJobWork pstJobWork;*/
 
+	public String getPayAll() {
+		return payAll;
+	}
+	public void setPayAll(String payAll) {
+		this.payAll = payAll;
+	}
+	public String getCubicAmount() {
+		return cubicAmount;
+	}
+	public void setCubicAmount(String cubicAmount) {
+		this.cubicAmount = cubicAmount;
+	}
+	public String getPayAmount() {
+		return payAmount;
+	}
+	public void setPayAmount(String payAmount) {
+		this.payAmount = payAmount;
+	}
+	public String getPayExtAmount() {
+		return payExtAmount;
+	}
+	public void setPayExtAmount(String payExtAmount) {
+		this.payExtAmount = payExtAmount;
+	}
 	public PstJob() {
 	} 
 	public PstJob(Long pjId, String pjContractMobileNo, String pjContractName,

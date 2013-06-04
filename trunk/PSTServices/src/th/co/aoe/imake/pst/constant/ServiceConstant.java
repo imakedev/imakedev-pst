@@ -144,6 +144,24 @@ public class ServiceConstant {
 		public static final String PST_CONCRETE_FIND_BY_ID = "findPstConcreteById";
 		public static final String PST_CONCRETE_LIST = "listPstConcrete";
 		
+
+		// PST_DEPARTMENT
+		public static final String PST_DEPARTMENT_SAVE = "savePstDepartment";
+		public static final String PST_DEPARTMENT_UPDATE = "updatePstDepartment";
+		public static final String PST_DEPARTMENT_DELETE = "deletePstDepartment";
+		public static final String PST_DEPARTMENT_ITEMS_DELETE ="deletePstDepartmentItems";
+		public static final String PST_DEPARTMENT_SEARCH = "searchPstDepartment";
+		public static final String PST_DEPARTMENT_FIND_BY_ID = "findPstDepartmentById";
+		public static final String PST_DEPARTMENT_LIST = "listPstDepartment";
+		
+		// PST_DEPARTMENT
+		public static final String PST_WORK_TYPE_SAVE = "savePstWorkType";
+		public static final String PST_WORK_TYPE_UPDATE = "updatePstWorkType";
+		public static final String PST_WORK_TYPE_DELETE = "deletePstWorkType";
+		public static final String PST_WORK_TYPE_ITEMS_DELETE ="deletePstWorkTypeItems";
+		public static final String PST_WORK_TYPE_SEARCH = "searchPstWorkType";
+		public static final String PST_WORK_TYPE_FIND_BY_ID = "findPstWorkTypeById";
+		
 		// PST_JOB
 		public static final String PST_JOB_SAVE = "savePstJob";
 		public static final String PST_JOB_UPDATE = "updatePstJob";
@@ -175,4 +193,6 @@ public class ServiceConstant {
 		
 		public static final String PST_OBJECT_SEARCH = "searchObject";
 		public static final String PST_OBJECT_EXECUTE = "executeQuery";
+		
+	
 }

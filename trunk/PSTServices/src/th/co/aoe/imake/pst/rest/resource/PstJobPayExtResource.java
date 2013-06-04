@@ -81,6 +81,8 @@ public class PstJobPayExtResource  extends BaseResource {
 						} 
 						else if(serviceName.equals(ServiceConstant.PST_JOB_PAY_EXT_DELETE)){
 								//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
+							//System.out.println(bpsTerm.getId().getPjId()+","+bpsTerm.getId().getPjpeNo());
+							bpsTerm.getId().setPjpeNo(xbpsTerm.getPjpeNo());
 								int updateRecord=pstCommonService.delete(bpsTerm);
 								return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}else if(serviceName.equals(ServiceConstant.PST_JOB_PAY_EXT_SEARCH)){

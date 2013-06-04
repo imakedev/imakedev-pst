@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="PST_WORK_TYPE")
+@Table(name="PST_WORK_TYPE",schema="PST_DB")
 public class PstWorkType implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="PST_EMPLOYEE")
+@Table(name="PST_EMPLOYEE",schema="PST_DB")
 public class PstEmployee implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -52,6 +52,9 @@ public class PstEmployee implements Serializable {
 	@JoinColumn(name="PT_ID",nullable=true)
 	private PstTitle pstTitle;
 
+	@ManyToOne
+	@JoinColumn(name="PRP_ID",nullable=true)
+	private PstRoadPump pstRoadPump;
 	//bi-directional many-to-one association to PstEmployeeWorkMapping
 	/*@OneToMany(mappedBy="pstEmployee")
 	private List<PstEmployeeWorkMapping> pstEmployeeWorkMappings;*/
@@ -125,6 +128,14 @@ public class PstEmployee implements Serializable {
 
 	public void setPstTitle(PstTitle pstTitle) {
 		this.pstTitle = pstTitle;
+	}
+
+	public PstRoadPump getPstRoadPump() {
+		return pstRoadPump;
+	}
+
+	public void setPstRoadPump(PstRoadPump pstRoadPump) {
+		this.pstRoadPump = pstRoadPump;
 	}
 
 	/*public List<PstEmployeeWorkMapping> getPstEmployeeWorkMappings() {

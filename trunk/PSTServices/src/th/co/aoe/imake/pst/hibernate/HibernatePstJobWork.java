@@ -43,8 +43,7 @@ public class HibernatePstJobWork extends HibernateCommon implements PstJobWorkSe
 		} query =session.createQuery(sb.toString());
 		// set pagging.
 		 
-		 List l = query.list();  
-		 System.out.println(l);
+		 List l = query.list();   
 		return l;
 	} catch (Exception re) {
 		//re.printStackTrace();

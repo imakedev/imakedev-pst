@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="PST_JOB")
+@Table(name="PST_JOB",schema="PST_DB")
 public class PstJob implements Serializable {
 	private static final long serialVersionUID = 1L;
 

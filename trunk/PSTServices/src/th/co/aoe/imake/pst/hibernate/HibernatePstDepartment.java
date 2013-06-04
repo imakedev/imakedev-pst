@@ -13,12 +13,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import th.co.aoe.imake.pst.constant.ServiceConstant;
-import th.co.aoe.imake.pst.hibernate.bean.PstPosition;
-import th.co.aoe.imake.pst.managers.PstPositionService;
+import th.co.aoe.imake.pst.hibernate.bean.PstDepartment;
+import th.co.aoe.imake.pst.managers.PstDepartmentService;
 import th.co.aoe.imake.pst.xstream.common.Pagging;
 @Repository
 @Transactional
-public class HibernatePstPosition  extends HibernateCommon implements PstPositionService {
+public class HibernatePstDepartment  extends HibernateCommon implements PstDepartmentService {
 
 	private static final Logger logger = Logger.getLogger(ServiceConstant.LOG_APPENDER);
 	private SessionFactory sessionAnnotationFactory;
@@ -28,25 +28,25 @@ public class HibernatePstPosition  extends HibernateCommon implements PstPositio
 	public void setSessionAnnotationFactory(SessionFactory sessionAnnotationFactory) {
 		this.sessionAnnotationFactory = sessionAnnotationFactory;
 	}
-	private int getSize(Session session, PstPosition instance) throws Exception{
+	private int getSize(Session session, PstDepartment instance) throws Exception{
 		try {
 			/*String pcUid=instance.getPcUid();
 			String pcName=instance.getPcName();*/
 			
 			Query query=null;
 			
-			StringBuffer sb =new StringBuffer(" select count(pstPosition) from PstPosition pstPosition ");
+			StringBuffer sb =new StringBuffer(" select count(pstDepartment) from PstDepartment pstDepartment ");
 			
 			//boolean iscriteria = false;
 			
 			/*if(pcUid !=null && pcUid.trim().length()> 0){  
 				//criteria.add(Expression.eq("megId", megId));	
-				sb.append(iscriteria?(" and lcase(pstPosition.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"):(" where lcase(pstPosition.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"));
+				sb.append(iscriteria?(" and lcase(pstDepartment.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"):(" where lcase(pstDepartment.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"));
 				  iscriteria = true;
 			}
 			if(pcName !=null && pcName.trim().length() > 0){  
 				//criteria.add(Expression.eq("megId", megId));	
-				sb.append(iscriteria?(" and lcase(pstPosition.pcName) like '%"+pcName.trim().toLowerCase()+"%'"):(" where lcase(pstPosition.pcName) like '%"+pcName.trim().toLowerCase()+"%'"));
+				sb.append(iscriteria?(" and lcase(pstDepartment.pcName) like '%"+pcName.trim().toLowerCase()+"%'"):(" where lcase(pstDepartment.pcName) like '%"+pcName.trim().toLowerCase()+"%'"));
 				  iscriteria = true;
 			}*/
 			
@@ -64,7 +64,7 @@ public class HibernatePstPosition  extends HibernateCommon implements PstPositio
 	}
 	 @SuppressWarnings({ "rawtypes", "unchecked" })
 	 @Transactional(readOnly=true)
-	 public List searchPstPosition(PstPosition instance,Pagging pagging) throws DataAccessException {
+	 public List searchPstDepartment(PstDepartment instance,Pagging pagging) throws DataAccessException {
 			ArrayList  transList = new ArrayList ();
 			Session session = sessionAnnotationFactory.getCurrentSession();
 			try {
@@ -72,22 +72,22 @@ public class HibernatePstPosition  extends HibernateCommon implements PstPositio
 				String pcName=instance.getPcName();*/
 				Query query = null;
 			
-				StringBuffer sb =new StringBuffer(" select pstPosition from PstPosition pstPosition ");
+				StringBuffer sb =new StringBuffer(" select pstDepartment from PstDepartment pstDepartment ");
 				
 				/*boolean iscriteria = false;
 				
 				if(pcUid !=null && pcUid.trim().length()> 0){  
 					//criteria.add(Expression.eq("megId", megId));	
-					sb.append(iscriteria?(" and lcase(pstPosition.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"):(" where lcase(pstPosition.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"));
+					sb.append(iscriteria?(" and lcase(pstDepartment.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"):(" where lcase(pstDepartment.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"));
 					  iscriteria = true;
 				}
 				if(pcName !=null && pcName.trim().length() > 0){  
 					//criteria.add(Expression.eq("megId", megId));	
-					sb.append(iscriteria?(" and lcase(pstPosition.pcName) like '%"+pcName.trim().toLowerCase()+"%'"):(" where lcase(pstPosition.pcName) like '%"+pcName.trim().toLowerCase()+"%'"));
+					sb.append(iscriteria?(" and lcase(pstDepartment.pcName) like '%"+pcName.trim().toLowerCase()+"%'"):(" where lcase(pstDepartment.pcName) like '%"+pcName.trim().toLowerCase()+"%'"));
 					  iscriteria = true;
 				}*/
 				if(pagging.getSortBy()!=null && pagging.getSortBy().length()>0){
-						sb.append( " order by pstPosition."+pagging.getOrderBy()+" "+pagging.getSortBy().toLowerCase());
+						sb.append( " order by pstDepartment."+pagging.getOrderBy()+" "+pagging.getSortBy().toLowerCase());
 				}			
 				 query =session.createQuery(sb.toString());
 				// set pagging.
@@ -110,12 +110,12 @@ public class HibernatePstPosition  extends HibernateCommon implements PstPositio
 		}
 	 @SuppressWarnings("rawtypes")
 	@Override
-	public List listPstPosition() throws DataAccessException {
+	public List listPstDepartment() throws DataAccessException {
 		// TODO Auto-generated method stub
 		Session session = sessionAnnotationFactory.getCurrentSession();
 		try {
 			Query query = null;
-			StringBuffer sb =new StringBuffer(" select pstPosition from PstPosition pstPosition ");
+			StringBuffer sb =new StringBuffer(" select pstDepartment from PstDepartment pstDepartment ");
 			 query =session.createQuery(sb.toString());
 			// set pagging.
 			 
@@ -131,4 +131,3 @@ public class HibernatePstPosition  extends HibernateCommon implements PstPositio
 
 
 }
-

@@ -17,12 +17,18 @@ import th.co.aoe.imake.pst.managers.PstEmployeeStatusService;
 import th.co.aoe.imake.pst.xstream.common.Pagging;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
+
 public class PstEmployeeStatusResource  extends BaseResource {
 
 	private static final Logger logger = Logger.getLogger(ServiceConstant.LOG_APPENDER);  
 	private PSTCommonService pstCommonService;
 	private PstEmployeeStatusService pstEmployeeStatusService; 
 	private com.thoughtworks.xstream.XStream xstream; 
+	private com.thoughtworks.xstream.XStream jsonXstream;
+	private com.thoughtworks.xstream.XStream _xstream;
+	
 	public PstEmployeeStatusResource() {
 		super();
 		logger.debug("into constructor PstEmployeeStatusResource");
@@ -35,25 +41,32 @@ public class PstEmployeeStatusResource  extends BaseResource {
 		super.doInit();
 		logger.debug("into doInit");
 	}
-	
+	 
 	@Override
 	protected Representation post(Representation entity, Variant variant)
 			throws ResourceException {
 		// TODO Auto-generated method stub
-
-		// TODO Auto-generated method stub
-		logger.debug("into Post PSTCommonResource 2");
+		
+		 System.out.println("getMediaType->"+entity.getMediaType());
+		logger.debug("into Post PSTCommonResource 2"); 
+		String mediaType=entity.getMediaType().toString();
+		 if(mediaType.indexOf("json")!=-1)
+			 _xstream=jsonXstream;
+		 else
+			 _xstream=xstream;
 		InputStream in = null;
 		try {
 			in = entity.getStream();
-			xstream.processAnnotations(th.co.aoe.imake.pst.xstream.PstEmployeeStatus.class);// or xstream.autodetectAnnotations(true); (Auto-detect  Annotations)
+			_xstream.processAnnotations(th.co.aoe.imake.pst.xstream.PstEmployeeStatus.class);// or xstream.autodetectAnnotations(true); (Auto-detect  Annotations)
 			th.co.aoe.imake.pst.xstream.PstEmployeeStatus xbpsTerm = new th.co.aoe.imake.pst.xstream.PstEmployeeStatus();
-			Object ntcCalendarObj = xstream.fromXML(in);
+			Object ntcCalendarObj = _xstream.fromXML(in);
 			if (ntcCalendarObj != null) {
 				xbpsTerm = (th.co.aoe.imake.pst.xstream.PstEmployeeStatus) ntcCalendarObj;
 				if (xbpsTerm != null) { 
+					System.out.println("x->"+xbpsTerm);
 					if (xbpsTerm.getServiceName() != null
 							&& !xbpsTerm.getServiceName().equals("")) {
+						
 						logger.debug(" BPS servicename = "
 								+ xbpsTerm.getServiceName());
 						String serviceName = xbpsTerm.getServiceName();
@@ -73,17 +86,17 @@ public class PstEmployeeStatusResource  extends BaseResource {
 								xntcCalendars.add(xbpsTerm);
 								vresultMessage.setResultListObj(xntcCalendars);
 							}
-							return getRepresentation(entity, vresultMessage, xstream);
+							return getRepresentationCommon(entity, vresultMessage, _xstream,mediaType);
 						}else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_STATUS_SAVE)){
 							//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							Long pesId=0l;
 							pesId=(Long) (pstCommonService.save(bpsTerm));
 							xbpsTerm.setPesId(pesId);
-							return returnUpdateRecord(entity,xbpsTerm,pesId.intValue());
+							return returnUpdateRecord(entity,xbpsTerm,pesId.intValue(),mediaType);
 						} else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_STATUS_UPDATE)){
 					//		java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							int updateRecord=pstCommonService.update(bpsTerm);
-							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
+							return returnUpdateRecord(entity,xbpsTerm,updateRecord,mediaType);
 							
 						}
 						else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_STATUS_ITEMS_DELETE)){
@@ -98,12 +111,12 @@ public class PstEmployeeStatusResource  extends BaseResource {
 								item.setPesId(Long.parseLong(ids[i]));
 								updateRecord=pstCommonService.delete(item);
 							}
-							return returnUpdateRecord(entity,xbpsTerm,updateRecord);
+							return returnUpdateRecord(entity,xbpsTerm,updateRecord,mediaType);
 						}
 						else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_STATUS_DELETE)){
 								//java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 								int updateRecord=pstCommonService.delete(bpsTerm);
-								return returnUpdateRecord(entity,xbpsTerm,updateRecord);
+								return returnUpdateRecord(entity,xbpsTerm,updateRecord,mediaType);
 						}else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_STATUS_SEARCH)){
 							Pagging page = xbpsTerm.getPagging(); 
 							@SuppressWarnings("rawtypes")
@@ -121,7 +134,7 @@ public class PstEmployeeStatusResource  extends BaseResource {
 									xntcCalendars = getxPstEmployeeStatusObject(ntcCalendars);
 								}
 								vresultMessage.setResultListObj(xntcCalendars);
-								return getRepresentation(entity, vresultMessage, xstream);
+								return getRepresentationCommon(entity, vresultMessage, _xstream,mediaType);
 							}
 						}else if(serviceName.equals(ServiceConstant.PST_EMPLOYEE_STATUS_LIST)){
 							@SuppressWarnings("rawtypes")
@@ -135,7 +148,7 @@ public class PstEmployeeStatusResource  extends BaseResource {
 								xntcCalendars = getxPstEmployeeStatusObject(ntcCalendars);
 							}
 							vresultMessage.setResultListObj(xntcCalendars);
-							return getRepresentation(entity, vresultMessage, xstream);
+							return getRepresentationCommon(entity, vresultMessage, _xstream,mediaType);
 						}
 					} else {
 					}
@@ -159,14 +172,14 @@ public class PstEmployeeStatusResource  extends BaseResource {
 		return null;
 	
 	}
-	private Representation returnUpdateRecord(Representation entity,th.co.aoe.imake.pst.xstream.PstEmployeeStatus xbpsTerm,int updateRecord){
+	private Representation returnUpdateRecord(Representation entity,th.co.aoe.imake.pst.xstream.PstEmployeeStatus xbpsTerm,int updateRecord,String mediaType){
 		VResultMessage vresultMessage = new VResultMessage();
 		List<th.co.aoe.imake.pst.xstream.PstEmployeeStatus> xbpsTerms = new ArrayList<th.co.aoe.imake.pst.xstream.PstEmployeeStatus>(1);
 		xbpsTerm.setUpdateRecord(updateRecord);
 		xbpsTerms.add(xbpsTerm);
 		vresultMessage.setResultListObj(xbpsTerms);
 		//export(entity, vresultMessage, xstream);	
-		return getRepresentation(entity, vresultMessage, xstream);
+		return getRepresentationCommon(entity, vresultMessage, _xstream,mediaType);
 	}
 	private List<th.co.aoe.imake.pst.xstream.PstEmployeeStatus> getxPstEmployeeStatusObject(
 			java.util.ArrayList<th.co.aoe.imake.pst.hibernate.bean.PstEmployeeStatus> ntcCalendars) {
@@ -183,7 +196,8 @@ public class PstEmployeeStatusResource  extends BaseResource {
 	@Override
 	protected Representation get(Variant variant) throws ResourceException {
 		// TODO Auto-generated method stub
-		System.out.println("sss");
+		//System.out.println("sss");
+		System.out.println("getMediaType get->"+variant.getMediaType());
 		th.co.aoe.imake.pst.xstream.PstEmployeeStatus  xbpsTerm =new th.co.aoe.imake.pst.xstream.PstEmployeeStatus();
 		th.co.aoe.imake.pst.hibernate.bean.PstEmployeeStatus pstEmployeeStatus =new  th.co.aoe.imake.pst.hibernate.bean.PstEmployeeStatus();
 		xbpsTerm.setPesId(1l);
@@ -209,8 +223,11 @@ public class PstEmployeeStatusResource  extends BaseResource {
 		
 		// delete
 		//pstCommonService.delete(pstEmployeeStatus);
-		return getRepresentation(null, vresultMessage, xstream);
-		// return null;
+		 XStream xstreamx = new XStream(new JettisonMappedXmlDriver());
+		 xstreamx.setMode(XStream.NO_REFERENCES);
+		 
+			return getJsonRepresentation(null, vresultMessage, xstreamx);
+		 
 	} 
 	
 
@@ -239,6 +256,14 @@ public class PstEmployeeStatusResource  extends BaseResource {
 
 	public void setXstream(com.thoughtworks.xstream.XStream xstream) {
 		this.xstream = xstream;
+	}
+
+	public com.thoughtworks.xstream.XStream getJsonXstream() {
+		return jsonXstream;
+	}
+
+	public void setJsonXstream(com.thoughtworks.xstream.XStream jsonXstream) {
+		this.jsonXstream = jsonXstream;
 	}
 
 	

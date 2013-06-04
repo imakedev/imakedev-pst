@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@Table(name="PST_ROAD_PUMP")
+@Table(name="PST_ROAD_PUMP",schema="PST_DB")
 public class PstRoadPump implements Serializable {
 	private static final long serialVersionUID = 1L;
 

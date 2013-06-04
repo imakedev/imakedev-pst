@@ -184,7 +184,7 @@ public class PstRoadPumpStatusResource extends BaseResource {
 	@Override
 	protected Representation get(Variant variant) throws ResourceException {
 		// TODO Auto-generated method stub
-		System.out.println("sss");
+		//System.out.println("sss");
 		th.co.aoe.imake.pst.xstream.PstRoadPumpStatus  xbpsTerm =new th.co.aoe.imake.pst.xstream.PstRoadPumpStatus();
 		th.co.aoe.imake.pst.hibernate.bean.PstRoadPumpStatus pstRoadPumpStatus =new  th.co.aoe.imake.pst.hibernate.bean.PstRoadPumpStatus();
 		xbpsTerm.setPrpsId(1l);

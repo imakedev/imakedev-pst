@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="role_contact")
+@Table(name="role_contact",schema="PST_DB")
 public class RoleContact implements Serializable {
 	private static final long serialVersionUID = 1L;
 

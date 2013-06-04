@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="PST_ROAD_PUMP_STATUS")
+@Table(name="PST_ROAD_PUMP_STATUS",schema="PST_DB")
 public class PstRoadPumpStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 

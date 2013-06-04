@@ -25,8 +25,8 @@ public class HibernatePstJobEmployee  extends HibernateCommon implements PstJobE
 		this.sessionAnnotationFactory = sessionAnnotationFactory;
 	}
 	@SuppressWarnings("rawtypes")
-	@Override
-	public List listPstJobEmployees(Long pjId, Long peId) {
+	@Override 
+	public List listPstJobEmployees(Long pjId, Long peId,Long prpId){
 		// TODO Auto-generated method stub
 		Session session = sessionAnnotationFactory.getCurrentSession();
 		try {
@@ -41,6 +41,11 @@ public class HibernatePstJobEmployee  extends HibernateCommon implements PstJobE
 				sb.append(iscriteria?(" and pstJobEmployee.id.peId="+peId.intValue()+""):(" where pstJobEmployee.id.peId="+peId.intValue()+""));
 				iscriteria=true;
 			}
+			if(prpId!=null && prpId.intValue()!=0){
+				sb.append(iscriteria?(" and pstJobEmployee.id.prpId="+prpId.intValue()+""):(" where pstJobEmployee.id.prpId="+prpId.intValue()+""));
+				iscriteria=true;
+			}
+			
 			 query =session.createQuery(sb.toString());
 			// set pagging.
 			 

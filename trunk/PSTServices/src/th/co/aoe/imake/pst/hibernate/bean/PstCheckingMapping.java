@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="PST_CHECKING_MAPPING")
+@Table(name="PST_CHECKING_MAPPING",schema="PST_DB")
 public class PstCheckingMapping implements Serializable {
 	private static final long serialVersionUID = 1L;
 

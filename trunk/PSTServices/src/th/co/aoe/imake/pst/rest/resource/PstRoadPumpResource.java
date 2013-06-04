@@ -356,6 +356,7 @@ public class PstRoadPumpResource extends BaseResource {
 		}
 		return xntcCalendars;
 	} 
+//	@Get("json")
 	@Override
 	protected Representation get(Variant variant) throws ResourceException {
 		// TODO Auto-generated method stub

@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user") 
+@Table(name="user",schema="PST_DB")
 public class User {
 	
 	@Id

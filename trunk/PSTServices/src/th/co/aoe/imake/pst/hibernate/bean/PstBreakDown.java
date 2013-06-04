@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="PST_BREAK_DOWN")
+@Table(name="PST_BREAK_DOWN",schema="PST_DB")
 public class PstBreakDown implements Serializable {
 	private static final long serialVersionUID = 1L;
 

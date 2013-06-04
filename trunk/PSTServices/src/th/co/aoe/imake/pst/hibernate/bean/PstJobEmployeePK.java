@@ -14,11 +14,16 @@ public class PstJobEmployeePK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	public PstJobEmployeePK(Long pjId, Long peId) {
+	public PstJobEmployeePK(Long pjId, Long peId,Long prpId) {
 		super();
 		this.pjId = pjId;
 		this.peId = peId;
+		this.prpId=prpId;
 	}
+	
+	@Column(name="PRP_ID")
+	private Long prpId;
+	
 	@Column(name="PJ_ID")
 	private Long pjId;
 
@@ -38,6 +43,12 @@ public class PstJobEmployeePK implements Serializable {
 	}
 	public void setPeId(Long peId) {
 		this.peId = peId;
+	}
+	public Long getPrpId() {
+		return prpId;
+	}
+	public void setPrpId(Long prpId) {
+		this.prpId = prpId;
 	}
 
 	/*public boolean equals(Object other) {

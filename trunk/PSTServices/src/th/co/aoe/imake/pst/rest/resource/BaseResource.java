@@ -10,6 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.log4j.Logger;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
+import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.ext.xml.DomRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
@@ -66,10 +67,14 @@ public abstract class BaseResource extends ServerResource {
 		// Allow modifications of this resource via POST requests.
 		//setModifiable(true);
 		// Declare the kind of representations supported by this resource.
+		 
 	//	 getVariants().add(new Variant(MediaType.TEXT_HTML));
-		getVariants().add(new Variant(MediaType.TEXT_XML));
-		getVariants().add(new Variant(MediaType.APPLICATION_ATOM_XML));
-		getVariants().add(new Variant(MediaType.APPLICATION_ALL_XML));
+  	getVariants().add(new Variant(MediaType.TEXT_XML));
+		 //getVariants().add(new Variant(MediaType.APPLICATION_ATOM_XML));
+	//	getVariants().add(new Variant(MediaType.APPLICATION_ALL_XML)); 
+	 getVariants().add(new Variant(MediaType.APPLICATION_XML));
+		getVariants().add(new Variant(MediaType.APPLICATION_JSON));  
+		 
 		// TODO Auto-generated constructor stub
 	}
 
@@ -259,6 +264,13 @@ public abstract class BaseResource extends ServerResource {
 		representation_aoe.setDocument(document);
 		getResponse().setEntity(representation_aoe);
 	}
+	public Representation getRepresentationCommon(Representation entity, VResultMessage vresultMessage,
+			com.thoughtworks.xstream.XStream xstream,String mediaType) {
+		if(mediaType.indexOf("json")!=-1)
+			return getJsonRepresentation(entity, vresultMessage, xstream);
+		else
+			return getRepresentation(entity, vresultMessage, xstream);
+	}
 	public Representation getRepresentation(Representation entity, VResultMessage vresultMessage,
 			com.thoughtworks.xstream.XStream xstream) {
 
@@ -336,7 +348,75 @@ public abstract class BaseResource extends ServerResource {
 		return representation_aoe;
 		//getResponse().setEntity(representation_aoe);
 	}
+	public Representation getJsonRepresentation(Representation entity, VResultMessage vresultMessage,
+			com.thoughtworks.xstream.XStream xstream)  {
 
+		// TODO Auto-generated method stub
+		logger.debug("into Post FAQs");
+		// com.sun.syndication.io.WireFeedOutput output = new
+		// com.sun.syndication.io.WireFeedOutput();
+		JsonRepresentation representation_aoe = null;
+	/*	 
+		javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory
+				.newInstance();
+		dbf.setNamespaceAware(true);
+		javax.xml.parsers.DocumentBuilder db = null;
+		try {
+			db = dbf.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		xstream
+				.processAnnotations(VResultMessage.class);// or
+																					// xstream.autodetectAnnotations(true);
+																					// (Auto-detect
+		 																			// Annotations)
+		xstream.autodetectAnnotations(true);
+		String xml = xstream.toXML(vresultMessage);
+		//Document document = null;
+		InputStream in = null;
+		try {
+			in = new ByteArrayInputStream(xml.getBytes("UTF-8"));
+			//document = db.parse(in);
+		} catch (UnsupportedEncodingException e2) {
+			// TODO Auto-generated catch block
+			logger.error("error UnsupportedEncodingException xml="+xml);
+			e2.printStackTrace();
+		} finally {
+			if (in != null)
+				try {
+					in.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					logger.error("xml="+xml);
+					e.printStackTrace();
+				}
+		}
+
+		//document.normalizeDocument();
+		//try {
+			representation_aoe = new JsonRepresentation(xml);
+			 //MediaType.APPLICATION_JSON);
+				//	MediaType.APPLICATION_ATOM_XML);
+			Form responseHeaders = (Form) getResponse().getAttributes().get("org.restlet.http.headers");
+			if (responseHeaders == null)
+			{
+			responseHeaders = new Form();
+			getResponse().getAttributes().put("org.restlet.http.headers", responseHeaders);
+			}
+			responseHeaders.add("Access-Control-Allow-Origin", "*");
+		/*} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.error("xml="+xml);
+			e.printStackTrace();
+			
+		}*/
+
+	//	representation_aoe.setDocument(document);
+		return representation_aoe;
+		//getResponse().setEntity(representation_aoe);
+	}
 	/*private com.sun.syndication.feed.atom.Feed getFeed(
 			List<FeedModel> feedModels,
 			String hostRef, String pathRef, int ntcfaqsTotal, int pageSize,

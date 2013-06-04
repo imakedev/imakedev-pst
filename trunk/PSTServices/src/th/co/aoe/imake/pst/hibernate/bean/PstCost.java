@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="PST_COSTS")
+@Table(name="PST_COSTS",schema="PST_DB")
 public class PstCost implements Serializable {
 	private static final long serialVersionUID = 1L;
 

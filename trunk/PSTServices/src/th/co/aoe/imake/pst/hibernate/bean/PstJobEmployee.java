@@ -1,8 +1,14 @@
 package th.co.aoe.imake.pst.hibernate.bean;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 
 /**
@@ -10,7 +16,7 @@ import java.math.BigDecimal;
  * 
  */
 @Entity
-@Table(name="PST_JOB_EMPLOYEE")
+@Table(name="PST_JOB_EMPLOYEE",schema="PST_DB")
 public class PstJobEmployee implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -36,6 +42,10 @@ public class PstJobEmployee implements Serializable {
 	@JoinColumn(name="PJ_ID",insertable=false,updatable=false)
 	private PstJob pstJob;
 
+	@ManyToOne
+	@JoinColumn(name="PRP_ID",insertable=false,updatable=false)
+	private PstRoadPump pstRoadPump;
+	
 	public PstJobEmployee() {
 	}
 
@@ -85,6 +95,14 @@ public class PstJobEmployee implements Serializable {
 
 	public void setPstJob(PstJob pstJob) {
 		this.pstJob = pstJob;
+	}
+
+	public PstRoadPump getPstRoadPump() {
+		return pstRoadPump;
+	}
+
+	public void setPstRoadPump(PstRoadPump pstRoadPump) {
+		this.pstRoadPump = pstRoadPump;
 	}
 
 }

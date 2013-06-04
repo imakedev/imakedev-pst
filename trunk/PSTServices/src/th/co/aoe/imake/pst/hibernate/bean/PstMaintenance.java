@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * 
  */
 @Entity
-@Table(name="PST_MAINTENANCE")
+@Table(name="PST_MAINTENANCE",schema="PST_DB")
 public class PstMaintenance implements Serializable {
 	private static final long serialVersionUID = 1L;
 
