@@ -30,7 +30,8 @@ $(document).ready(function() {
 	    if($("#mode").val()=='edit'){ 
 	    	  renderPart('4');
 	    	  renderPart('3');
-	    	  renderPart('2');
+	    	  $("#tabs_2").slideUp("slow"); 
+	    	//  renderPart('2');
 	    	  renderPart('1');
 	    	  $("#element_detail").slideDown("slow"); 
 	    	  
@@ -115,7 +116,7 @@ function doJobAction(action,mode,id){
 	  str=str+"<tr>"+
 			"<td>"+(i+1)+"</td>"+
 		 	"<td><input type=\"hidden\" name=\"prpId_input\" value=\""+data2[1][i].pstRoadPump.prpId+"\"/><input type=\"hidden\" name=\"mode_input\" value=\"edit\"/>"+
-		 	((data2[1][i].pstRoadPump!=null)?data2[1][i].pstRoadPump.prpNo:"")+"</td>"+ 
+		 	"<span style=\"cursor: pointer;text-decoration: underline;\"  onClick=\"renderJobEmployee('"+data2[1][i].pstRoadPump.prpId+"','"+data2[1][i].pstRoadPump.prpNo+"')\">"+((data2[1][i].pstRoadPump!=null)?data2[1][i].pstRoadPump.prpNo:"")+"</span></td>"+ 
 			"<td><input type=\"text\" name=\"pjwCubicAmount_input\" style=\"width: 65px;text-align: right;\" value=\""+data2[1][i].pjwCubicAmount+"\"/></td>"+
 			"<td><input type=\"text\"  name=\"pjwMile_input\" style=\"width: 65px;text-align: right;\" value=\""+data2[1][i].pjwMile+"\"/></td>"+
 			"<td><input type=\"text\"  name=\"pjwHoursOfWork_input\" style=\"width: 65px;text-align: right;\" value=\""+data2[1][i].pjwHoursOfWork+"\"/></td>"+
@@ -152,8 +153,16 @@ function doJobAction(action,mode,id){
 	//alert(str);
 	$("#job_part1_element").html(str);
 	  
- }
-function renderPart2(data2){
+ } 
+function renderJobEmployee(prpId,prpNo){
+	var pjId=$("#pjId").val();
+	  //alert(pjId);
+	  $.get("job/payext_get_employee/"+pjId+"/"+prpId, function(data2) {
+		  //alert(data2)
+			  renderPart2(data2,prpId,prpNo);			  
+	  }); 
+} 	
+function renderPart2(data2,prpId,prpNo){
 	var str="<table id=\"table_part2\" class=\"table table-striped table-bordered table-condensed\" border=\"1\" style=\"font-size: 12px\">"+
 	  "<thead>"+
 		"<tr>"+
@@ -168,7 +177,30 @@ function renderPart2(data2){
 		"</thead>"+
 		"<tbody>";
 		//var sum=0;
-		 
+    if(data2!=null && data2.length>0){
+		for(var i=0;i<data2.length;i++){
+	var extInc="<input name=\"pjeExcInc_"+data2[i].peId+"\" value=\"1\" type=\"radio\">/<input  name=\"pjeExcInc_"+data2[i].peId+"\" value=\"2\" checked=\"checked\" type=\"radio\">";
+	  if(data2[i].pjeExcInc!=null && data2[i].pjeExcInc=='1'){
+		  extInc="<input name=\"pjeExcInc_"+data2[i].peId+"\" value=\"1\" checked=\"checked\" type=\"radio\">/<input  name=\"pjeExcInc_"+data2[i].peId+"\" value=\"2\" type=\"radio\">";
+	  }
+	  str=str+"<tr>"+
+			"<td><input type=\"hidden\" name=\"part2_mode_input\" value=\"edit\"/><input type=\"hidden\" name=\"peId_input\" value=\""+data2[i].peId+"\"/><input type=\"hidden\" name=\"prpId_job_input\" value=\""+data2[i].prpId+"\"/>"+data2[i].pstEmployee.peUid+"</td>"+
+			"<td>"+data2[i].pstEmployee.pstTitle.ptName+" "+data2[i].pstEmployee.peFirstName+" "+data2[i].pstEmployee.peLastName+"</td>"+
+			"<td>"+(data2[i].pstEmployee.pstPosition!=null?data2[i].pstEmployee.pstPosition.ppName:"")+"</td>"+
+			"<td>"+extInc+"</td>"+
+			"<td><input type=\"text\" name=\"pjePercentCubic_input\" value=\""+data2[i].pjePercentCubic+"\" style=\"width: 65px;text-align: right;\"></td>"+
+			"<td><input type=\"text\" name=\"pjeAmount_input\" value=\""+data2[i].pjeAmount+"\" readonly=\"true\" style=\"width: 65px;text-align: right;\"></td>"+
+			"<td><i title=\"Delete\" onclick=\"confirmDeleteEmployee('"+data2[i].peId+"','"+data2[i].prpId+"')\" style=\"cursor: pointer;\" class=\"icon-trash\"></i></td>"+
+		"</tr>";
+}
+    }
+str=str+"</tbody>"+ 
+	"</table> ";
+	$("#job_part2_element").html(str);
+	$("#road_pump_id_element").val(prpId);
+	$("#road_pump_no_element").html(prpNo);
+	  $("#tabs_2").slideDown("slow"); 
+	/*	 
 for(var i=0;i<data2[1].length;i++){
 	var extInc="<input name=\"pjeExcInc_"+data2[1][i].peId+"\" value=\"1\" type=\"radio\">/<input  name=\"pjeExcInc_"+data2[1][i].peId+"\" value=\"2\" checked=\"checked\" type=\"radio\">";
 	  if(data2[1][i].pjeExcInc!=null && data2[1][i].pjeExcInc=='1'){
@@ -181,13 +213,14 @@ for(var i=0;i<data2[1].length;i++){
 			"<td>"+extInc+"</td>"+
 			"<td><input type=\"text\" name=\"pjePercentCubic_input\" value=\""+data2[1][i].pjePercentCubic+"\" style=\"width: 65px;text-align: right;\"></td>"+
 			"<td><input type=\"text\" name=\"pjeAmount_input\" value=\""+data2[1][i].pjeAmount+"\" readonly=\"true\" style=\"width: 65px;text-align: right;\"></td>"+
-			"<td><i title=\"Delete\" onclick=\"confirmDelete('2','delete','"+data2[1][i].peId+"')\" style=\"cursor: pointer;\" class=\"icon-trash\"></i></td>"+
+			"<td><i title=\"Delete\" onclick=\"confirmDeleteEmployee('"+data2[1][i].peId+"','"+data2[1][i].prpId+"')\" style=\"cursor: pointer;\" class=\"icon-trash\"></i></td>"+
 		"</tr>";
-	 // sum=sum+data2[1][i].pjpeAmount;
 }  
 str=str+"</tbody>"+ 
 	"</table> ";
 	$("#job_part2_element").html(str);
+	  $("#tabs_2").slideDown("slow"); 
+	  */
  }
 function renderPart3(data2){
 	var str="<table id=\"table_part3\" class=\"table table-striped table-bordered table-condensed\" border=\"1\" style=\"font-size: 12px\">"+
@@ -288,8 +321,15 @@ for(var i=0;i<data2[1].length;i++){
  }
  function confirmDelete(part,mode,id){ 
 	 var pjId=$("#pjId").val();
+	 //alert("part->"+part+",pjId->"+pjId+",id->"+id)
 	 $.get("job/payext_delete/"+part+"/"+pjId+"/"+id,function(data) {
 		 renderPart(part);
+	 });
+ }
+ function confirmDeleteEmployee(id,prpId){
+	 var pjId=$("#pjId").val();
+	 $.get("job/payext_delete_employee/"+pjId+"/"+id+"/"+prpId,function(data) {
+		 renderPart2(data);	
 	 });
  }
  ///"<td><i title=\"Delete\" onclick=\"confirmDelete('1','delete','"+data2[1][i].pjId+"','"+data2[1][i].prpId+"')\" style=\"cursor: pointer;\" class=\"icon-trash\"></i></td>"+
@@ -367,7 +407,7 @@ for(var i=0;i<data2[1].length;i++){
 
 	  var rowCount = table.rows.length;
 	 
-		
+	   var road_pump_id_val=$("#road_pump_id_element").val();
 	    //alert(rowCount);
 	  var pjId=$("#pjId").val();
 	  var peId=$("#peId").val();
@@ -397,7 +437,7 @@ for(var i=0;i<data2[1].length;i++){
 
 				  //  var colCount = table.rows[0].cells.length;
 				    var newcell1 = row.insertCell(0); 
-				    newcell1.innerHTML="<input type=\"hidden\" name=\"part2_mode_input\" value=\"add\"/><input type=\"hidden\" name=\"peId_input\" value=\""+data[0][0]+"\"/>"+data[0][1]; 
+				    newcell1.innerHTML="<input type=\"hidden\" name=\"part2_mode_input\" value=\"add\"/><input type=\"hidden\" name=\"peId_input\" value=\""+data[0][0]+"\"/><input type=\"hidden\" name=\"prpId_job_input\" value=\""+road_pump_id_val+"\"/>"+data[0][1]; 
 					
 				    var newcell2 = row.insertCell(1);
 				     newcell2.innerHTML=data[0][2]+" "+data[0][3];
@@ -675,6 +715,7 @@ function submit_part2(){
 		 var pjCubicAmount=document.getElementById("pjCubicAmount");
 		  var part2_mode_input=document.getElementsByName("part2_mode_input");
 		  var peId_input=document.getElementsByName("peId_input");
+		  var prpId_job_input=document.getElementsByName("prpId_job_input");
 		  //var pjeExcInc_=document.getElementsByName("pjeExcInc_");
 		  var pjePercentCubic_input=document.getElementsByName("pjePercentCubic_input");
 		  var pjeAmount_input=document.getElementsByName("pjeAmount_input"); 
@@ -693,6 +734,7 @@ function submit_part2(){
 			 } 
 		  var mode_array=[];
 		  var peId_array=[]; 
+		  var prpId_array=[]; 
 		  var pjePercentCubic_array=[];
 		  var pjeAmount_array=[];
 		  var pjeExcInc_array=[];
@@ -705,6 +747,7 @@ function submit_part2(){
 			 if(peId_input!=null && peId_input.length>0){
 				 for(var i=0;i<peId_input.length;i++){ 
 					 peId_array.push(jQuery.trim(peId_input[i].value));
+					 prpId_array.push(jQuery.trim(prpId_job_input[i].value));
 					 var pjeExcInc=document.getElementsByName("pjeExcInc_"+peId_input[i].value);
 					// alert(pjeExcInc.length+","+peId_input[i].value)
 					 for(var j=0;j<pjeExcInc.length;j++){
@@ -767,12 +810,13 @@ function submit_part2(){
 	 for(var i=0;i<mode_array.length;i++){
 		 var query="";
 		 if(mode_array[i]=='add'){
-			 query="insert into "+SCHEMA_G+".PST_JOB_EMPLOYEE set PJ_ID="+pjId+", PE_ID="+peId_array[i]+",PJE_EXC_INC="+pjeExcInc_array[i]+",PJE_PERCENT_CUBIC="+pjePercentCubic_array[i]+",PJE_AMOUNT="+pjeAmount_array[i];
+			 //alert(prpId_array[i])
+			 query="insert into "+SCHEMA_G+".PST_JOB_EMPLOYEE set PJ_ID="+pjId+", PE_ID="+peId_array[i]+", PRP_ID="+prpId_array[i]+",PJE_EXC_INC="+pjeExcInc_array[i]+",PJE_PERCENT_CUBIC="+pjePercentCubic_array[i]+",PJE_AMOUNT="+pjeAmount_array[i];
 			 
 		 }else{	 
 			query="update  "+SCHEMA_G+".PST_JOB_EMPLOYEE set PJE_EXC_INC="+pjeExcInc_array[i]+",PJE_PERCENT_CUBIC="+pjePercentCubic_array[i]+",PJE_AMOUNT="+pjeAmount_array[i];
 			 
-			 query=query+" where PJ_ID="+pjId+" and PE_ID="+peId_array[i]+""; 
+			 query=query+" where PJ_ID="+pjId+" and PE_ID="+peId_array[i]+" and  PRP_ID="+prpId_array[i]+" "; 
 		 }	
 		 querys.push(query);
 	 }
@@ -783,7 +827,8 @@ function submit_part2(){
 	PSTAjax.executeQuery(querys,{
 		callback:function(data){ 
 			if(data!=0){
-				renderPart("2"); 
+				//renderPart("2");    
+				renderJobEmployee($("#road_pump_id_element").val(),$("#road_pump_no_element").html());
 				//$( "#dialog-form" ).dialog("close");
 			}
 		}
@@ -939,13 +984,13 @@ legend {font-size: 14px}
     					</td>
     					<td width="10%" align="right"><span style="font-size: 13px;padding: 5px">หน่วยงาน :</span></td>
     					<td width="30%" colspan="1"> 
-    						<form:input path="pstJob.pjCustomerDepartment" id="pjCustomerDepartment" cssStyle="height: 30;"/><span style="color: red;padding-left: 5px">*</span>
+    						<form:input path="pstJob.pjCustomerDepartment" id="pjCustomerDepartment" cssStyle="height: 30;width:167px"/><span style="color: red;padding-left: 5px">*</span>
     					</td>
     				</tr>
     				<tr valign="middle">
     					<td width="13%" align="right"><span style="font-size: 13px;padding: 5px">คอนกรีตที่ใช้ :</span></td>
     					<td width="20%" colspan="1"> 
-    					<form:select path="pstJob.pstConcrete.pconcreteId" cssStyle="width:100px">
+    					<form:select path="pstJob.pstConcrete.pconcreteId" cssStyle="width:170px">
 	    						      <form:option value="-1">---</form:option>
 	    					      	  <form:options itemValue="pconcreteId" itemLabel="pconcreteName" items="${pstConcretes}"/> 
 	    	            </form:select>
@@ -957,7 +1002,7 @@ legend {font-size: 14px}
     					</td>
     					<td width="10%" align="right"><span style="font-size: 13px;padding: 5px">ชื่อลูกค้า :</span></td>
     					<td width="30%" colspan="1"> 
-    						<form:input path="pstJob.pjCustomerName" id="pjCustomerName" cssStyle="height: 30;"/>
+    						<form:input path="pstJob.pjCustomerName" id="pjCustomerName" cssStyle="height: 30;width:200px"/>
     					</td>
     				</tr>
     				<tr valign="middle">
@@ -1087,7 +1132,9 @@ legend {font-size: 14px}
     					<td width="100%" colspan="6">
     					 	<div id="tabs_2">
 								<ul>			 
-									<li><a href="#tabs_2-1">พนักงานประจำรถ</a></li> 
+								
+								  <input type="hidden" id="road_pump_id_element"/>
+									<li><a href="#tabs_2-1">พนักงานประจำรถ&nbsp;&nbsp;<span id="road_pump_no_element"></span></a></li> 
 								</ul>
 								<div id="tabs_2-1" >  
 								<div>รหัส ชื่อ-นามสกุล พนง. 

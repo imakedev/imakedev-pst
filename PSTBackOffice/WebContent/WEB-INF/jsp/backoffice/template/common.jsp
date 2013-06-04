@@ -2,6 +2,7 @@
 <%@ include file="/WEB-INF/jsp/includes.jsp" %>
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=7, IE=9"/>
 <title></title>  
 <c:url var="url" value="/" />
 <script type="text/javascript"

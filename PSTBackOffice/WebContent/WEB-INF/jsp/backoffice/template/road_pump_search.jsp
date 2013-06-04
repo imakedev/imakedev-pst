@@ -102,7 +102,7 @@ function doAction(mode,id){
             <div align="left">
             <strong>Road pump</strong>
             </div>
-            <div align="left" style="padding: 10px 60px">
+            <div align="left" style="padding: 10px 10px">
             	<span style="font-size: 13px;">หมายเลข</span> 
             	<span style="padding: 20px">
             	<!-- <input type="text" style="height: 30;width:80px">  -->
@@ -114,7 +114,7 @@ function doAction(mode,id){
             	<form:input path="pstRoadPump.prpRegister" cssStyle="height: 30;width:100px"/>
             	</span>  
             	<span style="font-size: 13px;">สถานะปัจจุบัน</span> 
-            	<span style="padding: 20px">
+            	<span style="padding-left: 10px">
             	<form:select path="pstRoadPump.pstRoadPumpStatus.prpsId">
     						 <form:option value="0">-- Select Status --</form:option>
     						 <form:options items="${pstRoadPumpStatuses}" itemLabel="prpsName" itemValue="prpsId"></form:options>
