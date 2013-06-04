@@ -343,7 +343,7 @@ th{ font-family:Tahoma; font-size:12px; font-weight:bold;
         	 <c:forEach items="${missCandidates}" var="missCandidate" varStatus="loop"> 
           	<tr> 
             
-            	<td><input type="checkbox" name="mcaIdCheckbox" value="${missCandidate.mcaId}"/>&nbsp;&nbsp;${(candidateForm.paging.pageNo-1)*candidateForm.paging.pageSize+(loop.index+1)}.</td>
+            	<td><input type="checkbox" name="mcaIdCheckbox"  value="${missCandidate.mcaId}"/>&nbsp;&nbsp;${(candidateForm.paging.pageNo-1)*candidateForm.paging.pageSize+(loop.index+1)}.</td>
             	<td>&nbsp;${missCandidate.mcaUsername}&nbsp;/&nbsp;${missCandidate.mcaPassword}</td>
             	<%-- <td>&nbsp;${missCandidate.mcaPassword}</td> --%>
             	<td>&nbsp;${missCandidate.missAccount.maName}&nbsp;[${missCandidate.missAccount.maTotalUnit}/${missCandidate.missAccount.maTotalUnit-missCandidate.missAccount.maUsedUnit}]</td>

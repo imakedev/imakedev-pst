@@ -111,22 +111,24 @@ function doAction(mode,id){
               <form:hidden path="paging.pageSize" id="pageSize"/>
               <form:hidden path="pageCount"/>
             <div align="left">
-            <strong>แผนก</strong>
+            <strong>จัดการประเภทงาน</strong>
             </div>
-            <%--
+           
             <div align="center" style="padding: 10px 60px">
-            	<span style="font-size: 13px;">รหัสรายการ</span> 
+            	<span style="font-size: 13px;">รายการ</span> 
             	<span style="padding: 20px">
-            	<form:input path="pstWorkType.pbdUid" cssStyle="height: 30;width:80px"/>
+            	<form:input path="pstWorkType.pwtName" cssStyle="height: 30;width:300px"/>
             	<!-- <input type="text" style="height: 30;width:80px">  -->
             	</span>  
-	    		<span style="font-size: 13px;">รายละเอียด</span> 
+	    		<span style="font-size: 13px;">แผนก</span> 
             	<span style="padding: 20px">
-            	<form:input path="pstWorkType.pbdName" cssStyle="height: 30;"/>
-            	<!-- <input type="text" style="height: 30;">  -->
+            	<form:select path="pstWorkType.pstDepartment.pdId" cssStyle="width:120px">
+    						 	<form:option value="-1">---</form:option> 
+    						 	<form:options items="${pstDepartments}" itemLabel="pdName" itemValue="pdId"></form:options> 
+    						 </form:select> 
             	</span>  
             </div>
-             --%>
+           
 			</form:form> 
 			
 	    					<table border="0" width="100%" style="font-size: 13px">
@@ -140,15 +142,19 @@ function doAction(mode,id){
 	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;
 	    					<span id="pageElement">
 	    					<select name="workTypePageSelect" id="workTypePageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select>
-	    					</span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;</td>
+	    					</span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;<a class="btn btn-primary" onclick="doSearch('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a></td>
 	    					</tr>
 	    					</tbody></table>
 		<table class="table table-striped table-bordered table-condensed" border="1" style="font-size: 12px">
         	<thead>
           		<tr> 
             		<th width="10%"><div class="th_class">ลำดับ</div></th>
-            		<th width="82%"><div class="th_class">รายการตรวจเช็ค</div></th>
-            		<!-- <th width="15%"><div class="th_class">อัตราค่าแรง(เท่า)</div></th>   -->
+            		<th width="32%"><div class="th_class">รายการตรวจเช็ค</div></th>
+            		<th width="25%"><div class="th_class">แผนก</div></th>  
+            		<th width="10%"><div class="th_class">ระยะเวลา(วัน)</div></th> 
+            		<th width="10%"><div class="th_class">คอนกรีต(คิว)</div></th> 
+            		<th width="10%"><div class="th_class">เลขไมค์(กม)</div></th> 
+            		<th width="10%"><div class="th_class">ชม.การทำงาน(ชม.)</div></th>  
             		<th width="8%"><div class="th_class">Action</div></th> 
           		</tr>
         	</thead>
@@ -157,7 +163,16 @@ function doAction(mode,id){
         	 <c:forEach items="${pstWorkTypes}" var="pstWorkType" varStatus="loop"> 
           	<tr> 
             	<td>${(workTypeForm.paging.pageNo-1)*workTypeForm.paging.pageSize+(loop.index+1)}.</td>
-            	<td>${pstWorkType.pwtName}</td>  
+            	<td>&nbsp;${pstWorkType.pwtName}</td>   
+            	<td>&nbsp;${pstWorkType.pstDepartment.pdName}</td>  
+            	<td>&nbsp;<fmt:formatNumber  pattern="###.##"  
+     value="${pstWorkType.pwtPeriod}" /></td>  
+            	<td>&nbsp;<fmt:formatNumber  pattern="###.##"  
+     value="${pstWorkType.pwtConcrete}" /></td>  
+            	<td>&nbsp;<fmt:formatNumber  pattern="###.##"  
+     value="${pstWorkType.pwtMile}" /></td>  
+            	<td>&nbsp;<fmt:formatNumber  pattern="###.##"  
+     value="${pstWorkType.pwtHoursOfWork}" /></td>   
             	<td style="text-align: center;"> 
             	 <i title="Edit" onclick="loadDynamicPage('workType/item/${pstWorkType.pwtId}')" style="cursor: pointer;" class="icon-edit"></i>&nbsp;&nbsp;
             	 <i title="Delete" onclick="confirmDelete('delete','${pstWorkType.pwtId}')" style="cursor: pointer;" class="icon-trash"></i>
@@ -167,7 +182,7 @@ function doAction(mode,id){
           	</c:if>
           	<c:if test="${empty pstWorkTypes}"> 
           	<tr>
-          		<td colspan="4" style="text-align: center;">&nbsp;Not Found&nbsp;</td>
+          		<td colspan="8" style="text-align: center;">&nbsp;Not Found&nbsp;</td>
           	</tr>
           </c:if>
         	</tbody>

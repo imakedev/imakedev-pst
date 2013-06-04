@@ -241,9 +241,13 @@ function openMailDialog(todo_id,todo_ref){
                       <li class="dropdown" id="maintenance_link"> 
                       	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Maintenance<b class="caret"></b></a>
                       	<ul class="dropdown-menu">
-                          <li><a href="javascript:void(0);"  onclick="togle_page('maintenance/page/maintenance_roadpump_search','maintenance_link')" style="text-align: left;">ตรวจสภาพรถ</a></li>
+                          <!-- <li><a href="javascript:void(0);"  onclick="togle_page('maintenance/page/maintenance_roadpump_search','maintenance_link')" style="text-align: left;">ตรวจสภาพรถ</a></li>
                           <li><a href="javascript:void(0);" onclick="togle_page('maintenance/page/maintenance_dept_search','maintenance_link')"  style="text-align: left;">จัดการแผนก</a></li>
                           <li><a href="javascript:void(0);" onclick="togle_page('maintenance/page/maintenance_jobtype_search','maintenance_link')"  style="text-align: left;">จัดการประเภทงาน</a></li>
+                          <li><a href="javascript:void(0);" onclick="togle_page('maintenance/page/maintenance_check_search','maintenance_link')"  style="text-align: left;">จัดการตรวจเช็ค</a></li> -->
+                          <li><a href="javascript:void(0);"  onclick="togle_page('maintenance/page/maintenance_roadpump_search','maintenance_link')" style="text-align: left;">ตรวจสภาพรถ</a></li>
+                          <li><a href="javascript:void(0);" onclick="togle_page('department/init','maintenance_link')"  style="text-align: left;">จัดการแผนก</a></li>
+                          <li><a href="javascript:void(0);" onclick="togle_page('workType/init','maintenance_link')"  style="text-align: left;">จัดการประเภทงาน</a></li>
                           <li><a href="javascript:void(0);" onclick="togle_page('maintenance/page/maintenance_check_search','maintenance_link')"  style="text-align: left;">จัดการตรวจเช็ค</a></li>
                          </ul>
                       </li>

@@ -8,6 +8,12 @@ $(document).ready(function() {
 		 $("#message_element").slideDown("slow"); 
 		 setTimeout(function(){$("#message_element").slideUp("slow")},5000);
 	 }
+	 $("#pstDepartment\\.pdName").keypress(function(event) { 
+	 	  if ( event.which == 13 ) {
+	 	     event.preventDefault();
+	 	    doSearch('search','0');
+	 	   }
+});
 });
 function goBackEmployee(){
 	 
@@ -111,7 +117,13 @@ function doAction(mode,id){
               <form:hidden path="paging.pageSize" id="pageSize"/>
               <form:hidden path="pageCount"/>
             <div align="left">
-            <strong>แผนก</strong>
+            <strong>จัดการแผนก</strong>
+            </div>
+            <div align="left" style="padding: 10px 60px">
+            	<span style="font-size: 13px;">แผนก</span> 
+            	<span style="padding: 20px">
+            	  <form:input path="pstDepartment.pdName" cssStyle="height: 30;width:300px"/>  
+            	</span>  
             </div>
             <%--
             <div align="center" style="padding: 10px 60px">
@@ -140,7 +152,7 @@ function doAction(mode,id){
 	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;
 	    					<span id="pageElement">
 	    					<select name="departmentPageSelect" id="departmentPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select>
-	    					</span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;</td>
+	    					</span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;<a class="btn btn-primary" onclick="doSearch('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a></td>
 	    					</tr>
 	    					</tbody></table>
 		<table class="table table-striped table-bordered table-condensed" border="1" style="font-size: 12px">
@@ -148,7 +160,6 @@ function doAction(mode,id){
           		<tr> 
             		<th width="10%"><div class="th_class">ลำดับ</div></th>
             		<th width="82%"><div class="th_class">แผนก</div></th>
-            		<!-- <th width="15%"><div class="th_class">อัตราค่าแรง(เท่า)</div></th>   -->
             		<th width="8%"><div class="th_class">Action</div></th> 
           		</tr>
         	</thead>
@@ -157,7 +168,7 @@ function doAction(mode,id){
         	 <c:forEach items="${pstDepartments}" var="pstDepartment" varStatus="loop"> 
           	<tr> 
             	<td>${(departmentForm.paging.pageNo-1)*departmentForm.paging.pageSize+(loop.index+1)}.</td>
-            	<td>${pstDepartment.pdName}</td>  
+            	<td>&nbsp;${pstDepartment.pdName}</td>
             	<td style="text-align: center;"> 
             	 <i title="Edit" onclick="loadDynamicPage('department/item/${pstDepartment.pdId}')" style="cursor: pointer;" class="icon-edit"></i>&nbsp;&nbsp;
             	 <i title="Delete" onclick="confirmDelete('delete','${pstDepartment.pdId}')" style="cursor: pointer;" class="icon-trash"></i>
