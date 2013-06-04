@@ -96,7 +96,8 @@ public class JobController {
 	        jobForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	        jobForm.getPstJob().setPagging(jobForm.getPaging());
 	        VResultMessage vresultMessage = pstService.searchPstJob(jobForm.getPstJob());
-	       
+	        
+	       // System.out.println("jobForm.getPstJob()-->"+jobForm.getPstJob().getPrpNo());
 	        jobForm.setPageCount(IMakeDevUtils.calculatePage(jobForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 	        model.addAttribute("pstJobs", vresultMessage.getResultListObj());
 	        model.addAttribute("jobForm", jobForm);
@@ -129,7 +130,7 @@ public class JobController {
 	        model.addAttribute("pstBreakDownList", pstJobMaster.getPstBreakDownList());
 	        model.addAttribute("pstCostList", pstJobMaster.getPstCostList());
 	        model.addAttribute("pstEmployeeList", pstJobMaster.getPstEmployeeList()); 
-	        System.out.println(" pstJobMaster.getPstEmployeeList()="+ pstJobMaster.getPstEmployeeList());
+	       // System.out.println(" pstJobMaster.getPstEmployeeList()="+ pstJobMaster.getPstEmployeeList());
 	        }catch(Exception ex){
 	        	ex.printStackTrace();
 	        }
@@ -219,7 +220,7 @@ public class JobController {
 	  public @ResponseBody String payext(HttpServletRequest request, @PathVariable String part, @ModelAttribute(value="jobForm") JobForm jobForm, BindingResult result, Model model)
 	    {
 	//	 List payext=null;
-		 System.out.println("part="+part);
+		 //System.out.println("part="+part);
 		  if(part.equals("1")){
 			//  jobForm.getPstJobWork();
 			  jobForm.getPstJobWork().setPjId(jobForm.getPstJob().getPjId());
@@ -254,14 +255,11 @@ public class JobController {
 	    { 
 		 List returnResult=new ArrayList(2); 
 		  List payext=null;
-		 System.out.println("part="+part);
+		 //System.out.println("part="+part);
 		  if(part.equals("1")){
 			//  jobForm.getPstJobWork();
 			  
 			  payext= pstService.listPstJobWorks(pjId, null);
-		  }else if(part.equals("2")){
-			  payext=pstService.listPstJobEmployees(pjId, null);
-			//  jobForm.getPstJobEmployee();
 		  }else if(part.equals("3")){
 			  //jobForm.getPstJobPay();
 			  payext=pstService.listPstJobPays(pjId, null);
@@ -275,6 +273,13 @@ public class JobController {
 		  return returnResult; 
 	    }
 	  @SuppressWarnings({ "rawtypes", "unchecked" })
+		@RequestMapping(value={"/payext_get_employee/{pjId}/{prpId}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+		  public @ResponseBody List getPayExtEmployee(HttpServletRequest request, @PathVariable Long pjId,
+				  @PathVariable Long prpId,Model model)
+		    {  
+			  	return pstService.listPstJobEmployees(pjId, null,prpId);
+		    }
+	  @SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value={"/payext_delete/{part}/{pjId}/{id}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	  public @ResponseBody List deletePayExt(HttpServletRequest request, @PathVariable String part,
 			  @PathVariable Long pjId,@PathVariable Long id,Model model)
@@ -282,18 +287,13 @@ public class JobController {
 	    {
 		 List returnResult=new ArrayList(2);
 		 List payext=null;
-		 System.out.println("part="+part);
+		// System.out.println("part="+part);
 		  if(part.equals("1")){
 			//  jobForm.getPstJobWork();
 			  PstJobWork work=new PstJobWork(pjId, id, null,
 					  null,null,null, null,null, null, null, null); 
 			  pstService.deletePstJobWork(work, ServiceConstant.PST_JOB_WORK_DELETE);
 			  payext= pstService.listPstJobWorks(pjId, null);
-		  }else if(part.equals("2")){ 
-			  PstJobEmployee employee=new PstJobEmployee(pjId, id,null,null,null,null,null);
-			  pstService.deletePstJobEmployee(employee, ServiceConstant.PST_JOB_EMPLOYEE_DELETE);
-			  payext=pstService.listPstJobEmployees(pjId, null);
-			//  jobForm.getPstJobEmployee();
 		  }else if(part.equals("3")){
 			  //jobForm.getPstJobPay();
 			  PstJobPay jobpay=new PstJobPay(pjId, id, null, null, null);
@@ -310,5 +310,21 @@ public class JobController {
 		  returnResult.add(payext);
 		  return returnResult; 
 	    }
+	
+	  @SuppressWarnings({ "rawtypes", "unchecked" })
+		@RequestMapping(value={"/payext_delete_employee/{pjId}/{id}/{prpId}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+		  public @ResponseBody List deletePayExtEmployee(HttpServletRequest request, 
+				  @PathVariable Long pjId,@PathVariable Long id,@PathVariable Long prpId,Model model)
+		  //,@ModelAttribute(value="jobForm") JobForm jobForm, BindingResult result, 
+		    {
+			 
+			// System.out.println("part="+part);
+			  
+				  PstJobEmployee employee=new PstJobEmployee(pjId, id,prpId,null,null,null,null,null);
+				  pstService.deletePstJobEmployee(employee, ServiceConstant.PST_JOB_EMPLOYEE_DELETE);
+				return pstService.listPstJobEmployees(pjId, null,prpId);
+				//  jobForm.getPstJobEmployee();
+		 
+		    }
 	  
 }
