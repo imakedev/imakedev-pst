@@ -27,10 +27,10 @@ public class PostCommon {
 	public static final int PAGE_SIZE = 5; 
 	public VResultMessage postMessage(VServiceXML vserviceXML,@SuppressWarnings("rawtypes") Class[] className,String endPoint,boolean isReturn) {
 	 
-		HttpPost httppost = new HttpPost("http://localhost:3000/v1/"+endPoint);
-		//HttpPost httppost = new HttpPost("http://localhost:8080/PSTServices/rest/"+endPoint);
+		//HttpPost httppost = new HttpPost("http://localhost:3000/v1/"+endPoint);
+		HttpPost httppost = new HttpPost("http://localhost:8080/PSTServices/rest/"+endPoint);
 		
-				//HttpPost httppost = new HttpPost("http://10.0.20.27:3000/v1/"+endPoint);
+			//	HttpPost httppost = new HttpPost("http://10.0.20.27:3000/v1/"+endPoint);
 				//Test
 				//HttpPost httppost = new HttpPost("http://10.2.0.94:10000/BPSService/RestletServlet/"+endPoint);
 				
