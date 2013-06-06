@@ -7,6 +7,7 @@ package th.co.aoe.imake.pst.backoffice.service;
 
 import java.util.List;
 
+import th.co.aoe.imake.pst.xstream.PstBrand;
 import th.co.aoe.imake.pst.xstream.PstBreakDown;
 import th.co.aoe.imake.pst.xstream.PstConcrete;
 import th.co.aoe.imake.pst.xstream.PstCost;
@@ -19,8 +20,10 @@ import th.co.aoe.imake.pst.xstream.PstJobEmployee;
 import th.co.aoe.imake.pst.xstream.PstJobPay;
 import th.co.aoe.imake.pst.xstream.PstJobPayExt;
 import th.co.aoe.imake.pst.xstream.PstJobWork;
+import th.co.aoe.imake.pst.xstream.PstModel;
 import th.co.aoe.imake.pst.xstream.PstPosition;
 import th.co.aoe.imake.pst.xstream.PstRoadPump;
+import th.co.aoe.imake.pst.xstream.PstRoadPumpStatus;
 import th.co.aoe.imake.pst.xstream.PstWorkType;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
@@ -143,6 +146,40 @@ public interface PSTService {
 
 	public abstract PstPosition findPstPositionById(Long long1);
 	
+	// User
+	public abstract VResultMessage searchUser(
+			th.co.aoe.imake.pst.xstream.User user);
+	public abstract Long saveUser(th.co.aoe.imake.pst.xstream.User user);
+
+	public abstract int updateUser(th.co.aoe.imake.pst.xstream.User user);
+
+	public abstract int deleteUser(th.co.aoe.imake.pst.xstream.User user, String service);
+
+	public abstract th.co.aoe.imake.pst.xstream.User findUserById(Long long1);
+	
+	
+	// PstModel
+	public abstract VResultMessage searchPstModel(
+				PstModel pstModel);
+	public abstract Long savePstModel(PstModel pstModel);
+
+	public abstract int updatePstModel(PstModel pstModel);
+
+	public abstract int deletePstModel(PstModel pstModel, String service);
+
+	public abstract PstModel findPstModelById(Long long1);
+		
+	// PstBrand
+	public abstract VResultMessage searchPstBrand(
+				PstBrand pstBrand);
+	public abstract Long savePstBrand(PstBrand pstBrand);
+
+	public abstract int updatePstBrand(PstBrand pstBrand);
+
+	public abstract int deletePstBrand(PstBrand pstBrand, String service);
+
+	public abstract PstBrand findPstBrandById(Long long1);
+	
 	// PstConcrete
 	public abstract VResultMessage searchPstConcrete(
 				PstConcrete pstConcrete);
@@ -179,5 +216,16 @@ public interface PSTService {
 	public abstract int deletePstWorkType(PstWorkType pstWorkType, String service);
 
 	public abstract PstWorkType findPstWorkTypeById(Long long1);
+	
+	// PstRoadPumpStatus
+	public abstract VResultMessage searchPstRoadPumpStatus(
+				PstRoadPumpStatus pstRoadPumpStatus);
+	public abstract Long savePstRoadPumpStatus(PstRoadPumpStatus pstRoadPumpStatus);
+
+	public abstract int updatePstRoadPumpStatus(PstRoadPumpStatus pstRoadPumpStatus);
+
+	public abstract int deletePstRoadPumpStatus(PstRoadPumpStatus pstRoadPumpStatus, String service);
+
+	public abstract PstRoadPumpStatus findPstRoadPumpStatusById(Long long1);
 		
 }
