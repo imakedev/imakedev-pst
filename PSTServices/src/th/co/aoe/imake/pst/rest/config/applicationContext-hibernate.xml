@@ -48,15 +48,15 @@
 		for the required JAR files. Alternatively you can use another connection pool
 		such as C3P0, similarly configured using Spring.
 	-->
-	<!--  -->  
+	<!--   
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
 			p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}" p:username="${jdbc.username}"
 			p:password="${jdbc.password}"/>
-			
+		--> 	
 	<!--   
-	       
+	       -->
      <jee:jndi-lookup id="dataSource" resource-ref="true" jndi-name="jdbc/pstdb"/>
-     -->
+     
 	<!-- JNDI DataSource for JEE environments -->
        <!--
          
@@ -309,6 +309,15 @@
 	</bean>
 	
 	<bean id="pstPositionService" class="th.co.aoe.imake.pst.hibernate.HibernatePstPosition">
+		<property name="sessionAnnotationFactory" ref="sessionFactory"></property>	 
+	</bean>
+	<bean id="pstModelService" class="th.co.aoe.imake.pst.hibernate.HibernatePstModel">
+		<property name="sessionAnnotationFactory" ref="sessionFactory"></property>	 
+	</bean>
+	<bean id="pstBrandService" class="th.co.aoe.imake.pst.hibernate.HibernatePstBrand">
+		<property name="sessionAnnotationFactory" ref="sessionFactory"></property>	 
+	</bean>
+	<bean id="userService" class="th.co.aoe.imake.pst.hibernate.HibernateUser">
 		<property name="sessionAnnotationFactory" ref="sessionFactory"></property>	 
 	</bean>
 	<bean id="pstDepartmentService" class="th.co.aoe.imake.pst.hibernate.HibernatePstDepartment">

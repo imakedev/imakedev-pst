@@ -71,10 +71,29 @@
 							bean="pstPositionResource" />
 					</bean>
 				</entry>
+				<entry key="/pstModel">
+				 <bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create"
+							bean="pstModelResource" />
+					</bean>
+				</entry>
+				<entry key="/pstBrand">
+				 <bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create"
+							bean="pstBrandResource" />
+					</bean>
+				</entry>
 				<entry key="/pstDepartment">
 				 <bean class="org.restlet.ext.spring.SpringFinder">
 						<lookup-method name="create"
 							bean="pstDepartmentResource" />
+					</bean>
+				</entry>
+				
+				<entry key="/user">
+				 <bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create"
+							bean="userResource" />
 					</bean>
 				</entry>
 				<entry key="/pstWorkType">
