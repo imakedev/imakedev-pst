@@ -236,7 +236,16 @@ function openMailDialog(todo_id,todo_ref){
                       <li  id="job_link"><a onclick="togle_page('job/init','job_link')">Job</a></li>
                       <li id="breakdown_link"><a onclick="togle_page('breakdown/init','breakdown_link')">Break down</a></li>
                       <li id="costs_link"><a onclick="togle_page('costs/init','costs_link')">Costs</a></li>
-                      <li id="roadpump_link"><a onclick="togle_page('roadpump/init','roadpump_link')">Road pump</a></li>
+                    <!--   <li id="roadpump_link"><a onclick="togle_page('roadpump/init','roadpump_link')">Road pump</a></li> -->
+                       <li class="dropdown" id="roadpump_link"> 
+                      	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Road pump<b class="caret"></b></a>
+                      	<ul class="dropdown-menu">
+                          <li><a href="javascript:void(0);"  onclick="togle_page('roadpump/init','roadpump_link')" style="text-align: left;">จัดการ Road pump</a></li>
+                          <li><a href="javascript:void(0);" onclick="togle_page('model/init','roadpump_link')"  style="text-align: left;">จัดการ รุ่นรถ/รุ่นปั๊ม</a></li>
+                          <li><a href="javascript:void(0);" onclick="togle_page('brand/init','roadpump_link')"  style="text-align: left;">จัดการ ยี่ห้อรถ/ยี่ห้อปั๊ม</a></li>
+                          <li><a href="javascript:void(0);" onclick="togle_page('roadPumpStatus/init','roadpump_link')"  style="text-align: left;">จัดการ สถานะ Road pump</a></li>
+                         </ul>
+                      </li>
                       <!--  <li id="maintenance_link"><a onclick="togle_page('maintenance/init','maintenance_link')">Maintenance</a></li> -->
                       <li class="dropdown" id="maintenance_link"> 
                       	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Maintenance<b class="caret"></b></a>
@@ -268,17 +277,18 @@ function openMailDialog(todo_id,todo_ref){
                           
                          </ul>
                       </li>
-                      <li class="dropdown">
+                     <%--  <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">นาย สมชาย รักงาน<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                           <li><a href="<c:url value='/logout'/>">Log out</a></li>
-                         <!--  <li><a href="#">Another action</a></li>
-                          <li><a href="#">Something else here</a></li>
-                          <li class="divider"></li>
-                          <li class="nav-header">Nav header</li>
-                          <li><a href="#">Separated link</a></li>
-                          <li><a href="#">One more separated link</a></li> -->
                         </ul>
+                      </li> --%>
+                       <li class="dropdown" id="user_link"> 
+                      	<a href="#" class="dropdown-toggle" data-toggle="dropdown">${myUser.fullName}<b class="caret"></b></a>
+                      	<ul class="dropdown-menu">
+                      	   <li><a href="javascript:void(0);" onclick="togle_page('user/init','user_link')" style="text-align: left;">จัดการ User</a></li>
+                      	   <li><a href="<c:url value='/logout'/>"  style="text-align: left;">Log out</a></li>
+                         </ul>
                       </li>
                     </ul> 
                    <!--  <ul class="nav pull-right">
