@@ -98,6 +98,23 @@ public class ServiceConstant {
 	public static final String PST_POSITION_FIND_BY_ID = "findPstPositionById";
 	public static final String PST_POSITION_LIST = "listPstPostion";
 	
+	// PST_MODEL
+	public static final String PST_MODEL_SAVE = "savePstModel";
+	public static final String PST_MODEL_UPDATE = "updatePstModel";
+	public static final String PST_MODEL_DELETE = "deletePstModel";
+	public static final String PST_MODEL_ITEMS_DELETE ="deletePstModelItems";
+	public static final String PST_MODEL_SEARCH = "searchPstModel";
+	public static final String PST_MODEL_FIND_BY_ID = "findPstModelById";
+	 	
+		
+	// PST_BRAND
+	public static final String PST_BRAND_SAVE = "savePstBrand";
+	public static final String PST_BRAND_UPDATE = "updatePstBrand";
+	public static final String PST_BRAND_DELETE = "deletePstBrand";
+	public static final String PST_BRAND_ITEMS_DELETE ="deletePstBrandItems";
+	public static final String PST_BRAND_SEARCH = "searchPstBrand";
+	public static final String PST_BRAND_FIND_BY_ID = "findPstBrandById";
+	
 	// PST_TITLE
 	public static final String PST_TITLE_SAVE = "savePstTitle";
 	public static final String PST_TITLE_UPDATE = "updatePstTitle";
@@ -190,6 +207,14 @@ public class ServiceConstant {
 		public static final String PST_JOB_WORK_SAVE = "savePstJobWork"; 
 		public static final String PST_JOB_WORK_DELETE = "deletePstJobWork";
 		public static final String PST_JOB_WORK_SEARCH = "searchPstJobWork";
+		
+		// USER
+		public static final String USER_SAVE = "saveUser";
+		public static final String USER_UPDATE = "updateUser";
+		public static final String USER_DELETE = "deleteUser";
+		public static final String USER_SEARCH = "searchUser";
+		public static final String USER_FIND_BY_ID = "findUserById";
+		 
 		
 		public static final String PST_OBJECT_SEARCH = "searchObject";
 		public static final String PST_OBJECT_EXECUTE = "executeQuery";

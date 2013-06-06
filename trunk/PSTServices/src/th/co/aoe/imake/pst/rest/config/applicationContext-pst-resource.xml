@@ -95,6 +95,27 @@
 		<property name="pstPositionService" ref="pstPositionService"></property>  
 		<property name="xstream" ref="xstream"></property>
 	</bean>
+	<bean id="pstModelResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstModelResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstModelService" ref="pstModelService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>
+	<bean id="pstBrandResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstBrandResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstBrandService" ref="pstBrandService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>
+	 <bean id="userResource" 
+		class="th.co.aoe.imake.pst.rest.resource.UserResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="userService" ref="userService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean>
 	<bean id="pstDepartmentResource" 
 		class="th.co.aoe.imake.pst.rest.resource.PstDepartmentResource"
 		scope="prototype"> 
