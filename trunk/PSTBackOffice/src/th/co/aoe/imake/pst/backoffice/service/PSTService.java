@@ -24,6 +24,7 @@ import th.co.aoe.imake.pst.xstream.PstModel;
 import th.co.aoe.imake.pst.xstream.PstPosition;
 import th.co.aoe.imake.pst.xstream.PstRoadPump;
 import th.co.aoe.imake.pst.xstream.PstRoadPumpStatus;
+import th.co.aoe.imake.pst.xstream.PstRoadPumpType;
 import th.co.aoe.imake.pst.xstream.PstWorkType;
 import th.co.aoe.imake.pst.xstream.common.VResultMessage;
 
@@ -227,5 +228,18 @@ public interface PSTService {
 	public abstract int deletePstRoadPumpStatus(PstRoadPumpStatus pstRoadPumpStatus, String service);
 
 	public abstract PstRoadPumpStatus findPstRoadPumpStatusById(Long long1);
+	
+	@SuppressWarnings("rawtypes")
+	public abstract List listPstRoadPumpTypees();
+	// PstRoadPumpType
+	public abstract VResultMessage searchPstRoadPumpType(
+					PstRoadPumpType pstRoadPumpType);
+	public abstract Long savePstRoadPumpType(PstRoadPumpType pstRoadPumpType);
+
+	public abstract int updatePstRoadPumpType(PstRoadPumpType pstRoadPumpType);
+
+	public abstract int deletePstRoadPumpType(PstRoadPumpType pstRoadPumpType, String service);
+
+	public abstract PstRoadPumpType findPstRoadPumpTypeById(Long long1);
 		
 }
