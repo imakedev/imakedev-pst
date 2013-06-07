@@ -178,23 +178,36 @@ function test(){
             	<td>${pstEmployeeWorkMapping.pstEmployee.peUid}  	 
             	 <input type="hidden" name="peIds" value="${pstEmployeeWorkMapping.pstEmployee.peId}" />
             	</td>
-            	<td>${pstEmployeeWorkMapping.pstEmployee.pstTitle.ptName} ${pstEmployeeWorkMapping.pstEmployee.peFirstName} ${pstEmployeeWorkMapping.pstEmployee.peLastName}</td>
-            	 
-	
+            	<td>${pstEmployeeWorkMapping.pstEmployee.pstTitle.ptName}  ${pstEmployeeWorkMapping.pstEmployee.peFirstName} ${pstEmployeeWorkMapping.pstEmployee.peLastName}
+            	
+            	</td> 
             	<td>${pstEmployeeWorkMapping.pstEmployee.pstPosition.ppName}</td>
-            	<td>${pstEmployeeWorkMapping.weekdayCollection}</td>
+            	<td>${pstEmployeeWorkMapping.weekdayCollection}</td> 
             	<td>
             <%-- 	<form:select path="prpNos" cssStyle="width:80px"> --%>
             	<select name="prpNos" style="width:120px">
-            		<option value="-1">---</option>
-            		 <c:forEach items="${pstRoadPumpNos}" var="pstRoadPumpNo" varStatus="loop1">  
-            		 	 <c:if test="${pstRoadPumpNo.prpNo==pstEmployeeWorkMapping.prpNo}">
+            		<option value="-1">---</option> 
+            		<c:if test="${not empty pstEmployeeWorkMapping.prpNo}"> 
+            	        <c:forEach items="${pstRoadPumpNos}" var="pstRoadPumpNo" varStatus="loop1">  
+            		     <c:if test="${pstRoadPumpNo.prpNo==pstEmployeeWorkMapping.prpNo}">
             		 	 	<option value="${pstRoadPumpNo.prpNo}" selected="selected">${pstRoadPumpNo.prpNo}</option>
             		 	 </c:if>
             		 	 <c:if test="${pstRoadPumpNo.prpNo!=pstEmployeeWorkMapping.prpNo}">
             		 	 	<option value="${pstRoadPumpNo.prpNo}">${pstRoadPumpNo.prpNo}</option>
             		 	 </c:if>
             		 </c:forEach>
+            	    </c:if>
+            	    <c:if test="${empty pstEmployeeWorkMapping.prpNo}"> 
+            	        <c:forEach items="${pstRoadPumpNos}" var="pstRoadPumpNo" varStatus="loop1">  
+            		     <c:if test="${pstRoadPumpNo.prpNo==pstEmployeeWorkMapping.pstEmployee.pstRoadPump.prpNo}">
+            		 	 	<option value="${pstRoadPumpNo.prpNo}" selected="selected">${pstRoadPumpNo.prpNo}</option>
+            		 	 </c:if>
+            		 	 <c:if test="${pstRoadPumpNo.prpNo!=pstEmployeeWorkMapping.pstEmployee.pstRoadPump.prpNo}">
+            		 	 	<option value="${pstRoadPumpNo.prpNo}">${pstRoadPumpNo.prpNo}</option>
+            		 	 </c:if>
+            		 </c:forEach>
+            	    </c:if>
+            		 
     						  <%-- 	<form:option value="-1">---</form:option> 
     						 	<form:options items="${pstRoadPumpNos}" itemLabel="prpNo" itemValue="prpNo"></form:options>  --%>
     						 <%-- </form:select>  --%>

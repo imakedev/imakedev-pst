@@ -244,6 +244,7 @@ function openMailDialog(todo_id,todo_ref){
                           <li><a href="javascript:void(0);" onclick="togle_page('model/init','roadpump_link')"  style="text-align: left;">จัดการ รุ่นรถ/รุ่นปั๊ม</a></li>
                           <li><a href="javascript:void(0);" onclick="togle_page('brand/init','roadpump_link')"  style="text-align: left;">จัดการ ยี่ห้อรถ/ยี่ห้อปั๊ม</a></li>
                           <li><a href="javascript:void(0);" onclick="togle_page('roadPumpStatus/init','roadpump_link')"  style="text-align: left;">จัดการ สถานะ Road pump</a></li>
+                          <li><a href="javascript:void(0);" onclick="togle_page('roadPumpType/init','roadpump_link')"  style="text-align: left;">จัดการ ประเภท Road pump</a></li>
                          </ul>
                       </li>
                       <!--  <li id="maintenance_link"><a onclick="togle_page('maintenance/init','maintenance_link')">Maintenance</a></li> -->
