@@ -52,6 +52,15 @@ public class ServiceConstant {
 	public static final String PST_ROAD_PUMP_STATUS_FIND_BY_ID = "findPstRoadPumpStatusById";
 	public static final String PST_ROAD_PUMP_STATUS_LIST = "listPstRoadPumpStatus";
 	
+	// PST_ROAD_PUMP_STATUS
+	public static final String PST_ROAD_PUMP_TYPE_SAVE = "savePstRoadPumpType";
+	public static final String PST_ROAD_PUMP_TYPE_UPDATE = "updatePstRoadPumpType";
+	public static final String PST_ROAD_PUMP_TYPE_DELETE = "deletePstRoadPumpType";
+	public static final String PST_ROAD_PUMP_TYPE_ITEMS_DELETE ="deletePstRoadPumpTypeItems";
+	public static final String PST_ROAD_PUMP_TYPE_SEARCH = "searchPstRoadPumpType";
+	public static final String PST_ROAD_PUMP_TYPE_FIND_BY_ID = "findPstRoadPumpTypeById";
+	public static final String PST_ROAD_PUMP_TYPE_LIST = "listPstRoadPumpType";
+	
 	// PST_ROAD_PUMP_DEACTIVE_MAPPING
 	public static final String PST_ROAD_PUMP_DEACTIVE_MAPPING_SAVE = "savePstRoadPumpDeactiveMapping";
 	public static final String PST_ROAD_PUMP_DEACTIVE_MAPPING_UPDATE = "updatePstRoadPumpDeactiveMapping";

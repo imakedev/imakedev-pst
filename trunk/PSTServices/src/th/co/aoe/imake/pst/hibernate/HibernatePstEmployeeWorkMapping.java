@@ -159,6 +159,7 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 				for (int i = 0; i < sizeReturn; i++) { 
 					java.lang.Object[] l1= (java.lang.Object[])l.get(i);
 					th.co.aoe.imake.pst.hibernate.bean.PstEmployee employee=(th.co.aoe.imake.pst.hibernate.bean.PstEmployee)l1[0];
+					
 					th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping pstEmployeeWorkMapping=(th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping)l1[1]; 
 					
 					th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping xmapping=new th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping();
@@ -276,23 +277,14 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 					 if(employee.getPstRoadPump()!=null){
 						 th.co.aoe.imake.pst.xstream.PstRoadPump xpstRoadPump= new th.co.aoe.imake.pst.xstream.PstRoadPump();
 						 xpstRoadPump.setPrpId(employee.getPstRoadPump().getPrpId());
-						 xpstRoadPump.setPrpNo(employee.getPstRoadPump().getPrpNo());
-						// BeanUtils.copyProperties(employee.getPstRoadPump(),xpstRoadPump);
+						 xpstRoadPump.setPrpNo(employee.getPstRoadPump().getPrpNo()); 
 						 xemployee.setPstRoadPump(xpstRoadPump);
 					 }
 					 xmapping.setPstEmployee(xemployee);
 					 xmapping.setWeekdayCollection(((java.lang.Long)l1[1]).intValue()+"");
 					 returnList.add(xmapping); 
 				}
-				/* for (th.co.aoe.imake.pst.hibernate.bean.PstEmployee entry : l) {
-					 th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping mapping=new th.co.aoe.imake.pst.xstream.PstEmployeeWorkMapping();
-					 th.co.aoe.imake.pst.xstream.PstEmployee employee= new th.co.aoe.imake.pst.xstream.PstEmployee();
-					 BeanUtils.copyProperties(entry, employee);
-				}*/
-				/* for (int i = 0; i < sizeReturn; i++) {
-					
-				}*/
-				 
+			 
 				 transList.add(returnList); 
 			 	 transList.add(size); 
 				return transList;
