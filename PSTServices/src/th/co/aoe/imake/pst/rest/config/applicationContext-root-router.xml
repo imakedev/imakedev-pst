@@ -38,6 +38,12 @@
 							bean="pstRoadPumpStatusResource" />
 					</bean>
 				</entry>
+				<entry key="/pstRoadPumpType">
+				 <bean class="org.restlet.ext.spring.SpringFinder">
+						<lookup-method name="create"
+							bean="pstRoadPumpTypeResource" />
+					</bean>
+				</entry> 
 				<entry key="/pstRoadPumpDeactiveMapping">
 				 <bean class="org.restlet.ext.spring.SpringFinder">
 						<lookup-method name="create"

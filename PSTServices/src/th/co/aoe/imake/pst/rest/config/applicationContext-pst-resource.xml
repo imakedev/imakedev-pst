@@ -56,6 +56,13 @@
 		<property name="pstRoadPumpStatusService" ref="pstRoadPumpStatusService"></property>  
 		<property name="xstream" ref="xstream"></property>
 	</bean> 
+	<bean id="pstRoadPumpTypeResource" 
+		class="th.co.aoe.imake.pst.rest.resource.PstRoadPumpTypeResource"
+		scope="prototype"> 
+		<property name="pstCommonService" ref="pstCommonService"></property>
+		<property name="pstRoadPumpTypeService" ref="pstRoadPumpTypeService"></property>  
+		<property name="xstream" ref="xstream"></property>
+	</bean> 
 	<bean id="pstRoadPumpDeactiveMappingResource" 
 		class="th.co.aoe.imake.pst.rest.resource.PstRoadPumpDeactiveMappingResource"
 		scope="prototype"> 
