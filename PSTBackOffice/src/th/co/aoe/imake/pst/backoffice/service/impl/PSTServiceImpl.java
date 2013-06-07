@@ -27,6 +27,7 @@ import th.co.aoe.imake.pst.xstream.PstObject;
 import th.co.aoe.imake.pst.xstream.PstPosition;
 import th.co.aoe.imake.pst.xstream.PstRoadPump;
 import th.co.aoe.imake.pst.xstream.PstRoadPumpStatus;
+import th.co.aoe.imake.pst.xstream.PstRoadPumpType;
 import th.co.aoe.imake.pst.xstream.PstTitle;
 import th.co.aoe.imake.pst.xstream.PstWorkType;
 import th.co.aoe.imake.pst.xstream.User;
@@ -2636,5 +2637,58 @@ public class PSTServiceImpl extends PostCommon
 			user.setServiceName(ServiceConstant.USER_FIND_BY_ID);
 	        VResultMessage resultMessage = postMessage(user, user.getClass().getName(), "user", true);
 	        return (User)resultMessage.getResultListObj().get(0);
+		}
+
+		@Override
+		public List listPstRoadPumpTypees() {
+			// TODO Auto-generated method stub
+			PstRoadPumpType pstRoadPumpType = new PstRoadPumpType();
+			pstRoadPumpType.setServiceName(ServiceConstant.PST_ROAD_PUMP_TYPE_LIST);
+		        VResultMessage resultMessage = postMessage(pstRoadPumpType, pstRoadPumpType.getClass().getName(), "pstRoadPumpType", true);
+		        return resultMessage.getResultListObj();
+		}
+
+		@Override
+		public VResultMessage searchPstRoadPumpType(
+				PstRoadPumpType pstRoadPumpType) {
+			// TODO Auto-generated method stub
+			pstRoadPumpType.setServiceName(ServiceConstant.PST_ROAD_PUMP_TYPE_SEARCH);
+		    return postMessage(pstRoadPumpType, pstRoadPumpType.getClass().getName(), "pstRoadPumpType", true);
+		}
+
+		@Override
+		public Long savePstRoadPumpType(PstRoadPumpType pstRoadPumpType) {
+			pstRoadPumpType.setServiceName(ServiceConstant.PST_ROAD_PUMP_TYPE_SAVE);
+	        VResultMessage resultMessage = postMessage(pstRoadPumpType, pstRoadPumpType.getClass().getName(), "pstRoadPumpType", true);
+	        pstRoadPumpType = (PstRoadPumpType)resultMessage.getResultListObj().get(0);
+	        return pstRoadPumpType.getPrptId();
+		}
+
+		@Override
+		public int updatePstRoadPumpType(PstRoadPumpType pstRoadPumpType) {
+			// TODO Auto-generated method stub
+			pstRoadPumpType.setServiceName(ServiceConstant.PST_ROAD_PUMP_TYPE_UPDATE);
+	        VResultMessage resultMessage = postMessage(pstRoadPumpType, pstRoadPumpType.getClass().getName(), "pstRoadPumpType", true);
+	        pstRoadPumpType = (PstRoadPumpType)resultMessage.getResultListObj().get(0);
+	        return pstRoadPumpType.getUpdateRecord().intValue();
+		}
+
+		@Override
+		public int deletePstRoadPumpType(PstRoadPumpType pstRoadPumpType,
+				String service) {
+			// TODO Auto-generated method stub
+			pstRoadPumpType.setServiceName(service);
+			VResultMessage resultMessage = postMessage(pstRoadPumpType, pstRoadPumpType.getClass().getName(), "pstRoadPumpType", true);
+			pstRoadPumpType = (PstRoadPumpType)resultMessage.getResultListObj().get(0);
+			return pstRoadPumpType.getUpdateRecord().intValue();
+		}
+
+		@Override
+		public PstRoadPumpType findPstRoadPumpTypeById(Long long1) {
+			PstRoadPumpType pstRoadPumpType = new PstRoadPumpType();
+	    	pstRoadPumpType.setPrptId(long1);
+	    	pstRoadPumpType.setServiceName(ServiceConstant.PST_ROAD_PUMP_TYPE_FIND_BY_ID);
+	        VResultMessage resultMessage = postMessage(pstRoadPumpType, pstRoadPumpType.getClass().getName(), "pstRoadPumpType", true);
+	        return (PstRoadPumpType)resultMessage.getResultListObj().get(0);
 		}
 }
