@@ -107,6 +107,30 @@ public class ServiceConstant {
 	public static final String PST_POSITION_FIND_BY_ID = "findPstPositionById";
 	public static final String PST_POSITION_LIST = "listPstPostion";
 	
+	// PST_CUSTOMER
+	public static final String PST_CUSTOMER_SAVE = "savePstCustomer";
+	public static final String PST_CUSTOMER_UPDATE = "updatePstCustomer";
+	public static final String PST_CUSTOMER_DELETE = "deletePstCustomer";
+	public static final String PST_CUSTOMER_ITEMS_DELETE ="deletePstCustomerItems";
+	public static final String PST_CUSTOMER_SEARCH = "searchPstCustomer";
+	public static final String PST_CUSTOMER_FIND_BY_ID = "findPstCustomerById";
+		
+	// PST_CUSTOMER_DIVISION
+	public static final String PST_CUSTOMER_DIVISION_SAVE = "savePstCustomerContact";
+	public static final String PST_CUSTOMER_DIVISION_UPDATE = "updatePstCustomerContact";
+	public static final String PST_CUSTOMER_DIVISION_DELETE = "deletePstCustomerContact";
+	public static final String PST_CUSTOMER_DIVISION_ITEMS_DELETE ="deletePstCustomerContactItems";
+	public static final String PST_CUSTOMER_DIVISION_SEARCH = "searchPstCustomerContact";
+	public static final String PST_CUSTOMER_DIVISION_FIND_BY_ID = "findPstCustomerContactById";
+		
+	// PST_CUSTOMER_CONTACT
+	public static final String PST_CUSTOMER_CONTACT_SAVE = "savePstCustomerDivision";
+	public static final String PST_CUSTOMER_CONTACT_UPDATE = "updatePstCustomerDivision";
+	public static final String PST_CUSTOMER_CONTACT_DELETE = "deletePstCustomerDivision";
+	public static final String PST_CUSTOMER_CONTACT_ITEMS_DELETE ="deletePstCustomerDivisionItems";
+	public static final String PST_CUSTOMER_CONTACT_SEARCH = "searchPstCustomerDivision";
+	public static final String PST_CUSTOMER_CONTACT_FIND_BY_ID = "findPstCustomerDivisionById";
+	
 	// PST_MODEL
 	public static final String PST_MODEL_SAVE = "savePstModel";
 	public static final String PST_MODEL_UPDATE = "updatePstModel";
@@ -229,6 +253,8 @@ public class ServiceConstant {
 		public static final String PST_OBJECT_EXECUTE = "executeQuery";
 		public static final String PST_OBJECT_UPDATE = "executeQueryUpdate";
 		public static final String PST_OBJECT_DELETE = "executeQueryDelete";
+		public static final String PST_OBJECT_EXECUTE_MAINTENANCE = "executeMaintenanceQuery";
+		
 		
 		
 	

@@ -48,15 +48,15 @@
 		for the required JAR files. Alternatively you can use another connection pool
 		such as C3P0, similarly configured using Spring.
 	-->
-	<!--  	
+	<!--  	--> 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
 			p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}" p:username="${jdbc.username}"
 			p:password="${jdbc.password}"/>
-		 --> 
+		 
 	<!--   
-	      -->
+	     
      <jee:jndi-lookup id="dataSource" resource-ref="true" jndi-name="jdbc/pstdb"/>
-      
+       -->
 	<!-- JNDI DataSource for JEE environments -->
        <!--
          
@@ -154,6 +154,11 @@
 			 <value>th.co.aoe.imake.pst.hibernate.bean.PstRoadPumpType</value>
 			 <value>th.co.aoe.imake.pst.hibernate.bean.PstTitle</value>
 			 <value>th.co.aoe.imake.pst.hibernate.bean.PstWorkType</value>
+			 <value>th.co.aoe.imake.pst.hibernate.bean.PstMaintenanceTran</value>
+			 <value>th.co.aoe.imake.pst.hibernate.bean.PstCustomer</value>
+			 <value>th.co.aoe.imake.pst.hibernate.bean.PstCustomerContact</value>
+			 <value>th.co.aoe.imake.pst.hibernate.bean.PstCustomerDivision</value>
+			 
  			<!--  <value>th.co.aoe.imake.pst.hibernate.bean.MissEvaluationConfig</value>
  			 <value>th.co.aoe.imake.pst.hibernate.bean.MissTestShow</value>
  			 <value>th.co.aoe.imake.pst.hibernate.bean.MissTheme</value>  
@@ -356,5 +361,18 @@
 	<bean id="pstObjectService" class="th.co.aoe.imake.pst.hibernate.HibernatePstObject">
 		<property name="sessionAnnotationFactory" ref="sessionFactory"></property>	 
 	</bean>
+	
+	<bean id="pstCustomerService" class="th.co.aoe.imake.pst.hibernate.HibernatePstCustomer">
+		<property name="sessionAnnotationFactory" ref="sessionFactory"></property>	 
+	</bean>
+	
+	<bean id="pstCustomerContactService" class="th.co.aoe.imake.pst.hibernate.HibernatePstCustomerContact">
+		<property name="sessionAnnotationFactory" ref="sessionFactory"></property>	 
+	</bean>
+	
+	<bean id="pstCustomerDivisionService" class="th.co.aoe.imake.pst.hibernate.HibernatePstCustomerDivision">
+		<property name="sessionAnnotationFactory" ref="sessionFactory"></property>	 
+	</bean>
+ 
  
 </beans>

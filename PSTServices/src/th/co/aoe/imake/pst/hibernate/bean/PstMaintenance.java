@@ -1,8 +1,14 @@
 package th.co.aoe.imake.pst.hibernate.bean;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 
 /**
@@ -16,23 +22,24 @@ public class PstMaintenance implements Serializable {
 
 	@EmbeddedId
 	private PstMaintenancePK id;
-
-	@Column(name="PMAINTENANCE_DOC_NO")
-	private String pmaintenanceDocNo;
-
-	@Column(name="PMAINTENANCE_HOURS_OF_WORK")
-	private BigDecimal pmaintenanceHoursOfWork;
-
-	@Column(name="PMAINTENANCE_MILE")
-	private BigDecimal pmaintenanceMile;
+	@Lob
+	@Column(name="PMAINTENANCE_DETAIL")
+	private String pmaintenanceDetail;
 
 	@Column(name="PMAINTENANCE_STATUS")
 	private String pmaintenanceStatus;
+	
+	 
 
 	//bi-directional many-to-one association to PstDepartment
 	@ManyToOne
 	@JoinColumn(name="PD_ID",insertable=false,updatable=false)
 	private PstDepartment pstDepartment;
+	
+	@ManyToOne
+	@JoinColumn(name="PRP_ID",insertable=false,updatable=false)
+	private PstRoadPump pstRoadPump;
+
 
 	//bi-directional many-to-one association to PstWorkType
 	@ManyToOne
@@ -50,29 +57,7 @@ public class PstMaintenance implements Serializable {
 		this.id = id;
 	}
 
-	public String getPmaintenanceDocNo() {
-		return this.pmaintenanceDocNo;
-	}
-
-	public void setPmaintenanceDocNo(String pmaintenanceDocNo) {
-		this.pmaintenanceDocNo = pmaintenanceDocNo;
-	}
-
-	public BigDecimal getPmaintenanceHoursOfWork() {
-		return this.pmaintenanceHoursOfWork;
-	}
-
-	public void setPmaintenanceHoursOfWork(BigDecimal pmaintenanceHoursOfWork) {
-		this.pmaintenanceHoursOfWork = pmaintenanceHoursOfWork;
-	}
-
-	public BigDecimal getPmaintenanceMile() {
-		return this.pmaintenanceMile;
-	}
-
-	public void setPmaintenanceMile(BigDecimal pmaintenanceMile) {
-		this.pmaintenanceMile = pmaintenanceMile;
-	}
+	 
 
 	public String getPmaintenanceStatus() {
 		return this.pmaintenanceStatus;
@@ -96,6 +81,14 @@ public class PstMaintenance implements Serializable {
 
 	public void setPstWorkType(PstWorkType pstWorkType) {
 		this.pstWorkType = pstWorkType;
+	}
+
+	public String getPmaintenanceDetail() {
+		return pmaintenanceDetail;
+	}
+
+	public void setPmaintenanceDetail(String pmaintenanceDetail) {
+		this.pmaintenanceDetail = pmaintenanceDetail;
 	}
 
 }

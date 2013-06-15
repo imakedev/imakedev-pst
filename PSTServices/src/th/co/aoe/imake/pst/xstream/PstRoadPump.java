@@ -1,6 +1,8 @@
 package th.co.aoe.imake.pst.xstream;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +65,12 @@ public class PstRoadPump extends VServiceXML implements Serializable {
 	//bi-directional many-to-one association to PstRoadPumpType
 	@XStreamAlias("pstRoadPumpType")
 	private PstRoadPumpType pstRoadPumpType;
+	
+	private BigDecimal prpCubicAmount;
+	private BigDecimal prpMile;
+	private BigDecimal prpHoursOfWork;
+	private BigDecimal prpDaysOfWork;
+	private Timestamp prpCheckMaintenance;
 	
 	@XStreamAlias("pstBrandRoadList")
 	private List<PstBrand> pstBrandRoadList;
@@ -350,6 +358,66 @@ public class PstRoadPump extends VServiceXML implements Serializable {
 
 	public void setPstRoadPumpTypeList(List<PstBrand> pstRoadPumpTypeList) {
 		this.pstRoadPumpTypeList = pstRoadPumpTypeList;
+	}
+
+
+
+	public BigDecimal getPrpMile() {
+		return prpMile;
+	}
+
+
+
+	public void setPrpMile(BigDecimal prpMile) {
+		this.prpMile = prpMile;
+	}
+
+
+
+	public BigDecimal getPrpCubicAmount() {
+		return prpCubicAmount;
+	}
+
+
+
+	public void setPrpCubicAmount(BigDecimal prpCubicAmount) {
+		this.prpCubicAmount = prpCubicAmount;
+	}
+
+
+
+	public BigDecimal getPrpHoursOfWork() {
+		return prpHoursOfWork;
+	}
+
+
+
+	public void setPrpHoursOfWork(BigDecimal prpHoursOfWork) {
+		this.prpHoursOfWork = prpHoursOfWork;
+	}
+
+
+
+	public BigDecimal getPrpDaysOfWork() {
+		return prpDaysOfWork;
+	}
+
+
+
+	public void setPrpDaysOfWork(BigDecimal prpDaysOfWork) {
+		this.prpDaysOfWork = prpDaysOfWork;
+	}
+
+
+
+	public Timestamp getPrpCheckMaintenance() {
+		return prpCheckMaintenance;
+	}
+
+
+
+	public void setPrpCheckMaintenance(Timestamp prpCheckMaintenance) {
+		this.prpCheckMaintenance = prpCheckMaintenance;
 	}
 
 }

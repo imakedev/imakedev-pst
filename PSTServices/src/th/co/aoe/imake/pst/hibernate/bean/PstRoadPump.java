@@ -1,6 +1,8 @@
 package th.co.aoe.imake.pst.hibernate.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -99,6 +101,18 @@ public class PstRoadPump implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="PRPT_ID")
 	private PstRoadPumpType pstRoadPumpType;
+ 
+	
+	@Column(name="PRP_CUBIC_AMOUNT")
+	private BigDecimal prpCubicAmount;
+	@Column(name="PRP_MILE")
+	private BigDecimal prpMile;
+	@Column(name="PRP_HOURS_OF_WORK")
+	private BigDecimal prpHoursOfWork;
+	@Column(name="PRP_DAYS_OF_WORK")
+	private BigDecimal prpDaysOfWork;
+	@Column(name="PRP_CHECK_MAINTENANCE")
+	private Timestamp prpCheckMaintenance;
 
 	public PstRoadPump() {
 	}
@@ -246,6 +260,46 @@ public class PstRoadPump implements Serializable {
 
 	public void setPrpExpireDate2(String prpExpireDate2) {
 		this.prpExpireDate2 = prpExpireDate2;
+	}
+
+	public BigDecimal getPrpMile() {
+		return prpMile;
+	}
+
+	public void setPrpMile(BigDecimal prpMile) {
+		this.prpMile = prpMile;
+	}
+
+	public BigDecimal getPrpCubicAmount() {
+		return prpCubicAmount;
+	}
+
+	public void setPrpCubicAmount(BigDecimal prpCubicAmount) {
+		this.prpCubicAmount = prpCubicAmount;
+	}
+
+	public BigDecimal getPrpHoursOfWork() {
+		return prpHoursOfWork;
+	}
+
+	public void setPrpHoursOfWork(BigDecimal prpHoursOfWork) {
+		this.prpHoursOfWork = prpHoursOfWork;
+	}
+
+	public BigDecimal getPrpDaysOfWork() {
+		return prpDaysOfWork;
+	}
+
+	public void setPrpDaysOfWork(BigDecimal prpDaysOfWork) {
+		this.prpDaysOfWork = prpDaysOfWork;
+	}
+
+	public Timestamp getPrpCheckMaintenance() {
+		return prpCheckMaintenance;
+	}
+
+	public void setPrpCheckMaintenance(Timestamp prpCheckMaintenance) {
+		this.prpCheckMaintenance = prpCheckMaintenance;
 	}
 
 }
