@@ -18,8 +18,28 @@
         <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/demo.css'/>" />
         <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style3.css'/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/animate-custom.css'/>" />
+		<script  src="<c:url value='/resources/js/jquery-1.8.3.min.js'/>" type="text/javascript"></script>
+		<script>
+	$(document).ready(function() { 
+		$.get("/pst/checksession",function(data) {
+			//var obj = data;//jQuery.parseJSON(data);
+			//  alert(data);
+			//  alert(window.location.href.indexOf("login\/"))
+		//	wrapper var n=str.indexOf("welcome");
+			//if(data!='anonymousUser' && window.location.href.indexOf("login\/")==-1){
+				// alert(data)
+			if(data!='anonymousUser'){
+			//	alert("redirect")
+				window.location.href="<c:url value='/'/>";
+			}
+			else{
+				$("#login_body").slideDown("slow"); 
+			}
+			});
+		});
+		</script>
     </head>
-    <body>
+    <body id="login_body" style="display: none">
     <c:url value="/j_spring_security_check" var="security_check"/>
         <div class="container">
             <!-- Codrops top bar -->
