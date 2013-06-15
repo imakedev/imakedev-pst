@@ -25,7 +25,8 @@
 <c:url var="url" value="/" />
 <c:url value="/logout" var="logoutUrl"/>
 <link rel="icon" href="<c:url value='/resources/images/favicon.ico'/>" type="image/x-icon" />
-<link rel="shortcut icon" href="<c:url value='/resources/images/favicon.ico'/>" type="image/x-icon" />   <script  src="<c:url value='/resources/js/jquery-1.8.3.min.js'/>" type="text/javascript"></script>
+<link rel="shortcut icon" href="<c:url value='/resources/images/favicon.ico'/>" type="image/x-icon" />   
+<script  src="<c:url value='/resources/js/jquery-1.8.3.min.js'/>" type="text/javascript"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/smoothness/jquery-ui-1.9.1.custom.min.js'/>"></script>
  <script type="text/javascript" src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
 <script src="<c:url value='/resources/bootstrap/js/bootstrap.min.js'/>" type="text/javascript"></script>
@@ -68,6 +69,7 @@ var mail_toG;
 var mail_subjectG;
 var mail_messageG;
 var mail_attachG; 
+var _perpageG=20;
 var intRegex = /^\d+$/;
 //var floatRegex = /^((\d+(\.\d *)?)|((\d*\.)?\d+))$/;
 var floatRegex = /^((\d+(\.\d *)?)|((\d*\.)?\d+)|(-\d+(\.\d *)?)|((-\d*\.)?\d+))$/;
@@ -79,6 +81,10 @@ $(document).ready(function() {
 	//loadDynamicPage("employee/init");
 	togle_page('employeeWorkMapping/init','employee_link');
 });
+function   calculatePage( perPage, total)
+{ 
+	return total % perPage != 0 ? Math.floor(total / perPage) + 1 : Math.floor(total / perPage);
+}
 function loadDynamicPage(pageId){
 	//alert(pageId)
 
