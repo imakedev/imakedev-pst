@@ -18,6 +18,7 @@ public class IMakeDevUtils
         return total % perPage != 0 ? total / perPage + 1 : total / perPage;
     }
     public static final int PAGE_SIZE=20;
+   // public static final int PAGE_SIZE=2;
     public static final String MODE_EDIT="edit";
     public static final String MODE_NEW="new";
     public static final String MODE_DELETE_ITEMS="deleteItems";

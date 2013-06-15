@@ -52,6 +52,25 @@ public class BrandController {
 	        model.addAttribute("message", ""); 
 	        return "backoffice/template/brand_head";
 	    }
+	 @RequestMapping(value={"/search/{pbType}"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+	    public String doSearch(HttpServletRequest request, @ModelAttribute(value="brandForm") BrandForm brandForm, BindingResult result, Model model,
+	    		@PathVariable String pbType)
+	    {
+	         
+	        String page="brand_search_section";
+	         
+	        brandForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
+	        brandForm.getPaging().setPageNo(1);
+	        brandForm.getPstBrand().setPagging(brandForm.getPaging());
+	        brandForm.getPstBrand().setPbType(pbType);
+	        VResultMessage vresultMessage = pstService.searchPstBrand(brandForm.getPstBrand());
+	       
+	        brandForm.setPageCount(IMakeDevUtils.calculatePage(brandForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
+	        model.addAttribute("pstBrands", vresultMessage.getResultListObj());
+	        model.addAttribute("brandForm", brandForm);
+	        model.addAttribute("message", ""); 
+	        return "backoffice/template/"+page;
+	    }
 	 @RequestMapping(value={"/search"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
 	    public String doSearch(HttpServletRequest request, @ModelAttribute(value="brandForm") BrandForm brandForm, BindingResult result, Model model)
 	    {

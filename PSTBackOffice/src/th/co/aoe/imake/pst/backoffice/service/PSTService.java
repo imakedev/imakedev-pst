@@ -11,6 +11,9 @@ import th.co.aoe.imake.pst.xstream.PstBrand;
 import th.co.aoe.imake.pst.xstream.PstBreakDown;
 import th.co.aoe.imake.pst.xstream.PstConcrete;
 import th.co.aoe.imake.pst.xstream.PstCost;
+import th.co.aoe.imake.pst.xstream.PstCustomer;
+import th.co.aoe.imake.pst.xstream.PstCustomerContact;
+import th.co.aoe.imake.pst.xstream.PstCustomerDivision;
 import th.co.aoe.imake.pst.xstream.PstDepartment;
 import th.co.aoe.imake.pst.xstream.PstEmployee;
 import th.co.aoe.imake.pst.xstream.PstEmployeeStatus;
@@ -20,6 +23,8 @@ import th.co.aoe.imake.pst.xstream.PstJobEmployee;
 import th.co.aoe.imake.pst.xstream.PstJobPay;
 import th.co.aoe.imake.pst.xstream.PstJobPayExt;
 import th.co.aoe.imake.pst.xstream.PstJobWork;
+import th.co.aoe.imake.pst.xstream.PstMaintenance;
+import th.co.aoe.imake.pst.xstream.PstMaintenanceTran;
 import th.co.aoe.imake.pst.xstream.PstModel;
 import th.co.aoe.imake.pst.xstream.PstPosition;
 import th.co.aoe.imake.pst.xstream.PstRoadPump;
@@ -134,6 +139,8 @@ public interface PSTService {
 	public List searchObject(String query);
 	public int executeQuery(String[] query);
 	public int executeQueryUpdate(String[] queryDelete,String[] queryUpdate);
+	public int executeMaintenance(PstMaintenance[] pstMaintenance,PstMaintenanceTran pstMaintenanceTran,String mode);
+		 
 	//public int executeQueryDelete(String[] query);
 	
 	// PstPosition
@@ -146,6 +153,40 @@ public interface PSTService {
 	public abstract int deletePstPosition(PstPosition pstPosition, String service);
 
 	public abstract PstPosition findPstPositionById(Long long1);
+	
+	// PstCustomer
+	public abstract VResultMessage searchPstCustomer(
+				PstCustomer pstCustomer);
+	public abstract Long savePstCustomer(PstCustomer pstCustomer);
+
+	public abstract int updatePstCustomer(PstCustomer pstCustomer);
+
+	public abstract int deletePstCustomer(PstCustomer pstCustomer, String service);
+
+	public abstract PstCustomer findPstCustomerById(Long long1);
+		
+		
+	// PstCustomerDivision
+	public abstract VResultMessage searchPstCustomerDivision(
+				PstCustomerDivision pstCustomerDivision);
+	public abstract Long savePstCustomerDivision(PstCustomerDivision pstCustomerDivision);
+
+	public abstract int updatePstCustomerDivision(PstCustomerDivision pstCustomerDivision);
+
+	public abstract int deletePstCustomerDivision(PstCustomerDivision pstCustomerDivision, String service);
+
+	public abstract PstCustomerDivision findPstCustomerDivisionById(Long long1);
+		
+	// PstCustomerContact
+	public abstract VResultMessage searchPstCustomerContact(
+				PstCustomerContact pstCustomerContact);
+	public abstract Long savePstCustomerContact(PstCustomerContact pstCustomerContact);
+
+	public abstract int updatePstCustomerContact(PstCustomerContact pstCustomerContact);
+
+	public abstract int deletePstCustomerContact(PstCustomerContact pstCustomerContact, String service);
+
+	public abstract PstCustomerContact findPstCustomerContactById(Long long1);
 	
 	// User
 	public abstract VResultMessage searchUser(

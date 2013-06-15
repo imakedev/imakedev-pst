@@ -13,6 +13,9 @@ import th.co.aoe.imake.pst.xstream.PstBrand;
 import th.co.aoe.imake.pst.xstream.PstBreakDown;
 import th.co.aoe.imake.pst.xstream.PstConcrete;
 import th.co.aoe.imake.pst.xstream.PstCost;
+import th.co.aoe.imake.pst.xstream.PstCustomer;
+import th.co.aoe.imake.pst.xstream.PstCustomerContact;
+import th.co.aoe.imake.pst.xstream.PstCustomerDivision;
 import th.co.aoe.imake.pst.xstream.PstDepartment;
 import th.co.aoe.imake.pst.xstream.PstEmployee;
 import th.co.aoe.imake.pst.xstream.PstEmployeeStatus;
@@ -22,6 +25,8 @@ import th.co.aoe.imake.pst.xstream.PstJobEmployee;
 import th.co.aoe.imake.pst.xstream.PstJobPay;
 import th.co.aoe.imake.pst.xstream.PstJobPayExt;
 import th.co.aoe.imake.pst.xstream.PstJobWork;
+import th.co.aoe.imake.pst.xstream.PstMaintenance;
+import th.co.aoe.imake.pst.xstream.PstMaintenanceTran;
 import th.co.aoe.imake.pst.xstream.PstModel;
 import th.co.aoe.imake.pst.xstream.PstObject;
 import th.co.aoe.imake.pst.xstream.PstPosition;
@@ -2691,4 +2696,159 @@ public class PSTServiceImpl extends PostCommon
 	        VResultMessage resultMessage = postMessage(pstRoadPumpType, pstRoadPumpType.getClass().getName(), "pstRoadPumpType", true);
 	        return (PstRoadPumpType)resultMessage.getResultListObj().get(0);
 		}
+
+		@Override
+		public int executeMaintenance(PstMaintenance[] pstMaintenanceArray,
+				PstMaintenanceTran pstMaintenanceTran, String mode) {
+			// TODO Auto-generated method stub
+			PstObject pstObject = new PstObject(); 	
+			pstObject.setPstMaintenanceArray(pstMaintenanceArray);
+			pstObject.setPstMaintenanceTran(pstMaintenanceTran);
+			pstObject.setMode(mode);
+			pstObject.setServiceName(ServiceConstant.PST_OBJECT_EXECUTE_MAINTENANCE);
+		        VResultMessage resultMessage = postMessage(pstObject, pstObject.getClass().getName(), "pstObject", true); 
+		        pstObject = (PstObject)resultMessage.getResultListObj().get(0);
+		        return pstObject.getUpdateRecord().intValue(); 
+		}
+
+		@Override
+		public VResultMessage searchPstCustomer(PstCustomer pstCustomer) {
+			// TODO Auto-generated method stub
+			pstCustomer.setServiceName(ServiceConstant.PST_CUSTOMER_SEARCH);
+		    return postMessage(pstCustomer, pstCustomer.getClass().getName(), "pstCustomer", true);
+		}
+
+		@Override
+		public Long savePstCustomer(PstCustomer pstCustomer) {
+			// TODO Auto-generated method stub
+			pstCustomer.setServiceName(ServiceConstant.PST_CUSTOMER_SAVE);
+	        VResultMessage resultMessage = postMessage(pstCustomer, pstCustomer.getClass().getName(), "pstCustomer", true);
+	        pstCustomer = (PstCustomer)resultMessage.getResultListObj().get(0);
+	        return pstCustomer.getPcId();
+		}
+
+		@Override
+		public int updatePstCustomer(PstCustomer pstCustomer) {
+			// TODO Auto-generated method stub
+			pstCustomer.setServiceName(ServiceConstant.PST_CUSTOMER_UPDATE);
+	        VResultMessage resultMessage = postMessage(pstCustomer, pstCustomer.getClass().getName(), "pstCustomer", true);
+	        pstCustomer = (PstCustomer)resultMessage.getResultListObj().get(0);
+	        return pstCustomer.getUpdateRecord().intValue();
+		}
+
+		@Override
+		public int deletePstCustomer(PstCustomer pstCustomer, String service) {
+			// TODO Auto-generated method stub
+			pstCustomer.setServiceName(service);
+	        VResultMessage resultMessage = postMessage(pstCustomer, pstCustomer.getClass().getName(), "pstCustomer", true);
+	        pstCustomer = (PstCustomer)resultMessage.getResultListObj().get(0);
+	        return pstCustomer.getUpdateRecord().intValue();
+		}
+
+		@Override
+		public PstCustomer findPstCustomerById(Long long1) {
+			// TODO Auto-generated method stub
+			 	PstCustomer pstCustomer = new PstCustomer();
+			pstCustomer.setPcId(long1);
+			pstCustomer.setServiceName(ServiceConstant.PST_CUSTOMER_FIND_BY_ID);
+	        VResultMessage resultMessage = postMessage(pstCustomer, pstCustomer.getClass().getName(), "pstCustomer", true);
+	        return (PstCustomer)resultMessage.getResultListObj().get(0);
+		}
+
+		@Override
+		public VResultMessage searchPstCustomerDivision(
+				PstCustomerDivision pstCustomerDivision) {
+			// TODO Auto-generated method stub
+			pstCustomerDivision.setServiceName(ServiceConstant.PST_CUSTOMER_DIVISION_SEARCH);
+		    return postMessage(pstCustomerDivision, pstCustomerDivision.getClass().getName(), "pstCustomerDivision", true);
+		}
+
+		@Override
+		public Long savePstCustomerDivision(
+				PstCustomerDivision pstCustomerDivision) {
+			// TODO Auto-generated method stub
+			pstCustomerDivision.setServiceName(ServiceConstant.PST_CUSTOMER_DIVISION_SAVE);
+	        VResultMessage resultMessage = postMessage(pstCustomerDivision, pstCustomerDivision.getClass().getName(), "pstCustomerDivision", true);
+	        pstCustomerDivision = (PstCustomerDivision)resultMessage.getResultListObj().get(0);
+	        return pstCustomerDivision.getPcdId();
+		}
+
+		@Override
+		public int updatePstCustomerDivision(
+				PstCustomerDivision pstCustomerDivision) {
+			// TODO Auto-generated method stub
+			pstCustomerDivision.setServiceName(ServiceConstant.PST_CUSTOMER_DIVISION_UPDATE);
+	        VResultMessage resultMessage = postMessage(pstCustomerDivision, pstCustomerDivision.getClass().getName(), "pstCustomerDivision", true);
+	        pstCustomerDivision = (PstCustomerDivision)resultMessage.getResultListObj().get(0);
+	        return pstCustomerDivision.getUpdateRecord().intValue();
+		}
+
+		@Override
+		public int deletePstCustomerDivision(
+				PstCustomerDivision pstCustomerDivision, String service) {
+			// TODO Auto-generated method stub
+			pstCustomerDivision.setServiceName(service);
+	        VResultMessage resultMessage = postMessage(pstCustomerDivision, pstCustomerDivision.getClass().getName(), "pstCustomerDivision", true);
+	        pstCustomerDivision = (PstCustomerDivision)resultMessage.getResultListObj().get(0);
+	        return pstCustomerDivision.getUpdateRecord().intValue();
+		}
+
+		@Override
+		public PstCustomerDivision findPstCustomerDivisionById(Long long1) {
+			// TODO Auto-generated method stub
+			PstCustomerDivision pstCustomerDivision = new PstCustomerDivision();
+			pstCustomerDivision.setPcdId(long1);
+			pstCustomerDivision.setServiceName(ServiceConstant.PST_CUSTOMER_DIVISION_FIND_BY_ID);
+	        VResultMessage resultMessage = postMessage(pstCustomerDivision, pstCustomerDivision.getClass().getName(), "pstCustomerDivision", true);
+	        return (PstCustomerDivision)resultMessage.getResultListObj().get(0);
+		}
+
+		@Override
+		public VResultMessage searchPstCustomerContact(
+				PstCustomerContact pstCustomerContact) {
+			// TODO Auto-generated method stub
+			pstCustomerContact.setServiceName(ServiceConstant.PST_CUSTOMER_CONTACT_SEARCH);
+		    return postMessage(pstCustomerContact, pstCustomerContact.getClass().getName(), "pstCustomerContact", true);
+		}
+
+		@Override
+		public Long savePstCustomerContact(PstCustomerContact pstCustomerContact) {
+			// TODO Auto-generated method stub
+			pstCustomerContact.setServiceName(ServiceConstant.PST_CUSTOMER_CONTACT_SAVE);
+	        VResultMessage resultMessage = postMessage(pstCustomerContact, pstCustomerContact.getClass().getName(), "pstCustomerContact", true);
+	        pstCustomerContact = (PstCustomerContact)resultMessage.getResultListObj().get(0);
+	        return pstCustomerContact.getPccId();
+		}
+
+		@Override
+		public int updatePstCustomerContact(
+				PstCustomerContact pstCustomerContact) {
+			// TODO Auto-generated method stub
+			pstCustomerContact.setServiceName(ServiceConstant.PST_CUSTOMER_CONTACT_UPDATE);
+	        VResultMessage resultMessage = postMessage(pstCustomerContact, pstCustomerContact.getClass().getName(), "pstCustomerContact", true);
+	        pstCustomerContact = (PstCustomerContact)resultMessage.getResultListObj().get(0);
+	        return pstCustomerContact.getUpdateRecord().intValue();
+		}
+
+		@Override
+		public int deletePstCustomerContact(
+				PstCustomerContact pstCustomerContact, String service) {
+			// TODO Auto-generated method stub
+			pstCustomerContact.setServiceName(service);
+	        VResultMessage resultMessage = postMessage(pstCustomerContact, pstCustomerContact.getClass().getName(), "pstCustomerContact", true);
+	        pstCustomerContact = (PstCustomerContact)resultMessage.getResultListObj().get(0);
+	        return pstCustomerContact.getUpdateRecord().intValue();
+		}
+
+		@Override
+		public PstCustomerContact findPstCustomerContactById(Long long1) {
+			// TODO Auto-generated method stub
+			PstCustomerContact pstCustomerContact = new PstCustomerContact();
+			pstCustomerContact.setPccId(long1);
+			pstCustomerContact.setServiceName(ServiceConstant.PST_CUSTOMER_CONTACT_FIND_BY_ID);
+	        VResultMessage resultMessage = postMessage(pstCustomerContact, pstCustomerContact.getClass().getName(), "pstCustomerContact", true);
+	        return (PstCustomerContact)resultMessage.getResultListObj().get(0);
+		}
+		
+		 
 }

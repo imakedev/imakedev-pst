@@ -35,7 +35,7 @@ public class ConcreteController {
 		 concreteForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 		 concreteForm.getPstConcrete().setPagging(concreteForm.getPaging());
 	        VResultMessage vresultMessage = pstService.searchPstConcrete(concreteForm.getPstConcrete());
-	        System.out.println("vresultMessage-->"+vresultMessage.getResultListObj());
+	        //System.out.println("vresultMessage-->"+vresultMessage.getResultListObj());
 	        model.addAttribute("pstConcretes", vresultMessage.getResultListObj());
 	        concreteForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	        concreteForm.setPageCount(IMakeDevUtils.calculatePage(concreteForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
