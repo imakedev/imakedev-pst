@@ -53,6 +53,23 @@ public class ModelController {
 	        model.addAttribute("message", ""); 
 	        return "backoffice/template/model_head";
 	    }
+	 @RequestMapping(value={"/search/{pmType}"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+	    public String doSearch(HttpServletRequest request, @ModelAttribute(value="modelForm") ModelForm modelForm, BindingResult result, Model model,
+	    		@PathVariable String pmType)
+	    { 
+	        String page="model_search_section";  
+	        modelForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
+	        modelForm.getPaging().setPageNo(1);
+	        modelForm.getPstModel().setPagging(modelForm.getPaging());
+	        modelForm.getPstModel().setPmType(pmType);
+	        VResultMessage vresultMessage = pstService.searchPstModel(modelForm.getPstModel());
+	       
+	        modelForm.setPageCount(IMakeDevUtils.calculatePage(modelForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
+	        model.addAttribute("pstModels", vresultMessage.getResultListObj());
+	        model.addAttribute("modelForm", modelForm); 
+	        model.addAttribute("message", ""); 
+	        return "backoffice/template/"+page;
+	    }
 	 @RequestMapping(value={"/search"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
 	    public String doSearch(HttpServletRequest request, @ModelAttribute(value="modelForm") ModelForm modelForm, BindingResult result, Model model)
 	    {
@@ -64,6 +81,7 @@ public class ModelController {
 	        	modelForm.getPaging().setPageNo(1);
 	        } else*/
 	        String page="model_search_section";
+	        //System.out.println("modelForm.getPaging().getPageNo()->"+modelForm.getPaging().getPageNo());
 	        if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE)){
 	        	pstService.deletePstModel(modelForm.getPstModel(),  ServiceConstant.PST_MODEL_DELETE);
 	        	modelForm.getPaging().setPageNo(1);
@@ -85,6 +103,7 @@ public class ModelController {
 	        modelForm.setPageCount(IMakeDevUtils.calculatePage(modelForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 	        model.addAttribute("pstModels", vresultMessage.getResultListObj());
 	        model.addAttribute("modelForm", modelForm);
+	        
 	        model.addAttribute("message", ""); 
 	        return "backoffice/template/"+page;
 	    }

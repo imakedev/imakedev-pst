@@ -101,7 +101,8 @@ public class AccessController {
 		}else{
 			
 		}*/
-		return "redirect:/login?message="+message;
+	//	return "redirect:/login?message="+message;
+		return "redirect:/login";
 	}
 	/*private String getVersionBrowser(String band,String fullAgent){
 		// mozilla/5.0 (x11; ubuntu; linux x86_64; rv:15.0) gecko/20100101 firefox/15.0
