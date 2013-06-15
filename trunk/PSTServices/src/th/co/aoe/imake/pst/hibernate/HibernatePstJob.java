@@ -219,7 +219,7 @@ where job_work.pj_id=job.pj_id and road_pump.prp_no='HP0')
 					sb.append(iscriteria?(" and pstJob.PJ_CREATED_TIME  between '"+date+" 00:00:00' and '"+date+" 23:59:59'"):(" where pstJob.PJ_CREATED_TIME  between '"+date+" 00:00:00' and '"+date+" 23:59:59'"));
 					  iscriteria = true;
 				}
-				System.out.println("prpNo-->"+prpNo);
+				//System.out.println("prpNo-->"+prpNo);
 				if(prpNo!=null && prpNo.length()>0){  
 					//criteria.add(Expression.eq("megId", megId));	
 					/*job where 

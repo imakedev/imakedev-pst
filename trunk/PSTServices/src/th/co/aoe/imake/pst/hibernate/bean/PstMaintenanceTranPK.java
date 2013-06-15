@@ -8,13 +8,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * The primary key class for the PST_MAINTENANCE database table.
+ * The primary key class for the PST_MAINTENANCE_TRAN database table.
  * 
  */
 @Embeddable
-public class PstMaintenancePK implements Serializable {
+public class PstMaintenanceTranPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
+
 	@Column(name="PRP_ID")
 	private Long prpId;
 
@@ -22,60 +23,30 @@ public class PstMaintenancePK implements Serializable {
 	@Column(name="PMAINTENANCE_CHECK_TIME")
 	private java.util.Date pmaintenanceCheckTime;
 
-	@Column(name="PD_ID")
-	private Long pdId;
+	@Column(name="PMAINTENANCE_DOC_NO")
+	private String pmaintenanceDocNo;
 
-	@Column(name="PWT_ID")
-	private Long pwtId;
-	
-	 
-	public PstMaintenancePK() {
+	public PstMaintenanceTranPK() {
 	}
-
-
-	 
-
 	public Long getPrpId() {
-		return prpId;
+		return this.prpId;
 	}
-
-
-
-
 	public void setPrpId(Long prpId) {
 		this.prpId = prpId;
 	}
-
-
-
-
 	public java.util.Date getPmaintenanceCheckTime() {
-		return pmaintenanceCheckTime;
+		return this.pmaintenanceCheckTime;
 	}
-
-
 	public void setPmaintenanceCheckTime(java.util.Date pmaintenanceCheckTime) {
 		this.pmaintenanceCheckTime = pmaintenanceCheckTime;
 	}
-
-
-	public Long getPdId() {
-		return pdId;
+	public String getPmaintenanceDocNo() {
+		return this.pmaintenanceDocNo;
+	}
+	public void setPmaintenanceDocNo(String pmaintenanceDocNo) {
+		this.pmaintenanceDocNo = pmaintenanceDocNo;
 	}
 
-
-	public void setPdId(Long pdId) {
-		this.pdId = pdId;
-	}
-
-
-	public Long getPwtId() {
-		return pwtId;
-	}
-
-
-	public void setPwtId(Long pwtId) {
-		this.pwtId = pwtId;
-	}
+	 
 	 
 }
