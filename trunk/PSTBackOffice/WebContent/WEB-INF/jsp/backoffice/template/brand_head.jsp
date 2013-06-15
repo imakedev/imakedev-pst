@@ -2,15 +2,15 @@
 <%@ include file="/WEB-INF/jsp/includes.jsp" %>
 <script>
 $(document).ready(function() {
-	renderPageSelect();
+//	renderPageSelect();
 	/* if($("#message_element > strong").html().length>0){
 		 $('html, body').animate({ scrollTop: 0 }, 'slow'); 
 		 $("#message_element").slideDown("slow"); 
 		 setTimeout(function(){$("#message_element").slideUp("slow")},5000);
 	 } */
 	 var pbType=$('input:radio[name=pstBrand\\.pbType]:checked').val();
-	// alert(pbType)
-	 getBrand(pbType)
+	//alert(pbType)
+	 getBrand(pbType);
 });
 function goBackRoadpump(){
 	 
@@ -25,37 +25,6 @@ function goBackRoadpump(){
 				// $("#tabs-3").html(data);
 			  }
 		});
-}
-function goPrev(){
-	if($("#pageNo").val()!='1'){
-		var prev=parseInt($("#pageNo").val())-1;
-		$("#pageNo").val(prev);
-		doAction('search','0');
-	}
-}
-function goNext(){
-	var next=parseInt($("#pageNo").val());
-	if(next<parseInt($("#pageCount").val())){
-		next=next+1;
-		$("#pageNo").val(next);
-		doAction('search','0');
-	}
-} 
-function goToPage(){ 
-	$("#pageNo").val(document.getElementById("brandPageSelect").value);
-	doAction('search','0');
-}
-function renderPageSelect(){
-	 
-	var pageStr="<select name=\"brandPageSelect\" id=\"brandPageSelect\" onchange=\"goToPage()\" style=\"width: 50px\">";
-//	var pageCount=parseInt($("#pageCount").val());
-	var pageCount=$("#pageCount").val();
-	for(var i=1;i<=pageCount;i++){
-		pageStr=pageStr+"<option value=\""+i+"\">"+i+"</option>";
-	}
-	pageStr=pageStr+"</select>"; 
-	$("#pageElement").html(pageStr);
-	document.getElementById("brandPageSelect").value=$("#pageNo").val();
 }
 function confirmDelete(mode,id){
 	$( "#dialog-confirmDelete" ).dialog({
@@ -73,36 +42,17 @@ function confirmDelete(mode,id){
 		}
 	});
 }
-function doSearch(mode,id){
-	$("#pageNo").val("1");
-	doAction(mode,id);
-}
-function doAction(mode,id){
-	$("#mode").val(mode);
-	if(mode=='deleteItems'){
-		$("#pbIdArray").val(id);
-	}else if(mode!='search'){
-		$("#pbId").val(id);
-	}else {
-		$("#pbId").val("0");
-	}
-	$.post("brand/search",$("#brandForm").serialize(), function(data) {
-		  // alert(data);
-		    appendContent(data);
-		  // alert($("#_content").html());
-		});
-}
+ 
 function getBrand(id){ 
-	$.post("brand/search",$("#brandForm").serialize(), function(data) {
-		  // alert(data);
+//	$("#pageNo").val("1");
+	$.post("brand/search/"+id,$("#brandHeadForm").serialize(), function(data) {
+		 //  alert(data);
 		    //appendContent(data);
+		   // alert($("#pageNo").val());
 		    appendContentWithId(data,"brand_section");
 		  // alert($("#_content").html());
 	});
-}
-function loadAddPage(){
-	
-}
+} 
 
 </script>
 <div id="dialog-confirmDelete" title="Delete Brand" style="display: none;background: ('images/ui-bg_highlight-soft_75_cccccc_1x100.png') repeat-x scroll 50% 50% rgb(204, 204, 204)">
@@ -118,14 +68,8 @@ function loadAddPage(){
            <!-- <div style="brand:relative;right:-94%;">  </div> --> 
          
              
-            <form:form id="brandForm" name="brandForm" modelAttribute="brandForm"  cssClass="well" cssStyle="border:2px solid #B3D2EE;background: #F9F9F9" action="" method="post">
-            <form:hidden path="mode"/>
-           <%--  <form:hidden path="pbIdArray"/> --%>
-             <form:hidden path="pstBrand.pbId" id="pbId"/>
-            <%--  <form:hidden path="pstBrand.pbType" id="pbType"/> --%>
-             <form:hidden path="paging.pageNo" id="pageNo"/>
-              <form:hidden path="paging.pageSize" id="pageSize"/>
-              <form:hidden path="pageCount"/>
+            <form:form id="brandHeadForm" name="brandHeadForm" modelAttribute="brandForm"  cssClass="well" cssStyle="border:2px solid #B3D2EE;background: #F9F9F9" action="" method="post">
+             <%--  <form:hidden path="paging.pageNo" id="pageNo"/> --%>
             <div align="left">
             <strong>จัดการ ยี่ห้อรถ/ยี่ห้อปั๊ม</strong>
             </div>
@@ -140,12 +84,12 @@ function loadAddPage(){
             </div>
 			</form:form> 
 			
-	    					<table border="0" width="100%" style="font-size: 13px">
+	    					<!-- <table border="0" width="100%" style="font-size: 13px">
 	    					<tbody><tr>
 	    					<td align="left" width="50%">
 	    					
 	    					<a class="btn btn-primary" onclick="loadDynamicPage('brand/new')"><i class="icon-plus-sign icon-white"></i>&nbsp;Create</a>&nbsp;
-	    					<!-- <a class="btn btn-danger" onclick="doDeleteItems()"><i class="icon-trash icon-white"></i>&nbsp;Delete</a> -->
+	    					 
 	    					</td>
 	    					<td align="right" width="50%">  
 	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;
@@ -153,7 +97,7 @@ function loadAddPage(){
 	    					<select name="brandPageSelect" id="brandPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select>
 	    					</span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;</td>
 	    					</tr>
-	    					</tbody></table>
+	    					</tbody></table> -->
 	    					<div id="brand_section"></div>
 	<%-- 	<table class="table table-striped table-bordered table-condensed" border="1" style="font-size: 12px">
         	<thead>

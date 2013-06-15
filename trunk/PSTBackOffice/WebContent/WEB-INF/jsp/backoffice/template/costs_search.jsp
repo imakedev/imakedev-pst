@@ -106,6 +106,7 @@ function doAction(mode,id){
             	<form:input path="pstCost.pcName" cssStyle="height: 30;"/>
             	<!-- <input type="text" style="height: 30;">  -->
             	</span>  
+            	<a class="btn btn-primary" style="margin-top: -10px" onclick="doAction('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a>
             </div>
              
 	    					</form:form> 
@@ -120,7 +121,9 @@ function doAction(mode,id){
 	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;
 	    					<span id="pageElement">
 	    					<select name="costPageSelect" id="costPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select>
-	    					</span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;<a class="btn btn-primary" onclick="doAction('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a></td>
+	    					</span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;
+	    					<!-- <a class="btn btn-primary" onclick="doAction('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a> -->
+	    					</td>
 	    					</tr>
 	    					</tbody></table>
 	   					 

@@ -9,6 +9,20 @@ $(document).ready(function() {
 		 setTimeout(function(){$("#message_element").slideUp("slow")},5000);
 	 }
 });
+function goBackDivision(){
+	 
+	  $.ajax({
+		  type: "get",
+		  url: "customer/division/init/${customerForm.pstCustomerContact.pstCustomerDivision.pstCustomer.pcId}",
+		  cache: false
+		 // data: { name: "John", location: "Boston" }
+		}).done(function( data ) {
+			if(data!=null){
+				 appendContent(data);
+				// $("#tabs-3").html(data);
+			  }
+		});
+}
 function goPrev(){
 	if($("#pageNo").val()!='1'){
 		var prev=parseInt($("#pageNo").val())-1;
@@ -25,12 +39,12 @@ function goNext(){
 	}
 } 
 function goToPage(){ 
-	$("#pageNo").val(document.getElementById("breakdownPageSelect").value);
+	$("#pageNo").val(document.getElementById("customerContactPageSelect").value);
 	doAction('search','0');
 }
 function renderPageSelect(){
 	 
-	var pageStr="<select name=\"breakdownPageSelect\" id=\"breakdownPageSelect\" onchange=\"goToPage()\" style=\"width: 50px\">";
+	var pageStr="<select name=\"customerContactPageSelect\" id=\"customerContactPageSelect\" onchange=\"goToPage()\" style=\"width: 50px\">";
 //	var pageCount=parseInt($("#pageCount").val());
 	var pageCount=$("#pageCount").val();
 	for(var i=1;i<=pageCount;i++){
@@ -38,7 +52,7 @@ function renderPageSelect(){
 	}
 	pageStr=pageStr+"</select>"; 
 	$("#pageElement").html(pageStr);
-	document.getElementById("breakdownPageSelect").value=$("#pageNo").val();
+	document.getElementById("customerContactPageSelect").value=$("#pageNo").val();
 }
 function confirmDelete(mode,id){
 	$( "#dialog-confirmDelete" ).dialog({
@@ -62,58 +76,43 @@ function doSearch(mode,id){
 }
 function doAction(mode,id){
 	$("#mode").val(mode);
-	if(mode=='deleteItems'){
-		$("#pbdIdArray").val(id);
-	}else if(mode!='search'){
-		$("#pbdId").val(id);
+	/* if(mode=='deleteItems'){
+		$("#pccIdArray").val(id);
+	}else */ if(mode!='search'){
+		$("#pccId").val(id);
 	}else {
-		$("#pbdId").val("0");
+		$("#pccId").val("0");
 	}
-	$.post("breakdown/search",$("#breakdownForm").serialize(), function(data) {
+	$.post("customer/contact/search",$("#customerForm").serialize(), function(data) {
 		  // alert(data);
 		    appendContent(data);
 		  // alert($("#_content").html());
 		});
 }
 </script>
-<div id="dialog-confirmDelete" title="Delete Breakdown" style="display: none;background: ('images/ui-bg_highlight-soft_75_cccccc_1x100.png') repeat-x scroll 50% 50% rgb(204, 204, 204)">
-	Are you sure you want to delete Breakdown ?
+<div id="dialog-confirmDelete" title="Delete Customer" style="display: none;background: ('images/ui-bg_highlight-soft_75_cccccc_1x100.png') repeat-x scroll 50% 50% rgb(204, 204, 204)">
+	Are you sure you want to delete Customer ?
 </div>
   <div id="message_element" class="alert alert-${message_class}" style="display: none;padding-top:10px">
     <button class="close" data-dismiss="alert"><span style="font-size: 12px">x</span></button>
     <strong>${message}</strong> 
   </div>
 <fieldset style="font-family: sans-serif;padding-top:5px">
-	         
-           <!-- <legend  style="font-size: 13px">Criteria</legend> -->
-           <!-- <div style="position:relative;right:-94%;">  </div> --> 
-           
-             
-            <form:form id="breakdownForm" name="breakdownForm" modelAttribute="breakdownForm"  cssClass="well" cssStyle="border:2px solid #B3D2EE;background: #F9F9F9" action="" method="post">
+            <form:form id="customerForm" name="customerForm" modelAttribute="customerForm"  cssClass="well" cssStyle="border:2px solid #B3D2EE;background: #F9F9F9" action="" method="post">
             <form:hidden path="mode"/>
-            <form:hidden path="pbdIdArray"/>
-             <form:hidden path="pstBreakDown.pbdId" id="pbdId"/>
+           <%--  <form:hidden path="pccIdArray"/> --%>
+             <form:hidden path="pstCustomerContact.pccId" id="pccId"/>
+              <form:hidden path="pstCustomerContact.pstCustomerDivision.pcdId" id="pcdId"/>
              <form:hidden path="paging.pageNo" id="pageNo"/>
               <form:hidden path="paging.pageSize" id="pageSize"/>
               <form:hidden path="pageCount"/>
-            <!-- <input id="mode" name="mode" type="hidden" value="">
-            <input id="mcaId" name="missCandidate.mcaId" type="hidden" value="">
-            <input id="mcaIdArray" name="mcaIdArray" type="hidden" value="">
-            <input id="pageNo" name="paging.pageNo" type="hidden" value="1">
-            <input id="pageSize" name="paging.pageSize" type="hidden" value="20"> 
-            <input id="pageCount" name="pageCount" type="hidden" value="8">  -->
             <div align="left">
-            <strong>Break down</strong>
+            <strong>Contact</strong>
             </div>
-            <div align="center" style="padding: 10px 60px">
-            	<span style="font-size: 13px;">รหัสรายการ</span> 
+            <div align="center" style="padding: 10px 60px"> 
+	    		<span style="font-size: 13px;">ชื่อผู้ติดต่อ</span> 
             	<span style="padding: 20px">
-            	<form:input path="pstBreakDown.pbdUid" cssStyle="height: 30;width:80px"/>
-            	<!-- <input type="text" style="height: 30;width:80px">  -->
-            	</span>  
-	    		<span style="font-size: 13px;">รายละเอียด</span> 
-            	<span style="padding: 20px">
-            	<form:input path="pstBreakDown.pbdName" cssStyle="height: 30;"/>
+            	<form:input path="pstCustomerContact.pccName" cssStyle="height: 30;"/>
             	<!-- <input type="text" style="height: 30;">  -->
             	</span>  
             	  <a class="btn btn-primary" style="margin-top: -10px" onclick="doSearch('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a> 
@@ -123,13 +122,13 @@ function doAction(mode,id){
 	    					<tbody><tr>
 	    					<td align="left" width="50%">
 	    					
-	    					<a class="btn btn-primary" onclick="loadDynamicPage('breakdown/new')"><i class="icon-plus-sign icon-white"></i>&nbsp;Create</a>&nbsp;
+	    					<a class="btn btn-primary" onclick="loadDynamicPage('customer/contact/new/${customerForm.pstCustomerContact.pstCustomerDivision.pcdId}')"><i class="icon-plus-sign icon-white"></i>&nbsp;Create</a>&nbsp;
 	    					<!-- <a class="btn btn-danger" onclick="doDeleteItems()"><i class="icon-trash icon-white"></i>&nbsp;Delete</a> -->
 	    					</td>
 	    					<td align="right" width="50%">  
 	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;
 	    					<span id="pageElement">
-	    					<select name="breakdownPageSelect" id="breakdownPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select>
+	    					<select name="customerContactPageSelect" id="customerContactPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select>
 	    					</span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;
 	    					<!-- <a class="btn btn-primary" onclick="doSearch('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a> -->
 	    					</td>
@@ -138,29 +137,34 @@ function doAction(mode,id){
 		<table class="table table-striped table-bordered table-condensed" border="1" style="font-size: 12px">
         	<thead>
           		<tr> 
-            		<th width="10%"><div class="th_class">รหัสรายการ</div></th>
-            		<th width="82%"><div class="th_class">รายละเอียด</div></th> 
-            		<th width="8%"><div class="th_class">Action</div></th> 
+            		<th width="10%"><div class="th_class">#</div></th>
+            		<th width="62%"><div class="th_class">ชื่อผู้ติดต่อ</div></th>
+            		<th width="20%"><div class="th_class">เบอร์โทรศัพท์</div></th> 
+            		<th width="8%"><div class="th_class"></div></th> 
           		</tr>
         	</thead>
         	<tbody> 
-        	<c:if test="${not empty pstBreakDowns}"> 
-        	 <c:forEach items="${pstBreakDowns}" var="pstBreakDown" varStatus="loop"> 
+        	<c:if test="${not empty pstCustomerContacts}"> 
+        	 <c:forEach items="${pstCustomerContacts}" var="pstCustomerContact" varStatus="loop"> 
           	<tr> 
-            	<td>${pstBreakDown.pbdUid}</td>
-            	<td>${pstBreakDown.pbdName}</td> 
+            	<td>${(customerForm.paging.pageNo-1)*customerForm.paging.pageSize+(loop.index+1)}.</td>
+            	<td>${pstCustomerContact.pccName}</td> 
+            	<td>${pstCustomerContact.pccMobileNo}</td> 
             	<td style="text-align: center;"> 
-            	 <i title="Edit" onclick="loadDynamicPage('breakdown/item/${pstBreakDown.pbdId}')" style="cursor: pointer;" class="icon-edit"></i>&nbsp;&nbsp;
-            	 <i title="Delete" onclick="confirmDelete('delete','${pstBreakDown.pbdId}')" style="cursor: pointer;" class="icon-trash"></i>
+            	 <i title="Edit" onclick="loadDynamicPage('customer/contact/item/${pstCustomerContact.pccId}')" style="cursor: pointer;" class="icon-edit"></i>&nbsp;&nbsp;
+            	 <i title="Delete" onclick="confirmDelete('delete','${pstCustomerContact.pccId}')" style="cursor: pointer;" class="icon-trash"></i>
             	</td>
           	</tr> 
           	</c:forEach>
           	</c:if>
-          	<c:if test="${empty pstBreakDowns}"> 
+          	<c:if test="${empty pstCustomerContacts}"> 
           	<tr>
-          		<td colspan="3" style="text-align: center;">&nbsp;Not Found&nbsp;</td>
+          		<td colspan="4" style="text-align: center;">&nbsp;Not Found&nbsp;</td>
           	</tr>
           </c:if>
         	</tbody>
       </table> 
+       <div align="left">
+			<a class="btn btn-info"  onclick="goBackDivision()"><i class="icon-chevron-left icon-white"></i>&nbsp;<span style="color: white;font-weight: bold;">Back</span></a>	
+    	</div>
       </fieldset> 

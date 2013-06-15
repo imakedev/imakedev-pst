@@ -34,7 +34,7 @@ $(document).ready(function() {
 	
 });
 
-function exportReport1(){
+function exportReport3(){
 	var time_from =jQuery.trim($("#time_from").val()); 
 
 	if(time_from.length==0){
@@ -43,7 +43,7 @@ function exportReport1(){
 	    }
 	var time_from_array=time_from.replace(/ /g,"_"); 
 	
-	var src = "report/export_report1";
+	var src = "report/export_report4";
 
 	src=src+"?from="+time_from_array;
 	var div = document.createElement("div");
@@ -58,14 +58,13 @@ function exportReport1(){
             <strong>สถิติเบรคดาวน์ประจำเดือน</strong>
             </div>
             <div align="left" style="padding: 10px 10px">
-            <span style="font-size: 13px;">...</span> 
-            	<!-- <span style="font-size: 13px;">เลือกเดือน:</span> 
+           <span style="font-size: 13px;">เลือกเดือน:</span> 
             	<span style="padding: 20px">
             	<input type="text"  id="time_from" style="height: 30;width:120px" readonly="true"/>
             	</span>  
             	<span style="padding-left: 10px">
-            	<a class="btn btn-primary" style="margin-top:-12px;" onclick="exportReport1()">&nbsp;Export&nbsp;</a>
-            	</span> -->
+            	<a class="btn btn-primary" style="margin-top:-12px;" onclick="exportReport3()">&nbsp;Export&nbsp;</a>
+            	</span>
             </div>
 	    					</form>  
       </fieldset> 

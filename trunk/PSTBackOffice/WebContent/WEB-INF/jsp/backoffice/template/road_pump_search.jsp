@@ -126,6 +126,7 @@ function doAction(mode,id){
 	    					      <option value="2">2</option>
 	    		</select> -->
             	</span>
+            	<a class="btn btn-primary" style="margin-top: -10px" onclick="doAction('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a> 
             </div>
 	    					</form:form> 
 	    					<table border="0" width="100%" style="font-size: 13px">
@@ -136,7 +137,9 @@ function doAction(mode,id){
 	    					<!-- <a class="btn btn-danger" onclick="doDeleteItems()"><i class="icon-trash icon-white"></i>&nbsp;Delete</a> -->
 	    					</td>
 	    					<td align="right" width="50%">  
-	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;<span id="pageElement"><select name="roadpumpPageSelect" id="roadpumpPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select></span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;<a class="btn btn-primary" onclick="doAction('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a></td>
+	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;<span id="pageElement"><select name="roadpumpPageSelect" id="roadpumpPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select></span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;
+	    					<!-- <a class="btn btn-primary" onclick="doAction('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a> -->
+	    					</td>
 	    					</tr>
 	    					</tbody></table>
 		<table class="table table-striped table-bordered table-condensed" border="1" style="font-size: 12px">
