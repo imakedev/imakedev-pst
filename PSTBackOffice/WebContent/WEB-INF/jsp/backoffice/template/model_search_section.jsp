@@ -38,13 +38,15 @@ function goNext(){
 		doAction('search','0');
 	}
 } 
-function goToPage(){ 
+function goToPageModel(){ 
+	
 	$("#pageNo").val(document.getElementById("modelPageSelect").value);
+	//alert($("#pageNo").val())
 	doAction('search','0');
 }
 function renderPageSelect(){
 	 
-	var pageStr="<select name=\"modelPageSelect\" id=\"modelPageSelect\" onchange=\"goToPage()\" style=\"width: 50px\">";
+	var pageStr="<select name=\"modelPageSelect\" id=\"modelPageSelect\" onchange=\"goToPageModel()\" style=\"width: 50px\">";
 //	var pageCount=parseInt($("#pageCount").val());
 	var pageCount=$("#pageCount").val();
 	for(var i=1;i<=pageCount;i++){
@@ -52,6 +54,7 @@ function renderPageSelect(){
 	}
 	pageStr=pageStr+"</select>"; 
 	$("#pageElement").html(pageStr);
+	//alert($("#pageNo").val());
 	document.getElementById("modelPageSelect").value=$("#pageNo").val();
 }
 function confirmDelete(mode,id){
@@ -70,10 +73,10 @@ function confirmDelete(mode,id){
 		}
 	});
 }
-function doSearch(mode,id){
+/* function doSearch(mode,id){
 	$("#pageNo").val("1");
 	doAction(mode,id);
-}
+} */
 function doAction(mode,id){
 	$("#mode").val(mode);
 	if(mode=='deleteItems'){
@@ -85,7 +88,8 @@ function doAction(mode,id){
 	}
 	$.post("model/search",$("#modelForm").serialize(), function(data) {
 		  // alert(data);
-		    appendContent(data);
+		    //appendContent(data);
+		    appendContentWithId(data,"model_section");
 		  // alert($("#_content").html());
 		});
 }
@@ -103,25 +107,24 @@ function doAction(mode,id){
            <!-- <div style="model:relative;right:-94%;">  </div> --> 
          
              
-           <%--  <form:form id="modelForm" name="modelForm" modelAttribute="modelForm"  cssClass="well" cssStyle="border:2px solid #B3D2EE;background: #F9F9F9" action="" method="post">
+            <form:form id="modelForm"  name="modelForm" modelAttribute="modelForm"  cssClass="well" cssStyle="border:2px solid #B3D2EE;background: #F9F9F9;display:none" action="" method="post">
             <form:hidden path="mode"/>
              <form:hidden path="pstModel.pmId" id="pmId"/>
              <form:hidden path="pstModel.pmType" id="pmType"/>
              <form:hidden path="paging.pageNo" id="pageNo"/>
               <form:hidden path="paging.pageSize" id="pageSize"/>
               <form:hidden path="pageCount"/>
-            <div align="left">
+          <!--   <div align="left">
             <strong>Model</strong>
-            </div>
+            </div> -->
           
-			</form:form>  --%>
-			<!-- 
+			</form:form>   
+			 
 	    					<table border="0" width="100%" style="font-size: 13px">
 	    					<tbody><tr>
 	    					<td align="left" width="50%">
 	    					
 	    					<a class="btn btn-primary" onclick="loadDynamicPage('model/new')"><i class="icon-plus-sign icon-white"></i>&nbsp;Create</a>&nbsp;
-	    					<a class="btn btn-danger" onclick="doDeleteItems()"><i class="icon-trash icon-white"></i>&nbsp;Delete</a>
 	    					</td>
 	    					<td align="right" width="50%">  
 	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;
@@ -129,7 +132,7 @@ function doAction(mode,id){
 	    					<select name="modelPageSelect" id="modelPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select>
 	    					</span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;</td>
 	    					</tr>
-	    					</tbody></table> -->
+	    					</tbody></table>  
 		<table class="table table-striped table-bordered table-condensed" border="1" style="font-size: 12px">
         	<thead>
           		<tr> 

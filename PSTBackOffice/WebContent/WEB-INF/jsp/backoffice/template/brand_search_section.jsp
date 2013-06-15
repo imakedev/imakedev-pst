@@ -38,13 +38,15 @@ function goNext(){
 		doAction('search','0');
 	}
 } 
-function goToPage(){ 
+function goToPageBrand(){ 
+	//alert("ss")
 	$("#pageNo").val(document.getElementById("brandPageSelect").value);
+	//alert($("#pageNo").val());
 	doAction('search','0');
 }
 function renderPageSelect(){
 	 
-	var pageStr="<select name=\"brandPageSelect\" id=\"brandPageSelect\" onchange=\"goToPage()\" style=\"width: 50px\">";
+	var pageStr="<select name=\"brandPageSelect\" id=\"brandPageSelect\" onchange=\"goToPageBrand()\" style=\"width: 50px\">";
 //	var pageCount=parseInt($("#pageCount").val());
 	var pageCount=$("#pageCount").val();
 	for(var i=1;i<=pageCount;i++){
@@ -52,6 +54,7 @@ function renderPageSelect(){
 	}
 	pageStr=pageStr+"</select>"; 
 	$("#pageElement").html(pageStr);
+ //alert($("#pageNo").val());
 	document.getElementById("brandPageSelect").value=$("#pageNo").val();
 }
 function confirmDelete(mode,id){
@@ -70,10 +73,10 @@ function confirmDelete(mode,id){
 		}
 	});
 }
-function doSearch(mode,id){
+/* function doSearch(mode,id){
 	$("#pageNo").val("1");
 	doAction(mode,id);
-}
+} */
 function doAction(mode,id){
 	$("#mode").val(mode);
 	if(mode=='deleteItems'){
@@ -85,7 +88,8 @@ function doAction(mode,id){
 	}
 	$.post("brand/search",$("#brandForm").serialize(), function(data) {
 		  // alert(data);
-		    appendContent(data);
+		   // appendContent(data);
+		    appendContentWithId(data,"brand_section");
 		  // alert($("#_content").html());
 		});
 }
@@ -103,20 +107,18 @@ function doAction(mode,id){
            <!-- <div style="brand:relative;right:-94%;">  </div> --> 
          
              
-           <%--  <form:form id="brandForm" name="brandForm" modelAttribute="brandForm"  cssClass="well" cssStyle="border:2px solid #B3D2EE;background: #F9F9F9" action="" method="post">
+             <form:form id="brandForm" name="brandForm" modelAttribute="brandForm"  cssClass="well" cssStyle="border:2px solid #B3D2EE;background: #F9F9F9;display:none" action="" method="post">
             <form:hidden path="mode"/>
-            <form:hidden path="pbIdArray"/>
+           
              <form:hidden path="pstBrand.pbId" id="pbId"/>
              <form:hidden path="pstBrand.pbType" id="pbType"/>
              <form:hidden path="paging.pageNo" id="pageNo"/>
               <form:hidden path="paging.pageSize" id="pageSize"/>
               <form:hidden path="pageCount"/>
-            <div align="left">
-            <strong>Brand</strong>
-            </div>
-			</form:form>  --%>
+           
+			</form:form>   
 			
-	    				<!-- 	<table border="0" width="100%" style="font-size: 13px">
+	    				 	<table border="0" width="100%" style="font-size: 13px">
 	    					<tbody><tr>
 	    					<td align="left" width="50%">
 	    					
@@ -128,7 +130,7 @@ function doAction(mode,id){
 	    					<select name="brandPageSelect" id="brandPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select>
 	    					</span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;</td>
 	    					</tr>
-	    					</tbody></table> -->
+	    					</tbody></table>  
 		<table class="table table-striped table-bordered table-condensed" border="1" style="font-size: 12px">
         	<thead>
           		<tr> 

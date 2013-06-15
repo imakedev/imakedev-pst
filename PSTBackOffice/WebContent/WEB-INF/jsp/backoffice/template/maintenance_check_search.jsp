@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ include file="/WEB-INF/jsp/includes.jsp" %>
 <script>
-var _perpageG=20;
+
 $(document).ready(function() {
 	/* renderPageSelect();
 	if($("#message_element > strong").html().length>0){
@@ -9,16 +9,17 @@ $(document).ready(function() {
 		 $("#message_element").slideDown("slow"); 
 		 setTimeout(function(){$("#message_element").slideUp("slow")},5000);
 	 } */
-	getModel('1');
-	getDepartment();
+	getModel('1','init');
+	//getDepartment();
+	//getRenderMapping(1);
 });
-function getModel(id){ 
+function getModel(id,mode){ 
 	var query="SELECT pm_id,pm_name  FROM "+SCHEMA_G+".PST_MODEL where pm_type="+id+" order by pm_name "; 
 	PSTAjax.searchObject(query,{
 		callback:function(data){
 			//alert(data)
 			//var str="<div align=\"left\" style=\"padding-bottom: 4px;width:1070px\"> <a class=\"btn\" onclick=\"showForm('add','0')\"><i class=\"icon-plus-sign\"></i>&nbsp;<span style=\"font-weight: normal;\">Add</span></a></div>"+
-			var str="	  <select name=\"modelSelect\" id=\"modelSelect\" style=\"width: 190px\"> "+
+			var str="	  <select name=\"modelSelect\" id=\"modelSelect\" onchange=\"getRenderMapping(1)\" style=\"width: 190px\"> "+
 			        "";  
 			//str=str+ " <option value=\"-1\">---</option>";
 			   if(data!=null && data.length>0){
@@ -28,16 +29,19 @@ function getModel(id){
 			   }
 			        str=str+  " </select>"+
 			$("#model_section").html(str);
+			if(mode=='init')
+				getDepartment(mode);
+			
 		}
 	}); 
 }
-function getDepartment(){ 
+function getDepartment(mode){ 
 	var query="SELECT pd_id,pd_name FROM  "+SCHEMA_G+".PST_DEPARTMENT order by pd_name "; 
 	PSTAjax.searchObject(query,{
 		callback:function(data){
 			//alert(data)
 			//var str="<div align=\"left\" style=\"padding-bottom: 4px;width:1070px\"> <a class=\"btn\" onclick=\"showForm('add','0')\"><i class=\"icon-plus-sign\"></i>&nbsp;<span style=\"font-weight: normal;\">Add</span></a></div>"+
-			var str="	  <select name=\"departmentSelect\" id=\"departmentSelect\" style=\"width: 190px\"> "+
+			var str="	  <select name=\"departmentSelect\" id=\"departmentSelect\" onchange=\"getRenderMapping(1)\" style=\"width: 190px\"> "+
 			        "";  
 			//str=str+ " <option value=\"-1\">---</option>";
 			   if(data!=null && data.length>0){
@@ -47,15 +51,12 @@ function getDepartment(){
 			   }
 			        str=str+  " </select>"+
 			$("#department_section").html(str);
+			        if(mode=='init')
+			        	 getRenderMapping(1);
 		}
 	}); 
 }
-function   calculatePage( perPage, total)
-{
-	/* alert("total % perPage->"+total % perPage)
-	alert("total / perPage->"+Math.floor(total / perPage)) */
-	return total % perPage != 0 ? Math.floor(total / perPage) + 1 : Math.floor(total / perPage);
-}
+
 function doUpdateMapping(){
 	//<td style=\"text-align: left;\"><input type=\"checkbox\" name=\"pwtNameCheckbox\" "+checked+" value=\""+pcm_type+"_"+pcm_ref_type_no+"_"+data[i][7]+"_"+data[i][1]+"\"/>&nbsp;&nbsp;"+(limitRow+i+1)+" </td>"+
 	var pwtNameCheckboxArray=document.getElementsByName("pwtNameCheckbox");
@@ -327,8 +328,8 @@ function doAction(mode,id){
             	<span style="font-size: 13px;">ตรวจเช็คตาม:</span> 
             	<span style="padding: 20px">
             	<%-- <form:input path="pstBreakDown.pbdUid" cssStyle="height: 30;width:80px"/> --%>
-            	 <input type="radio" value="1" checked="checked" name="checkname" onclick="getModel('1')"/>&nbsp;รุ่นรถ&nbsp;&nbsp;/
-            	 <input type="radio" value="2"  name="checkname" onclick="getModel('2')"/>&nbsp;รุ่นปั๊ม
+            	 <input type="radio" value="1" checked="checked" name="checkname" onclick="getModel('1','init')"/>&nbsp;รุ่นรถ&nbsp;&nbsp;/
+            	 <input type="radio" value="2"  name="checkname" onclick="getModel('2','init')"/>&nbsp;รุ่นปั๊ม
             	</span>  
 	    		 <span style="font-size: 13px;">รุ่น:</span> 
             	<span style="padding: 20px" id="model_section">  
@@ -352,7 +353,7 @@ function doAction(mode,id){
 	    					<select name="breakdownPageSelect" id="breakdownPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select>
 	    					</span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;
 	    					<!-- <a class="btn btn-primary" onclick="doSearch('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a> -->
-	    					<a class="btn btn-primary" onclick="getRenderMapping(1)"><i class="icon-search icon-white"></i>&nbsp;Search</a>
+	    					<!-- <a class="btn btn-primary" onclick="getRenderMapping(1)"><i class="icon-search icon-white"></i>&nbsp;Search</a> -->
 	    					
 	    					</td>
 	    					</tr>

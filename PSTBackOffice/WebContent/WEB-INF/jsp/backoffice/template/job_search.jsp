@@ -2,6 +2,9 @@
 <%@ include file="/WEB-INF/jsp/includes.jsp" %>
 <style>
 .ui-datepicker-trigger{cursor: pointer;}
+.ui-autocomplete-loading {
+    background: white url('<%=request.getContextPath() %>/resources/css/smoothness/images/ui-anim_basic_16x16.gif') right center no-repeat;
+  } 
 </style>
 <script>
 $(document).ready(function() {
@@ -19,6 +22,45 @@ $(document).ready(function() {
 		changeMonth: true,
 		changeYear: true
 	});
+	/* $( "#periodDesc" ).autocomplete({
+		  source: function( request, response ) {  
+			  var periodWhere=""; 
+				var periodNo =jQuery.trim($("#periodNo").val());
+				var year =jQuery.trim($("#year").val());
+			    if(year.length>0)
+			    	periodWhere=periodWhere+" and year like  '%"+year+"%'   ";	
+			    if(periodNo.length>0)
+			    	periodWhere=periodWhere+" and period_no like  '%"+periodNo+"%'   ";	
+				var query="SELECT period_no,period_desc  FROM "+SCHEMA_G+".period where period_desc like '%"+request.term+"%'   "+periodWhere;		
+				KPIAjax.searchObject(query,{
+					callback:function(data){ 
+						if(data!=null && data.length>0){
+							response( $.map( data, function( item ) {
+					          return {
+					        	  label: item[1],
+					        	  value: item[0] 
+					          }
+					        }));
+						}else{
+							var xx=[]; 
+							response( $.map(xx));
+						}
+					}
+			 });		  
+		  },
+		  minLength: 2,
+		  select: function( event, ui ) { 
+			  this.value = ui.item.label;
+			   $("#periodDesc").val(ui.item.label);
+		      return false;
+		  },
+		  open: function() {
+		    $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+		  },
+		  close: function() {
+		    $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+		  }
+		}); */
 });
 function goPrev(){
 	if($("#pageNo").val()!='1'){
@@ -167,6 +209,7 @@ function doAction(mode,id){
 	    	        </form:select>
             	<!-- <input type="text" style="height: 30px;width:150px"/> -->  
             	</span>
+            	<a class="btn btn-primary" style="margin-top: -10px" onclick="doAction('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a>
             </div>
             <!-- 
             <table border="0" width="100%" style="font-size: 13px">
@@ -222,11 +265,14 @@ function doAction(mode,id){
 	    					<td align="left" width="50%">
 	    					
 	    					<a class="btn btn-primary" onclick="loadDynamicPage('job/new')"><i class="icon-plus-sign icon-white"></i>&nbsp;Create</a>&nbsp;
+	    					<a class="btn btn-info" onclick="loadDynamicPage('customer/init')"><i class="icon-circle-arrow-up icon-white"></i>&nbsp;Manage ลูกค้า</a>&nbsp;
 	    					<a class="btn btn-info" onclick="loadDynamicPage('concrete/init')"><i class="icon-circle-arrow-up icon-white"></i>&nbsp;Manage คอนกรีต</a>&nbsp;
 	    					</td>
 	    					<td align="right" width="50%">  
 	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;<span id="pageElement">
-	    					<select name="seriesPageSelect" id="seriesPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select></span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;<a class="btn btn-primary" onclick="doAction('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a></td>
+	    					<select name="seriesPageSelect" id="seriesPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select></span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;
+	    					<!-- <a class="btn btn-primary" onclick="doAction('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a> -->
+	    					</td>
 	    					</tr>
 	    					</tbody></table>
 	    					<!-- 

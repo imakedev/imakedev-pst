@@ -142,7 +142,9 @@ function test(){
     						 	<form:option value="-1">---</form:option> 
     						 	<form:options items="${pstRoadPumpNos}" itemLabel="prpNo" itemValue="prpNo"></form:options> 
     						 </form:select> 
-	    		</span>  
+	    		</span> 
+	    		 <a class="btn btn-primary" style="margin-top:-10px" onclick="doSearch('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a> 
+	    		
             </div>
 			 
 	    					<table border="0" width="100%" style="font-size: 13px">
@@ -157,7 +159,9 @@ function test(){
 	    					<span id="pageElement">
 	    					<select name="employeeWorkMappingPageSelect" id="employeeWorkMappingPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select>
 	    					</span>
-	    					&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;<a class="btn btn-primary" onclick="doSearch('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a></td>
+	    					&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;
+	    					<!-- <a class="btn btn-primary" onclick="doSearch('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a> -->
+	    					</td>
 	    					</tr>
 	    					</tbody></table>  
 		<table class="table table-striped table-bordered table-condensed" border="1" style="font-size: 12px">

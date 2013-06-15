@@ -128,7 +128,7 @@ function doAction(mode,id){
             <div align="left">
             <strong>User</strong>
             </div> 
-             <div align="left" style="padding: 10px 60px">
+             <div align="left" style="padding: 10px 40px">
             	<span style="font-size: 13px;">Username</span> 
             	<span style="padding: 20px">
             	<form:input path="user.username" cssStyle="height: 30;width:130px"/>
@@ -144,6 +144,7 @@ function doAction(mode,id){
             	<form:input path="user.lastName" cssStyle="height: 30;width:130px"/>
             	<!-- <input type="text" style="height: 30;">  -->
             	</span>  
+            	<a class="btn btn-primary" style="margin-top: -10px" onclick="doSearch('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a>
             </div>
             <%--
             <div align="center" style="padding: 10px 60px">
@@ -172,7 +173,9 @@ function doAction(mode,id){
 	    					<a onclick="goPrev()">Prev</a>&nbsp;|&nbsp;
 	    					<span id="pageElement">
 	    					<select name="userPageSelect" id="userPageSelect" onchange="goToPage()" style="width: 50px"><option value="1">1</option></select>
-	    					</span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;<a class="btn btn-primary" onclick="doSearch('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a></td>
+	    					</span>&nbsp;|&nbsp;<a onclick="goNext()">Next</a>&nbsp;
+	    					<!-- <a class="btn btn-primary" onclick="doSearch('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a> -->
+	    					</td>
 	    					</tr>
 	    					</tbody></table>
 		<table class="table table-striped table-bordered table-condensed" border="1" style="font-size: 12px">
