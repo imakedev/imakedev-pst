@@ -553,7 +553,7 @@ public class ReportController {
 			    			" FROM "+SCHEMA+".PST_EMPLOYEE emp " +
 			    			" left join  "+SCHEMA+".PST_TITLE title  on emp.PT_ID=title.PT_ID "+
 			    			" order by emp.pe_uid  ");
-			       //System.out.println("query2->"+query.toString());
+			      // System.out.println("query2->"+query.toString());
 			    	 List<Object[]> emps=pstService.searchObject(query.toString());
 			    	// System.out.println("query->"+query.toString());
 			    	  int rowIndex=1;  
@@ -576,7 +576,7 @@ public class ReportController {
 							    cell.setCellStyle(cellStyle3);
 							}
 						    cell = row.createCell(index++);	    
-						    cell.setCellValue(((java.math.BigDecimal)emps.get(i)[status_size+3]).doubleValue());
+						    cell.setCellValue(((java.math.BigDecimal)emps.get(i)[status_size+4]).doubleValue());
 						    cell.setCellStyle(cellStyle4);
 					}
 			    	 query.setLength(0);
@@ -585,7 +585,7 @@ public class ReportController {
 			    	 		" job.pj_created_time between '"+from_sql+"' and '"+to_sql+"' ) as pst_1,pump.prp_no " +
 			    	 		" FROM "+SCHEMA+".PST_ROAD_PUMP  pump order by pump.prp_no " +
 			    			" ");
-			    	 //System.out.println("query3->"+query.toString());
+			    	// System.out.println("query3->"+query.toString());
 			    	emps=pstService.searchObject(query.toString());
 				    	// System.out.println("query->"+query.toString());
 				    //	  int rowIndex=1;  

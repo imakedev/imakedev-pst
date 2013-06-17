@@ -158,7 +158,32 @@ public class JobController {
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}*/
+				}*/ 
+	     /*   System.out.println("pjContractMobileNo-->"+jobForm.getPstJob().getPjContractMobileNo());
+	        System.out.println("pjContractName-->"+jobForm.getPstJob().getPjContractName());
+	        System.out.println("pjCustomerDepartment-->"+jobForm.getPstJob().getPjCustomerDepartment());
+	        System.out.println("pjCustomerName-->"+jobForm.getPstJob().getPjCustomerName());
+	        System.out.println("pjCustomerNo-->"+jobForm.getPstJob().getPjCustomerNo());
+	        System.out.println("pjContractMobileNo-->"+jobForm.getPstJob().getPjContractMobileNo());
+	        
+	        System.out.println("pccId-->"+jobForm.getPccId());
+	        System.out.println("pccName-->"+jobForm.getPccName());
+	        System.out.println("pcdId-->"+jobForm.getPcdId());
+	        System.out.println("pcdName-->"+jobForm.getPcdName());
+	        System.out.println("pcId-->"+jobForm.getPcId()); 
+	        
+	        System.out.println("pccId 2 -->"+jobForm.getPstJob().getPccId()); 
+	        System.out.println("pcdId 2 -->"+jobForm.getPstJob().getPcdId()); 
+	        System.out.println("pcId 2 -->"+jobForm.getPstJob().getPcId()); */
+	      /* if(jobForm.getPccId()!=null){
+	    	   jobForm.getPstJob().setPccId(jobForm.getPccId());
+	       }
+	       if(jobForm.getPcdId()!=null){
+	    	   jobForm.getPstJob().setPcdId(jobForm.getPcdId());
+	       }
+	       if(jobForm.getPcId()!=null){
+	    	   jobForm.getPstJob().setPcId(jobForm.getPcId());
+	       }*/
 	       if(mode != null)
 	            if(mode.equals(IMakeDevUtils.MODE_NEW))
 	            {
