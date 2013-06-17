@@ -62,6 +62,19 @@ public class PstJob implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="PCONCRETE_ID")
 	private PstConcrete pstConcrete;
+	
+	
+	@Column(name="PC_ID")
+	private Long pcId;
+	
+	@Column(name="PCD_ID")
+	private Long pcdId;
+	
+	@Column(name="PCC_ID")
+	private Long pccId;
+	
+	
+
 
 	//bi-directional many-to-one association to PstJobEmployee
 	/*@OneToMany(mappedBy="pstJob")
@@ -176,6 +189,30 @@ public class PstJob implements Serializable {
 
 	public void setPjCubicAmount(BigDecimal pjCubicAmount) {
 		this.pjCubicAmount = pjCubicAmount;
+	}
+
+	public Long getPcId() {
+		return pcId;
+	}
+
+	public void setPcId(Long pcId) {
+		this.pcId = pcId;
+	}
+
+	public Long getPcdId() {
+		return pcdId;
+	}
+
+	public void setPcdId(Long pcdId) {
+		this.pcdId = pcdId;
+	}
+
+	public Long getPccId() {
+		return pccId;
+	}
+
+	public void setPccId(Long pccId) {
+		this.pccId = pccId;
 	}
 
 	/*public List<PstJobEmployee> getPstJobEmployees() {
