@@ -55,7 +55,13 @@ public class PstJob  extends VServiceXML implements Serializable {
 	
 	@XStreamAlias("pstCostList")
 	private List<PstCost> pstCostList; 
-
+ 
+	private Long pcId;
+	 
+	private Long pcdId;
+	 
+	private Long pccId;
+	
 	//ext
 	private String cubicAmount;
 	private String payAmount;
@@ -253,6 +259,24 @@ public class PstJob  extends VServiceXML implements Serializable {
 	}
 	public void setPjCubicAmount(BigDecimal pjCubicAmount) {
 		this.pjCubicAmount = pjCubicAmount;
+	}
+	public Long getPcId() {
+		return pcId;
+	}
+	public void setPcId(Long pcId) {
+		this.pcId = pcId;
+	}
+	public Long getPcdId() {
+		return pcdId;
+	}
+	public void setPcdId(Long pcdId) {
+		this.pcdId = pcdId;
+	}
+	public Long getPccId() {
+		return pccId;
+	}
+	public void setPccId(Long pccId) {
+		this.pccId = pccId;
 	}
 
 	/*public List<PstJobEmployee> getPstJobEmployees() {
