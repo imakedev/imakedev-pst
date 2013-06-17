@@ -23,6 +23,17 @@ public class JobForm extends CommonForm implements Serializable {
 	private PstJobEmployee pstJobEmployee;
 	private PstJobWork pstJobWork;
 	private String part;
+	
+	//ext  
+	private Long pccId;
+	private String pccName; 
+	 
+	private Long pcdId; 
+	private String pcdName; 
+	
+	private Long pcId; 
+	
+	 
 	public JobForm() {
 		//super();
 		this.pstJob = new PstJob();
@@ -30,6 +41,36 @@ public class JobForm extends CommonForm implements Serializable {
 		this.pstJobPay =new PstJobPay();
 		this.pstJobEmployee =new PstJobEmployee();
 		this.pstJobWork =new PstJobWork();
+	}
+	public Long getPccId() {
+		return pccId;
+	}
+	public void setPccId(Long pccId) {
+		this.pccId = pccId;
+	}
+	public String getPccName() {
+		return pccName;
+	}
+	public void setPccName(String pccName) {
+		this.pccName = pccName;
+	}
+	public Long getPcdId() {
+		return pcdId;
+	}
+	public void setPcdId(Long pcdId) {
+		this.pcdId = pcdId;
+	}
+	public String getPcdName() {
+		return pcdName;
+	}
+	public void setPcdName(String pcdName) {
+		this.pcdName = pcdName;
+	}
+	public Long getPcId() {
+		return pcId;
+	}
+	public void setPcId(Long pcId) {
+		this.pcId = pcId;
 	}
 	public PstJob getPstJob() {
 		return pstJob;
