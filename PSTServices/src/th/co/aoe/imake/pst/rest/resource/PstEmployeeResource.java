@@ -74,7 +74,7 @@ public class PstEmployeeResource  extends BaseResource {
 							//BeanUtils.copyProperties(xbpsTerm.getPstRoadPump(),pstRoadPump); 	
 							bpsTerm.setPstRoadPump(pstRoadPump);
 						}
-						System.out.println("bpsTerm.getPstRoadPump()->"+bpsTerm.getPstRoadPump());
+						//System.out.println("bpsTerm.getPstRoadPump()->"+bpsTerm.getPstRoadPump());
 						if(xbpsTerm.getPstTitle()!=null && xbpsTerm.getPstTitle().getPtId()!=null && xbpsTerm.getPstTitle().getPtId().intValue()!=0)
 						{
 							th.co.aoe.imake.pst.hibernate.bean.PstTitle pstTitle = new th.co.aoe.imake.pst.hibernate.bean.PstTitle(); 

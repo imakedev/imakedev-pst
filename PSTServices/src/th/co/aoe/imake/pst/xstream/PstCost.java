@@ -24,7 +24,7 @@ public class PstCost extends VServiceXML implements Serializable {
 	private String pcUid;
 
 	private String pcUnit;
-
+	private String pcType;
 	//bi-directional many-to-one association to PstJobPay
 	/*@OneToMany(mappedBy="pstCost")
 	private List<PstJobPay> pstJobPays;*/
@@ -80,6 +80,14 @@ public class PstCost extends VServiceXML implements Serializable {
 
 	public void setPcUnit(String pcUnit) {
 		this.pcUnit = pcUnit;
+	}
+
+	public String getPcType() {
+		return pcType;
+	}
+
+	public void setPcType(String pcType) {
+		this.pcType = pcType;
 	}
 
 /*	public List<PstJobPay> getPstJobPays() {

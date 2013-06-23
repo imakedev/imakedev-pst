@@ -35,6 +35,9 @@ public class PstCost implements Serializable {
 
 	@Column(name="PC_UNIT")
 	private String pcUnit;
+	
+	@Column(name="PC_TYPE")
+	private String pcType;
 
 	//bi-directional many-to-one association to PstJobPay
 	/*@OneToMany(mappedBy="pstCost")
@@ -81,6 +84,14 @@ public class PstCost implements Serializable {
 
 	public void setPcUnit(String pcUnit) {
 		this.pcUnit = pcUnit;
+	}
+
+	public String getPcType() {
+		return pcType;
+	}
+
+	public void setPcType(String pcType) {
+		this.pcType = pcType;
 	}
 
 /*	public List<PstJobPay> getPstJobPays() {
