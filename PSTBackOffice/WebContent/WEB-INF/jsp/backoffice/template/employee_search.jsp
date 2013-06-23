@@ -162,8 +162,8 @@ function doAction(mode,id){
         	<thead>
           		<tr> 
             		<th width="10%"><div class="th_class">รหัส</div></th>
-            		<th width="52%"><div class="th_class">ชื่อ-นามสกุล</div></th>
-            		<th width="15%"><div class="th_class">ตำแหน่ง</div></th>
+            		<th width="32%"><div class="th_class">ชื่อ-นามสกุล</div></th>
+            		<th width="35%"><div class="th_class">ตำแหน่ง</div></th>
             		<th width="15%"><div class="th_class">ค่าแรง</div></th>
             		<th width="8%"><div class="th_class">Action</div></th> 
           		</tr>
@@ -173,9 +173,10 @@ function doAction(mode,id){
         	 <c:forEach items="${pstEmployees}" var="pstEmployee" varStatus="loop"> 
           	<tr> 
             	<td>${pstEmployee.peUid}</td>
-            	<td>${pstEmployee.peFirstName}&nbsp;${pstEmployee.peLastName}</td>
+            	<td>${pstEmployee.pstTitle.ptName}&nbsp;${pstEmployee.peFirstName}&nbsp;${pstEmployee.peLastName}</td>
             	<td>${pstEmployee.pstPosition.ppName}</td>
-            	<td>${pstEmployee.peWage}</td>    
+            	<td style="text-align: right;">&nbsp;<fmt:formatNumber  pattern="#,###,###,###.##"  
+     value="${pstEmployee.peWage}"/></td>   
             	<td style="text-align: center;"> 
             	 <i title="Edit" onclick="loadDynamicPage('employee/item/${pstEmployee.peId}')" style="cursor: pointer;" class="icon-edit"></i>&nbsp;&nbsp;
             	 <i title="Delete" onclick="confirmDelete('delete','${pstEmployee.peId}')" style="cursor: pointer;" class="icon-trash"></i>

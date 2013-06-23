@@ -107,7 +107,7 @@ function doAction(mode,id){
               <form:hidden path="pageCount"/>
            
             <div align="left">
-            <strong>Customer</strong>
+            <strong>ลูกค้า</strong>
             </div>
             <div align="center" style="padding: 10px 60px">
             	<span style="font-size: 13px;">รหัสลูกค้า</span> 
@@ -154,7 +154,7 @@ function doAction(mode,id){
           	<tr> 
             	<td>${pstCustomer.pcNo}</td>
             	<td>${pstCustomer.pcName}</td> 
-            	<td style="text-decoration: underline;cursor: pointer;" onclick="loadDynamicPage('customer/division/init/${pstCustomer.pcId}')">แผนก</td> 
+            	<td style="text-decoration: underline;cursor: pointer;" onclick="loadDynamicPage('customer/division/init/${pstCustomer.pcId}')">หน่วยงาน</td> 
             	<td style="text-align: center;"> 
             	 <i title="Edit" onclick="loadDynamicPage('customer/item/${pstCustomer.pcId}')" style="cursor: pointer;" class="icon-edit"></i>&nbsp;&nbsp;
             	 <i title="Delete" onclick="confirmDelete('delete','${pstCustomer.pcId}')" style="cursor: pointer;" class="icon-trash"></i>

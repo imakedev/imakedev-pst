@@ -59,7 +59,7 @@ function doCustomerAction(action,mode,id){
 			  <fieldset style="font-family: sans-serif;">   
 			 <!--  <pre  class="prettyprint" style="font-family: sans-serif;font-size:12px:;margin-top: 0px"> -->
 			  <div align="left">
-           	 <strong>Customer</strong><br></br>
+           	 <strong>ลูกค้า</strong><br></br>
             	</div>
 			    <table border="0" width="100%" style="font-size: 12px">
 			    	<tr>

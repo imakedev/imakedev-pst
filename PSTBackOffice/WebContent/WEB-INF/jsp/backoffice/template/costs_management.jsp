@@ -83,6 +83,15 @@ function doCostAction(action,mode,id){
     					</td> 
     				</tr>
     				<tr valign="middle">
+    					<td width="25%" align="right"><span style="font-size: 13px;padding: 15px">ประเภท :</span></td>
+    					<td width="75%" colspan="2"> 
+    					<form:select path="pstCost.pcType" cssStyle="width:100px">
+            				<form:option value="1">ปั๊มลาก</form:option>
+            				<form:option value="2">ปั๊มบูม</form:option>
+            			</form:select>
+    					</td>
+    				</tr> 
+    				<tr valign="middle">
     					<td width="25%" align="right"><span style="font-size: 13px;padding: 15px">รายละเอียด :</span></td>
     					<td width="75%" colspan="2"> 
     					<form:input path="pstCost.pcName" id="pcName" cssStyle="height: 30;"/>

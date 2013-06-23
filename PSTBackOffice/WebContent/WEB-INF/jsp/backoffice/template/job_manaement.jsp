@@ -4,7 +4,7 @@
 .ui-autocomplete-loading {
     background: white url('<%=request.getContextPath() %>/resources/css/smoothness/images/ui-anim_basic_16x16.gif') right center no-repeat;
   } 
-</style>
+</style> 
 <script type="text/javascript">
 var intRegex = /^\d+$/;
 //var floatRegex = /^((\d+(\.\d *)?)|((\d*\.)?\d+))$/;
@@ -129,7 +129,27 @@ $(document).ready(function() {
 	    	/*  var pcId=jQuery.trim($("#pcId").val());
 	    	 alert(pcId); */
 	     }
+	     loadPstCost();
 });
+function loadPstCost(){
+	var costType=jQuery.trim($("#costType").val());
+	//alert(costType)
+	var str="<select id=\"pstJobPay_pcId\" >"; 
+	var query="SELECT pc_id,pc_uid,pc_name  FROM "+SCHEMA_G+".PST_COSTS where pc_type='"+costType+"'";
+	PSTAjax.searchObject(query,{
+		callback:function(data){
+			//alert(data) 
+			//var str="<select id=\"pcdId\" onchange=\"listContact()\" style=\"width:170px\">";
+			if(data!=null && data.length>0){
+				for(var i=0;i<data.length;i++){
+					str=str+"<option value=\""+data[i][0]+"\">"+data[i][1]+" - "+data[i][2]+"</option>";
+				}
+			}
+			str=str+"</select>";
+			$("#pstJobPay_pcId_section").html(str); 
+		}
+	});
+}
 function listDivision(isInit){
 	var pcId=jQuery.trim($("#pcId").val());
 	//alert(pcId);
@@ -476,6 +496,14 @@ str=str+"</tbody>"+
 	  $("#tabs_2").slideDown("slow"); 
 	  */
  }
+function ReplaceNumberWithCommas(yourNumber) {
+    //Seperates the components of the number
+    var n= yourNumber.toString().split(".");
+    //Comma-fies the first part
+    n[0] = n[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    //Combines the two sections
+    return n.join(".");
+}
 function renderPart3(data2){
 	var str="<table id=\"table_part3\" class=\"table table-striped table-bordered table-condensed\" border=\"1\" style=\"font-size: 12px\">"+
 	  "<thead>"+
@@ -493,13 +521,16 @@ function renderPart3(data2){
 		var sum=0;
 	  for(var i=0;i<data2[1].length;i++){
 		  var sumIner= (data2[1][i].pstCost!=null)?(data2[1][i].pstCost.pcAmount*data2[1][i].pjpAmount):0;
+		 // $.format.number(7456.2, '#,##0.00#');
+		/*   var pjpAmount=$.format.number(data2[1][i].pjpAmount,'#,##0.00#');
+		  alert(pjpAmount); */
 		  str=str+"<tr>"+
  			"<td><input type=\"hidden\" name=\"pcId_input\" value=\""+data2[1][i].pstCost.pcId+"\"/>"+(i+1)+"</td>"+
  			"<td>"+(data2[1][i].pstCost!=null?(data2[1][i].pstCost.pcUid+" - "+data2[1][i].pstCost.pcName):"")+"</td>"+
- 			"<td>"+(data2[1][i].pstCost!=null?data2[1][i].pstCost.pcAmount:"")+"</td> "+
+ 			"<td style=\"text-align: right;\">"+(data2[1][i].pstCost!=null?(ReplaceNumberWithCommas(data2[1][i].pstCost.pcAmount)):"")+"</td> "+
  			"<td>"+(data2[1][i].pstCost!=null?data2[1][i].pstCost.pcUnit:"")+"</td>"+
- 			"<td>"+(data2[1][i].pjpAmount!=null?data2[1][i].pjpAmount:"")+"</td> "+
- 			"<td>"+sumIner+"</td> "+
+ 			"<td style=\"text-align: right;\">"+(data2[1][i].pjpAmount!=null?(ReplaceNumberWithCommas(data2[1][i].pjpAmount)):"")+"</td> "+
+ 			"<td style=\"text-align: right;\">"+(ReplaceNumberWithCommas(sumIner))+"</td> "+
  			"<td><i title=\"Delete\" onclick=\"confirmDelete('3','delete','"+data2[1][i].pcId+"')\" style=\"cursor: pointer;\" class=\"icon-trash\"></i></td>"+
  		"</tr>";
 		  sum=sum+sumIner;
@@ -512,7 +543,7 @@ function renderPart3(data2){
  		"	<th></th>"+
  		"	<th></th>"+
  		"	<th></th>"+
- 		"	<th>"+sum+"</th>"+
+ 		"	<th style=\"text-align: right;\">"+(ReplaceNumberWithCommas(sum))+"</th>"+
  		"	<th> </th>   "+
  		"</tr>"+
  		"</tbody>"+
@@ -536,7 +567,7 @@ for(var i=0;i<data2[1].length;i++){
 	  str=str+"<tr>"+
 			"<td>"+(i+1)+"</td>"+
 			"<td>"+(data2[1][i].pjpeName!=null?data2[1][i].pjpeName:"")+"</td>"+
-			"<td>"+(data2[1][i].pjpeAmount!=null?data2[1][i].pjpeAmount:"")+"</td> "+
+			"<td style=\"text-align: right;\">"+(data2[1][i].pjpeAmount!=null?(ReplaceNumberWithCommas(data2[1][i].pjpeAmount)):"")+"</td> "+
 			"<td><i title=\"Delete\" onclick=\"confirmDelete('4','delete','"+data2[1][i].pjpeNo+"')\" style=\"cursor: pointer;\" class=\"icon-trash\"></i></td>"+
 		"</tr>";
 	  sum=sum+data2[1][i].pjpeAmount;
@@ -547,7 +578,7 @@ for(var i=0;i<data2[1].length;i++){
 		str=str+"<tr>"+
 		"	<th></th>"+
 		"	<th>ยอดรวม</th>"+
-		"	<th>"+sum+"</th>"+
+		"	<th style=\"text-align: right;\">"+ReplaceNumberWithCommas(sum)+"</th>"+
 		"	<th> </th>   "+
 		"</tr>"+
 		//"</thead>"+
@@ -737,19 +768,27 @@ for(var i=0;i<data2[1].length;i++){
  function addRow_part3() {
 	 
 	 var pjId=$("#pjId").val();
-	  var pcId= $("#pcId").val();
+	  var pstJobPay_pcId= $("#pstJobPay_pcId").val();
+	 // alert(pstJobPay_pcId)
+	  /* if(pstJobPay_pcId==null)
+		  alert("value is null") */
+	  if(pstJobPay_pcId==null){
+			  alert("กรุณาเลือกรหัสการจ่าย-คำอธิบาย.");
+			  return false;
+	  } 
 	  var pjpAmount=$("#pjpAmount").val(); 
 	  var haveDup=false;
 	  var pcId_input = document.getElementsByName("pcId_input");
 	  if(pcId_input!=null && pcId_input){
 		  for(var i=0;i<pcId_input.length;i++){
-			  if(pcId_input[i].value==pcId){
+			  if(pcId_input[i].value==pstJobPay_pcId){
 				//  alert("หมายเลขรถ ซ้ำกับที่เลือกไว้.");
 				  haveDup=true;
 				  break; 
 			  }
 		  }
 	  }
+	
 	  if(haveDup){
 		  alert("รหัสการจ่าย ซ้ำกับที่เลือกไว้.");
 		  return false;
@@ -768,7 +807,7 @@ for(var i=0;i<data2[1].length;i++){
 				 }  
 				  
 				 var querys=[]; 
-					 var query="insert into "+SCHEMA_G+".PST_JOB_PAY set PJ_ID="+pjId+", PC_ID="+pcId+",PJP_AMOUNT="+pjpAmount;
+					 var query="insert into "+SCHEMA_G+".PST_JOB_PAY set PJ_ID="+pjId+", PC_ID="+pstJobPay_pcId+",PJP_AMOUNT="+pjpAmount;
 						 
 					 querys.push(query);
 				 
@@ -1504,14 +1543,24 @@ legend {font-size: 14px}
 									<li><a href="#tabs_3-1">รายงานจ่ายค่าคิว หมายเลขรถ</a></li> 
 								</ul>
 								<div id="tabs_3-1" >
-								 <div>รหัสการจ่าย-คำอธิบาย
-								  <form:select path="pstJobPay.pcId" id="pcId" >  
-								  		<!-- <option value="-1">---</option> -->  
+								 <div>
+								 ประเภท
+								  <select id="costType" onclick="loadPstCost()" style="width:100px">  
+								  		 <option value="1">ปั๊มลาก</option>
+								  		 <option value="2">ปั๊มบูม</option>  
+								  		<%--  <c:forEach items="${pstCostList}" var="pstCost" varStatus="loop"> 
+								  		 	<option value="${pstCost.pcId}">${pstCost.pcUid} - ${pstCost.pcName}</option>  
+								  		 </c:forEach> --%> 
+	    	            		  </select>
+	    	            		  &nbsp;รหัสการจ่าย-คำอธิบาย
+	    	            		  <span id="pstJobPay_pcId_section">
+								 <%--  <form:select path="pstJobPay.pcId" id="pstJobPay_pcId" >  
 								  		 <c:forEach items="${pstCostList}" var="pstCost" varStatus="loop"> 
 								  		 	<option value="${pstCost.pcId}">${pstCost.pcUid} - ${pstCost.pcName}</option>  
 								  		 </c:forEach> 
-	    	            		  </form:select>
-	    	            		   จำนวน <form:input path="pstJobPay.pjpAmount" id="pjpAmount" cssStyle="width: 65px;text-align: right;height: 30px"/> <a  class="btn" style="position: relative;top: -4px" onclick="addRow_part3()">Add</a></div>  
+	    	            		  </form:select> --%>
+	    	            		  </span>
+	    	            		   &nbsp;จำนวน <form:input path="pstJobPay.pjpAmount" id="pjpAmount" cssStyle="width: 65px;text-align: right;height: 30px"/> <a  class="btn" style="position: relative;top: -4px" onclick="addRow_part3()">Add</a></div>  
 								  <!-- PST_JOB_PAY -->
 								   <div id="job_part3_element">
 								   <%--
