@@ -33,7 +33,7 @@ public class HibernatePstCost  extends HibernateCommon implements PstCostService
 		try {
 			String pcUid=instance.getPcUid();
 			String pcName=instance.getPcName();
-			
+			String pcType=instance.getPcType();
 			Query query=null;
 			
 			StringBuffer sb =new StringBuffer(" select count(pstCost) from PstCost pstCost ");
@@ -43,6 +43,11 @@ public class HibernatePstCost  extends HibernateCommon implements PstCostService
 			if(pcUid !=null && pcUid.trim().length()> 0){  
 				//criteria.add(Expression.eq("megId", megId));	
 				sb.append(iscriteria?(" and lcase(pstCost.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"):(" where lcase(pstCost.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"));
+				  iscriteria = true;
+			}
+			if(pcType !=null && pcType.trim().length() > 0){  
+				//criteria.add(Expression.eq("megId", megId));	
+				sb.append(iscriteria?(" and pstCost.pcType='"+pcType.trim()+"'"):(" where pstCost.pcType='"+pcType.trim()+"'"));
 				  iscriteria = true;
 			}
 			if(pcName !=null && pcName.trim().length() > 0){  
@@ -70,7 +75,8 @@ public class HibernatePstCost  extends HibernateCommon implements PstCostService
 			Session session = sessionAnnotationFactory.getCurrentSession();
 			try {
 				String pcUid=instance.getPcUid();
-				String pcName=instance.getPcName();
+				String pcName=instance.getPcName();	
+				String pcType=instance.getPcType();
 				Query query = null;
 			
 				StringBuffer sb =new StringBuffer(" select pstCost from PstCost pstCost ");
@@ -80,6 +86,11 @@ public class HibernatePstCost  extends HibernateCommon implements PstCostService
 				if(pcUid !=null && pcUid.trim().length()> 0){  
 					//criteria.add(Expression.eq("megId", megId));	
 					sb.append(iscriteria?(" and lcase(pstCost.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"):(" where lcase(pstCost.pcUid) like '%"+pcUid.trim().toLowerCase()+"%'"));
+					  iscriteria = true;
+				}
+				if(pcType !=null && pcType.trim().length() > 0){  
+					//criteria.add(Expression.eq("megId", megId));	
+					sb.append(iscriteria?(" and pstCost.pcType='"+pcType.trim()+"'"):(" where pstCost.pcType='"+pcType.trim()+"'"));
 					  iscriteria = true;
 				}
 				if(pcName !=null && pcName.trim().length() > 0){  
