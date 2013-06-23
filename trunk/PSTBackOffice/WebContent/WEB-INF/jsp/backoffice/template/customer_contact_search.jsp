@@ -107,7 +107,7 @@ function doAction(mode,id){
               <form:hidden path="paging.pageSize" id="pageSize"/>
               <form:hidden path="pageCount"/>
             <div align="left">
-            <strong>Contact</strong>
+            <strong>ผู้ติดต่อ</strong>
             </div>
             <div align="center" style="padding: 10px 60px"> 
 	    		<span style="font-size: 13px;">ชื่อผู้ติดต่อ</span> 

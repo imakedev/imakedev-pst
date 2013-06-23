@@ -95,7 +95,7 @@ function doAction(mode,id){
             <div align="left">
             <strong>Costs</strong>
             </div>
-            <div align="center" style="padding: 10px 60px">
+            <div align="center" style="padding: 10px 1px">
             	<span style="font-size: 13px;">รหัสรายการ</span> 
             	<span style="padding: 20px">
             	<form:input path="pstCost.pcUid" cssStyle="height: 30;width:80px"/>
@@ -104,6 +104,15 @@ function doAction(mode,id){
 	    		<span style="font-size: 13px;">รายละเอียด</span> 
             	<span style="padding: 20px">
             	<form:input path="pstCost.pcName" cssStyle="height: 30;"/>
+            	<!-- <input type="text" style="height: 30;">  -->
+            	</span>
+            	<span style="font-size: 13px;">ประเภท</span> 
+            	<span style="padding: 20px">
+            <%-- 	<form:input path="" cssStyle="height: 30;"/> --%>
+            	<form:select path="pstCost.pcType" cssStyle="width:100px">
+            		<form:option value="1">ปั๊มลาก</form:option>
+            		<form:option value="2">ปั๊มบูม</form:option>
+            	</form:select>
             	<!-- <input type="text" style="height: 30;">  -->
             	</span>  
             	<a class="btn btn-primary" style="margin-top: -10px" onclick="doAction('search','0')"><i class="icon-search icon-white"></i>&nbsp;Search</a>
@@ -131,9 +140,10 @@ function doAction(mode,id){
         	<thead>
           		<tr> 
             		<th width="10%"><div class="th_class">รหัสการจ่าย</div></th>
-            		<th width="35%"><div class="th_class">รายละเอียด</div></th> 
-            		<th width="10%"><div class="th_class">จำนวนเงิน</div></th> 
-            		<th width="10%"><div class="th_class">หน่วย</div></th>
+            		<th width="58%"><div class="th_class">รายละเอียด</div></th>
+            		<th width="8%"><div class="th_class">ประเภท</div></th>   
+            		<th width="8%"><div class="th_class">จำนวนเงิน</div></th> 
+            		<th width="8%"><div class="th_class">หน่วย</div></th>
             		<th width="8%"><div class="th_class">Action</div></th> 
           		</tr>
         	</thead>
@@ -143,8 +153,16 @@ function doAction(mode,id){
           	<tr>  
             	<td>${pstCost.pcUid}</td>
             	<td>${pstCost.pcName}</td>
-            	
-            	<td>${pstCost.pcAmount}</td>
+            	<td> 
+            		<c:if test="${pstCost.pcType=='1'}">
+            		ปั๊มลาก
+            		</c:if>
+            		<c:if test="${pstCost.pcType=='2'}">
+            		ปั๊มบูม
+            		</c:if> 
+            	</td> 
+            	<td style="text-align: right;"><fmt:formatNumber  pattern="#,###,###,###.##"  
+     value="${pstCost.pcAmount}"/></td>
             	<td>${pstCost.pcUnit}</td>
             	<td style="text-align: center;"> 
             	 <i title="Edit" onclick="loadDynamicPage('costs/item/${pstCost.pcId}')" style="cursor: pointer;" class="icon-edit"></i>&nbsp;&nbsp;
@@ -155,7 +173,7 @@ function doAction(mode,id){
           	</c:if>
           	<c:if test="${empty pstCosts}"> 
           	<tr>
-          		<td colspan="5" style="text-align: center;">&nbsp;Not Found&nbsp;</td>
+          		<td colspan="6" style="text-align: center;">&nbsp;Not Found&nbsp;</td>
           	</tr>
           	</c:if> 
         	</tbody>

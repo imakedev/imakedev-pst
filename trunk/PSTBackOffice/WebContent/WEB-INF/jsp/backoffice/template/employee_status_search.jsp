@@ -158,7 +158,7 @@ function doAction(mode,id){
           	<tr> 
             	<td>${(employeeStatusForm.paging.pageNo-1)*employeeStatusForm.paging.pageSize+(loop.index+1)}.</td>
             	<td>${pstEmployeeStatus.pesName}</td>
-            	<td>${pstEmployeeStatus.pesWageRate}</td>  
+            	<td style="text-align: right;">${pstEmployeeStatus.pesWageRate}</td>  
             	<td style="text-align: center;"> 
             	 <i title="Edit" onclick="loadDynamicPage('employeeStatus/item/${pstEmployeeStatus.pesId}')" style="cursor: pointer;" class="icon-edit"></i>&nbsp;&nbsp;
             	 <i title="Delete" onclick="confirmDelete('delete','${pstEmployeeStatus.pesId}')" style="cursor: pointer;" class="icon-trash"></i>

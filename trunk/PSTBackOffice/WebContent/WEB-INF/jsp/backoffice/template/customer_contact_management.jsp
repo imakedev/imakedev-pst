@@ -59,7 +59,7 @@ function doCustomerContactAction(action,mode,id){
 			  <fieldset style="font-family: sans-serif;">   
 			 <!--  <pre  class="prettyprint" style="font-family: sans-serif;font-size:12px:;margin-top: 0px"> -->
 			  <div align="left">
-           	 <strong>Contact</strong><br></br>
+           	 <strong>ผู้ติดต่อ</strong><br></br>
             	</div>
 			    <table border="0" width="100%" style="font-size: 12px">
 			    	<tr>

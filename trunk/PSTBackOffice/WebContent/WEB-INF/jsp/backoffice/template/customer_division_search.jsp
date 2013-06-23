@@ -107,10 +107,10 @@ function doAction(mode,id){
               <form:hidden path="paging.pageSize" id="pageSize"/>
               <form:hidden path="pageCount"/>
             <div align="left">
-            <strong>Division</strong>
+            <strong>หน่วยงาน</strong>
             </div>
             <div align="center" style="padding: 10px 60px"> 
-	    		<span style="font-size: 13px;">แผนก</span> 
+	    		<span style="font-size: 13px;">ชื่อ หน่วยงาน</span> 
             	<span style="padding: 20px">
             	<form:input path="pstCustomerDivision.pcdName" cssStyle="height: 30;"/>
             	<!-- <input type="text" style="height: 30;">  -->
@@ -138,7 +138,7 @@ function doAction(mode,id){
         	<thead>
           		<tr> 
             		<th width="10%"><div class="th_class">#</div></th>
-            		<th width="74%"><div class="th_class">แผนก</div></th>
+            		<th width="74%"><div class="th_class">หน่วยงาน</div></th>
             		<th width="8%"><div class="th_class"></div></th> 
             		<th width="8%"><div class="th_class"></div></th> 
           		</tr>

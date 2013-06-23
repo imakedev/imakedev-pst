@@ -168,8 +168,8 @@ function test(){
         	<thead>
           		<tr> 
             		<th width="7%"><div class="th_class">รหัส</div></th>
-            		<th width="27%"><div class="th_class">ชื่อ-นามสกุล</div></th> 
-            		<th width="18%"><div class="th_class">ตำแหน่ง</div></th> 
+            		<th width="20%"><div class="th_class">ชื่อ-นามสกุล</div></th> 
+            		<th width="25%"><div class="th_class">ตำแหน่ง</div></th> 
             		<th width="12%"><div class="th_class">วันทำงานสะสม</div></th>
             		<th width="15%"><div class="th_class">เบอร์รถ</div></th> 
             		<th width="15%"><div class="th_class">สถานะการทำงาน</div></th> 
@@ -186,7 +186,7 @@ function test(){
             	
             	</td> 
             	<td>${pstEmployeeWorkMapping.pstEmployee.pstPosition.ppName}</td>
-            	<td>${pstEmployeeWorkMapping.weekdayCollection}</td> 
+            	<td style="text-align: right;">${pstEmployeeWorkMapping.weekdayCollection}</td> 
             	<td>
             <%-- 	<form:select path="prpNos" cssStyle="width:80px"> --%>
             	<select name="prpNos" style="width:120px">

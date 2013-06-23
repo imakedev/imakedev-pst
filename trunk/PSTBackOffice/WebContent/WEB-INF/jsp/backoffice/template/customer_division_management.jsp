@@ -59,14 +59,14 @@ function doCustomerDivisionAction(action,mode,id){
 			  <fieldset style="font-family: sans-serif;">   
 			 <!--  <pre  class="prettyprint" style="font-family: sans-serif;font-size:12px:;margin-top: 0px"> -->
 			  <div align="left">
-           	 <strong>Division</strong><br></br>
+           	 <strong>หน่วยงาน</strong><br></br>
             	</div>
 			    <table border="0" width="100%" style="font-size: 12px">
 			    	<tr>
     					<td width="100%" colspan="3"></td>
     				</tr>
     				<tr valign="middle">
-    					<td width="25%" align="right"><span style="font-size: 13px;padding: 15px">แผนก :</span></td>
+    					<td width="25%" align="right"><span style="font-size: 13px;padding: 15px">ชื่อ หน่วยงาน:</span></td>
     					<td width="75%" colspan="2"> 
     						<form:input path="pstCustomerDivision.pcdName" id="pcdName" cssStyle="height: 30;"/>
     					</td> 

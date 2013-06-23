@@ -69,7 +69,7 @@ function doEmployeeAction(action,mode,id){
     					<td width="25%" align="right"><span style="font-size: 13px;padding: 15px">คำนำหน้า :</span></td>
     					<td width="75%" colspan="2"> 
     					<form:select path="pstEmployee.pstTitle.ptId"  cssStyle="width:80px">
-	    						      <form:option value="0">--</form:option>
+	    						     <%--  <form:option value="0">--</form:option> --%>
 	    					      	  <form:options itemValue="ptId" itemLabel="ptName" items="${titles}"/>
 	    					     
 	    			 	</form:select>&nbsp;
@@ -84,7 +84,7 @@ function doEmployeeAction(action,mode,id){
     					<td width="75%" colspan="2">  
     					
 	    			 	<form:select path="pstEmployee.pstPosition.ppId">
-	    						      <form:option value="0">--</form:option>
+	    						   <%--	   <form:option value="0">--</form:option>  --%>
 	    					      	  <form:options itemValue="ppId" itemLabel="ppName" items="${positions}"/>
 	    					     
 	    			 	</form:select>
@@ -101,7 +101,7 @@ function doEmployeeAction(action,mode,id){
     					<td width="75%" colspan="2">  
     					
 	    			 	<form:select path="pstEmployee.pstRoadPump.prpId">
-	    						      <form:option value="0">--</form:option>
+	    						   <%--    <form:option value="0">--</form:option>  --%>
 	    					      	  <form:options itemValue="prpId" itemLabel="prpNo" items="${pstRoadPumpNos}"/>
 	    			 	</form:select>
     					</td> 
