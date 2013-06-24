@@ -44,6 +44,9 @@ public class PstJob  extends VServiceXML implements Serializable {
 	@XStreamAlias("pstConcrete")
 	private PstConcrete pstConcrete;
 	
+	@XStreamAlias("pstRoadPump")
+	private PstRoadPump pstRoadPump;
+	
 	private String prpNo;
 	
 	
@@ -277,6 +280,12 @@ public class PstJob  extends VServiceXML implements Serializable {
 	}
 	public void setPccId(Long pccId) {
 		this.pccId = pccId;
+	}
+	public PstRoadPump getPstRoadPump() {
+		return pstRoadPump;
+	}
+	public void setPstRoadPump(PstRoadPump pstRoadPump) {
+		this.pstRoadPump = pstRoadPump;
 	}
 
 	/*public List<PstJobEmployee> getPstJobEmployees() {

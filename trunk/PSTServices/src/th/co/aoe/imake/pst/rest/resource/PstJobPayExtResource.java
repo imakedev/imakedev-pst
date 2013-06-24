@@ -24,7 +24,7 @@ public class PstJobPayExtResource  extends BaseResource {
 	private PstJobPayExtService pstJobPayExtService; 
 	private com.thoughtworks.xstream.XStream xstream; 
 	private String[] ignore_id={"id","pstJob"};   
-	private String[] ignore_job_id={"pstConcrete"};
+	private String[] ignore_job_id={"pstConcrete","pstRoadPump"};
 	 
 	public PstJobPayExtResource() {
 		super();

@@ -63,6 +63,10 @@ public class PstJob implements Serializable {
 	@JoinColumn(name="PCONCRETE_ID")
 	private PstConcrete pstConcrete;
 	
+	@ManyToOne
+	@JoinColumn(name="PRP_ID")
+	private PstRoadPump pstRoadPump;
+	
 	
 	@Column(name="PC_ID")
 	private Long pcId;
@@ -213,6 +217,14 @@ public class PstJob implements Serializable {
 
 	public void setPccId(Long pccId) {
 		this.pccId = pccId;
+	}
+
+	public PstRoadPump getPstRoadPump() {
+		return pstRoadPump;
+	}
+
+	public void setPstRoadPump(PstRoadPump pstRoadPump) {
+		this.pstRoadPump = pstRoadPump;
 	}
 
 	/*public List<PstJobEmployee> getPstJobEmployees() {
