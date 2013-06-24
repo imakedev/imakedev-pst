@@ -21,7 +21,7 @@ public class PstJobResource  extends BaseResource {
  
 
 	private static final Logger logger = Logger.getLogger(ServiceConstant.LOG_APPENDER);
-	private static String[] ignore={"pstConcrete"};  
+	private static String[] ignore={"pstConcrete","pstRoadPump"};  
 	private static final String[] ignore_employee=	 {"pstPosition","pstTitle","pstRoadPump"};
 	private PSTCommonService pstCommonService;
 	private PstJobService pstJobService; 
@@ -74,6 +74,14 @@ public class PstJobResource  extends BaseResource {
 							BeanUtils.copyProperties(xbpsTerm.getPstConcrete(),pstConcrete); 
 							bpsTerm.setPstConcrete(pstConcrete);
 						}
+						if(xbpsTerm.getPstRoadPump()!=null && xbpsTerm.getPstRoadPump().getPrpId()!=null &&  xbpsTerm.getPstRoadPump().getPrpId().intValue()!=-1){
+							th.co.aoe.imake.pst.hibernate.bean.PstRoadPump pstRoadPump = new th.co.aoe.imake.pst.hibernate.bean.PstRoadPump();
+							pstRoadPump.setPrpId(xbpsTerm.getPstRoadPump().getPrpId());
+							pstRoadPump.setPrpNo(xbpsTerm.getPstRoadPump().getPrpNo());
+							//private String prpNo;
+							//BeanUtils.copyProperties(xbpsTerm.getPstRoadPump(),pstRoadPump); 
+							bpsTerm.setPstRoadPump(pstRoadPump);
+						}
 						if(serviceName.equals(ServiceConstant.PST_JOB_FIND_BY_ID)){
 							Object obj= pstCommonService.findById(bpsTerm.getClass(), xbpsTerm.getPjId());
 							if(obj!=null){
@@ -83,6 +91,21 @@ public class PstJobResource  extends BaseResource {
 									th.co.aoe.imake.pst.xstream.PstConcrete pstConcrete = new th.co.aoe.imake.pst.xstream.PstConcrete();
 									BeanUtils.copyProperties(pstJob.getPstConcrete(),pstConcrete); 
 									xbpsTerm.setPstConcrete(pstConcrete);
+								}
+								if(pstJob.getPstRoadPump()!=null && pstJob.getPstRoadPump().getPrpId()!=null &&  pstJob.getPstRoadPump().getPrpId().intValue()!=-1){
+									th.co.aoe.imake.pst.xstream.PstRoadPump pstRoadPump = new th.co.aoe.imake.pst.xstream.PstRoadPump();
+									pstRoadPump.setPrpId(pstJob.getPstRoadPump().getPrpId());
+									pstRoadPump.setPrpNo(pstJob.getPstRoadPump().getPrpNo());
+									
+									if(pstJob.getPstRoadPump().getPstRoadPumpType()!=null){
+										th.co.aoe.imake.pst.xstream.PstRoadPumpType pstRoadPumpType = new th.co.aoe.imake.pst.xstream.PstRoadPumpType();
+										BeanUtils.copyProperties(pstJob.getPstRoadPump().getPstRoadPumpType(), pstRoadPumpType) ;
+										pstRoadPump.setPstRoadPumpType(pstRoadPumpType);
+									}
+									
+									//private String prpNo;
+									//BeanUtils.copyProperties(pstJob.getPstRoadPump(),pstRoadPump); 
+									xbpsTerm.setPstRoadPump(pstRoadPump);
 								}
 							}
 						//logger.debug(" object return ="+ntcCalendarReturn);
@@ -98,6 +121,12 @@ public class PstJobResource  extends BaseResource {
 						//	java.sql.Timestamp timeStampStartDate = new java.sql.Timestamp(new Date().getTime());
 							Long pjId=0l;
 							pjId=(Long) (pstCommonService.save(bpsTerm));
+							th.co.aoe.imake.pst.hibernate.bean.PstJobWork pstJobWork=new th.co.aoe.imake.pst.hibernate.bean.PstJobWork();
+							th.co.aoe.imake.pst.hibernate.bean.PstJobWorkPK pk =new th.co.aoe.imake.pst.hibernate.bean.PstJobWorkPK();
+							pk.setPjId(pjId);
+							pk.setPrpId(bpsTerm.getPstRoadPump().getPrpId());
+							pstJobWork.setId(pk);
+							pstCommonService.save(pstJobWork);
 							xbpsTerm.setPjId(pjId);
 							return returnUpdateRecord(entity,xbpsTerm,pjId.intValue());
 						} else if(serviceName.equals(ServiceConstant.PST_JOB_UPDATE)){
@@ -205,43 +234,20 @@ public class PstJobResource  extends BaseResource {
 				BeanUtils.copyProperties(missManual.getPstConcrete(),pstConcrete); 
 				xmissManual.setPstConcrete(pstConcrete);
 			}
+			if(missManual.getPstRoadPump()!=null && missManual.getPstRoadPump().getPrpId()!=null &&  missManual.getPstRoadPump().getPrpId().intValue()!=-1){
+				th.co.aoe.imake.pst.xstream.PstRoadPump pstRoadPump = new th.co.aoe.imake.pst.xstream.PstRoadPump();
+				pstRoadPump.setPrpId(missManual.getPstRoadPump().getPrpId());
+				pstRoadPump.setPrpNo(missManual.getPstRoadPump().getPrpNo());
+				//private String prpNo;
+				//BeanUtils.copyProperties(missManual.getPstRoadPump(),pstRoadPump); 
+				xmissManual.setPstRoadPump(pstRoadPump);
+			}
 			xmissManual.setPagging(null);
 			xntcCalendars.add(xmissManual);
 		}
 		return xntcCalendars;
 	} 
-	@Override
-	protected Representation get(Variant variant) throws ResourceException {
-		// TODO Auto-generated method stub
-		//System.out.println("sss");
-		th.co.aoe.imake.pst.xstream.PstJob  xbpsTerm =new th.co.aoe.imake.pst.xstream.PstJob();
-		th.co.aoe.imake.pst.hibernate.bean.PstJob pstJob =new  th.co.aoe.imake.pst.hibernate.bean.PstJob();
-		xbpsTerm.setPjId(1l);
-		Object obj= pstCommonService.findById(pstJob.getClass(), xbpsTerm.getPjId());
-		if(obj!=null){
-			 pstJob = (th.co.aoe.imake.pst.hibernate.bean.PstJob)obj;
-			BeanUtils.copyProperties(pstJob, xbpsTerm,ignore) ;
-		}
-	//logger.debug(" object return ="+ntcCalendarReturn);
-	VResultMessage vresultMessage = new VResultMessage();
-		if(xbpsTerm!=null){
-			List<th.co.aoe.imake.pst.xstream.PstJob> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstJob>(1);
-			xbpsTerm.setPagging(null);							 
-			xntcCalendars.add(xbpsTerm);
-			vresultMessage.setResultListObj(xntcCalendars);
-		}
-		//save
-		//Long pjId=(Long) (pstCommonService.save(pstJob));
-		
-		//update
-		/*pstJob.setPbdUid("updated");
-		pstCommonService.update(pstJob);*/
-		
-		// delete
-		//pstCommonService.delete(pstJob);
-		return getRepresentation(null, vresultMessage, xstream);
-		// return null;
-	} 
+	
 	private List<th.co.aoe.imake.pst.xstream.PstBreakDown> getxPstBreakDownObject(
 			java.util.List<th.co.aoe.imake.pst.hibernate.bean.PstBreakDown> pstBreakDowns){
 		List<th.co.aoe.imake.pst.xstream.PstBreakDown> xpstBreakDowns = new ArrayList<th.co.aoe.imake.pst.xstream.PstBreakDown>(
@@ -281,6 +287,12 @@ public class PstJobResource  extends BaseResource {
 				//BeanUtils.copyProperties(pstEmployee.getPstRoadPump(),pstRoadPump); 	
 				pstRoadPump.setPrpId(pstEmployee.getPstRoadPump().getPrpId());
 				pstRoadPump.setPrpNo(pstEmployee.getPstRoadPump().getPrpNo());
+				
+				if(pstEmployee.getPstRoadPump().getPstRoadPumpType()!=null){
+					th.co.aoe.imake.pst.xstream.PstRoadPumpType pstRoadPumpType = new th.co.aoe.imake.pst.xstream.PstRoadPumpType();
+					BeanUtils.copyProperties(pstEmployee.getPstRoadPump().getPstRoadPumpType(), pstRoadPumpType) ;
+					pstRoadPump.setPstRoadPumpType(pstRoadPumpType);
+				}
 				xpstEmployee.setPstRoadPump(pstRoadPump);
 			}
 			xpstEmployees.add(xpstEmployee);

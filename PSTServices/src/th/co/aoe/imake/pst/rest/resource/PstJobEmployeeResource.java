@@ -30,7 +30,7 @@ public class PstJobEmployeeResource  extends BaseResource {
 	private com.thoughtworks.xstream.XStream xstream; 
 	private String[] ignore_id={"id","pstEmployee","pstJob","pstRoadPump"};  
 	private String[] ignore_employee_id={"pstPosition","pstTitle","pstRoadPump"};
-	private String[] ignore_job_id={"pstConcrete"};
+	private String[] ignore_job_id={"pstConcrete","pstRoadPump"};
 	private String[] ignore_roadpump_id={"pstBrandRoad","pstBrandPump","pstModelRoad","pstModelPump","pstRoadPumpStatus","pstRoadPumpType",
 			"pstBrandRoadList","pstRoadPumpType","pstBrandRoadList","pstBrandPumpList","pstModelRoadList","pstModelPumpList","pstRoadPumpStatusList",
 			"pstRoadPumpTypeList"};

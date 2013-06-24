@@ -27,7 +27,7 @@ public class PstJobWorkResource  extends BaseResource {
 	/*private String[] ignore_WORK_id={"pstPosition","pstTitle"};
 	  
 	 */
-	private String[] ignore_job_id={"pstConcrete"};
+	private String[] ignore_job_id={"pstConcrete","pstRoadPump"};
 	 
 	
 	public PstJobWorkResource() {

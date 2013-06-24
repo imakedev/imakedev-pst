@@ -24,7 +24,7 @@ public class PstJobPayResource  extends BaseResource {
 	private PstJobPayService pstJobPayService; 
 	private com.thoughtworks.xstream.XStream xstream; 
 	private String[] ignore_id={"id","pstCost","pstJob"};   
-	private String[] ignore_job_id={"pstConcrete"};
+	private String[] ignore_job_id={"pstConcrete","pstRoadPump"};
 	 
 	public PstJobPayResource() {
 		super();
@@ -147,7 +147,7 @@ public class PstJobPayResource  extends BaseResource {
 			}
 			if(missManual.getPstJob()!=null){
 				th.co.aoe.imake.pst.xstream.PstJob xpstJob =new th.co.aoe.imake.pst.xstream.PstJob(); 
-				BeanUtils.copyProperties(missManual.getPstJob(), xpstJob,ignore_job_id); 
+				BeanUtils.copyProperties(missManual.getPstJob(), xpstJob,ignore_job_id);  
 				xmissManual.setPstJob(xpstJob);
 			} 
 			xmissManual.setPagging(null);
