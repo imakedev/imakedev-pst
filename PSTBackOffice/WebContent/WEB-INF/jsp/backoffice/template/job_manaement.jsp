@@ -15,6 +15,7 @@ $(document).ready(function() {
 	$('#tabs_2').tabs();
 	$('#tabs_3').tabs();
 	$('#tabs_4').tabs();
+	
 	/* $('#tabs_3').tabs();
 	$('#tabs_4').tabs(); */
 	/*  $( "#accordion" ).accordion({
@@ -127,15 +128,24 @@ $(document).ready(function() {
 	     if(mode=='edit'){
 	    	 listDivision(true);
 	    	/*  var pcId=jQuery.trim($("#pcId").val());
-	    	 alert(pcId); */
+	    	 alert(pcId); */ // $('select.foo option:selected').val(); 
+	    	 renderJobEmployee($("#pstJob\\.pstRoadPump\\.prpId").val(),$("#pstJob\\.pstRoadPump\\.prpId option:selected").text());
+	    	 loadPstCost();
 	     }
-	     loadPstCost();
+	    
 });
 function loadPstCost(){
-	var costType=jQuery.trim($("#costType").val());
+	//pstJob.pstRoadPump.prpId
+	var prp_id=$("#pstJob\\.pstRoadPump\\.prpId").val();
+	 
+//	var costType=jQuery.trim($("#costType").val());
 	//alert(costType)
 	var str="<select id=\"pstJobPay_pcId\" >"; 
-	var query="SELECT pc_id,pc_uid,pc_name  FROM "+SCHEMA_G+".PST_COSTS where pc_type='"+costType+"'";
+	//var  query="SELECT pc_id,pc_uid,pc_name  FROM "+SCHEMA_G+".PST_COSTS where pc_type='"+costType+"'";
+	var query=" select costs.pc_id,costs.pc_uid,costs.pc_name  from "+SCHEMA_G+".PST_COSTS costs left join  "+SCHEMA_G+".PST_ROAD_PUMP_TYPE p_type "+
+	  " on costs.pc_type=p_type.prpt_id "+
+	  " where pc_type=(select pump.prpt_id FROM "+SCHEMA_G+".PST_ROAD_PUMP pump "+ 
+	  " where pump.prp_id="+prp_id+") ";
 	PSTAjax.searchObject(query,{
 		callback:function(data){
 			//alert(data) 
@@ -319,13 +329,14 @@ function doJobAction(action,mode,id){
 	 $("#pccId").val($("#pccIdSelect").val());
 	 $("#pcdId").val($("#pcdIdSelect").val()); 
 	$("#pjRemark").val(CKEDITOR.instances["pjRemark"].getData());
-	var target="job"; 
+	submit_part1(mode);
+	/* var target="job"; 
  	$.post(target+"/action/job",$("#jobForm").serialize(), function(data) {
 		  // alert(data);
 		  appendContent(data);
 		   //appendContentWithId(data,"tabs-3");
 		  // alert($("#_content").html());
-		});
+		}); */
   }
  function renderPart1(data2){ 
 	 var query_break_down="SELECT pbd_id,pbd_name FROM "+SCHEMA_G+".PST_BREAK_DOWN ";
@@ -345,15 +356,15 @@ function doJobAction(action,mode,id){
 				var str="<table id=\"table_part1\" class=\"table table-striped table-bordered table-condensed\" border=\"1\" style=\"font-size: 12px\">"+
 			 	  "<thead>"+
 			 		"<tr>"+
-						"<th>No</th>"+
-						"<th>หมายเลขรถ</th>"+ 
+						//"<th>No</th>"+
+						//"<th>หมายเลขรถ</th>"+ 
 						"<th>จำนวน(คิว)</th>"+ 
 						"<th>เลขไมค์</th>"+ 
 						"<th>ชม.การทำงาน</th>"+ 
 						"<th>ต่อท่อ(เมตร)</th>"+ 
 						"<th>Break down/สาเหตุ</th>"+
 						"<th>Concrete Spoil</th>"+
-						"<th>ลบ</th>"+ 
+						//"<th>ลบ</th>"+ 
 					"</tr>"+
 					"</thead>"+
 					"<tbody>";
@@ -369,13 +380,13 @@ function doJobAction(action,mode,id){
 											  		//<option value="-1">---</option>  
 											  		  
 				  str=str+"<tr>"+
-						"<td>"+(i+1)+"</td>"+
-					 	"<td><input type=\"hidden\" name=\"prpId_input\" value=\""+data2[1][i].pstRoadPump.prpId+"\"/><input type=\"hidden\" name=\"mode_input\" value=\"edit\"/>"+
-					 	"<span style=\"cursor: pointer;text-decoration: underline;\"  onClick=\"renderJobEmployee('"+data2[1][i].pstRoadPump.prpId+"','"+data2[1][i].pstRoadPump.prpNo+"')\">"+((data2[1][i].pstRoadPump!=null)?data2[1][i].pstRoadPump.prpNo:"")+"</span></td>"+ 
-						"<td><input type=\"text\" name=\"pjwCubicAmount_input\" style=\"width: 65px;text-align: right;\" value=\""+data2[1][i].pjwCubicAmount+"\"/></td>"+
-						"<td><input type=\"text\"  name=\"pjwMile_input\" style=\"width: 65px;text-align: right;\" value=\""+data2[1][i].pjwMile+"\"/></td>"+
-						"<td><input type=\"text\"  name=\"pjwHoursOfWork_input\" style=\"width: 65px;text-align: right;\" value=\""+data2[1][i].pjwHoursOfWork+"\"/></td>"+
-						"<td><input type=\"text\"  name=\"pjwTube_input\" style=\"width: 65px;text-align: right;\" value=\""+data2[1][i].pjwTube+"\"/></td>"+
+						//"<td>"+(i+1)+"</td>"+
+					 	//"<td><input type=\"hidden\" name=\"prpId_input\" value=\""+data2[1][i].pstRoadPump.prpId+"\"/><input type=\"hidden\" name=\"mode_input\" value=\"edit\"/>"+
+					 //	"<span style=\"cursor: pointer;text-decoration: underline;\"  onClick=\"renderJobEmployee('"+data2[1][i].pstRoadPump.prpId+"','"+data2[1][i].pstRoadPump.prpNo+"')\">"+((data2[1][i].pstRoadPump!=null)?data2[1][i].pstRoadPump.prpNo:"")+"</span></td>"+ 
+						"<td><input type=\"text\" name=\"pjwCubicAmount_input\" style=\"width: 65px;text-align: right;\" value=\""+(data2[1][i].pjwCubicAmount!=null?data2[1][i].pjwCubicAmount:"")+"\"/></td>"+
+						"<td><input type=\"text\"  name=\"pjwMile_input\" style=\"width: 65px;text-align: right;\" value=\""+(data2[1][i].pjwMile!=null?data2[1][i].pjwMile:"")+"\"/></td>"+
+						"<td><input type=\"text\"  name=\"pjwHoursOfWork_input\" style=\"width: 65px;text-align: right;\" value=\""+(data2[1][i].pjwHoursOfWork!=null?data2[1][i].pjwHoursOfWork:"")+"\"/></td>"+
+						"<td><input type=\"text\"  name=\"pjwTube_input\" style=\"width: 65px;text-align: right;\" value=\""+(data2[1][i].pjwTube!=null?data2[1][i].pjwTube:"")+"\"/></td>"+
 						
 						"<td>";
 					 var str_break_down="<select name=\"pbdId_input\"><option value=\"-1\">---</option> ";
@@ -395,8 +406,8 @@ function doJobAction(action,mode,id){
 						//(data2[1][i].pstBreakDown!=null?data2[1][i].pstBreakDown.pbdName:"---")+""+  
 						//"<input type=\"hidden\" name=\"pbdId_input\" value=\""+(data2[1][i].pstBreakDown!=null?data2[1][i].pstBreakDown.pbdId:"-1")+"\">
 						"</td>"+ 
-						"<td><input type=\"text\"  name=\"pjwConcreteSpoil_input\" style=\"width: 65px;text-align: right;\" value=\""+data2[1][i].pjwConcreteSpoil+"\"/></td>"+
-						"<td><i title=\"Delete\" onclick=\"confirmDelete('1','delete','"+data2[1][i].prpId+"')\" style=\"cursor: pointer;\" class=\"icon-trash\"></i></td>"+
+						"<td><input type=\"text\"  name=\"pjwConcreteSpoil_input\" style=\"width: 65px;text-align: right;\" value=\""+(data2[1][i].pjwConcreteSpoil!=null?data2[1][i].pjwConcreteSpoil:"")+"\"/></td>"+
+						//"<td><i title=\"Delete\" onclick=\"confirmDelete('1','delete','"+data2[1][i].prpId+"')\" style=\"cursor: pointer;\" class=\"icon-trash\"></i></td>"+
 					"</tr>";
 					sum_pjwCubicAmount=sum_pjwCubicAmount+data2[1][i].pjwCubicAmount;
 					sum_pjwMile=sum_pjwMile+data2[1][i].pjwMile;
@@ -407,6 +418,7 @@ function doJobAction(action,mode,id){
 			 }  
 			/*  str=str+"</tbody>"+
 					"<thead>"+ */
+					/*
 					str=str+"<tr>"+
 					"	<td></td>"+
 					"	<td>ยอดรวม</td>"+
@@ -418,6 +430,7 @@ function doJobAction(action,mode,id){
 					"	<td style=\"width: 65px;text-align: right;\">"+sum_pjwConcreteSpoil+"</td>"+
 					"	<td></td>"+
 					"</tr>"+
+					*/
 				//	"</thead>"+
 				"</tbody>"+
 				"</table> ";
@@ -472,7 +485,7 @@ str=str+"</tbody>"+
 	"</table> ";
 	$("#job_part2_element").html(str);
 	$("#road_pump_id_element").val(prpId);
-	$("#road_pump_no_element").html(prpNo);
+	//$("#road_pump_no_element").html(prpNo);
 	  $("#tabs_2").slideDown("slow"); 
 	/*	 
 for(var i=0;i<data2[1].length;i++){
@@ -710,12 +723,16 @@ for(var i=0;i<data2[1].length;i++){
 
 	  var rowCount = table.rows.length;
 	 
-	   var road_pump_id_val=$("#road_pump_id_element").val();
+	   //var road_pump_id_val=$("#road_pump_id_element").val();
+	   var road_pump_id_val=$("#pstJob\\.pstRoadPump\\.prpId").val();
+	   
 	    //alert(rowCount);
 	  var pjId=$("#pjId").val();
 	  var peId=$("#peId").val();
 	  var prpId= $("#prpId").val();
-	  var prpName = $("#prpId option:selected").text();
+	  //var prpName = $("#prpId option:selected").text();
+	  var prpName = $("#pstJob\\.pstRoadPump\\.prpId option:selected").text();
+	  
 	  var haveDup=false;
 	  var peId_input = document.getElementsByName("peId_input");
 	  if(peId_input!=null && peId_input){
@@ -795,15 +812,19 @@ for(var i=0;i<data2[1].length;i++){
 	  } 
 				 var isBank=checkBank(jQuery.trim(pjpAmount));
 				 if(isBank){
-					 alert('Please fill Value !!!');  
+					// alert('Please fill Value !!!');  
+					 alert('กรุณากรอก  จำนวนเงิน.');  
+					$("#pjpAmount").focus();
 					 return false;	 
 				 } 
 				 	 
 				 var isNumber=checkNumber(jQuery.trim(pjpAmount));
 				
-				 if(isNumber){
-					 alert('Please fill Number  !!!');  
-					 return false;
+				 if(isNumber){  
+					 alert('กรุณากรอก  จำนวนเงิน เป็นตัวเลข.');  
+					 $("#pjpAmount").focus();
+					 return false;	
+					  
 				 }  
 				  
 				 var querys=[]; 
@@ -826,24 +847,27 @@ for(var i=0;i<data2[1].length;i++){
 	 var pjId=$("#pjId").val();
 	 var pjpeName= $("#pjpeName").val();
 	  var pjpeAmount=$("#pjpeAmount").val();
-	
-	  var isBank=checkBank(jQuery.trim(pjpeAmount));
+	  var isBank=checkBank(jQuery.trim(pjpeName));
 		 if(isBank){
-			 alert('Please fill Value !!!');  
+			 alert('กรุณากรอกรายละเอียด.');  
+			 $("#pjpeName").focus();
+			 return false;	  
+		 } 
+	   isBank=checkBank(jQuery.trim(pjpeAmount));
+		 if(isBank){
+			 alert('กรุณากรอกจำนวนเงิน.');  
+			 $("#pjpeAmount").focus();
 			 return false;	  
 		 } 
 		 
 		 var isNumber=checkNumber(jQuery.trim(pjpeAmount));
 		 
 		 if(isNumber){
-			 alert('Please fill Number  !!!');  
+			 alert('กรุณากรอกจำนวนเงินเป็นตัวเลข.');  
+			 $("#pjpeAmount").focus();
 			 return false;  
 		 }   
-				  isBank=checkBank(jQuery.trim(pjpeName));
-				 if(isBank){
-					 alert('Please fill Value !!!');  
-					 return false;	  
-				 }  
+			 
 				 
 				 var query_max="SELECT max(pjpe_no) FROM "+SCHEMA_G+".PST_JOB_PAY_EXT where pj_id="+pjId;
 					PSTAjax.searchObject(query_max,{ 
@@ -870,10 +894,11 @@ for(var i=0;i<data2[1].length;i++){
 					});
 				
 	}
-function submit_part1(){
+function submit_part1(mode){
 	  var pjId=$("#pjId").val();
 	  var mode_input=document.getElementsByName("mode_input");
-	  var prpId_input=document.getElementsByName("prpId_input");
+	//  var prpId_input=document.getElementsByName("prpId_input");
+	var prpId_input=$("#pstJob\\.pstRoadPump\\.prpId").val();
 	  var pjwCubicAmount_input=document.getElementsByName("pjwCubicAmount_input");
 	  var pjwMile_input=document.getElementsByName("pjwMile_input");
 	  var pjwHoursOfWork_input=document.getElementsByName("pjwHoursOfWork_input");
@@ -902,11 +927,11 @@ function submit_part1(){
 			 }
 		 } 
 	  
-		 if(prpId_input!=null && prpId_input.length>0){
+		/*  if(prpId_input!=null && prpId_input.length>0){
 			 for(var i=0;i<prpId_input.length;i++){ 
 				 prpId_array.push(jQuery.trim(prpId_input[i].value));
 			 }
-		 }
+		 } */
 		  
 		 
 		 if(pjwCubicAmount_input!=null && pjwCubicAmount_input.length>0){
@@ -914,7 +939,10 @@ function submit_part1(){
 				 
 				 var isNumber=checkNumber(jQuery.trim(pjwCubicAmount_input[i].value));
 				 if(isNumber){
-					 alert('Please fill Number pjwCubicAmount !!!');  
+					 alert('กรุณากรอกจำนวน(คิว)เป็นตัวเลข.');  
+					 $("input[name=pjwCubicAmount_input]").get(i).focus();
+					// $("#pjpeName").focus();
+					 //alert('Please fill Number pjwCubicAmount !!!');  
 					 isBreak=true; 
 					 break;
 					 
@@ -932,8 +960,9 @@ function submit_part1(){
 			 for(var i=0;i<prpId_input.length;i++){
 				 
 				 var isNumber=checkNumber(jQuery.trim(pjwMile_input[i].value));
-				 if(isNumber){
-					 alert('Please fill Number pjwMile !!!');  
+				 if(isNumber){  
+					 alert('กรุณากรอกเลขไมค์เป็นตัวเลข.');  
+					 $("input[name=pjwMile_input]").get(i).focus();
 					 isBreak=true; 
 					 break;
 					 
@@ -949,7 +978,8 @@ function submit_part1(){
 				 
 				 var isNumber=checkNumber(jQuery.trim(pjwHoursOfWork_input[i].value));
 				 if(isNumber){
-					 alert('Please fill Number prpId !!!');  
+					 alert('กรุณากรอก ชม.การทำงานเป็นตัวเลข.');  
+					 $("input[name=pjwHoursOfWork_input]").get(i).focus();
 					 isBreak=true; 
 					 break;
 					 
@@ -965,7 +995,8 @@ function submit_part1(){
 				 
 				 var isNumber=checkNumber(jQuery.trim(pjwTube_input[i].value));
 				 if(isNumber){
-					 alert('Please fill Number pjwTube !!!');  
+					 alert('กรุณากรอก ต่อท่อ(เมตร)เป็นตัวเลข.');  
+					 $("input[name=pjwTube_input]").get(i).focus();
 					 isBreak=true; 
 					 break;
 					 
@@ -982,7 +1013,9 @@ function submit_part1(){
 				 
 				 var isNumber=checkNumber(jQuery.trim(pjwConcreteSpoil_input[i].value));
 				 if(isNumber){
-					 alert('Please fill Number pjwConcreteSpoil !!!');  
+					 //alert('Please fill Number pjwConcreteSpoil !!!');  
+					 alert('กรุณากรอก Concrete Spoil เป็นตัวเลข.');  
+					 $("input[name=pjwConcreteSpoil_input]").get(i).focus();
 					 isBreak=true; 
 					 break;
 					 
@@ -994,10 +1027,17 @@ function submit_part1(){
 			 return false;
 		 
 	var querys=[];
-	 for(var i=0;i<mode_array.length;i++){
-		 var query="";
-		 if(mode_array[i]=='add'){
-			 query="insert into "+SCHEMA_G+".PST_JOB_WORK set PJ_ID="+pjId+", PRP_ID="+prpId_array[i]+",PJW_CUBIC_AMOUNT="+pjwCubicAmount_array[i]+",PJW_MILE='"+pjwMile_array[i]+"',PJW_HOURS_OF_WORK="+pjwHoursOfWork_array[i]+", PJW_TUBE="+pjwTube_array[i]+",PJW_CONCRETE_SPOIL='"+pjwConcreteSpoil_array[i]+"'";
+	querys.push("DELETE FROM "+SCHEMA_G+".PST_JOB_WORK WHERE PJ_ID="+pjId);
+	// for(var i=0;i<mode_array.length;i++){
+		 var query=""; 
+		 query="insert into "+SCHEMA_G+".PST_JOB_WORK set PJ_ID="+pjId+", PRP_ID="+prpId_input+",PJW_CUBIC_AMOUNT="+pjwCubicAmount_array[0]+",PJW_MILE='"+pjwMile_array[0]+"',PJW_HOURS_OF_WORK="+pjwHoursOfWork_array[0]+", PJW_TUBE="+pjwTube_array[0]+",PJW_CONCRETE_SPOIL='"+pjwConcreteSpoil_array[0]+"'";
+		 if(pbdId_array[0]!='-1')
+			 query=query+" ,PBD_ID="+pbdId_array[0];
+		 else
+			 query=query+" ,PBD_ID=null ";
+	 
+		 /* if(mode_array[i]=='add'){
+			 query="insert into "+SCHEMA_G+".PST_JOB_WORK set PJ_ID="+pjId+", PRP_ID="+prpId_input+",PJW_CUBIC_AMOUNT="+pjwCubicAmount_array[i]+",PJW_MILE='"+pjwMile_array[i]+"',PJW_HOURS_OF_WORK="+pjwHoursOfWork_array[i]+", PJW_TUBE="+pjwTube_array[i]+",PJW_CONCRETE_SPOIL='"+pjwConcreteSpoil_array[i]+"'";
 			 if(pbdId_array[i]!='-1')
 				 query=query+" ,PBD_ID="+pbdId_array[i];
 			 else
@@ -1008,43 +1048,59 @@ function submit_part1(){
 				 query=query+" ,PBD_ID="+pbdId_array[i];
 			 else
 				 query=query+" ,PBD_ID=null ";
-			 query=query+" where PJ_ID="+pjId+" and PRP_ID="+prpId_array[i]+""; 
-		 }	
+			 query=query+" where PJ_ID="+pjId+" and PRP_ID="+prpId_input+""; 
+		 } */	
 		 querys.push(query);
-	 }
+	// }
 	 
    // alert(querys)
-	PSTAjax.executeQuery(querys,{
-		callback:function(data){ 
-			if(data!=0){
-				renderPart("1"); 
-				//$( "#dialog-form" ).dialog("close");
+    if(mode=='edit'){
+		PSTAjax.executeQuery(querys,{
+			callback:function(data){  
+				postFormAction();
 			}
-		}
-	});
+		});
+    }else{
+    	postFormAction();     }
+}
+function postFormAction(){
+	var target="job"; 
+ 	$.post(target+"/action/job",$("#jobForm").serialize(), function(data1) { 
+		  appendContent(data1); 
+		});
+}
+function loadPart2(){ 
+	 if($("#mode").val()=='edit'){
+		submit_part2();
+		loadPstCost(); 
+	 }
 }
 function submit_part2(){
+  //if($("#mode").val()=='edit'){ 
 	  var pjId=$("#pjId").val();
 	  var sum_percent=0;
 		 //var pjId=$("#pjId").val();
 		 var pjCubicAmount=document.getElementById("pjCubicAmount");
 		  var part2_mode_input=document.getElementsByName("part2_mode_input");
 		  var peId_input=document.getElementsByName("peId_input");
-		  var prpId_job_input=document.getElementsByName("prpId_job_input");
-		  //var pjeExcInc_=document.getElementsByName("pjeExcInc_");
+		 // var prpId_job_input=document.getElementsByName("prpId_job_input");
+		var pstJob_pstRoadPump_prpId=$("#pstJob\\.pstRoadPump\\.prpId").val();
+		 //var pjeExcInc_=document.getElementsByName("pjeExcInc_");
 		  var pjePercentCubic_input=document.getElementsByName("pjePercentCubic_input");
 		  var pjeAmount_input=document.getElementsByName("pjeAmount_input"); 
 		  
 		  
 		  var isBank=checkBank(jQuery.trim(pjCubicAmount.value));
-			 if(isBank){
-				 alert('Please fill ค่าคิว !!!');  
+			 if(isBank){  
+				 alert('กรุณากรอก ค่าคิว.');  
+				 $("#pjCubicAmount").focus();
 				 return false;	  
 			 } 
 			 
 		var isNumber=checkNumber(jQuery.trim(pjCubicAmount.value));
 			 if(isNumber){
-				 alert('Please fill Number ค่าคิว !!!');   
+				 alert('กรุณากรอก ค่าคิว เป็นตัวเลข.');  
+				 $("#pjCubicAmount").focus();
 				 return false;	  
 			 } 
 		  var mode_array=[];
@@ -1062,7 +1118,8 @@ function submit_part2(){
 			 if(peId_input!=null && peId_input.length>0){
 				 for(var i=0;i<peId_input.length;i++){ 
 					 peId_array.push(jQuery.trim(peId_input[i].value));
-					 prpId_array.push(jQuery.trim(prpId_job_input[i].value));
+					// prpId_array.push(jQuery.trim(prpId_job_input[i].value));
+					 prpId_array.push(pstJob_pstRoadPump_prpId);
 					 var pjeExcInc=document.getElementsByName("pjeExcInc_"+peId_input[i].value);
 					// alert(pjeExcInc.length+","+peId_input[i].value)
 					 for(var j=0;j<pjeExcInc.length;j++){
@@ -1079,8 +1136,9 @@ function submit_part2(){
 			 if(pjePercentCubic_input!=null && pjePercentCubic_input.length>0){
 				 for(var i=0;i<pjePercentCubic_input.length;i++){ 
 					 var isNumber=checkNumber(jQuery.trim(pjePercentCubic_input[i].value));
-					 if(isNumber){
-						 alert('Please fill Number Percent Cubic !!!');  
+					 if(isNumber){ 
+						 alert('กรุณากรอก %คิว เป็นตัวเลข.');  
+						 $("input[name=pjePercentCubic_input]").get(i).focus();
 						 isBreak=true; 
 						 break; 
 					 } 
@@ -1097,8 +1155,9 @@ function submit_part2(){
 					 sum_percent=sum_percent+parseFloat(pjePercentCubic_array[i]); 
 				 }
 			 }
-			if(sum_percent!=100){
-				 alert('Please fill  Percent Cubic to 100%');  
+			if(sum_percent!=100){ 
+				 alert('กรุณากรอก %คิว ให้ถึง 100%.');  
+				 //$("input[name=pjePercentCubic_input]").get(i).focus();
 				 return false;
 			} 
 			for(var i=0;i<pjePercentCubic_array.length;i++){
@@ -1112,8 +1171,8 @@ function submit_part2(){
 			  if(pjeAmount_input!=null && pjeAmount_input.length>0){
 			 for(var i=0;i<pjeAmount_input.length;i++){ 
 				 var isBank=checkBank(jQuery.trim(pjeAmount_input[i].value));
-				 if(isBank){
-					 alert('Please click Calculate !!!');  
+				 if(isBank){ 
+					 alert('กรุณากรอกกดปุ่ม Calculate.');   
 					 return false;	  
 				 } 
 				 //pjeAmount_array.push(jQuery.trim(pjeAmount_input[i].value));
@@ -1122,7 +1181,7 @@ function submit_part2(){
 		 if(isBreak)
 			 return false;  
 	var querys=[];
-	 for(var i=0;i<mode_array.length;i++){
+	/*  for(var i=0;i<mode_array.length;i++){
 		 var query="";
 		 if(mode_array[i]=='add'){
 			 //alert(prpId_array[i])
@@ -1134,20 +1193,30 @@ function submit_part2(){
 			 query=query+" where PJ_ID="+pjId+" and PE_ID="+peId_array[i]+" and  PRP_ID="+prpId_array[i]+" "; 
 		 }	
 		 querys.push(query);
-	 }
-	 
-  //alert(querys)
-  //alert(pjeExcInc_array);
- // return false;
+	 } */
+	 //alert("pjId-->"+pjId)
+	 querys.push("DELETE FROM "+SCHEMA_G+".PST_JOB_EMPLOYEE WHERE PJ_ID="+pjId);
+	for(var i=0;i<mode_array.length;i++){
+		 var query="";
+	//	 if(mode_array[i]=='add'){
+			 //alert(prpId_array[i])
+			 query="insert into "+SCHEMA_G+".PST_JOB_EMPLOYEE set PJ_ID="+pjId+", PE_ID="+peId_array[i]+", PRP_ID="+prpId_array[i]+",PJE_EXC_INC="+pjeExcInc_array[i]+",PJE_PERCENT_CUBIC="+pjePercentCubic_array[i]+",PJE_AMOUNT="+pjeAmount_array[i];
+			 
+		/*  }else{	 
+			query="update  "+SCHEMA_G+".PST_JOB_EMPLOYEE set PJE_EXC_INC="+pjeExcInc_array[i]+",PJE_PERCENT_CUBIC="+pjePercentCubic_array[i]+",PJE_AMOUNT="+pjeAmount_array[i];
+			 
+			 query=query+" where PJ_ID="+pjId+" and PE_ID="+peId_array[i]+" and  PRP_ID="+prpId_array[i]+" "; 
+		 }	 */
+		 querys.push(query);
+	 } 
 	PSTAjax.executeQuery(querys,{
 		callback:function(data){ 
-			if(data!=0){
-				//renderPart("2");    
-				renderJobEmployee($("#road_pump_id_element").val(),$("#road_pump_no_element").html());
-				//$( "#dialog-form" ).dialog("close");
+			if(data!=0){ 
+				renderJobEmployee($("#pstJob\\.pstRoadPump\\.prpId").val(),$("#pstJob\\.pstRoadPump\\.prpId option:selected").text()); 
 			}
 		}
 	});
+  //}
 }
 function calculate_part2(){
 	 
@@ -1163,13 +1232,19 @@ function calculate_part2(){
 	  
 	  var isBank=checkBank(jQuery.trim(pjCubicAmount.value));
 		 if(isBank){
-			 alert('Please fill ค่าคิว !!!');  
+			// alert('Please fill ค่าคิว !!!');  
+			 alert('กรุณากรอก ค่าคิว.');  
+			// $("input[name=pjwConcreteSpoil_input]").get(i).focus();
+			$("#pjCubicAmount").focus();			
 			 return false;	  
 		 } 
 		 
 	var isNumber=checkNumber(jQuery.trim(pjCubicAmount.value));
 		 if(isNumber){
-			 alert('Please fill Number ค่าคิว !!!');   
+			// alert('Please fill Number ค่าคิว !!!');  
+			 alert('กรุณากรอก ค่าคิว เป็นตัวเลข.');  
+				// $("input[name=pjwConcreteSpoil_input]").get(i).focus();
+				$("#pjCubicAmount").focus();		
 			 return false;	  
 		 } 
 	  var mode_array=[];
@@ -1203,7 +1278,10 @@ function calculate_part2(){
 			 for(var i=0;i<pjePercentCubic_input.length;i++){ 
 				 var isNumber=checkNumber(jQuery.trim(pjePercentCubic_input[i].value));
 				 if(isNumber){
-					 alert('Please fill Number Percent Cubic !!!');  
+					// alert('Please fill Number Percent Cubic !!!');  
+					 alert('กรุณากรอก %คิว เป็นตัวเลข.');  
+						$("input[name=pjePercentCubic_input]").get(i).focus();
+						//$("#pjCubicAmount").focus();	
 					 isBreak=true; 
 					 break; 
 				 } 
@@ -1233,7 +1311,9 @@ function calculate_part2(){
 			 }
 		 }
 		if(sum_percent!=100){
-			 alert('Please fill  Percent Cubic to 100%');  
+			// alert('Please fill  Percent Cubic to 100%');  
+			 alert('กรุณากรอก %คิว ให้ถึง 100%.');   
+				 
 			 return false;
 		} 
 		
@@ -1294,20 +1374,20 @@ legend {font-size: 14px}
     				</tr>
     				<tr valign="middle">
     					<td width="10%" align="right"><span style="font-size: 13px;padding: 5px">เลขที่งาน :</span></td>
-    					<td width="20%" colspan="1"> 
+    					<td width="15%" colspan="1"> 
     					<span id="pjJobNo_span" class="control-group">
     						<form:input path="pstJob.pjJobNo" id="pjJobNo" cssStyle="height: 30;width:80px"/><span style="color: red;padding-left: 5px">*</span>
     						</span>
     					</td> 
-    					<td width="10%" align="right"><span style="font-size: 13px;padding: 5px">วันที่ :</span></td>
-    					<td width="20%" colspan="1"> 
-    					<span id="pjCreatedTime_span"  class="control-group">
-    						<form:input path="pjCreatedTime" id="pjCreatedTime"  cssStyle="height: 30;width:85px" readonly="true"/>
-    						</span>
+    					<td width="12%" align="right"><span style="font-size: 13px;padding: 5px">หมายเลขรถ :</span></td>
+    					<td width="25%" colspan="1"> 
+    					<form:select path="pstJob.pstRoadPump.prpId" cssStyle="width:100px" onchange="loadPart2()">
+	    					      	  <form:options itemValue="prpId" itemLabel="prpNo" items="${pstRoadPumpNos}"/> 
+	    	                </form:select>
     						<span style="color: red;padding-left: 5px">*</span>
     					</td>
-    					<td width="12%" align="right"><span style="font-size: 13px;padding: 5px">คอนกรีตที่ใช้ :</span></td>
-    					<td width="28%" colspan="1"> 
+    					<td width="13%" align="right"><span style="font-size: 13px;padding: 5px">คอนกรีตที่ใช้ :</span></td>
+    					<td width="25%" colspan="1"> 
     						<form:select path="pstJob.pstConcrete.pconcreteId" cssStyle="width:170px">
 	    						      <form:option value="-1">---</form:option>
 	    					      	  <form:options itemValue="pconcreteId" itemLabel="pconcreteName" items="${pstConcretes}"/> 
@@ -1316,8 +1396,8 @@ legend {font-size: 14px}
     					</td>
     				</tr>
     				<tr valign="middle">
-    					<td width="13%" align="right"><span style="font-size: 13px;padding: 5px">รหัสลูกค้า :</span></td>
-    					<td width="20%" colspan="1">  
+    					<td width="10%" align="right"><span style="font-size: 13px;padding: 5px">รหัสลูกค้า :</span></td>
+    					<td width="15%" colspan="1">  
     					<!-- <input type="hidden" id="pcId" /> -->
     					<form:hidden path="pstJob.pcId" id="pcId"/>
     					<span id="pjCustomerNo_span"  class="control-group">
@@ -1326,15 +1406,15 @@ legend {font-size: 14px}
     						<%-- <form:input path="pstJob.pstConcrete.pconcreteId" id="pconcreteId" cssStyle="height: 30;width:80px"/> --%>
     					<span style="color: red;padding-left: 2px">*</span>
     					</td> 
-    					<td width="10%" align="right"><span style="font-size: 13px;padding: 5px">ชื่อลูกค้า :</span></td>
-    					<td width="20%" colspan="1"> 
+    					<td width="12%" align="right"><span style="font-size: 13px;padding: 5px">ชื่อลูกค้า :</span></td>
+    					<td width="25%" colspan="1"> 
     						 <span id="pjCustomerName_span"  class="control-group">
     						<form:input path="pstJob.pjCustomerName" id="pjCustomerName" cssStyle="height: 30;width:157px"/>
     						</span>
     						<span style="color: red;padding-left: 2px">*</span>
     					</td>
-    					<td width="12%" align="right"><span style="font-size: 13px;padding: 5px">หน่วยงาน :</span></td>
-    					<td width="28%" colspan="1"> 
+    					<td width="13%" align="right"><span style="font-size: 13px;padding: 5px">หน่วยงาน :</span></td>
+    					<td width="25%" colspan="1"> 
     					  <span id="customerDepartmentElement"  class="control-group"> 
 	         
     					  	<select id="pcdIdSelect" style="width:170px"></select>
@@ -1345,27 +1425,27 @@ legend {font-size: 14px}
     						<span style="color: red;padding-left: 2px">*</span>
     					</td>
     				</tr>
-    				<tr valign="middle">
-    					<td width="10%" align="right"><span style="font-size: 13px;padding: 5px">ชื่อผู้ติดต่อ :</span></td>
-    					<td width="50%" colspan="3">   
-    					 <span id="contractNameElement"  class="control-group">
-    					  	<select id="pccIdSelect" style="width:170px"></select>
-    					  </span> 
-    						<span style="color: red;padding-left: 2px">*</span>
-    						<span style="font-size: 13px;padding: 5px">โทรศัพท์ :</span>
-    						<span id="pjContractMobileNo_span" class="control-group">
-    						<form:input path="pstJob.pjContractMobileNo"  id="pjContractMobileNo" cssStyle="height: 30;width:120px"/>
+    				<tr valign="middle"> <!--  10 15 12 25 13 25 -->
+    					<td width="10%" align="right"><span style="font-size: 13px;padding: 5px">วันที่ :</span></td>
+    					<td width="15%" >
+    						<span id="pjCreatedTime_span"  class="control-group">
+    						<form:input path="pjCreatedTime" id="pjCreatedTime"  cssStyle="height: 30;width:85px" readonly="true"/>
     						</span>
     						<span style="color: red;padding-left: 2px">*</span>
     					</td> 
-    					<%-- <td width="10%" align="right"><span style="font-size: 13px;padding: 5px">โทรศัพท์ :</span></td>
-    					<td width="20%" colspan="1"> 
-    						<form:input path="pstJob.pjContractMobileNo" id="pjContractMobileNo" cssStyle="height: 30;width:120px"/>
+    					<td width="12%" align="right"><span style="font-size: 13px;padding: 5px">ชื่อผู้ติดต่อ :</span></td>
+    					<td width="25%" colspan="1"> 
+    					 <span id="contractNameElement"  class="control-group">
+    					  	<select id="pccIdSelect" style="width:170px"></select>
+    					  </span>
     						<span style="color: red;padding-left: 2px">*</span>
-    					</td> --%>
-    					<td width="12%" align="right"><span style="font-size: 13px;padding: 5px"></span></td>
-    					<td width="28%" colspan="1"> 
-    						 
+    					</td> 
+    					<td width="13%" align="right"><span style="font-size: 13px;padding: 5px">
+    					โทรศัพท์ :</span></td>
+    					<td width="25%" colspan="1"> 
+    						 <span id="pjContractMobileNo_span" class="control-group">
+    						<form:input path="pstJob.pjContractMobileNo"  id="pjContractMobileNo" cssStyle="height: 30;width:120px"/>
+    						</span>
     					</td>
     				</tr>
     				<tr valign="top">
@@ -1405,13 +1485,15 @@ legend {font-size: 14px}
 									<li><a href="#tabs_1-1">รายการรถออกงาน</a></li> 
 								</ul>
 								<div id="tabs_1-1" >
+								<%-- 
 								  <div>หมายเลขรถ 
 								  <form:select path="pstJobWork.pstRoadPump.prpId" id="prpId" cssStyle="width:100px">
-								  		<!-- <option value="-1">---</option>   -->
+								  		 
 								  		 <c:forEach items="${pstRoadPumpNos}" var="pstRoadPumpNo" varStatus="loop"> 
 								  		 	<option value="${pstRoadPumpNo.prpId}">${pstRoadPumpNo.prpNo}</option>  
 								  		 </c:forEach> 
 	    	            		  </form:select>
+	    	            		   --%>
 								 <%--   Break down/สาเหตุ 
 								    <form:select path="pstJobWork.pstBreakDown.pbdId" id="pbdId">
 								  		<option value="-1">---</option>  
@@ -1419,56 +1501,15 @@ legend {font-size: 14px}
 								  		 	<option value="${pstBreakDown.pbdId}">${pstBreakDown.pbdName}</option>  
 								  		 </c:forEach>  
 	    	            		  </form:select> --%>
-	    	            		  
+	    	            		  <%-- 
 	    	            		  <a  class="btn" style="position: relative;top: -4px" onclick="addRow_part1()">Add</a>
 	    	            		  <a  class="btn" style="position: relative;top: -4px;right: -10px" onclick="submit_part1()">Submit</a> 
 								   </div>  
+								    --%>
 								  <div>รายการออกรถ</div>  
 								   <!--  PST_JOB_WORK  -->
-								   <div id="job_part1_element">
-								   <%--
-								   <table class="table table-striped table-bordered table-condensed" border="1" style="font-size: 12px">
-								   		<thead>
-								   		<tr>
-								   			<th>No</th>
-								   			<th>หมายเลขรถ</th>
-								   			<th>จำนวน(คิว)</th>
-								   			<th>เลขไมค์</th>
-								   			<th>ชม.การทำงาน</th>
-								   			<th>ต่อท่อ(เมตร)</th>
-								   			<th>Break down/สาเหตุ</th>
-								   			<th>Concrete Spoil</th>
-								   			<th>ลบ</th>
-								   		</tr>
-								   		</thead>
-								   		<tbody>
-								   		<tr>
-								   			<td>1</td>
-								   			<td>P32-32</td>
-								   			<td><input type="text" value="120" style="width: 65px;text-align: right;"></td>
-								   			<td><input type="text" value="500" style="width: 65px;text-align: right;"></td>
-								   			<td><input type="text" value="5000" style="width: 65px;text-align: right;"></td>
-								   			<td><input type="text" value="0" style="width: 65px;text-align: right;"></td>
-								   			<td>-----</td>
-								   			<td><input type="text" value="0" style="width: 65px;text-align: right;"></td>
-								   			<td><i title="Delete" onclick="confirmDelete('delete','')" style="cursor: pointer;" class="icon-trash"></i></td>
-								   		</tr>
-								   		</tbody>
-								   		<thead>
-								   		<tr>
-								   			<th></th>
-								   			<th>ยอดรวม</th>
-								   			<th>120</th>
-								   			<th>500</th>
-								   			<th>5000</th>
-								   			<th>0</th>
-								   			<th></th>
-								   			<th>0</th>
-								   			<th></th>
-								   		</tr>
-								   		</thead>
-								   	</table>
-								   	 --%>
+								   <div id="job_part1_element"> 
+								    
 								   </div> 
 								</div>
 							</div>
@@ -1540,18 +1581,16 @@ legend {font-size: 14px}
     					<td width="100%" colspan="6">
     					 	<div id="tabs_3">
 								<ul>			 
-									<li><a href="#tabs_3-1">รายงานจ่ายค่าคิว หมายเลขรถ</a></li> 
+									<!-- <li><a href="#tabs_3-1">รายงานจ่ายค่าคิว หมายเลขรถ</a></li> --> 
+									<li><a href="#tabs_3-1">รายงานจ่ายค่าคิว</a></li>
 								</ul>
 								<div id="tabs_3-1" >
 								 <div>
-								 ประเภท
-								  <select id="costType" onclick="loadPstCost()" style="width:100px">  
+								 <!--  ประเภท
+								 <select id="costType" onclick="loadPstCost()" style="width:100px">  
 								  		 <option value="1">ปั๊มลาก</option>
 								  		 <option value="2">ปั๊มบูม</option>  
-								  		<%--  <c:forEach items="${pstCostList}" var="pstCost" varStatus="loop"> 
-								  		 	<option value="${pstCost.pcId}">${pstCost.pcUid} - ${pstCost.pcName}</option>  
-								  		 </c:forEach> --%> 
-	    	            		  </select>
+	    	            		  </select> -->
 	    	            		  &nbsp;รหัสการจ่าย-คำอธิบาย
 	    	            		  <span id="pstJobPay_pcId_section">
 								 <%--  <form:select path="pstJobPay.pcId" id="pstJobPay_pcId" >  
