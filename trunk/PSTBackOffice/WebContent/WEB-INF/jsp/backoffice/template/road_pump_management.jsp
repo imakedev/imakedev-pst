@@ -120,7 +120,7 @@ function doRoadPumpAction(action,mode,id){
     					<td width="30%" align="left">
     					<span style="font-size: 13px;padding: 15px">ประเภท :</span>
     						<form:select path="pstRoadPump.pstRoadPumpType.prptId" cssStyle="width:130px">
-    						 	<form:option value="0">---</form:option>
+    						 	<%-- <form:option value="0">---</form:option> --%>
     						 	<form:options items="${pstRoadPumpTypeList}" itemLabel="prptName" itemValue="prptId"></form:options> 
     						 </form:select> 
     					</td>
