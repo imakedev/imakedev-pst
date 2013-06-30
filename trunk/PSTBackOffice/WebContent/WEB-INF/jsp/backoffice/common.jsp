@@ -282,6 +282,7 @@ function openMailDialog(todo_id,todo_ref){
                           <li><a  href="javascript:void(0);"  onclick="togle_page('report/page/report2','report_link')"  style="text-align: left;">สรุปค่าคิวรถออกงานประจำเดือน</a></li>
                           <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report3','report_link')"  style="text-align: left;">รายงานการออกงานประจำวัน</a></li>
                           <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report4','report_link')"  style="text-align: left;">สถิติเบรคดาวน์ประจำเดือน</a></li>
+                           <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report5','report_link')"  style="text-align: left;">รายงานสรุปคิวคอนกรีตประจำเดือน</a></li>
                          <!--  <li><a  href="javascript:void(0);" style="text-align: left;">รายงานสรุปค่าคิวออกงานประจำเดือน</a></li> -->
                           
                          </ul>
