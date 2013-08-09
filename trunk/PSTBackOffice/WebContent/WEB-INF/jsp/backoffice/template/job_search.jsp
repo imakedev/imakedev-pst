@@ -122,11 +122,15 @@ function doAction(mode,id){
 	}else {
 		$("#pjId").val("0");
 	}
+	//alert($("#pjCreatedTime").val())
 	$.post("job/search",$("#jobForm").serialize(), function(data) {
 		  // alert(data);
 		    appendContent(data);
 		  // alert($("#_content").html());
 		});
+}
+function clearValueById(id){
+	$("#"+id).val("");
 }
 </script>
 <div id="dialog-confirmDelete" title="Delete Job" style="display: none;background: ('images/ui-bg_highlight-soft_75_cccccc_1x100.png') repeat-x scroll 50% 50% rgb(204, 204, 204)">
@@ -163,7 +167,7 @@ function doAction(mode,id){
             	<span style="padding: 20px">            	
             	<!-- <input type="text" style="height: 30px;width:150px"> --> 
             	<form:input path="pjCreatedTime" id="pjCreatedTime" cssStyle="height: 30;width:85px" readonly="true"/>
-            	
+            	 <i class="icon-refresh" style="cursor: pointer;" onclick="clearValueById('pjCreatedTime')"></i>
             	</span>  
             </div>
              <div align="left" style="padding: 10px 10px">
