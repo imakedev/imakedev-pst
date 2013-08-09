@@ -56,7 +56,7 @@ public class PstJobPayExtResource  extends BaseResource {
 				xbpsTerm = (th.co.aoe.imake.pst.xstream.PstJobPayExt) ntcCalendarObj;
 				if (xbpsTerm != null) { 
 					if (xbpsTerm.getServiceName() != null
-							&& !xbpsTerm.getServiceName().equals("")) {
+							&& xbpsTerm.getServiceName().length()!=0) {
 						logger.debug(" BPS servicename = "
 								+ xbpsTerm.getServiceName());
 						String serviceName = xbpsTerm.getServiceName();

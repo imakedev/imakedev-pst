@@ -43,7 +43,6 @@ public class PstDepartmentResource extends BaseResource {
 		// TODO Auto-generated method stub
 
 		// TODO Auto-generated method stub
-		System.out.println("into Post PSTCommonResource 2");
 		InputStream in = null;
 		try {
 			in = entity.getStream();
@@ -54,7 +53,7 @@ public class PstDepartmentResource extends BaseResource {
 				xbpsTerm = (th.co.aoe.imake.pst.xstream.PstDepartment) ntcCalendarObj;
 				if (xbpsTerm != null) { 
 					if (xbpsTerm.getServiceName() != null
-							&& !xbpsTerm.getServiceName().equals("")) {
+							&& xbpsTerm.getServiceName().length()!=0) {
 						logger.debug(" BPS servicename = "
 								+ xbpsTerm.getServiceName());
 						String serviceName = xbpsTerm.getServiceName();
@@ -106,7 +105,6 @@ public class PstDepartmentResource extends BaseResource {
 								int updateRecord=pstCommonService.delete(bpsTerm);
 								return returnUpdateRecord(entity,xbpsTerm,updateRecord);
 						}else if(serviceName.equals(ServiceConstant.PST_DEPARTMENT_SEARCH)){
-							System.out.println("xxxxxxxx");
 							Pagging page = xbpsTerm.getPagging(); 
 							@SuppressWarnings({ "rawtypes" })
 							List result = (List) pstDepartmentService.searchPstDepartment(bpsTerm, page);
@@ -117,7 +115,7 @@ public class PstDepartmentResource extends BaseResource {
 								String faqs_size = (String) result.get(1);
 								VResultMessage vresultMessage = new VResultMessage();
 								List<th.co.aoe.imake.pst.xstream.PstDepartment> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstDepartment>();
-								if (faqs_size != null && !faqs_size.equals(""))
+								if (faqs_size != null && faqs_size.length()!=0)
 									vresultMessage.setMaxRow(faqs_size);
 								if (ntcCalendars != null && ntcCalendars.size() > 0) {
 									xntcCalendars = getxPstDepartmentObject(ntcCalendars);

@@ -122,7 +122,6 @@ public class HibernatePstConcrete   extends HibernateCommon implements PstConcre
 				 query.setMaxResults(pagging.getPageSize());
 				 
 				 List l = query.list();   
-				 System.out.println("size->"+l);
 				 transList.add(l); 
 			 	 transList.add(size); 
 				return transList;

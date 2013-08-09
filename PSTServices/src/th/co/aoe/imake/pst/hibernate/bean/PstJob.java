@@ -77,6 +77,9 @@ public class PstJob implements Serializable {
 	@Column(name="PCC_ID")
 	private Long pccId;
 	
+	@Column(name="PJ_FEEDBACK_SCORE")
+	private BigDecimal pjFeedBackScore;
+	
 	
 
 
@@ -225,6 +228,14 @@ public class PstJob implements Serializable {
 
 	public void setPstRoadPump(PstRoadPump pstRoadPump) {
 		this.pstRoadPump = pstRoadPump;
+	}
+
+	public BigDecimal getPjFeedBackScore() {
+		return pjFeedBackScore;
+	}
+
+	public void setPjFeedBackScore(BigDecimal pjFeedBackScore) {
+		this.pjFeedBackScore = pjFeedBackScore;
 	}
 
 	/*public List<PstJobEmployee> getPstJobEmployees() {

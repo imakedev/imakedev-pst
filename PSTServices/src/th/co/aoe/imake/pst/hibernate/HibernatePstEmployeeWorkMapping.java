@@ -85,9 +85,7 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 				String pcName=instance.getPcName();*/
 				Date pewmDateTime=instance.getId().getPewmDateTime();
 				String prpNo=instance.getPrpNo();
-				//System.out.println(prpNo);
 				boolean setPrpNo=false;
-				//System.out.println(pewmDateTime);
 				if(prpNo!=null && !prpNo.equals("-1")){
 					setPrpNo=true;
 				}
@@ -98,11 +96,9 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 				String date_start=format1.format(dt.toDate());
 				dt = dt.dayOfMonth().setCopy(dt.dayOfMonth().getMaximumValue());
 				String date_end=format1.format(dt.toDate());
-			    //System.out.println(dt.dayOfMonth().getMinimumValue());
 			    dt= dt.dayOfMonth().setCopy(dt.dayOfMonth().getMaximumValue());
 				//StringBuffer sb =new StringBuffer(" select pstEmployee,pstEmployeeWorkMapping from PstEmployeeWorkMapping as pstEmployeeWorkMapping   right join pstEmployeeWorkMapping.pstEmployee as pstEmployee ");
 				StringBuffer sb =new StringBuffer();
-				//System.out.println(setPrpNo);
 				if(setPrpNo){ 
 					sb.append(" select pstEmployee,pstEmployeeWorkMapping " +
 							", ( select count(map) from PstEmployeeWorkMapping as map where map.id.pewmDateTime  between '"+date_start+" 00:00:00' and '"+date_end+" 23:59:59' " +
@@ -134,7 +130,6 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 				if(pagging.getSortBy()!=null && pagging.getSortBy().length()>0){
 						sb.append( " order by "+pagging.getOrderBy()+" "+pagging.getSortBy().toLowerCase());
 				}			
-				//System.out.println(sb.toString());
 				 query =session.createQuery(sb.toString());
 				// set pagging.
 				 String size = String.valueOf(getSize(session, instance,setPrpNo,date)); 
@@ -152,7 +147,6 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 				// List<th.co.aoe.imake.pst.hibernate.bean.PstEmployee> l = query.list(); 
 					 List l = query.list();
 				 int sizeReturn=l.size();
-				//System.out.println(sizeReturn);
 				//Ljava.lang.Object;
 				List returnList=new ArrayList(sizeReturn);
 			if(setPrpNo)
@@ -227,11 +221,9 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 					 Object obj=query.uniqueResult();
 					 if(obj!=null){
 						// java.lang.Object[] l1= (java.lang.Object[])obj;
-						// System.out.println("object length="+l1.length);
 							/*th.co.aoe.imake.pst.hibernate.bean.PstEmployee employee=(th.co.aoe.imake.pst.hibernate.bean.PstEmployee)l1[0];
 							th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping pstEmployeeWorkMapping=(th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping)l1[1]; 
 							*/
-							//System.out.println("l1[1]="+l1[1].getClass());
 						 th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping mapping =(th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping)obj;
 						 th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMappingPK pk =mapping.getId();
 						 
@@ -302,12 +294,10 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 			String[] prpNos, Date pewmDateTime) {
 		try{
 		if(peIds!=null && peIds.length>0){
-			//System.out.println("pewmDateTime xx="+pewmDateTime);
 			StringBuffer sb =new StringBuffer();
 			String date=format1.format(pewmDateTime);
 			Query query=null;
 			for (int i = 0; i < prpNos.length; i++) {
-				//System.out.println(" [ "+i+" ] "+peIds[i]+" , "+pesIds[i]+" , "+prpNos[i]);
 				Session session = sessionAnnotationFactory.getCurrentSession();
 				 sb.setLength(0);
 				sb.append(" select count(pstEmployeeWorkMapping) from PstEmployeeWorkMapping as pstEmployeeWorkMapping " +
@@ -318,8 +308,6 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 			 int obj=((Long)query.uniqueResult()).intValue();
 			// th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping mapping=null;
 			 if(obj==1){ // update
-				 //System.out.println(" updating");
-				 
 				// mapping=(th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping)obj;
 				 if(pesIds[i]!=null && pesIds[i].intValue()!=-1){
 					// mapping.setPesId(pesIds[i]);
@@ -332,7 +320,6 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 					 prpNos[i]=null;
 					// mapping.setPrpNo(null);
 				// mapping.getId().setPewmDateTime(pewmDateTime);
-				// System.out.println("getPewmDateTime="+mapping.getId().getPewmDateTime());
 				 sb.setLength(0); 
 					sb.append(" update PstEmployeeWorkMapping as pstEmployeeWorkMapping  set pesId=:pesId " +
 							" , prpNo=:prpNo , id.pewmDateTime=:pewmDateTime " +
@@ -346,7 +333,6 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 				 
 				// session.update(mapping);
 			 }else{ // save 
-				// System.out.println(" saving");
 				 th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping   mapping= new th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMapping();
 				 if(pesIds[i]!=null && pesIds[i].intValue()!=-1){
 					 mapping.setPesId(pesIds[i]);
@@ -356,8 +342,6 @@ public class HibernatePstEmployeeWorkMapping  extends HibernateCommon implements
 					 mapping.setPrpNo(prpNos[i]);
 				 }else
 					 mapping.setPrpNo(null);
-				 //System.out.println("get getPrpNo="+mapping.getPrpNo());
-				 //System.out.println("get getPesId="+mapping.getPesId());
 				 th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMappingPK pk =
 						 new th.co.aoe.imake.pst.hibernate.bean.PstEmployeeWorkMappingPK(peIds[i],pewmDateTime);
 				 mapping.setId(pk);

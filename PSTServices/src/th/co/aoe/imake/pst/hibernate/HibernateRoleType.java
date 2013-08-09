@@ -189,7 +189,7 @@ public class HibernateRoleType  extends HibernateCommon implements RoleTypeServi
 		logger.debug("rcId="+rcId);
 		query.setParameter("rcId", rcId);
 		List<th.co.aoe.imake.pst.hibernate.bean.RoleMapping> list=query.list();
-		Map map =new HashMap();
+		Map<String,th.co.aoe.imake.pst.hibernate.bean.RoleMapping> map =new HashMap();
 		if(list!=null && list.size()>0){
 			for (th.co.aoe.imake.pst.hibernate.bean.RoleMapping roleMapping : list) {
 				map.put(roleMapping.getId().getRtId()+"", roleMapping);
@@ -197,6 +197,7 @@ public class HibernateRoleType  extends HibernateCommon implements RoleTypeServi
 			// mapping =(th.co.aoe.makedev.missconsult.hibernate.bean.RoleMapping)
 		}
 		if(map.size()>0){
+			 
 			for (Iterator iterator = map.keySet().iterator(); iterator.hasNext();) {
 				String rtId_key = (String) iterator.next();
 				query=session.createQuery(" select roleType from RoleType roleType where roleType.rtId="+rtId_key);
