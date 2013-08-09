@@ -27,8 +27,8 @@ public class PostCommon {
 	public static final int PAGE_SIZE = 5; 
 	public VResultMessage postMessage(VServiceXML vserviceXML,@SuppressWarnings("rawtypes") Class[] className,String endPoint,boolean isReturn) {
 	 
-		//HttpPost httppost = new HttpPost("http://localhost:3000/v1/"+endPoint);
-		HttpPost httppost = new HttpPost("http://localhost:8080/PSTServices/rest/"+endPoint);
+		HttpPost httppost = new HttpPost("http://localhost:3000/v1/"+endPoint);
+		//HttpPost httppost = new HttpPost("http://localhost:8080/PSTServices/rest/"+endPoint);
 		
 			//	HttpPost httppost = new HttpPost("http://10.0.20.27:3000/v1/"+endPoint);
 				//Test
@@ -90,7 +90,7 @@ public class PostCommon {
 							vresultMessage = (VResultMessage)obj; 
 							 
 							int maxRow = 0;
-							if(vresultMessage.getMaxRow()!=null && !vresultMessage.getMaxRow().equals(""))
+							if(vresultMessage.getMaxRow()!=null && vresultMessage.getMaxRow().length()!=0)
 								maxRow = Integer.parseInt(vresultMessage.getMaxRow());
 							int pageSize = 0;
 							if(vserviceXML.getPagging()!=null )
@@ -122,7 +122,7 @@ public class PostCommon {
 			  c = Class.forName(className);
 		} catch (ClassNotFoundException e2) {
 			e2.printStackTrace();
-		}
+		} 
 		@SuppressWarnings("rawtypes")
 		Class[] classArray=new Class[]{c};
 		//classArray[0]=c;

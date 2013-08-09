@@ -17,15 +17,14 @@ public class InternationalizationFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		final String newLocale = request.getParameter("language");
-		//System.out.println("into doFilter="+newLocale);
+		final String newLocale = request.getParameter("language"); 
 	    if (newLocale != null) {
 	       /* final Locale locale = StringUtils.parseLocaleString(newLocale
 	                .toLowerCase());
-	    	System.out.println(" locale="+locale.getDisplayLanguage());
+	    	 
 	        LocaleContextHolder.setLocale(locale,true);
 	        
-	        System.out.println(" locale2="+ LocaleContextHolder.getLocale().getDisplayLanguage());*/
+	        */
 	        
 	        // work --> if in controller
 	       /* LocaleEditor localeEditor = new LocaleEditor();

@@ -67,6 +67,7 @@ public class JobController {
 	    public String doSearch(HttpServletRequest request, @ModelAttribute(value="jobForm") JobForm jobForm, BindingResult result, Model model)
 	    {
 	        String mode = jobForm.getMode();
+	        jobForm.getPstJob().setPjCreatedTime(null);
 	        if(jobForm != null && jobForm.getPjCreatedTime() != null
 	        		&& jobForm.getPjCreatedTime().length()>0)
 				try {
@@ -97,7 +98,7 @@ public class JobController {
 	        jobForm.getPstJob().setPagging(jobForm.getPaging());
 	        VResultMessage vresultMessage = pstService.searchPstJob(jobForm.getPstJob());
 	        
-	       // System.out.println("jobForm.getPstJob()-->"+jobForm.getPstJob().getPrpNo());
+	     
 	        jobForm.setPageCount(IMakeDevUtils.calculatePage(jobForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 	        model.addAttribute("pstJobs", vresultMessage.getResultListObj());
 	        model.addAttribute("jobForm", jobForm);
@@ -130,7 +131,7 @@ public class JobController {
 	        model.addAttribute("pstBreakDownList", pstJobMaster.getPstBreakDownList());
 	        model.addAttribute("pstCostList", pstJobMaster.getPstCostList());
 	        model.addAttribute("pstEmployeeList", pstJobMaster.getPstEmployeeList()); 
-	       // System.out.println(" pstJobMaster.getPstEmployeeList()="+ pstJobMaster.getPstEmployeeList());
+	       
 	        }catch(Exception ex){
 	        	ex.printStackTrace();
 	        }
@@ -159,22 +160,6 @@ public class JobController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}*/ 
-	     /*   System.out.println("pjContractMobileNo-->"+jobForm.getPstJob().getPjContractMobileNo());
-	        System.out.println("pjContractName-->"+jobForm.getPstJob().getPjContractName());
-	        System.out.println("pjCustomerDepartment-->"+jobForm.getPstJob().getPjCustomerDepartment());
-	        System.out.println("pjCustomerName-->"+jobForm.getPstJob().getPjCustomerName());
-	        System.out.println("pjCustomerNo-->"+jobForm.getPstJob().getPjCustomerNo());
-	        System.out.println("pjContractMobileNo-->"+jobForm.getPstJob().getPjContractMobileNo());
-	        
-	        System.out.println("pccId-->"+jobForm.getPccId());
-	        System.out.println("pccName-->"+jobForm.getPccName());
-	        System.out.println("pcdId-->"+jobForm.getPcdId());
-	        System.out.println("pcdName-->"+jobForm.getPcdName());
-	        System.out.println("pcId-->"+jobForm.getPcId()); 
-	        
-	        System.out.println("pccId 2 -->"+jobForm.getPstJob().getPccId()); 
-	        System.out.println("pcdId 2 -->"+jobForm.getPstJob().getPcdId()); 
-	        System.out.println("pcId 2 -->"+jobForm.getPstJob().getPcId()); */
 	      /* if(jobForm.getPccId()!=null){
 	    	   jobForm.getPstJob().setPccId(jobForm.getPccId());
 	       }
@@ -245,7 +230,6 @@ public class JobController {
 	  public @ResponseBody String payext(HttpServletRequest request, @PathVariable String part, @ModelAttribute(value="jobForm") JobForm jobForm, BindingResult result, Model model)
 	    {
 	//	 List payext=null;
-		 //System.out.println("part="+part);
 		  if(part.equals("1")){
 			//  jobForm.getPstJobWork();
 			  jobForm.getPstJobWork().setPjId(jobForm.getPstJob().getPjId());
@@ -263,12 +247,9 @@ public class JobController {
 			 // payext=pstService.listPstJobPays(jobForm.getPstJob().getPjId(), jobForm.getPstJobPay().getPcId());
 		  }else if(part.equals("4")){
 			//  jobForm.getPstJobPayExt();
-			 // System.out.println("jobForm.getPstJob().getPjId()="+jobForm.getPstJob().getPjId());
 			  jobForm.getPstJobPayExt().setPjId(jobForm.getPstJob().getPjId());
 			   pstService.savePstJobPayExt(jobForm.getPstJobPayExt());
-			 /* System.out.println(pjpeNo);
-			  payext=pstService.listPstJobPayExts(jobForm.getPstJob().getPjId(), jobForm.getPstJobPayExt().getPjpeNo());
-			  System.out.println(payext);*/
+			 
 		  }
 		  return part; 
 	    }
@@ -280,7 +261,6 @@ public class JobController {
 	    { 
 		 List returnResult=new ArrayList(2); 
 		  List payext=null;
-		 //System.out.println("part="+part);
 		  if(part.equals("1")){
 			//  jobForm.getPstJobWork();
 			  
@@ -291,13 +271,12 @@ public class JobController {
 		  }else if(part.equals("4")){
 			//  jobForm.getPstJobPayExt();   
 			  payext=pstService.listPstJobPayExts(pjId, null);
-			 // System.out.println(payext);
 		  }
 		  returnResult.add(part);
 		  returnResult.add(payext);
 		  return returnResult; 
 	    }
-	  @SuppressWarnings({ "rawtypes", "unchecked" })
+	  @SuppressWarnings({ "rawtypes" })
 		@RequestMapping(value={"/payext_get_employee/{pjId}/{prpId}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 		  public @ResponseBody List getPayExtEmployee(HttpServletRequest request, @PathVariable Long pjId,
 				  @PathVariable Long prpId,Model model)
@@ -312,7 +291,6 @@ public class JobController {
 	    {
 		 List returnResult=new ArrayList(2);
 		 List payext=null;
-		// System.out.println("part="+part);
 		  if(part.equals("1")){
 			//  jobForm.getPstJobWork();
 			  PstJobWork work=new PstJobWork(pjId, id, null,
@@ -329,7 +307,6 @@ public class JobController {
 			  PstJobPayExt ext=new PstJobPayExt(pjId, id, null, null, null);
 			  pstService.deletePstJobPayExt(ext, ServiceConstant.PST_JOB_PAY_EXT_DELETE);
 			  payext=pstService.listPstJobPayExts(pjId, null);
-			 // System.out.println(payext);
 		  }
 		  returnResult.add(part);
 		  returnResult.add(payext);
@@ -343,7 +320,6 @@ public class JobController {
 		  //,@ModelAttribute(value="jobForm") JobForm jobForm, BindingResult result, 
 		    {
 			 
-			// System.out.println("part="+part);
 			  
 				  PstJobEmployee employee=new PstJobEmployee(pjId, id,prpId,null,null,null,null,null);
 				  pstService.deletePstJobEmployee(employee, ServiceConstant.PST_JOB_EMPLOYEE_DELETE);

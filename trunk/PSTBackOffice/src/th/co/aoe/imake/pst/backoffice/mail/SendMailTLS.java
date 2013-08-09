@@ -40,9 +40,7 @@ public class SendMailTLS {
 				+ "\n\n No spam to my email, please!");
  
 			Transport.send(message);
- 
-			//System.out.println("Done");
- 
+  
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
