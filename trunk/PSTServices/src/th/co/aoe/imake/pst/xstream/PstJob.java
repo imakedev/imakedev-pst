@@ -64,7 +64,7 @@ public class PstJob  extends VServiceXML implements Serializable {
 	private Long pcdId;
 	 
 	private Long pccId;
-	
+	private BigDecimal pjFeedBackScore;
 	//ext
 	private String cubicAmount;
 	private String payAmount;
@@ -286,6 +286,12 @@ public class PstJob  extends VServiceXML implements Serializable {
 	}
 	public void setPstRoadPump(PstRoadPump pstRoadPump) {
 		this.pstRoadPump = pstRoadPump;
+	}
+	public BigDecimal getPjFeedBackScore() {
+		return pjFeedBackScore;
+	}
+	public void setPjFeedBackScore(BigDecimal pjFeedBackScore) {
+		this.pjFeedBackScore = pjFeedBackScore;
 	}
 
 	/*public List<PstJobEmployee> getPstJobEmployees() {

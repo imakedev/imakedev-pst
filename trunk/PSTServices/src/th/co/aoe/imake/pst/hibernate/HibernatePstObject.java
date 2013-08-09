@@ -83,7 +83,6 @@ public class HibernatePstObject extends HibernateCommon implements PstObjectServ
 		Query  queryHQL=null;*/
 		int returnRecord=execute(queryDelete, "delete");
 		 returnRecord=returnRecord+execute(queryUpdate, "update");
-		 //System.out.println(returnRecord);
 		/*for (int i = 0; i < queryDelete.length; i++) {
 			String [] queryArray=queryDelete[i].split("_"); 
 			sb.setLength(0);
@@ -110,7 +109,6 @@ public class HibernatePstObject extends HibernateCommon implements PstObjectServ
 	@Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor={RuntimeException.class})
 	private int execute(String[] query,String mode) throws DataAccessException {
 		// TODO Auto-generated method stub
-		//System.out.println("query size="+query.length);
 		Session session=sessionAnnotationFactory.getCurrentSession();
 		StringBuffer sb =new StringBuffer();
 		Query  queryHQL=null;
@@ -121,7 +119,6 @@ public class HibernatePstObject extends HibernateCommon implements PstObjectServ
 			sb.append(" select count(pstCheckingMapping) from PstCheckingMapping pstCheckingMapping " +
 					" where  pstCheckingMapping.id.pcmType='"+queryArray[0]+"' and pstCheckingMapping.id.pcmRefTypeNo="+queryArray[1]+
 					" and pstCheckingMapping.id.pdId="+queryArray[2]+" and  pstCheckingMapping.id.pwtId="+queryArray[3]); 
-			//System.out.println("pcmType->"+queryArray[0]+",pcmRefTypeNo->"+queryArray[1]+",pdId->"+queryArray[2]+",pwtId->"+queryArray[3]);
 			queryHQL=session.createQuery(sb.toString());
 			 if(mode.equals("update")){
 				 if(((Long)queryHQL.uniqueResult()).intValue()==0){
@@ -175,12 +172,8 @@ public class HibernatePstObject extends HibernateCommon implements PstObjectServ
 	public int executeMaintenance(PstMaintenance[] pstMaintenanceArray,
 			PstMaintenanceTran pstMaintenanceTran, String mode,String pmaintenanceCheckTimeStr,String pmaintenanceCheckTimeOldStr) {
 		java.sql.Timestamp now = new java.sql.Timestamp(new Date().getTime());
-		java.sql.Timestamp dateOldTime = null;
+		//java.sql.Timestamp dateOldTime = null;
 		String nowStr=format1.format(now);
-		System.out.println("mode-->"+mode);
-		System.out.println("pmaintenanceCheckTimeStr->"+pmaintenanceCheckTimeStr);
-		System.out.println("pmaintenanceCheckTimeOldStr->"+pmaintenanceCheckTimeOldStr);
-		System.out.println("nowStr->"+nowStr);
 		
 		String[] seconds=nowStr.split("_");
 		
@@ -189,32 +182,28 @@ public class HibernatePstObject extends HibernateCommon implements PstObjectServ
 			try {
 				date=format2.parse(pmaintenanceCheckTimeStr);
 				String dateStr=format1.format(date);
-				System.out.println("dateStr->"+dateStr);
 				String[] nowArray=dateStr.split("_");
 				date=format1.parse(nowArray[0]+"_"+nowArray[1]+"_"+nowArray[2]+"_"+seconds[3]+"_"+seconds[4]+"_"+seconds[5]);
 				now=new Timestamp(date.getTime());
-				System.out.println("now->"+now);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		Date dateOld=null;
+		//Date dateOld=null;
 		String pmaintenanceCheckTimeOldTimeStamp="";
 		if(pmaintenanceCheckTimeOldStr!=null && pmaintenanceCheckTimeOldStr.length()>0){	
 			String[] oldStrArray=pmaintenanceCheckTimeOldStr.split("_");
 			//2013-06-09 19:13:36
 			pmaintenanceCheckTimeOldTimeStamp=oldStrArray[0]+"-"+oldStrArray[1]+"-"+oldStrArray[2]+" "+oldStrArray[3]+":"+oldStrArray[4]+":"+oldStrArray[5];
-			try {
-				dateOld=format1.parse(pmaintenanceCheckTimeOldStr);
-				String dateOldStr=format1.format(dateOld);
-				System.out.println("dateOldStr->"+dateOldStr);
-				dateOldTime=new Timestamp(dateOld.getTime());
-				System.out.println("dateOldTime->"+dateOldTime);
+			/*try {
+				//dateOld=format1.parse(pmaintenanceCheckTimeOldStr);
+//				String dateOldStr=format1.format(dateOld);
+			//	dateOldTime=new Timestamp(dateOld.getTime());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block 
 				e.printStackTrace();
-			}
+			}*/
 		} 
 		  /*DateTime dt = new DateTime(new Date().getTime());
 		  dt.hourOfDay().get()
@@ -289,7 +278,6 @@ public class HibernatePstObject extends HibernateCommon implements PstObjectServ
 	    	query.setParameter("prpId", pstMaintenanceTran.getId().getPrpId());
 	    	query.setParameter("pmaintenanceDocNo", pstMaintenanceTran.getId().getPmaintenanceDocNo()); 
 	    	returnValue=returnValue+query.executeUpdate();
-			//System.out.println("getPmaintenanceCheckTime->"+pstMaintenanceTran.getId().getPmaintenanceCheckTime());
 		//	session.update(pstMaintenanceTranDomain);
 	}  
 		return returnValue;

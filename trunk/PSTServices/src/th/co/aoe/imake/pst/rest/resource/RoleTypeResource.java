@@ -63,7 +63,7 @@ public class RoleTypeResource extends BaseResource {
 					}*/
 				
 					if (xbpsTerm.getServiceName() != null
-							&& !xbpsTerm.getServiceName().equals("")) {
+							&& xbpsTerm.getServiceName().length()!=0) {
 						logger.debug(" BPS servicename = "
 								+ xbpsTerm.getServiceName());
 						String serviceName = xbpsTerm.getServiceName();

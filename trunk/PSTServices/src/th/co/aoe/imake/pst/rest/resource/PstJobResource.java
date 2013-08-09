@@ -63,7 +63,7 @@ public class PstJobResource  extends BaseResource {
 				xbpsTerm = (th.co.aoe.imake.pst.xstream.PstJob) ntcCalendarObj;
 				if (xbpsTerm != null) { 
 					if (xbpsTerm.getServiceName() != null
-							&& !xbpsTerm.getServiceName().equals("")) {
+							&& xbpsTerm.getServiceName().length()!=0) {
 						logger.debug(" BPS servicename = "
 								+ xbpsTerm.getServiceName());
 						String serviceName = xbpsTerm.getServiceName();
@@ -165,7 +165,7 @@ public class PstJobResource  extends BaseResource {
 								String faqs_size = (String) result.get(1);
 								VResultMessage vresultMessage = new VResultMessage();
 							//	List<th.co.aoe.imake.pst.xstream.PstJob> xntcCalendars = new ArrayList<th.co.aoe.imake.pst.xstream.PstJob>();
-								if (faqs_size != null && !faqs_size.equals(""))
+								if (faqs_size != null && faqs_size.length()!=0)
 									vresultMessage.setMaxRow(faqs_size);
 								//if (ntcCalendars != null && ntcCalendars.size() > 0) {
 								//	xntcCalendars = getxPstJobObject(ntcCalendars);

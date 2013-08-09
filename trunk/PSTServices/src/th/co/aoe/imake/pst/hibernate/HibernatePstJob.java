@@ -55,51 +55,72 @@ public class HibernatePstJob extends HibernateCommon implements PstJobService {
 			
 			Query query=null;
 			
-			StringBuffer sb =new StringBuffer(" select count(pstJob) from PstJob pstJob ");
+			//StringBuffer sb =new StringBuffer(" select count(pstJob) from PstJob pstJob ");
+			StringBuffer sb =new StringBuffer(" select count(*)  from "+ServiceConstant.SCHEMA+".PST_JOB pstJob left join  "+ServiceConstant.SCHEMA+".PST_CONCRETE concrete on " +
+			" pstJob.PCONCRETE_ID=concrete.PCONCRETE_ID " +
+	" left join  "+ServiceConstant.SCHEMA+".PST_CUSTOMER customer on pstJob.PC_ID=customer.PC_ID"+
+	" left join  "+ServiceConstant.SCHEMA+".PST_CUSTOMER_DIVISION division on pstJob.PCD_ID=division.PCD_ID"+
+	" left join  "+ServiceConstant.SCHEMA+".PST_CUSTOMER_CONTACT contact on pstJob.PCC_ID=contact.PCC_ID" +
+	" left join  "+ServiceConstant.SCHEMA+".PST_ROAD_PUMP r_pump on pstJob.PRP_ID=r_pump.PRP_ID" );
+			
 			
 			boolean iscriteria = false;
 			
 			if(pjJobNo !=null && pjJobNo.trim().length()> 0){  
 				//criteria.add(Expression.eq("megId", megId));	
-				sb.append(iscriteria?(" and lcase(pstJob.pjJobNo) like '%"+pjJobNo.trim().toLowerCase()+"%'"):(" where lcase(pstJob.pjJobNo) like '%"+pjJobNo.trim().toLowerCase()+"%'"));
+				
+				//sb.append(iscriteria?(" and lcase(pstJob.pjJobNo) like '%"+pjJobNo.trim().toLowerCase()+"%'"):(" where lcase(pstJob.pjJobNo) like '%"+pjJobNo.trim().toLowerCase()+"%'"));
+				sb.append(iscriteria?(" and lower(pstJob.PJ_JOB_NO) like '%"+pjJobNo.trim().toLowerCase()+"%'"):(" where lower(pstJob.PJ_JOB_NO) like '%"+pjJobNo.trim().toLowerCase()+"%'"));
 				  iscriteria = true;
 			}
 			if(pjCustomerNo !=null && pjCustomerNo.trim().length() > 0){  
 				//criteria.add(Expression.eq("megId", megId));	
-				sb.append(iscriteria?(" and lcase(pstJob.pjCustomerNo) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"):(" where lcase(pstJob.pjCustomerNo) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"));
+				
+				//sb.append(iscriteria?(" and lcase(pstJob.pjCustomerNo) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"):(" where lcase(pstJob.pjCustomerNo) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"));
+				sb.append(iscriteria?(" and lower(customer.PC_NO) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"):(" where lower(customer.PC_NO) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"));
 				  iscriteria = true;
 			}
 			if(pjCustomerName !=null && pjCustomerName.trim().length() > 0){  
 				//criteria.add(Expression.eq("megId", megId));	
-				sb.append(iscriteria?(" and lcase(pstJob.pjCustomerName) like '%"+pjCustomerName.trim().toLowerCase()+"%'"):(" where lcase(pstJob.pjCustomerName) like '%"+pjCustomerName.trim().toLowerCase()+"%'"));
+				
+				//sb.append(iscriteria?(" and lcase(pstJob.pjCustomerName) like '%"+pjCustomerName.trim().toLowerCase()+"%'"):(" where lcase(pstJob.pjCustomerName) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"));
+				sb.append(iscriteria?(" and lower(customer.PC_NAME) like '%"+pjCustomerName.trim().toLowerCase()+"%'"):(" where lower(customer.PC_NAME) like '%"+pjCustomerName.trim().toLowerCase()+"%'"));
 				  iscriteria = true;
 			}
 			if(pjCustomerDepartment !=null && pjCustomerDepartment.trim().length() > 0){  
 				//criteria.add(Expression.eq("megId", megId));	
-				sb.append(iscriteria?(" and lcase(pstJob.pjCustomerDepartment) like '%"+pjCustomerDepartment.trim().toLowerCase()+"%'"):(" where lcase(pstJob.pjCustomerDepartment) like '%"+pjCustomerDepartment.trim().toLowerCase()+"%'"));
+				
+				//sb.append(iscriteria?(" and lcase(pstJob.pjCustomerDepartment) like '%"+pjCustomerDepartment.trim().toLowerCase()+"%'"):(" where lcase(pstJob.pjCustomerDepartment) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"));
+				sb.append(iscriteria?(" and lower(division.PCD_NAME) like '%"+pjCustomerDepartment.trim().toLowerCase()+"%'"):(" where lower(division.PCD_NAME) like '%"+pjCustomerDepartment.trim().toLowerCase()+"%'"));
 				  iscriteria = true;
 			}
 			if(pconcreteId !=null){  
 				//criteria.add(Expression.eq("megId", megId));	
-				sb.append(iscriteria?(" and pstJob.pstConcrete.pconcreteId="+pconcreteId+""):(" where pstJob.pstConcrete.pconcreteId="+pconcreteId+""));
+				
+				//sb.append(iscriteria?(" and pstJob.pstConcrete.pconcreteId="+pconcreteId+""):(" where pstJob.pstConcrete.pconcreteId="+pconcreteId+""));
+				sb.append(iscriteria?(" and pstJob.PCONCRETE_ID="+pconcreteId+""):(" where pstJob.PCONCRETE_ID="+pconcreteId+""));
 				  iscriteria = true;
 			}
 			if(date!=null){  
-				//criteria.add(Expression.eq("megId", megId));	
-				sb.append(iscriteria?(" and pstJob.pjCreatedTime  between '"+date+" 00:00:00' and '"+date+" 23:59:59'"):(" where pstJob.pjCreatedTime  between '"+date+" 00:00:00' and '"+date+" 23:59:59'"));
+				//criteria.add(Expression.eq("megId", megId));
+				
+				sb.append(iscriteria?(" and pstJob.PJ_CREATED_TIME  between '"+date+" 00:00:00' and '"+date+" 23:59:59'"):(" where pstJob.PJ_CREATED_TIME  between '"+date+" 00:00:00' and '"+date+" 23:59:59'"));
 				  iscriteria = true;
 			}
+			//System.out.println("prpNo-->"+prpNo);
 			if(prpNo!=null && prpNo.length()>0){  
-			sb.append(iscriteria?(" and pstJob.pjId  in ( select  pstJobWork.id.pjId from PstJobWork as pstJobWork " +
+				sb.append(iscriteria?(" and r_pump.PRP_NO='"+prpNo+"'"):(" where r_pump.PRP_NO='"+prpNo+"'"));
+				  iscriteria = true;
+			/*sb.append(iscriteria?(" and pstJob.pjId  in ( select  pstJobWork.id.pjId from PstJobWork as pstJobWork " +
 					" ,  PstRoadPump as pstRoadPump where pstJobWork.id.prpId=pstRoadPump.prpId and " +
 					" pstJobWork.id.pjId=pstJob.pjId and lcase(pstRoadPump.prpNo) like '%"+prpNo.trim().toLowerCase()+"%') "):
 						(" where pstJob.pjId  in ( select  pstJobWork.id.pjId from PstJobWork as pstJobWork " +
 					" ,  PstRoadPump as pstRoadPump where pstJobWork.id.prpId=pstRoadPump.prpId and " +
-					" pstJobWork.id.pjId=pstJob.pjId and lcase(pstRoadPump.prpNo) like '%"+prpNo.trim().toLowerCase()+"%') "));
+					" pstJobWork.id.pjId=pstJob.pjId and lcase(pstRoadPump.prpNo) like '%"+prpNo.trim().toLowerCase()+"%') "));*/
 			}
-			  query =session.createQuery(sb.toString());
+			  query =session.createSQLQuery(sb.toString());
 			 
-				 return ((Long)query.uniqueResult()).intValue(); 
+				 return ((java.math.BigInteger)query.uniqueResult()).intValue(); 
 		} catch (HibernateException re) {
 			logger.error("HibernateException",re);
 			throw re;
@@ -152,7 +173,7 @@ where job_work.pj_id=job.pj_id and road_pump.prp_no='HP0')
 						/*" (select sum(jpay.PJP_AMOUNT) FROM "+ServiceConstant.SCHEMA+".PST_JOB_PAY jpay" +
 						" where jpay.PJ_ID=pstJob.PJ_ID ) as PAY_AMOUNT ," +*/
 						" (select sum(jpay2.PJP_AMOUNT*costs.PC_AMOUNT) " +
-						" FROM "+ServiceConstant.SCHEMA+".PST_JOB_PAY jpay2 inner join  "+ServiceConstant.SCHEMA+".PST_COSTS costs on jpay2.PC_ID=costs.PC_ID" +
+						" FROM "+ServiceConstant.SCHEMA+".PST_JOB_PAY jpay2 inner join  "+ServiceConstant.SCHEMA+".PST_COSTS costs on jpay2.PC_ID=costs.PC_ID" +						
 						" where jpay2.PJ_ID=pstJob.PJ_ID ) as PAY_AMOUNT , " +
 						" (select sum(jpay_ext.PJPE_AMOUNT)" +
 						"  FROM "+ServiceConstant.SCHEMA+".PST_JOB_PAY_EXT jpay_ext where jpay_ext.PJ_ID=pstJob.PJ_ID ) as PAY_EXT_AMOUNT " +
@@ -161,17 +182,24 @@ where job_work.pj_id=job.pj_id and road_pump.prp_no='HP0')
 						", pstJob.PJ_CONTRACT_MOBILE_NO " +
 						", pstJob.PJ_CONTRACT_NAME " +
 						", pstJob.PJ_CREATED_TIME " +
-						", pstJob.PJ_CUSTOMER_DEPARTMENT " +
+						/*", pstJob.PJ_CUSTOMER_DEPARTMENT " +
 						", pstJob.PJ_CUSTOMER_NAME " +
-						", pstJob.PJ_CUSTOMER_NO " +
+						", pstJob.PJ_CUSTOMER_NO " +*/
+						", division.PCD_NAME " +
+						", customer.PC_NAME " +
+						", customer.PC_NO " + 
 						", pstJob.PJ_JOB_NO " +
 						", pstJob.PJ_REMARK " +
 						", pstJob.PJ_UPDATED_TIME " +
 						", pstJob.PJ_CUBIC_AMOUNT " +
 						", pstJob.PCONCRETE_ID " +
 						", concrete.PCONCRETE_NAME " + 
-						" from "+ServiceConstant.SCHEMA+".PST_JOB pstJob left join PST_CONCRETE concrete on " +
-								" pstJob.PCONCRETE_ID=concrete.PCONCRETE_ID ");
+						" from "+ServiceConstant.SCHEMA+".PST_JOB pstJob left join  "+ServiceConstant.SCHEMA+".PST_CONCRETE concrete on " +
+								" pstJob.PCONCRETE_ID=concrete.PCONCRETE_ID " +
+						" left join  "+ServiceConstant.SCHEMA+".PST_CUSTOMER customer on pstJob.PC_ID=customer.PC_ID"+
+						" left join  "+ServiceConstant.SCHEMA+".PST_CUSTOMER_DIVISION division on pstJob.PCD_ID=division.PCD_ID"+
+						" left join  "+ServiceConstant.SCHEMA+".PST_CUSTOMER_CONTACT contact on pstJob.PCC_ID=contact.PCC_ID" +
+						" left join  "+ServiceConstant.SCHEMA+".PST_ROAD_PUMP r_pump on pstJob.PRP_ID=r_pump.PRP_ID" );
 				
 				boolean iscriteria = false;
 				String date=null;
@@ -189,21 +217,21 @@ where job_work.pj_id=job.pj_id and road_pump.prp_no='HP0')
 					//criteria.add(Expression.eq("megId", megId));	
 					
 					//sb.append(iscriteria?(" and lcase(pstJob.pjCustomerNo) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"):(" where lcase(pstJob.pjCustomerNo) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"));
-					sb.append(iscriteria?(" and lower(pstJob.PJ_CUSTOMER_NO) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"):(" where lower(pstJob.PJ_CUSTOMER_NO) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"));
+					sb.append(iscriteria?(" and lower(customer.PC_NO) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"):(" where lower(customer.PC_NO) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"));
 					  iscriteria = true;
 				}
 				if(pjCustomerName !=null && pjCustomerName.trim().length() > 0){  
 					//criteria.add(Expression.eq("megId", megId));	
 					
 					//sb.append(iscriteria?(" and lcase(pstJob.pjCustomerName) like '%"+pjCustomerName.trim().toLowerCase()+"%'"):(" where lcase(pstJob.pjCustomerName) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"));
-					sb.append(iscriteria?(" and lower(pstJob.PJ_CUSTOMER_NAME) like '%"+pjCustomerName.trim().toLowerCase()+"%'"):(" where lower(pstJob.PJ_CUSTOMER_NAME) like '%"+pjCustomerName.trim().toLowerCase()+"%'"));
+					sb.append(iscriteria?(" and lower(customer.PC_NAME) like '%"+pjCustomerName.trim().toLowerCase()+"%'"):(" where lower(customer.PC_NAME) like '%"+pjCustomerName.trim().toLowerCase()+"%'"));
 					  iscriteria = true;
 				}
 				if(pjCustomerDepartment !=null && pjCustomerDepartment.trim().length() > 0){  
 					//criteria.add(Expression.eq("megId", megId));	
 					
 					//sb.append(iscriteria?(" and lcase(pstJob.pjCustomerDepartment) like '%"+pjCustomerDepartment.trim().toLowerCase()+"%'"):(" where lcase(pstJob.pjCustomerDepartment) like '%"+pjCustomerNo.trim().toLowerCase()+"%'"));
-					sb.append(iscriteria?(" and lower(pstJob.PJ_CUSTOMER_DEPARTMENT) like '%"+pjCustomerDepartment.trim().toLowerCase()+"%'"):(" where lower(pstJob.PJ_CUSTOMER_DEPARTMENT) like '%"+pjCustomerDepartment.trim().toLowerCase()+"%'"));
+					sb.append(iscriteria?(" and lower(division.PCD_NAME) like '%"+pjCustomerDepartment.trim().toLowerCase()+"%'"):(" where lower(division.PCD_NAME) like '%"+pjCustomerDepartment.trim().toLowerCase()+"%'"));
 					  iscriteria = true;
 				}
 				if(pconcreteId !=null){  
@@ -221,33 +249,17 @@ where job_work.pj_id=job.pj_id and road_pump.prp_no='HP0')
 				}
 				//System.out.println("prpNo-->"+prpNo);
 				if(prpNo!=null && prpNo.length()>0){  
-					//criteria.add(Expression.eq("megId", megId));	
-					/*job where 
-					job.pj_id in( select job_work.pj_id from PST_DB.PST_JOB_WORK job_work left join 
-					 PST_DB.PST_ROAD_PUMP road_pump on job_work.prp_id=road_pump.prp_id 
-					where job_work.pj_id=job.pj_id and road_pump.prp_no='HP0')*/
-					 /*query =session.createQuery("select  pstJobWork.id.pjId from PstJobWork as pstJobWork " +
-							" ,  PstRoadPump as pstRoadPump where pstJobWork.id.prpId=pstRoadPump.prpId and " +
-							" pstJobWork.id.pjId=1 and lcase(pstRoadPump.prpNo) like '%"+prpNo.trim().toLowerCase()+"%'  ");*/
-					// List list=query.list();
-					// System.out.println(list);
-					/*sb.append(iscriteria?(" and pstJob.pjId  in (1,2) "):
-								(" where pstJob.pjId  in (1,2) "));*/
-					sb.append(iscriteria?(" and pstJob.PJ_ID  in ( select  pstJobWork.PJ_ID from "+ServiceConstant.SCHEMA+".PST_JOB_WORK  pstJobWork " +
-							" left join  "+ServiceConstant.SCHEMA+".PST_ROAD_PUMP  pstRoadPump on pstJobWork.PRP_ID=pstRoadPump.PRP_ID where " +
-							" pstJobWork.PJ_ID=pstJob.PJ_ID and lower(pstRoadPump.PRP_NO) like '%"+prpNo.trim().toLowerCase()+"%') "):
-								(" where pstJob.PJ_ID  in ( select  pstJobWork.PJ_ID from "+ServiceConstant.SCHEMA+".PST_JOB_WORK  pstJobWork " +
-							" left join  "+ServiceConstant.SCHEMA+".PST_ROAD_PUMP  pstRoadPump on pstJobWork.PRP_ID=pstRoadPump.PRP_ID where " +
-							" pstJobWork.PJ_ID=pstJob.PJ_ID and lower(pstRoadPump.PRP_NO) like '%"+prpNo.trim().toLowerCase()+"%') "));
-					
+					sb.append(iscriteria?(" and r_pump.PRP_NO='"+prpNo+"'"):(" where r_pump.PRP_NO='"+prpNo+"'"));
+					  iscriteria = true;
 					/*sb.append(iscriteria?(" and pstJob.PJ_ID  in ( select  pstJobWork.PJ_ID from "+ServiceConstant.SCHEMA+".PST_JOB_WORK  pstJobWork " +
-							" left join  "+ServiceConstant.SCHEMA+".PST_ROAD_PUMP  pstRoadPump where pstJobWork.PRP_ID=pstRoadPump.PRP_ID and " +
+							" left join  "+ServiceConstant.SCHEMA+".PST_ROAD_PUMP  pstRoadPump on pstJobWork.PRP_ID=pstRoadPump.PRP_ID where " +
 							" pstJobWork.PJ_ID=pstJob.PJ_ID and lower(pstRoadPump.PRP_NO) like '%"+prpNo.trim().toLowerCase()+"%') "):
 								(" where pstJob.PJ_ID  in ( select  pstJobWork.PJ_ID from "+ServiceConstant.SCHEMA+".PST_JOB_WORK  pstJobWork " +
-							" left join  "+ServiceConstant.SCHEMA+".PST_ROAD_PUMP  pstRoadPump where pstJobWork.PRP_ID=pstRoadPump.PRP_ID and " +
+							" left join  "+ServiceConstant.SCHEMA+".PST_ROAD_PUMP  pstRoadPump on pstJobWork.PRP_ID=pstRoadPump.PRP_ID where " +
 							" pstJobWork.PJ_ID=pstJob.PJ_ID and lower(pstRoadPump.PRP_NO) like '%"+prpNo.trim().toLowerCase()+"%') "));
 					*/
-					  iscriteria = true;
+					 
+					//  iscriteria = true;
 				}
 				
 				if(pagging.getSortBy()!=null && pagging.getSortBy().length()>0){
