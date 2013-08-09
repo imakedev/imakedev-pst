@@ -411,7 +411,7 @@ public class CompanyController
                 {
                     e.printStackTrace();
                 }
-        	System.out.println("xxxxxxxxxxxxxxxxxxxxxxxx"+contactForm.getMissContact().getMcontactId());
+        	
         	int count=missExamService.countMissContactByUsername(contactForm.getMissContact().getMcontactUsername(),contactForm.getMissContact().getMcontactId());
         	
         if(count>0){

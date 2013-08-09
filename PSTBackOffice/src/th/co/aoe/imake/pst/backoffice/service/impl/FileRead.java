@@ -22,23 +22,15 @@ public class FileRead {
 	 /* StringBuffer buString=new StringBuffer();
 	  while ((strLine = br.readLine()) != null)   {
 	  // Print the content on the console
-	  System.out.println (strLine);
+	 
 	  buString.append(strLine);
 	  x=x+strLine;
 	  }*/
 	  //Close the input stream
-	 /* System.out.println("debug str="+x);
-	  byte[] bs=buString.toString().getBytes("UTF-8");
-	  for (int i = 0; i < bs.length; i++) {
-		byte b = bs[i];
-		//-78
-		System.out.println(""+b);
-	}*/
-	  /*System.out.println("xx"+new String(buString.toString().getBytes()));
-	  System.out.println("xx2"+new String(bs));*/
+	 
 	  in.close();
 	    }catch (Exception e){//Catch exception if any
-	  System.err.println("Error: " + e.getMessage());
+	     e.printStackTrace();
 	  }
 	  }
 
@@ -51,7 +43,7 @@ public class FileRead {
         while ((r = reader.read()) != -1) {
             char ch = (char) r;
             byte bValue = (byte)ch;
-            System.out.println("Byte is:=" + bValue);
+         
             if(bValue==11){
             	//ch="้";
             	/*ch=11;
@@ -59,23 +51,18 @@ public class FileRead {
             	bV[0]=bValue;
             	String sss=new String(bV);
             	char[] chars = sss.toCharArray();
-                System.out.println(chars.length+",้");*/
-            	System.out.println(" recplace with ้" );
+                */
+            	 
                 buString.append("้");
-            }else if(bValue==18){
-            	System.out.println(" recplace with ็" );
+            }else if(bValue==18){ 
             	 buString.append("็");
-            }else if(bValue==10 && ch!='ช' && ch!='\n'){
-            	System.out.println(" recplace with ่" );
+            }else if(bValue==10 && ch!='ช' && ch!='\n'){ 
            	 buString.append("่");
             	
             }else{
             	 buString.append(ch);
-            }
-            
-            System.out.println("Do something with x" + ch+"x");
-        }
-        System.out.println("xxxxxxxxxxxx"+buString.toString());
+            } 
+        } 
       
     	}catch (Exception e) {
 			// TODO: handle exception

@@ -232,7 +232,7 @@ public class MailRunnable implements Runnable {
 				
 				
 		    	//for (int i = 0; i < recipients.length; i++) {
-				// System.out.println("recipients==>"+recipients.get(i));
+				 
 				  
 					addressTo[0] = new InternetAddress(((String)recipients.get(i)).trim(),false);
 				

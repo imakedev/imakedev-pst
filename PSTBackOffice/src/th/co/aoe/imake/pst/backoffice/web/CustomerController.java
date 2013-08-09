@@ -272,11 +272,11 @@ public class CustomerController {
 	    public String doContactSearch(HttpServletRequest request, @ModelAttribute(value="customerForm") CustomerForm customerForm, BindingResult result, Model model)
 	    {
 	        String mode = customerForm.getMode();
-	       // System.out.println("mode-->"+mode);
+
 	        if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE)){
 	        	pstService.deletePstCustomerContact(customerForm.getPstCustomerContact(),  ServiceConstant.PST_CUSTOMER_CONTACT_DELETE);
 	        	customerForm.getPaging().setPageNo(1);
-	        //	System.out.println("ssssssss");
+ 
 	        }
 	        else
 	        if(mode != null && mode.equals(IMakeDevUtils.MODE_DO_BACK))
@@ -285,8 +285,7 @@ public class CustomerController {
 	            	customerForm = (CustomerForm)model.asMap().get("customerForm");
 	            else
 	            	customerForm = new CustomerForm();
-	        }
-	     //   System.out.println("customerForm.getPstCustomerDivision()-->"+customerForm.getPstCustomerDivision());
+	        } 
 	       /* PstCustomerDivision division =new PstCustomerDivision();
 			 division.setPcdId(pcdId);
 			 PstCustomer  customer =new PstCustomer();

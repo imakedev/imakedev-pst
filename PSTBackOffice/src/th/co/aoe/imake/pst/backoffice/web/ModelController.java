@@ -40,7 +40,6 @@ public class ModelController {
 	         modelForm.getPstModel().setPmType("1");
 	        }
 		 
-		//System.out.println("modelForm.getPstModel().getPmType()->"+modelForm.getPstModel().getPmType());
 	        
 		 modelForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 		 modelForm.getPstModel().setPagging(modelForm.getPaging());
@@ -81,7 +80,6 @@ public class ModelController {
 	        	modelForm.getPaging().setPageNo(1);
 	        } else*/
 	        String page="model_search_section";
-	        //System.out.println("modelForm.getPaging().getPageNo()->"+modelForm.getPaging().getPageNo());
 	        if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE)){
 	        	pstService.deletePstModel(modelForm.getPstModel(),  ServiceConstant.PST_MODEL_DELETE);
 	        	modelForm.getPaging().setPageNo(1);

@@ -108,7 +108,6 @@ public class RoadPumpController {
 			 roadPumpForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 			 roadPumpForm.getPstRoadPump().setPagging(roadPumpForm.getPaging());
 		        VResultMessage vresultMessage = pstService.searchPstRoadPump(roadPumpForm.getPstRoadPump()); 
-		        System.out.println("vresultMessage.getResultListObj())==>"+vresultMessage.getResultListObj());
 		        model.addAttribute("pstRoadPumps", vresultMessage.getResultListObj());
 		        roadPumpForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 		        roadPumpForm.setPageCount(IMakeDevUtils.calculatePage(roadPumpForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
@@ -146,7 +145,6 @@ public class RoadPumpController {
 			 roadPumpForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 			 roadPumpForm.getPstRoadPump().setPagging(roadPumpForm.getPaging());
 		        VResultMessage vresultMessage = pstService.searchPstRoadPump(roadPumpForm.getPstRoadPump()); 
-		      //  System.out.println("vresultMessage.getResultListObj())==>"+vresultMessage.getResultListObj());
 		        model.addAttribute("pstRoadPumps", vresultMessage.getResultListObj());
 		        roadPumpForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 		        roadPumpForm.setPageCount(IMakeDevUtils.calculatePage(roadPumpForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
