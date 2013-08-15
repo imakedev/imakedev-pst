@@ -267,7 +267,8 @@ where job_work.pj_id=job.pj_id and road_pump.prp_no='HP0')
 				}else{
 					 
 					//sb.append( " order by pstJob.pjCreatedTime desc , pstJob.pjJobNo asc");
-					sb.append( " order by pstJob.PJ_CREATED_TIME desc , pstJob.PJ_JOB_NO asc");
+					//sb.append( " order by pstJob.PJ_CREATED_TIME desc , pstJob.PJ_JOB_NO asc");
+					sb.append( " order by   pstJob.PJ_JOB_NO desc");
 				}
 				 
 				 //query =session.createsQuery(sb.toString());
