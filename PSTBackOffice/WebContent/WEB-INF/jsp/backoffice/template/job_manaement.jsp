@@ -245,7 +245,38 @@ function goBackJob(){
 			  }
 		});
 }
+function doCheckDuplicate(action,mode,id){
+	//alert(mode);
+	
+	if(mode=='new'){
+		//check duplicate 
+		var jobNo=jQuery.trim($("#pjJobNo").val());
+		//alert(jobNo);
+		if(jobNo.length>0){
+		 var query_duplicate="SELECT count(*)  FROM "+SCHEMA_G+".PST_JOB where PJ_JOB_NO='"+jobNo+"'";
+		 
+			PSTAjax.searchObject(query_duplicate,{ 
+				callback:function(data){
+					if(data>0){
+						alert(" เลขที่งานซ้ำ กรุณากรอกเลขที่งานใหม่. ");
+						$("#pjJobNo").focus();
+						$("#pjJobNo_span").addClass("error");
+						return false;
+					}else{
+						$("#pjJobNo_span").removeClass("error");
+						doJobAction(action,mode,id);
+					}
+				}
+			});
+		}else
+			doJobAction(action,mode,id);
+		//alert(jQuery.trim($("#pjJobNo").val()));
+	}else{
+		doJobAction(action,mode,id);
+	}
+}
 function doJobAction(action,mode,id){
+	
 	 var isBank=checkBank(jQuery.trim($("#pjJobNo").val()));
 	 if(isBank){
 		 alert('กรุณากรอก เลขที่งาน');  
@@ -323,8 +354,9 @@ function doJobAction(action,mode,id){
 	     }else{
 			 $("#pjContractMobileNo_span").removeClass("error");
 		 } */
-	 $("#pjContractName").val($("#pccIdSelect").text());
-	 $("#pjCustomerDepartment").val($("#pcdIdSelect").text()); 
+		 
+	 $("#pjContractName").val($("#pccIdSelect option:selected").text());
+	 $("#pjCustomerDepartment").val($("#pcdIdSelect option:selected").text()); 
 	 
 	 $("#pccId").val($("#pccIdSelect").val());
 	 $("#pcdId").val($("#pcdIdSelect").val()); 
@@ -1609,6 +1641,6 @@ legend {font-size: 14px}
 			  </form:form>  
 			<div align="center">
 			<a class="btn btn-info"  onclick="goBackJob()"><i class="icon-chevron-left icon-white"></i>&nbsp;<span style="color: white;font-weight: bold;">Back</span></a>	
-    					 <a class="btn btn-primary"  onclick="doJobAction('action','${jobForm.mode}','${jobForm.pstJob.pjId}')"><i class="icon-ok icon-white"></i>&nbsp;<span style="color: white;font-weight: bold;">Save</span></a>
+    					 <a class="btn btn-primary"  onclick="doCheckDuplicate('action','${jobForm.mode}','${jobForm.pstJob.pjId}')"><i class="icon-ok icon-white"></i>&nbsp;<span style="color: white;font-weight: bold;">Save</span></a>
 			</div>
 </fieldset>
