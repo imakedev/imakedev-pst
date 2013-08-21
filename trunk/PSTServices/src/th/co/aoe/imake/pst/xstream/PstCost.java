@@ -1,6 +1,7 @@
 package th.co.aoe.imake.pst.xstream;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import th.co.aoe.imake.pst.xstream.common.VServiceXML;
 
@@ -17,7 +18,8 @@ public class PstCost extends VServiceXML implements Serializable {
 
 	private Long pcId;
 
-	private Long pcAmount;
+	
+	private BigDecimal pcAmount;
 
 	private String pcName;
 
@@ -32,7 +34,7 @@ public class PstCost extends VServiceXML implements Serializable {
 	public PstCost() {
 	}
 
-	public PstCost(Long pcId, Long pcAmount, String pcName, String pcUid,
+	public PstCost(Long pcId, BigDecimal pcAmount, String pcName, String pcUid,
 			String pcUnit) {
 		super();
 		this.pcId = pcId;
@@ -50,11 +52,13 @@ public class PstCost extends VServiceXML implements Serializable {
 		this.pcId = pcId;
 	}
 
-	public Long getPcAmount() {
-		return this.pcAmount;
+ 
+
+	public BigDecimal getPcAmount() {
+		return pcAmount;
 	}
 
-	public void setPcAmount(Long pcAmount) {
+	public void setPcAmount(BigDecimal pcAmount) {
 		this.pcAmount = pcAmount;
 	}
 
