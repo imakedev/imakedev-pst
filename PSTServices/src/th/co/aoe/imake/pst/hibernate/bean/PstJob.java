@@ -80,6 +80,11 @@ public class PstJob implements Serializable {
 	@Column(name="PJ_FEEDBACK_SCORE")
 	private BigDecimal pjFeedBackScore;
 	
+	@Column(name="PJ_TIME_USED")
+	private BigDecimal pjTimeUsed;
+	
+	
+	
 	
 
 
@@ -236,6 +241,14 @@ public class PstJob implements Serializable {
 
 	public void setPjFeedBackScore(BigDecimal pjFeedBackScore) {
 		this.pjFeedBackScore = pjFeedBackScore;
+	}
+
+	public BigDecimal getPjTimeUsed() {
+		return pjTimeUsed;
+	}
+
+	public void setPjTimeUsed(BigDecimal pjTimeUsed) {
+		this.pjTimeUsed = pjTimeUsed;
 	}
 
 	/*public List<PstJobEmployee> getPstJobEmployees() {

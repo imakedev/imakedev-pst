@@ -1,6 +1,7 @@
 package th.co.aoe.imake.pst.hibernate.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,8 +25,8 @@ public class PstCost implements Serializable {
 	@Column(name="PC_ID")
 	private Long pcId;
 
-	@Column(name="PC_AMOUNT")
-	private Long pcAmount;
+	@Column(name="PC_AMOUNT") 
+	private BigDecimal pcAmount;
 
 	@Column(name="PC_NAME")
 	private String pcName;
@@ -54,11 +55,13 @@ public class PstCost implements Serializable {
 		this.pcId = pcId;
 	}
 
-	public Long getPcAmount() {
-		return this.pcAmount;
+	 
+
+	public BigDecimal getPcAmount() {
+		return pcAmount;
 	}
 
-	public void setPcAmount(Long pcAmount) {
+	public void setPcAmount(BigDecimal pcAmount) {
 		this.pcAmount = pcAmount;
 	}
 
