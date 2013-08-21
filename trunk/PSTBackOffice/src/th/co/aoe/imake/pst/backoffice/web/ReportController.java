@@ -1337,8 +1337,10 @@ public void export5(HttpServletRequest request, HttpServletResponse response,Mod
 				    		" left join "+SCHEMA+".PST_JOB job on (j_work.pj_id=job.pj_id and j_work.prp_id =job.prp_id ) " +
 				    		" where job.pj_created_time between '"+year+"-"+month+"-"+i+" 00:00:00' and '"+year+"-"+month+"-"+i+" 23:59:59'	)as amount_all_x," +
 				    		"r_pump.prp_id "+//,(select '2013-03-01' as day_pump) " +
-				    		" from "+SCHEMA+".PST_ROAD_PUMP r_pump	order by r_pump.prp_id ");	
+				    		" from "+SCHEMA+".PST_ROAD_PUMP r_pump	order by r_pump.prp_no ");	
 					 List<Object[]> emps=pstService.searchObject(query.toString());
+					 
+					//System.out.println("sql->"+query.toString());
 					 int emps_size=emps.size();
 					 row = sheet.createRow(indexRow);
 					    indexRow++;
@@ -1356,7 +1358,8 @@ public void export5(HttpServletRequest request, HttpServletResponse response,Mod
 						    else 
 						    	cell.setCellValue(0);
 						    //cellStyle4
-						    if(((java.math.BigInteger)emps.get(j)[0]).intValue()>1){
+						    //if(((java.math.BigInteger)emps.get(j)[0]).intValue()>1){
+						    if(emps.get(j)[1]!=null && ((java.math.BigDecimal)emps.get(j)[1]).doubleValue()>1){
 						    	 cell.setCellStyle(cellStyle4);
 						    }else
 						    	 cell.setCellStyle(cellStyle3);
@@ -1605,6 +1608,7 @@ FROM PST_DB.PST_JOB_EMPLOYEE job_emp left join
  		" left join "+SCHEMA+".PST_POSITION position on emp.pp_id=position.pp_id" +
  		" where job_outer.pj_created_time between '"+from_sql+"' and '"+to_sql+"' "+
  		" group by emp.pe_id ");
+    // System.out.println("sql->"+query.toString());
    List<Object[]> emps=pstService.searchObject(query.toString()); 
    //System.out.println("emps->"+emps);
    // int emps_size=emps.size();
