@@ -98,9 +98,12 @@ function doCostAction(action,mode,id){
     					</td>
     				</tr> 
     				<tr valign="middle">
-    					<td width="25%" align="right"><span style="font-size: 13px;padding: 15px">จำนวนเงิน :</span></td>
+    					<td width="25%" align="right"><span style="font-size: 13px;padding: 15px">ตัวคูณ :</span></td>
     					<td width="75%" colspan="2"> 
-    					<form:input path="pstCost.pcAmount" id="pcAmount" cssStyle="height: 30;"/>
+    					<fmt:formatNumber pattern="###.##"  
+     value="${costForm.pstCost.pcAmount}"  var="pstCost_pcAmount_formated"/>
+    						
+    					<form:input path="pstCost.pcAmount" id="pcAmount" value="${pstCost_pcAmount_formated}"  cssStyle="height: 30;"/>
     					</td>
     				</tr>
     				<tr valign="middle">

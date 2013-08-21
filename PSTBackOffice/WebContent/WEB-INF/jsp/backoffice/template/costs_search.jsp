@@ -142,7 +142,7 @@ function doAction(mode,id){
             		<th width="10%"><div class="th_class">รหัสการจ่าย</div></th>
             		<th width="58%"><div class="th_class">รายละเอียด</div></th>
             		<th width="8%"><div class="th_class">ประเภท</div></th>   
-            		<th width="8%"><div class="th_class">จำนวนเงิน</div></th> 
+            		<th width="8%"><div class="th_class">ตัวคูณ</div></th> 
             		<th width="8%"><div class="th_class">หน่วย</div></th>
             		<th width="8%"><div class="th_class">Action</div></th> 
           		</tr>

@@ -341,7 +341,26 @@ function doJobAction(action,mode,id){
 	 }else{
 		 $("#pjContractMobileNo_span").removeClass("error");
 	 }
-	  
+	 isBank=checkBank(jQuery.trim($("#pjTimeUsed").val()));
+	 if(isBank){
+		 alert('กรุณากรอก เวลาที่ใช้');  
+		  $("#pjTimeUsed").focus();
+		  $("#pjTimeUsed_span").addClass("error"); 
+		 return false;	 
+	 }else{
+		 $("#pjTimeUsed_span").removeClass("error");
+	 }
+	 
+	 var isNumber=checkNumber(jQuery.trim($("#pjTimeUsed").val()));
+		
+	 if(isNumber){  
+		 alert('กรุณากรอก  เวลาที่ใช้ เป็นตัวเลข.');  
+		 $("#pjTimeUsed").focus();
+		 $("#pjTimeUsed_span").addClass("error"); 
+		 return false;	  
+	 } else{
+		 $("#pjTimeUsed_span").removeClass("error");
+	 } 
 	
 	 /* var pjContractMobileNo=jQuery.trim($("#pjContractMobileNo").val());
 	 if(pjContractMobileNo.length>0)
@@ -1496,6 +1515,18 @@ legend {font-size: 14px}
     						</span>
     					</td>
     				</tr>
+    				<tr valign="middle"> <!--  10 15 12 25 13 25 -->
+    					<td width="10%" align="right"><span style="font-size: 13px;padding: 5px">เวลาที่ใช้ :</span></td>
+    					<td width="15%" >
+    						<span id="pjTimeUsed_span"  class="control-group">
+    							<form:input path="pstJob.pjTimeUsed" id="pjTimeUsed"  cssStyle="height: 30px;width: 90px;text-align: right"/>
+    						</span>
+    						<span style="color: red;padding-left: 2px">*</span>
+    					</td> 
+    					<td width="75%" colspan="4" align="right"></td>
+    					 
+    				</tr>
+    				
     				<tr valign="top">
     					<td width="10%" align="right"><span style="font-size: 13px;padding: 5px">หมายเหตุ :</span></td>
     					<td width="20%" colspan="5"> 
