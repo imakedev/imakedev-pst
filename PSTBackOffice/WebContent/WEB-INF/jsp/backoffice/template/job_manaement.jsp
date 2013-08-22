@@ -578,13 +578,14 @@ function renderPart3(data2){
 		 // $.format.number(7456.2, '#,##0.00#');
 		/*   var pjpAmount=$.format.number(data2[1][i].pjpAmount,'#,##0.00#');
 		  alert(pjpAmount); */
+		  //pjeAmount.toFixed(2);
 		  str=str+"<tr>"+
  			"<td><input type=\"hidden\" name=\"pcId_input\" value=\""+data2[1][i].pstCost.pcId+"\"/>"+(i+1)+"</td>"+
  			"<td>"+(data2[1][i].pstCost!=null?(data2[1][i].pstCost.pcUid+" - "+data2[1][i].pstCost.pcName):"")+"</td>"+
  			"<td style=\"text-align: right;\">"+(data2[1][i].pstCost!=null?(ReplaceNumberWithCommas(data2[1][i].pstCost.pcAmount)):"")+"</td> "+
  			"<td>"+(data2[1][i].pstCost!=null?data2[1][i].pstCost.pcUnit:"")+"</td>"+
  			"<td style=\"text-align: right;\">"+(data2[1][i].pjpAmount!=null?(ReplaceNumberWithCommas(data2[1][i].pjpAmount)):"")+"</td> "+
- 			"<td style=\"text-align: right;\">"+(ReplaceNumberWithCommas(sumIner))+"</td> "+
+ 			"<td style=\"text-align: right;\">"+(ReplaceNumberWithCommas(sumIner.toFixed(2)))+"</td> "+
  			"<td><i title=\"Delete\" onclick=\"confirmDelete('3','delete','"+data2[1][i].pcId+"')\" style=\"cursor: pointer;\" class=\"icon-trash\"></i></td>"+
  		"</tr>";
 		  sum=sum+sumIner;
@@ -597,7 +598,7 @@ function renderPart3(data2){
  		"	<th></th>"+
  		"	<th></th>"+
  		"	<th></th>"+
- 		"	<th style=\"text-align: right;\">"+(ReplaceNumberWithCommas(sum))+"</th>"+
+ 		"	<th style=\"text-align: right;\">"+(ReplaceNumberWithCommas(sum.toFixed(2)))+"</th>"+
  		"	<th> </th>   "+
  		"</tr>"+
  		"</tbody>"+
