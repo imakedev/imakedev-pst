@@ -419,6 +419,7 @@ public class ReportController {
 		    cellStyle3.setBorderTop(HSSFCellStyle.BORDER_THIN);
 		    cellStyle3.setWrapText(true); 
 		    cellStyle3.setDataFormat(dataFormat.getFormat("#,##0.##"));
+		    //cellStyle3.setDataFormat(dataFormat.getFormat("#,##0.00"));
 		    
 		    cellStyle4.setAlignment(HSSFCellStyle.ALIGN_LEFT);
 		    cellStyle4.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
@@ -431,6 +432,7 @@ public class ReportController {
 		    cellStyle4.setFillPattern(CellStyle.SOLID_FOREGROUND);
 		   
 		    cellStyle4.setDataFormat(dataFormat.getFormat("#,##0.##"));
+		    //cellStyle4.setDataFormat(dataFormat.getFormat("#,##0.00"));
 		    sheet.addMergedRegion(new CellRangeAddress(
 		            0, //first row (0-based)
 		            0, //last row  (0-based)
@@ -455,25 +457,8 @@ public class ReportController {
 			    	cell = row.createCell(index++);	    
 			    	cell.setCellValue(label[i]);
 			    	cell.setCellStyle(cellStyle);	   
-			    }
-			 //System.out.println("query1->"+query.toString());
-				    List<Object[]> status=pstService.searchObject(query.toString());
-				    
-				    
-				/*	SELECT emp.pe_uid,emp.pe_first_name 
-					,
-					IFNULL((SELECT sum(j_emp.pje_amount) FROM "+SCHEMA+".PST_JOB_EMPLOYEE j_emp left join 
-					"+SCHEMA+".PST_JOB job on j_emp.pj_id=job.pj_id where j_emp.pe_id=emp.pe_id and j_emp.prp_id=2),0) as pst_2,
-					IFNULL((SELECT sum(j_emp.pje_amount) FROM "+SCHEMA+".PST_JOB_EMPLOYEE j_emp left join 
-					"+SCHEMA+".PST_JOB job on j_emp.pj_id=job.pj_id where j_emp.pe_id=emp.pe_id and j_emp.prp_id=3),0) as pst_3,
-					(SELECT sum(j_emp.pje_amount) FROM "+SCHEMA+".PST_JOB_EMPLOYEE j_emp left join 
-					"+SCHEMA+".PST_JOB job on j_emp.pj_id=job.pj_id where j_emp.pe_id=emp.pe_id  ) as pst_sum
-					 FROM "+SCHEMA+".PST_EMPLOYEE emp
-
-					SELECT (SELECT IFNULL(sum(j_emp.pje_amount),0) FROM "+SCHEMA+".PST_JOB_EMPLOYEE j_emp left join 
-					"+SCHEMA+".PST_JOB job on j_emp.pj_id=job.pj_id where j_emp.prp_id=pump.prp_id) as pst_1
-					 FROM "+SCHEMA+".PST_ROAD_PUMP  pump
-					 */
+			    } 
+				    List<Object[]> status=pstService.searchObject(query.toString()); 
 				    int status_size=status.size();
 			    	 for (Object[] objects : status) {
 			    		  cell = row.createCell(index++);	    
@@ -483,24 +468,13 @@ public class ReportController {
 						    		" "+SCHEMA+".PST_JOB job on j_emp.pj_id=job.pj_id where j_emp.pe_id=emp.pe_id  " +
 						    		"and job.pj_created_time between '"+from_sql+"' and '"+to_sql+"' and j_emp.prp_id="+(Integer)objects[0]+"),0) " +
 						    		" as pst_"+(Integer)objects[0]+" ");
-						   /* query_inner.append("   (select count(*) FROM "+SCHEMA+".PST_EMPLOYEE_WORK_MAPPING mapping" +
-						    		"    where mapping.pe_id=emp.pe_id and mapping.pes_id in("+(Integer)objects[0]+")" +
-						    		"   and mapping.pewm_date_time between '"+from_sql+"' and '"+to_sql+"' ) as work_"+(Integer)objects[0]+" , ");
-						    query_inner_sum.append(" ,  (select  (pst_status.pes_wage_rate*(count(*))) FROM "+SCHEMA+".PST_EMPLOYEE_WORK_MAPPING mapping" +
-						    		"   left join  "+SCHEMA+".PST_EMPLOYEE_STATUS pst_status on (mapping.pes_id=pst_status.pes_id) " +
-						    		" where mapping.pe_id=emp.pe_id and mapping.pes_id in("+(Integer)objects[0]+")" +
-						    		"   and mapping.pewm_date_time between '"+from_sql+"' and '"+to_sql+"' ) as work_sum_"+(Integer)objects[0]+"  ");*/
-			    	 }
+					 }
 			    	 query_inner.append(" , (SELECT sum(j_emp.pje_amount) FROM "+SCHEMA+".PST_JOB_EMPLOYEE j_emp left join " +
 			    	 		" "+SCHEMA+".PST_JOB job on j_emp.pj_id=job.pj_id where j_emp.pe_id=emp.pe_id " +
 			    	 				" and job.pj_created_time between '"+from_sql+"' and '"+to_sql+"' ) as pst_sum" );
 			    	    cell = row.createCell(index++);	    
-					    cell.setCellValue("รวม");
-					    cell.setCellStyle(cellStyle);  
-					    
-					   /* cell = row.createCell(index++);	    
-					    cell.setCellValue("ค่าแรง(บาท)");
-					    cell.setCellStyle(cellStyle); */
+					    cell.setCellValue("รวม (บาท)");
+					    cell.setCellStyle(cellStyle);   
 				    indexRow++;
 				   
 				    for(int i=0;i<index;i++){
@@ -508,28 +482,14 @@ public class ReportController {
 				    		 sheet.setColumnWidth(i,(short)((50*8)/((double)1/20) ));
 				    	 else
 				    		 sheet.setColumnWidth(i,(short)((20*8)/((double)1/20) ));
-				    }
-				  //  query.setLength(0);
-				  //  query.append(" SELECT status.pes_id,status.pes_name FROM "+SCHEMA+".PST_EMPLOYEE_STATUS status where status.pes_wage_rate>0");
-				   
-				 /*   List<Object[]> work_days=pstService.searchObject(query.toString());
-				    StringBuffer status_in=new StringBuffer();
-				    int work_days_size=work_days.size();				    
-				    for (int i = 0; i <work_days_size; i++) {
-						if(i!=(work_days_size-1))
-							status_in.append((Integer)work_days.get(i)[0]+",");
-						else
-							status_in.append((Integer)work_days.get(i)[0]+"");
-					}
-				    query_inner.append("   (select count(*) FROM "+SCHEMA+".PST_EMPLOYEE_WORK_MAPPING mapping" +
-				    		"    where mapping.pe_id=emp.pe_id and mapping.pes_id in("+status_in+")" +
-				    		"   and mapping.pewm_date_time between '"+from_sql+"' and '"+to_sql+"' ) as work_all , ");
-				    		*/
+				    } 
+				   // 
 			    	 query.setLength(0);
 			    	 query.append("SELECT emp.pe_uid,emp.pe_first_name,emp.pe_last_name ,IFNULL(title.PT_NAME ,'') "+query_inner.toString()+" " +
 			    			" FROM "+SCHEMA+".PST_EMPLOYEE emp " +
 			    			" left join  "+SCHEMA+".PST_TITLE title  on emp.PT_ID=title.PT_ID "+
 			    			" order by emp.pe_uid  ");
+			    	// System.out.println("sql 1->"+query.toString());
 			    	 List<Object[]> emps=pstService.searchObject(query.toString());
 			    	  int rowIndex=1;  
 			    	 int emps_size=emps.size();
@@ -572,7 +532,7 @@ public class ReportController {
 				     cellStyle.setFillForegroundColor( IndexedColors.YELLOW.getIndex() );
 				     cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
 				      cell = row.createCell(index++);	    
-					    cell.setCellValue("รวม");
+					    cell.setCellValue("รวม (บาท)");
 					    cell.setCellStyle(cellStyle);  
 				    	 for (int i = 0; i <emps_size; i++) {
 							    cell = row.createCell(index++);	    
@@ -707,6 +667,7 @@ public class ReportController {
 		    cellStyle_number.setFillBackgroundColor(new HSSFColor.GREY_25_PERCENT().getIndex());     
 		    cellStyle_number.setWrapText(true);
 		    cellStyle_number.setDataFormat(dataFormat.getFormat("#,##0.##"));
+		  //  cellStyle_number.setDataFormat(dataFormat.getFormat("#,##0.00"));
 		    
 		    cellStyle2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		    cellStyle2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
@@ -1022,7 +983,8 @@ public void export4(HttpServletRequest request, HttpServletResponse response,Mod
 	      cellStyle.setFillForegroundColor( IndexedColors.YELLOW.getIndex() );
 		     cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
 	    	 List<Object[]> emps=pstService.searchObject(query.toString());
-	    	//  int rowIndex=1;  
+ 
+	    if(emps!=null && emps.size()>0){
 	    	 int emps_size=emps.size();
 	    	 for (int i = 0; i <emps_size; i++) {
 	    		//for(status_size)
@@ -1040,46 +1002,9 @@ public void export4(HttpServletRequest request, HttpServletResponse response,Mod
 				    	cell = row.createCell(index++);	    
 					    cell.setCellValue(((java.math.BigInteger)emps.get(i)[j+2]).doubleValue());
 					    cell.setCellStyle(cellStyle3);
-					}
-				 /*   cell = row.createCell(index++);	    
-				    cell.setCellValue(((java.math.BigDecimal)emps.get(i)[status_size+3]).doubleValue());
-				    cell.setCellStyle(cellStyle4);*/
-			}
-	    	/* row = sheet.createRow(indexRow);
-			 indexRow++;
-			 index=0;
-	    	
-		     cell = row.createCell(index++);	    
-			 cell.setCellValue("รวม");
-			 cell.setCellStyle(cellStyle); 
-			    
-	    	 query.setLength(0);
-	    	 query.append(query_sum_all.toString());
-	    	 List<java.math.BigInteger> sumArray=pstService.searchObject(query.toString());
-	    	 
-		     emps_size=sumArray.size();
-		     java.math.BigInteger  sum_all =new java.math.BigInteger("0");
-		     //(java.math.BigInteger)pstService.searchObject(query.toString());;
-		     for (int i = 0; i <emps_size; i++) { 
-		    	 //sum_all=((java.math.BigInteger)emps.get(i));
-		    	 sum_all=sumArray.get(i);
-				}
-		     cell = row.createCell(index++);	    
-			 cell.setCellValue(sum_all.doubleValue());
-			 cell.setCellStyle(cellStyle4); 
-			 
-	    	 query.setLength(0);
-	    	 query.append(query_sum.toString());
-	    	emps=pstService.searchObject(query.toString());
-		    //	  int rowIndex=1;  
-		     emps_size=emps.size();
-		    	 for (int i = 0; i <emps_size; i++) {
-					    cell = row.createCell(index++);	    
-					   // cell.setCellValue(((java.math.BigDecimal)emps.get(i)[1]).doubleValue());
-					    cell.setCellValue(((java.math.BigInteger)emps.get(i)[1]).doubleValue());
-					    
-					    cell.setCellStyle(cellStyle4); 
-				}*/
+					} 
+			} 
+       }
     response.setHeader("Content-Type", "application/octet-stream; charset=UTF-8");
     String filename="สถิติการเบรคดาวน์.xls";
     if(filename.length()>0){
@@ -1249,7 +1174,9 @@ public void export5(HttpServletRequest request, HttpServletResponse response,Mod
     cellStyle4.setFillForegroundColor( IndexedColors.YELLOW.getIndex() );
     cellStyle4.setFillPattern(CellStyle.SOLID_FOREGROUND);
    
-    cellStyle4.setDataFormat(dataFormat.getFormat("#,##0.##"));
+    //cellStyle4.setDataFormat(dataFormat.getFormat("#,##0.##"));
+    cellStyle4.setDataFormat(dataFormat.getFormat("#,##0.00"));
+    
     List<Object[]> status=pstService.searchObject(query.toString()); 
     int status_size=status.size();
     sheet.addMergedRegion(new CellRangeAddress(
@@ -1503,6 +1430,7 @@ FROM PST_DB.PST_JOB_EMPLOYEE job_emp left join
      HSSFCellStyle cellStyle_topic_center = wb.createCellStyle();
      HSSFCellStyle cellStyle_left = wb.createCellStyle();
      HSSFCellStyle cellStyle_right = wb.createCellStyle();
+     HSSFCellStyle cellStyle_right_sum = wb.createCellStyle();
      HSSFCellStyle cellStyle_center = wb.createCellStyle();
      
      
@@ -1549,6 +1477,16 @@ FROM PST_DB.PST_JOB_EMPLOYEE job_emp left join
      cellStyle_right.setBorderRight(HSSFCellStyle.BORDER_THIN);
      cellStyle_right.setBorderTop(HSSFCellStyle.BORDER_THIN);
      cellStyle_right.setWrapText(true);
+     
+     cellStyle_right_sum.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
+     cellStyle_right_sum.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+     cellStyle_right_sum.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+     cellStyle_right_sum.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+     cellStyle_right_sum.setBorderRight(HSSFCellStyle.BORDER_THIN);
+     cellStyle_right_sum.setBorderTop(HSSFCellStyle.BORDER_THIN);
+     cellStyle_right_sum.setWrapText(true);
+     DataFormat dataFormat = wb.createDataFormat();
+     cellStyle_right_sum.setDataFormat(dataFormat.getFormat("#,##0.00")); 
     
      cellStyle_center.setAlignment(HSSFCellStyle.ALIGN_CENTER);
      cellStyle_center.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
@@ -1594,12 +1532,20 @@ FROM PST_DB.PST_JOB_EMPLOYEE job_emp left join
   	query.append("SELECT road_pump.prp_no, title.pt_name ,emp.pe_first_name" +
   			" ,emp.pe_last_name,position.pp_name,");
   	 for (int i=day_from;i<=day_to;i++) { 
-	    query.append("(select count(*)*job1.pj_feedback_score from "+SCHEMA+".PST_JOB_EMPLOYEE job_emp_inner " +
+	   // query.append("(select count(*)*job1.pj_feedback_score from "+SCHEMA+".PST_JOB_EMPLOYEE job_emp_inner " +
+  		 query.append("(select sum(job1.pj_feedback_score) from "+SCHEMA+".PST_JOB_EMPLOYEE job_emp_inner " +
 	    		" left join "+SCHEMA+".PST_JOB as job1 on job_emp_inner.pj_id=job1.pj_id" +
 	    		" where job_emp_inner.pe_id=emp.pe_id and job1.pj_created_time='"+year+"-"+month+"-"+i+" 00:00:00') as day"+i+",");				  
      }
-     query.append("( select  sum(job_inner.pj_cubic_amount)  FROM "+SCHEMA+".PST_JOB job_inner " +
- 		" where  job_inner.pj_id=job_emp.pj_id) as sum_amount " +
+  	 //   sum(job_inner.pj_cubic_amount) 
+    /* query.append("( select  sum(job_work_iner.pjw_cubic_amount)  FROM "+SCHEMA+".PST_JOB job_inner " +
+     	" left join "+SCHEMA+".PST_JOB_WORK job_work_iner on job_inner.pj_id=job_work_iner.pj_id  " +
+ 		" where  job_inner.pj_id=job_emp.pj_id) as sum_amount " +*/
+  	 query.append("( select  sum(job_work_iner.pjw_cubic_amount)  FROM "+SCHEMA+".PST_JOB job_inner " +
+  	     	" left join "+SCHEMA+".PST_JOB_WORK job_work_iner on job_inner.pj_id=job_work_iner.pj_id  " +
+  			" left join   "+SCHEMA+".PST_JOB_EMPLOYEE job_emp_x on job_inner.pj_id=job_emp_x.pj_id "+
+  	 		" where  job_emp_x.pe_id=job_emp.pe_id " +
+  	 		" and   job_inner.pj_created_time between '"+from_sql+"' and '"+to_sql+"' ) as sum_amount " +
  		" FROM "+SCHEMA+".PST_JOB_EMPLOYEE job_emp left join" +
  		" "+SCHEMA+".PST_JOB job_outer  on job_emp.pj_id=job_outer.pj_id left join" +
  		" "+SCHEMA+".PST_EMPLOYEE emp on job_emp.pe_id = emp.pe_id " +
@@ -1694,7 +1640,7 @@ FROM PST_DB.PST_JOB_EMPLOYEE job_emp left join
   		  	    		 cell = row.createCell(day_to+label_size+extend_index++);
   		  	    		if(objects[label_size+2+day_to]!=null)
   	  	    				cell.setCellValue(((java.math.BigDecimal)objects[label_size+2+day_to]).doubleValue()); 
-  		  	    		cell.setCellStyle(cellStyle_right);
+  		  	    		cell.setCellStyle(cellStyle_right_sum);
   		  	    		
   		  	    		cell = row.createCell(day_to+label_size+extend_index++);	
   		  	    		sheet.setColumnWidth(cell.getColumnIndex(),(short)((20*8)/((double)1/20) ));
@@ -1768,6 +1714,619 @@ FROM PST_DB.PST_JOB_EMPLOYEE job_emp left join
         e.printStackTrace();
     }
  }
+
+@RequestMapping(value={"/export_report7"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+public void export7(HttpServletRequest request, HttpServletResponse response,Model model,SecurityContextHolderAwareRequestWrapper srequest)
+{ 
+	String time_from=request.getParameter("from");
+	  Date d=null;
+	  try {
+		 d=format.parse(time_from);
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	  DateTime dt = new DateTime(d);
+	  int day_from=dt.getDayOfMonth();
+	  int month= dt.getMonthOfYear();
+	  int year= dt.getYear(); 
+	  
+	int day_to=dt.dayOfMonth().getMaximumValue(); 
+	StringBuffer query=new StringBuffer();
+	query.append(" SELECT pump.prp_id,pump.prp_no FROM "+SCHEMA+".PST_ROAD_PUMP pump order by pump.prp_no");
+    HSSFWorkbook wb = new HSSFWorkbook();
+    HSSFSheet sheet = wb.createSheet("คิวคอนกรีต");
+    
+    int indexRow = 2;  
+    DataFormat dataFormat = wb.createDataFormat();
+    HSSFCellStyle cellStyle = wb.createCellStyle();
+    HSSFCellStyle cellStyle_topic = wb.createCellStyle();
+    HSSFCellStyle cellStyle2 = wb.createCellStyle();
+    HSSFCellStyle cellStyle3 = wb.createCellStyle();
+    HSSFCellStyle cellStyle4 = wb.createCellStyle();
+    cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+    cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+    cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+    cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+    cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+    cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN); 
+    
+    cellStyle_topic.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+    cellStyle_topic.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+    cellStyle_topic.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+    cellStyle_topic.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+    cellStyle_topic.setBorderRight(HSSFCellStyle.BORDER_THIN);
+    cellStyle_topic.setBorderTop(HSSFCellStyle.BORDER_THIN);
+    
+    cellStyle_topic.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex() );
+    cellStyle_topic.setFillPattern(CellStyle.SOLID_FOREGROUND);
+  
+    cellStyle2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+    cellStyle2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+    cellStyle2.setBorderBottom(HSSFCellStyle.BORDER_NONE);
+    cellStyle2.setBorderLeft(HSSFCellStyle.BORDER_NONE);
+    cellStyle2.setBorderRight(HSSFCellStyle.BORDER_NONE);
+    cellStyle2.setBorderTop(HSSFCellStyle.BORDER_NONE); 
+    cellStyle2.setWrapText(true); 
+    
+    Font font = wb.createFont();
+    font.setFontHeightInPoints((short)13);
+    cellStyle2.setFont(font);
+    
+    cellStyle3.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+    cellStyle3.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+    cellStyle3.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+    cellStyle3.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+    cellStyle3.setBorderRight(HSSFCellStyle.BORDER_THIN);
+    cellStyle3.setBorderTop(HSSFCellStyle.BORDER_THIN);
+    cellStyle3.setWrapText(true); 
+    cellStyle3.setDataFormat(dataFormat.getFormat("#,##0.##"));
+    
+    cellStyle4.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+    cellStyle4.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+    cellStyle4.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+    cellStyle4.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+    cellStyle4.setBorderRight(HSSFCellStyle.BORDER_THIN);
+    cellStyle4.setBorderTop(HSSFCellStyle.BORDER_THIN);
+    cellStyle4.setWrapText(true); 
+    cellStyle4.setFillForegroundColor( IndexedColors.YELLOW.getIndex() );
+    cellStyle4.setFillPattern(CellStyle.SOLID_FOREGROUND);
+   
+    //cellStyle4.setDataFormat(dataFormat.getFormat("#,##0.##"));
+    cellStyle4.setDataFormat(dataFormat.getFormat("#,##0.00"));
+    
+    List<Object[]> status=pstService.searchObject(query.toString()); 
+    int status_size=status.size();
+    sheet.addMergedRegion(new CellRangeAddress(
+            0, //first row (0-based)
+            0, //last row  (0-based)
+            0, //first column (0-based)
+            status_size+1  //last column  (0-based)
+    ));
+    HSSFRow row = sheet.createRow(0);
+    row.setHeight((short)400);
+    HSSFCell cell = row.createCell(0);
+	cell.setCellValue("รายงานสรุปคะแนนประเมิณ ประจำเดือน "+dt.monthOfYear().getAsText(locale)+" "+dt.year().getAsText());
+   	cell.setCellStyle(cellStyle2);
+   	
+	cell = row.createCell(status_size+1);
+	cell.setCellStyle(cellStyle);
+    cellStyle2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+    cellStyle2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+    cellStyle2.setBorderRight(HSSFCellStyle.BORDER_THIN);
+    cellStyle2.setBorderTop(HSSFCellStyle.BORDER_THIN); 
+    
+   
+    
+    row = sheet.createRow(1);
+    cell = row.createCell(0);
+    cell.setCellValue("วันที่");
+    cell.setCellStyle(cellStyle_topic);
+    
+    cell = row.createCell(1);
+    cell.setCellValue("เบอร์รถ");
+    cell.setCellStyle(cellStyle_topic);
+    
+    cell = row.createCell(status_size);
+    cell.setCellStyle(cellStyle_topic);
+    
+    cell = row.createCell(status_size+1);
+    cell.setCellValue("ยอดรวม");
+    cell.setCellStyle(cellStyle_topic);
+   // row = sheet.createRow(2);
+     
+    row = sheet.createRow(indexRow++);    
+    sheet.addMergedRegion(new CellRangeAddress(
+            1, //first row (0-based)
+            2, //last row  (0-based)
+            0, //first column (0-based)
+            0  //last column  (0-based)
+    ));
+    sheet.addMergedRegion(new CellRangeAddress(
+            1, //first row (0-based)
+            1, //last row  (0-based)
+            1, //first column (0-based)
+            status_size  //last column  (0-based)
+    ));
+    sheet.addMergedRegion(new CellRangeAddress(
+    		1, //first row (0-based)
+            2, //last row  (0-based)
+            status_size+1, //first column (0-based)
+            status_size+1  //last column  (0-based)
+    ));
+	int index=1;
+	
+	 for(int i=0;i<status_size;i++){
+	    	cell = row.createCell(index++);	   
+	    	cell.setCellValue((String)status.get(i)[1]);
+	    	//cell.setCellValue(label[i]);
+	    	cell.setCellStyle(cellStyle_topic);	   
+	    } 
+		    query.setLength(0);
+		    double[] sum_y_array=new double[status_size];
+			 for (int i=day_from;i<=day_to;i++) {
+				 query.setLength(0);
+				    query.append(" select (SELECT count(job.prp_id) FROM "+SCHEMA+".PST_JOB job " + 
+				    		" where	job.prp_id=  r_pump.prp_id and job.pj_created_time between '"+year+"-"+month+"-"+i+" 00:00:00'" +
+				    		"  and '"+year+"-"+month+"-"+i+" 23:59:59')as count_pump," +
+				    		" (SELECT sum(job.pj_feedback_score)FROM "+SCHEMA+".PST_JOB job " + 
+				    		" where	job.prp_id=  r_pump.prp_id and job.pj_created_time between '"+year+"-"+month+"-"+i+" 00:00:00'" +
+				    		"  and '"+year+"-"+month+"-"+i+" 23:59:59')as amount ," +
+				    		" (SELECT sum(job.pj_feedback_score) FROM "+SCHEMA+".PST_JOB job " + 
+				    		" where job.prp_id=  r_pump.prp_id and job.pj_created_time between '"+year+"-"+month+"-"+day_from+" 00:00:00'" +
+				    		"  and '"+year+"-"+month+"-"+day_to+" 23:59:59')as amount_all_y ," +
+				    		" (SELECT sum(job.pj_feedback_score) FROM "+SCHEMA+".PST_JOB job " + 
+				    		" where job.pj_created_time between '"+year+"-"+month+"-"+i+" 00:00:00' and '"+year+"-"+month+"-"+i+" 23:59:59'	)as amount_all_x," +
+				    		"r_pump.prp_id "+//,(select '2013-03-01' as day_pump) " +
+				    		" from "+SCHEMA+".PST_ROAD_PUMP r_pump	order by r_pump.prp_no ");	
+					 List<Object[]> emps=pstService.searchObject(query.toString());
+					 
+					System.out.println("sql->"+query.toString());
+					 int emps_size=emps.size();
+					 row = sheet.createRow(indexRow);
+					    indexRow++;
+					    index=1;
+					    cell = row.createCell(0);
+					    cell.setCellValue(i);
+					    cell.setCellStyle(cellStyle_topic); 
+					    double sum_x=0;
+					    double sum_y=0;
+			    	 for (int j = 0; j <emps_size; j++) {
+			    		  sum_y=0;
+						    cell = row.createCell(index++);	  
+						    if(emps.get(j)[1]!=null)
+						    	  cell.setCellValue(((java.math.BigDecimal)emps.get(j)[1]).doubleValue());
+						    else 
+						    	cell.setCellValue(0);
+						    //cellStyle4
+						    //if(((java.math.BigInteger)emps.get(j)[0]).intValue()>1){
+						    if(emps.get(j)[1]!=null && ((java.math.BigDecimal)emps.get(j)[1]).doubleValue()>1){
+						    	 cell.setCellStyle(cellStyle4);
+						    }else
+						    	 cell.setCellStyle(cellStyle3);
+						    if(emps.get(j)[3]!=null)
+						    	sum_x=((java.math.BigDecimal)emps.get(j)[3]).doubleValue();
+						    
+						    if(emps.get(j)[2]!=null)
+						    	sum_y=((java.math.BigDecimal)emps.get(j)[2]).doubleValue();
+						    //cell.setCellStyle(cellStyle3); 
+						    
+						    sum_y_array[j]=sum_y;
+						   
+			    	 }
+			    	 cell = row.createCell(emps_size+1);
+					 cell.setCellValue(sum_x);
+					 cell.setCellStyle(cellStyle4);
+					 
+	    	 }
+			   row = sheet.createRow(indexRow);
+			    indexRow++;
+			    cell = row.createCell(0);
+			    cell.setCellValue("รวม");
+			    cell.setCellStyle(cellStyle4); 
+			    index=1;
+			    double sum_all=0;
+			    for (int j = 0; j < sum_y_array.length; j++) {
+			    	 cell = row.createCell(index++);
+					    cell.setCellValue(sum_y_array[j]);
+					    sum_all=sum_all+sum_y_array[j];
+					    cell.setCellStyle(cellStyle4); 
+				}
+			    cell = row.createCell(index++);
+			    cell.setCellValue(sum_all); 
+			    cell.setCellStyle(cellStyle4);
+    response.setHeader("Content-Type", "application/octet-stream; charset=UTF-8");
+    String filename="รายงานสรุปคะแนนประเมิณประจำเดือน.xls";
+    if(filename.length()>0){
+		String userAgent = request.getHeader("user-agent");
+		boolean isInternetExplorer = (userAgent.indexOf("MSIE") > -1);
+		byte[] fileNameBytes=null;
+		try {
+			fileNameBytes = filename.getBytes((isInternetExplorer) ? ("windows-1250") : ("utf-8"));
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	    String dispositionFileName = "";
+	    for (byte b: fileNameBytes) dispositionFileName += (char)(b & 0xff);
+
+		 String disposition = "attachment; filename=\"" + dispositionFileName + "\"";
+		 response.setHeader("Content-disposition", disposition);
+	}
+    //response.setHeader("Content-disposition", "attachment; filename=Report.xls");
+    ServletOutputStream servletOutputStream = null;
+    try
+    {
+        servletOutputStream = response.getOutputStream();
+    }
+    catch(IOException e)
+    {
+        e.printStackTrace();
+    }
+    try
+    {
+        wb.write(servletOutputStream);
+    }
+    catch(IOException e)
+    {
+        e.printStackTrace();
+    }
+    try
+    {
+        servletOutputStream.flush();
+    }
+    catch(IOException e)
+    {
+        e.printStackTrace();
+    }
+    try
+    {
+        servletOutputStream.close();
+    }
+    catch(IOException e)
+    {
+        e.printStackTrace();
+    }
+}
+
+@RequestMapping(value={"/export_report8"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+public void export8(HttpServletRequest request, HttpServletResponse response,Model model,SecurityContextHolderAwareRequestWrapper srequest)
+{ 
+	/*
+	 * SELECT 
+cost.PC_ID ,cost.pc_uid ,
+(SELECT sum(j_pay_1.pjp_amount)
+FROM  PST_JOB_PAY j_pay_1 left join PST_JOB job_1
+on j_pay_1.pj_id=job_1.pj_id left join PST_COSTS cost_1
+on j_pay_1.pc_id=cost_1.pc_id 
+where job_1.prp_id=job.prp_id and cost_1.pc_id=cost.pc_id
+and job_1.pj_created_time 
+between '2013-8-1 00:00:00'  and '2013-8-1 23:59:59' ) as pjp_amount_1,
+(SELECT sum(j_pay_1.pjp_amount)
+FROM  PST_JOB_PAY j_pay_1 left join PST_JOB job_1
+on j_pay_1.pj_id=job_1.pj_id left join PST_COSTS cost_1
+on j_pay_1.pc_id=cost_1.pc_id 
+where job_1.prp_id=job.prp_id and cost_1.pc_id=cost.pc_id
+and job_1.pj_created_time 
+between '2013-8-2 00:00:00'  and '2013-8-2 23:59:59' ) as pjp_amount_2,
+(SELECT sum(j_pay_1.pjp_amount)
+FROM  PST_JOB_PAY j_pay_1 left join PST_JOB job_1
+on j_pay_1.pj_id=job_1.pj_id left join PST_COSTS cost_1
+on j_pay_1.pc_id=cost_1.pc_id 
+where job_1.prp_id=job.prp_id and cost_1.pc_id=cost.pc_id
+and job_1.pj_created_time 
+between '2013-8-8 00:00:00'  and '2013-8-8 23:59:59' ) as pjp_amount_20
+-- j_pay.*,cost.*
+FROM  PST_JOB_PAY j_pay left join PST_JOB job
+on j_pay.pj_id=job.pj_id left join PST_COSTS cost 
+on j_pay.pc_id=cost.pc_id 
+where job.prp_id=3
+and job.pj_created_time 
+between '2013-8-1 00:00:00'  and '2013-8-31 23:59:59' 
+group by cost.pc_id order by cost.pc_uid
+	 */
+	String time_from=request.getParameter("from");
+	String prpId=request.getParameter("prpId");
+	  Date d=null;
+	  try {
+		 d=format.parse(time_from);
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	  DateTime dt = new DateTime(d);
+	  int day_from=dt.getDayOfMonth();
+	  int month= dt.getMonthOfYear();
+	  int year= dt.getYear(); 
+	  
+	int day_to=dt.dayOfMonth().getMaximumValue(); 
+	StringBuffer query=new StringBuffer();
+	query.append("SELECT prp_id , prp_no FROM "+SCHEMA+".PST_ROAD_PUMP where prp_id="+prpId);
+	 List<Object[]> road_pump=pstService.searchObject(query.toString());
+	  String prpNo="";
+	    int road_pump_size=road_pump.size();				    
+	    for (int i = 0; i <road_pump_size; i++)
+	    	prpNo=road_pump.get(i)[1]!=null?(String)road_pump.get(i)[1]:"";
+	 
+	query.setLength(0);
+	//query.append(" SELECT pump.prp_id,pump.prp_no FROM "+SCHEMA+".PST_ROAD_PUMP pump order by pump.prp_no");
+    HSSFWorkbook wb = new HSSFWorkbook();
+    HSSFSheet sheet = wb.createSheet("สรุปยอดรหัสการจ่าย");
+    
+    int indexRow = 2;  
+    DataFormat dataFormat = wb.createDataFormat();
+    HSSFCellStyle cellStyle = wb.createCellStyle();
+    HSSFCellStyle cellStyle_topic = wb.createCellStyle();
+    HSSFCellStyle cellStyle2 = wb.createCellStyle();
+    HSSFCellStyle cellStyle3 = wb.createCellStyle();
+    HSSFCellStyle cellStyle4 = wb.createCellStyle();
+    cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+    cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+    cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+    cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+    cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+    cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN); 
+    
+    cellStyle_topic.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+    cellStyle_topic.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+    cellStyle_topic.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+    cellStyle_topic.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+    cellStyle_topic.setBorderRight(HSSFCellStyle.BORDER_THIN);
+    cellStyle_topic.setBorderTop(HSSFCellStyle.BORDER_THIN);
+    
+    cellStyle_topic.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex() );
+    cellStyle_topic.setFillPattern(CellStyle.SOLID_FOREGROUND);
+  
+    cellStyle2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+    cellStyle2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+    cellStyle2.setBorderBottom(HSSFCellStyle.BORDER_NONE);
+    cellStyle2.setBorderLeft(HSSFCellStyle.BORDER_NONE);
+    cellStyle2.setBorderRight(HSSFCellStyle.BORDER_NONE);
+    cellStyle2.setBorderTop(HSSFCellStyle.BORDER_NONE); 
+    cellStyle2.setWrapText(true); 
+    
+    Font font = wb.createFont();
+    font.setFontHeightInPoints((short)13);
+    cellStyle2.setFont(font);
+    
+    cellStyle3.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+    cellStyle3.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+    cellStyle3.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+    cellStyle3.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+    cellStyle3.setBorderRight(HSSFCellStyle.BORDER_THIN);
+    cellStyle3.setBorderTop(HSSFCellStyle.BORDER_THIN);
+    cellStyle3.setWrapText(true); 
+    cellStyle3.setDataFormat(dataFormat.getFormat("#,##0.##"));
+    
+    cellStyle4.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+    cellStyle4.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+    cellStyle4.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+    cellStyle4.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+    cellStyle4.setBorderRight(HSSFCellStyle.BORDER_THIN);
+    cellStyle4.setBorderTop(HSSFCellStyle.BORDER_THIN);
+    cellStyle4.setWrapText(true); 
+    cellStyle4.setFillForegroundColor( IndexedColors.YELLOW.getIndex() );
+    cellStyle4.setFillPattern(CellStyle.SOLID_FOREGROUND);
+   
+    //cellStyle4.setDataFormat(dataFormat.getFormat("#,##0.##"));
+    cellStyle4.setDataFormat(dataFormat.getFormat("#,##0.00"));
+    
+ //   List<Object[]> status=pstService.searchObject(query.toString()); 
+  //  int status_size=status.size();
+   /* sheet.addMergedRegion(new CellRangeAddress(
+            0, //first row (0-based)
+            0, //last row  (0-based)
+            0, //first column (0-based)
+            status_size+1  //last column  (0-based)
+    ));*/
+    HSSFRow row = sheet.createRow(0);
+    row.setHeight((short)400);
+    HSSFCell cell = row.createCell(0);
+	cell.setCellValue("รายงานสรุปยอดรหัสการจ่ายของ เบอร์ปั๊ม "+prpNo+" ประจำเดือน "+dt.monthOfYear().getAsText(locale)+" "+dt.year().getAsText());
+   	cell.setCellStyle(cellStyle2);
+   	
+    cell = row.createCell(day_to);
+    cell.setCellStyle(cellStyle);
+	 
+    cellStyle2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+    cellStyle2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+    cellStyle2.setBorderRight(HSSFCellStyle.BORDER_THIN);
+    cellStyle2.setBorderTop(HSSFCellStyle.BORDER_THIN); 
+    
+   
+    
+    row = sheet.createRow(1);
+    cell = row.createCell(0);
+    cell.setCellValue("รหัส/วันที่");
+    cell.setCellStyle(cellStyle_topic);
+    sheet.setColumnWidth(0,(short)((20*8)/((double)1/20) ));
+    
+    for (int i=day_from;i<=day_to;i++) {
+    	 cell = row.createCell(i);
+    	 cell.setCellValue(i);
+    	 cell.setCellStyle(cellStyle_topic);
+    }
+  /*  cell = row.createCell(1);
+    cell.setCellValue("เบอร์รถ");
+    cell.setCellStyle(cellStyle_topic);
+    
+    cell = row.createCell(status_size);
+    cell.setCellStyle(cellStyle_topic);
+    
+    cell = row.createCell(status_size+1);
+    cell.setCellValue("ยอดรวม");
+    cell.setCellStyle(cellStyle_topic);*/
+   // row = sheet.createRow(2);
+     
+  //  row = sheet.createRow(indexRow++);   
+  
+    sheet.addMergedRegion(new CellRangeAddress(
+            0, //first row (0-based)
+            0, //last row  (0-based)
+            0, //first column (0-based)
+            31  //last column  (0-based)
+    )); 
+    /*sheet.addMergedRegion(new CellRangeAddress(
+            1, //first row (0-based)
+            1, //last row  (0-based)
+            1, //first column (0-based)
+            status_size  //last column  (0-based)
+    ));
+    sheet.addMergedRegion(new CellRangeAddress(
+    		1, //first row (0-based)
+            2, //last row  (0-based)
+            status_size+1, //first column (0-based)
+            status_size+1  //last column  (0-based)
+    ));*/
+//	int index=1;
+	
+	 /*for(int i=0;i<status_size;i++){
+	    	cell = row.createCell(index++);	   
+	    	cell.setCellValue((String)status.get(i)[1]);
+	    	//cell.setCellValue(label[i]);
+	    	cell.setCellStyle(cellStyle_topic);	   
+	    } */
+		    query.setLength(0);
+		    query.append(" SELECT cost.pc_amount ,cost.pc_uid ");
+		  
+			 for (int i=day_from;i<=day_to;i++) {
+				// query.setLength(0);
+				 query.append(", (SELECT sum(j_pay_1.pjp_amount) FROM  "+SCHEMA+".PST_JOB_PAY j_pay_1 left join "+SCHEMA+".PST_JOB job_1" +
+				 		" on j_pay_1.pj_id=job_1.pj_id left join "+SCHEMA+".PST_COSTS cost_1" +
+				 		" on j_pay_1.pc_id=cost_1.pc_id" +
+				 		"	 where job_1.prp_id=job.prp_id and cost_1.pc_id=cost.pc_id" +
+				 		"	 and job_1.pj_created_time" +
+				 		" between '"+year+"-"+month+"-"+i+" 00:00:00'" +
+				 		"  and '"+year+"-"+month+"-"+i+" 23:59:59' ) as pjp_amount_"+i); 
+			 }
+			 query.append(" FROM  "+SCHEMA+".PST_JOB_PAY j_pay left join "+SCHEMA+".PST_JOB job" +
+			 		" on j_pay.pj_id=job.pj_id left join "+SCHEMA+".PST_COSTS cost" +
+			 		" on j_pay.pc_id=cost.pc_id  where job.prp_id="+prpId+
+			 		" and job.pj_created_time " +			 		
+			 		" between '"+year+"-"+month+"-"+day_from+" 00:00:00'" +
+		    		"  and '"+year+"-"+month+"-"+day_to+" 23:59:59' " +
+			 		" group by cost.pc_id order by cost.pc_uid");
+			 
+			 List<Object[]> emps=pstService.searchObject(query.toString());
+			  if(emps!=null && emps.size()>0){ 
+					 int emps_size=emps.size(); 
+					 double[][] sum_y_array=new double[emps_size][day_to];	
+					  double pc_amount=0;
+					  CellReference cellRef=null;
+					  String beginCount="";
+			    		String endCount="";
+			    	 for (int j = 0; j <emps_size; j++) { 
+			    		  row = sheet.createRow(indexRow++);
+			    		  cell = row.createCell(0);
+			    		  cell.setCellValue(emps.get(j)[1]!=null?(String)emps.get(j)[1]:"");
+			    		  pc_amount=emps.get(j)[0]!=null?((java.math.BigDecimal)emps.get(j)[0]).doubleValue():0d;
+			    		  cell.setCellStyle(cellStyle_topic);
+			    		  for (int k=day_from;k<=day_to;k++) {					    			  
+			    			  	cell = row.createCell(k);	
+			    			  	if(emps.get(j)[k+1]!=null && ((java.math.BigDecimal)emps.get(j)[k+1]).doubleValue()>1){
+							    	 cell.setCellStyle(cellStyle4);
+							    	 cell.setCellValue(((java.math.BigDecimal)emps.get(j)[k+1]).doubleValue());
+							    	 sum_y_array[j][k-1]=((java.math.BigDecimal)emps.get(j)[k+1]).doubleValue()*pc_amount;
+							    	// sum_per_day=sum_per_day+((java.math.BigDecimal)emps.get(j)[k+1]).doubleValue();
+							    }else{
+							    	 cell.setCellStyle(cellStyle3);
+							    	 sum_y_array[j][k-1]=0d;
+							    } 
+			    		    }     
+			    	 }
+			    	  row = sheet.createRow(indexRow++);
+			    	 cell = row.createCell(0);
+					 cell.setCellValue("รวมเงิน(ต่อวัน)");
+					 cell.setCellStyle(cellStyle4);
+					 double [] sum_y=new double[day_to];	 
+					 double sum_y_all=0d;
+					 
+					    	for (int i = 0; i < day_to; i++) {  
+					    		double sum_y2=0; 
+							    for (int j = 0; j < emps_size; j++) {   
+							    		sum_y2=sum_y2+sum_y_array[j][i];
+							    		sum_y_all=sum_y_all+sum_y_array[j][i]; 
+							    }  
+							    sum_y[i]=sum_y2;
+						} 
+					    	for (int j = 0; j < sum_y.length; j++) {
+						    	    cell = row.createCell(j+1);
+								    cell.setCellValue(sum_y[j]); 
+								    cell.setCellStyle(cellStyle4); 
+								    if(j==0){
+			  	  	    				cellRef=new CellReference(row.getRowNum(), cell.getColumnIndex());
+			  	  	    				beginCount=cellRef.formatAsString().replaceAll("\\$","");
+								    }
+			  	  	    		 	if(j==sum_y.length-1){
+			  	  	    				cellRef=new CellReference(row.getRowNum(), cell.getColumnIndex());
+			  	  	    				endCount=cellRef.formatAsString().replaceAll("\\$",""); 
+			  	  	    			 }
+							}    	
+			   row = sheet.createRow(indexRow++); 
+			    cell = row.createCell(0);
+			    cell.setCellValue("เงินรวม(เดือน)");
+			    cell.setCellStyle(cellStyle4);  
+			    
+			    cell = row.createCell(1); 
+			    cell.setCellStyle(cellStyle4);   
+				cell.setCellFormula("SUM("+beginCount+":"+endCount+")");
+          }
+			     sheet.createFreezePane( 1, 2 ); 
+			    //=SUM(B11:AF11)
+    response.setHeader("Content-Type", "application/octet-stream; charset=UTF-8");
+    String filename="รายงานสรุปยอดรหัสการจ่ายประจำเดือน.xls";
+    if(filename.length()>0){
+		String userAgent = request.getHeader("user-agent");
+		boolean isInternetExplorer = (userAgent.indexOf("MSIE") > -1);
+		byte[] fileNameBytes=null;
+		try {
+			fileNameBytes = filename.getBytes((isInternetExplorer) ? ("windows-1250") : ("utf-8"));
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	    String dispositionFileName = "";
+	    for (byte b: fileNameBytes) dispositionFileName += (char)(b & 0xff);
+
+		 String disposition = "attachment; filename=\"" + dispositionFileName + "\"";
+		 response.setHeader("Content-disposition", disposition);
+	}
+    //response.setHeader("Content-disposition", "attachment; filename=Report.xls");
+    ServletOutputStream servletOutputStream = null;
+    try
+    {
+        servletOutputStream = response.getOutputStream();
+    }
+    catch(IOException e)
+    {
+        e.printStackTrace();
+    }
+    try
+    {
+        wb.write(servletOutputStream);
+    }
+    catch(IOException e)
+    {
+        e.printStackTrace();
+    }
+    try
+    {
+        servletOutputStream.flush();
+    }
+    catch(IOException e)
+    {
+        e.printStackTrace();
+    }
+    try
+    {
+        servletOutputStream.close();
+    }
+    catch(IOException e)
+    {
+        e.printStackTrace();
+    }
+}
+
 }
 
 
