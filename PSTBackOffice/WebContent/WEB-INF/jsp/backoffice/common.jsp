@@ -184,6 +184,8 @@ function openMailDialog(todo_id,todo_ref){
                           <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report4','report_link')"  style="text-align: left;">สถิติเบรคดาวน์ประจำเดือน</a></li>
                            <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report5','report_link')"  style="text-align: left;">รายงานสรุปคิวคอนกรีตประจำเดือน</a></li>
                            <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report6','report_link')"  style="text-align: left;">รายงานเงินประเมิณประจำเดือน</a></li>
+                            <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report7','report_link')"  style="text-align: left;">รายงานคะแนนประเมิณประจำเดือน</a></li>
+                             <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report8','report_link')"  style="text-align: left;">สรุปยอดรหัสการจ่ายประจำเดือน</a></li>
                          </ul>
                       </li> 
                        <li class="dropdown" id="user_link"> 
