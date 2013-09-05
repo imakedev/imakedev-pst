@@ -298,9 +298,10 @@ function clearValueById(id){
             		<th width="15%"><div class="th_class">ชื่อลูกค้า</div></th> 
             		<th width="25%"><div class="th_class">หน่วยงาน</div></th>
             		<th width="10%"><div class="th_class">คอนกรีตที่ใช้</div></th> 
-            		<th width="10%"><div class="th_class">จำนวนคิว</div></th> 
-            		<th width="10%"><div class="th_class">ยอดรวมสุทธิ</div></th> 
-            		<th width="8%"><div class="th_class">Action</div></th> 
+            		<th width="7%"><div class="th_class">จำนวนคิว</div></th> 
+            		<th width="10%"><div class="th_class">ยอดรวมสุทธิ</div></th>
+            		<th width="6%"><div class="th_class">Feedback</div></th>  
+            		<th width="5%"><div class="th_class">Action</div></th> 
           		</tr>
         	</thead>
         	<tbody>   
@@ -318,6 +319,9 @@ function clearValueById(id){
             	</td>
             	<td style="text-align: right;">&nbsp;<fmt:formatNumber   pattern="#,###,###,###.##"  
      value="${pstJob.payAll}" />
+            	</td>
+            	<td style="text-align: right;">&nbsp;<fmt:formatNumber   pattern="#,###,###,###.##"  
+     value="${pstJob.pjFeedBackScore}" />
             	</td>
             	<td style="text-align: center;"> 
             	 <i title="Edit" onclick="loadDynamicPage('job/item/${pstJob.pjId}')" style="cursor: pointer;" class="icon-edit"></i>&nbsp;&nbsp;
