@@ -13,33 +13,19 @@ public class CommonResourceApplication extends Application {
     /**
      * Creates a root Restlet that will receive all incoming calls.
      */
-    @Override
+	
+   @Override
     public synchronized Restlet createRoot() {
         // Create a router Restlet that defines routes.
-    	//System.out.println( " AoeResourceApplication into createRoot"); 
     	final   ApplicationContext springContext = new ClassPathXmlApplicationContext(
                  new String[] {
                 		 "th/co/aoe/imake/pst/rest/config/applicationContext-common.xml",
                 		 "th/co/aoe/imake/pst/rest/config/applicationContext-hibernate.xml",
                 		 "th/co/aoe/imake/pst/rest/config/applicationContext-pst-resource.xml",
                 		 "th/co/aoe/imake/pst/rest/config/applicationContext-root-router.xml"});    
-    	/*Guard guard = new Guard(getContext(),  
-    	        ChallengeScheme.HTTP_BASIC, "Tutorial");  */
-    	//guard.getSecrets().put("aoe", "aoe".toCharArray());  
-    	
-    	// Create a Directory able to return a deep hierarchy of files  
-    	/*Directory directory = new Directory(getContext(), ROOT_URI);  
-    	guard.setNext(directory);  
-    	return guard; */ 
-    	///guard.setNext(co.th.vlink.moogle.rest.resource.QuizsResource.class);
-
         // Add a route for the MailRoot resource
-        
     	org.restlet.ext.spring.SpringRouter router = (org.restlet.ext.spring.SpringRouter)springContext.getBean("root");
-    	
-    	//router.attachDefault(guard);
         return router;
-    	//return guard;
     }
      
 }
