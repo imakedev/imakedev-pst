@@ -193,7 +193,8 @@ where job_work.pj_id=job.pj_id and road_pump.prp_no='HP0')
 						", pstJob.PJ_UPDATED_TIME " +
 						", pstJob.PJ_CUBIC_AMOUNT " +
 						", pstJob.PCONCRETE_ID " +
-						", concrete.PCONCRETE_NAME " + 
+						", concrete.PCONCRETE_NAME  " +
+						", pstJob.PJ_FEEDBACK_SCORE " + 
 						" from "+ServiceConstant.SCHEMA+".PST_JOB pstJob left join  "+ServiceConstant.SCHEMA+".PST_CONCRETE concrete on " +
 								" pstJob.PCONCRETE_ID=concrete.PCONCRETE_ID " +
 						" left join  "+ServiceConstant.SCHEMA+".PST_CUSTOMER customer on pstJob.PC_ID=customer.PC_ID"+
@@ -324,6 +325,7 @@ where job_work.pj_id=job.pj_id and road_pump.prp_no='HP0')
 						pstConcrete.setPconcreteId(objects[14]!=null?Long.valueOf((Integer)objects[14]):null);
 						pstConcrete.setPconcreteName(objects[15]!=null?(String)objects[15]:null);
 						
+						pstJob.setPjFeedBackScore(objects[16]!=null?(java.math.BigDecimal)objects[16]:null);
 						pstJob.setPstConcrete(pstConcrete);
 						xpstjobs.add(pstJob);
 					 //System.out.println(pstJob.getCubicAmount());

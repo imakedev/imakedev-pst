@@ -130,7 +130,7 @@ public class HibernatePstRoadPump  extends HibernateCommon implements PstRoadPum
 		Session session = sessionAnnotationFactory.getCurrentSession();
 		try {
 			Query query = null;
-			StringBuffer sb =new StringBuffer(" select pstRoadPump from PstRoadPump pstRoadPump ");
+			StringBuffer sb =new StringBuffer(" select pstRoadPump from PstRoadPump pstRoadPump order by pstRoadPump.prpNo asc ");
 			 query =session.createQuery(sb.toString());
 			// set pagging.
 			 
