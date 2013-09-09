@@ -1094,16 +1094,16 @@ function submit_part1(mode){
 			 return false;
 		 
 	var querys=[];
-	querys.push("DELETE FROM "+SCHEMA_G+".PST_JOB_WORK WHERE PJ_ID="+pjId);
+	// querys.push("DELETE FROM "+SCHEMA_G+".PST_JOB_WORK WHERE PJ_ID="+pjId);
 	// for(var i=0;i<mode_array.length;i++){ 
 		 var query=""; 
-		 query="insert into "+SCHEMA_G+".PST_JOB_WORK set PJ_ID="+pjId+", PRP_ID="+prpId_input+",PJW_CUBIC_AMOUNT="+pjwCubicAmount_array[0]+",PJW_MILE="+pjwMile_array[0]+",PJW_HOURS_OF_WORK="+pjwHoursOfWork_array[0]+", PJW_TUBE="+pjwTube_array[0]+",PJW_CONCRETE_SPOIL="+pjwConcreteSpoil_array[0]+"";
+		/*  query="insert into "+SCHEMA_G+".PST_JOB_WORK set PJ_ID="+pjId+", PRP_ID="+prpId_input+",PJW_CUBIC_AMOUNT="+pjwCubicAmount_array[0]+",PJW_MILE="+pjwMile_array[0]+",PJW_HOURS_OF_WORK="+pjwHoursOfWork_array[0]+", PJW_TUBE="+pjwTube_array[0]+",PJW_CONCRETE_SPOIL="+pjwConcreteSpoil_array[0]+"";
 		 if(pbdId_array[0]!='-1')
 			 query=query+" ,PBD_ID="+pbdId_array[0];
 		 else
-			 query=query+" ,PBD_ID=null ";
+			 query=query+" ,PBD_ID=null "; */
 	 
-		 /* if(mode_array[i]=='add'){
+		 /*  if(mode_array[i]=='add'){
 			 query="insert into "+SCHEMA_G+".PST_JOB_WORK set PJ_ID="+pjId+", PRP_ID="+prpId_input+",PJW_CUBIC_AMOUNT="+pjwCubicAmount_array[i]+",PJW_MILE='"+pjwMile_array[i]+"',PJW_HOURS_OF_WORK="+pjwHoursOfWork_array[i]+", PJW_TUBE="+pjwTube_array[i]+",PJW_CONCRETE_SPOIL='"+pjwConcreteSpoil_array[i]+"'";
 			 if(pbdId_array[i]!='-1')
 				 query=query+" ,PBD_ID="+pbdId_array[i];
@@ -1116,20 +1116,34 @@ function submit_part1(mode){
 			 else
 				 query=query+" ,PBD_ID=null ";
 			 query=query+" where PJ_ID="+pjId+" and PRP_ID="+prpId_input+""; 
-		 } */	
-		 querys.push(query);
-	// }
+		 }  */	
+		 if(mode=='edit'){
+			// query="insert into "+SCHEMA_G+".PST_JOB_WORK set PJ_ID="+pjId+", PRP_ID="+prpId_input+",PJW_CUBIC_AMOUNT="+pjwCubicAmount_array[0]+",PJW_MILE="+pjwMile_array[0]+",PJW_HOURS_OF_WORK="+pjwHoursOfWork_array[0]+", PJW_TUBE="+pjwTube_array[0]+",PJW_CONCRETE_SPOIL="+pjwConcreteSpoil_array[0]+"";
+			 query="update  "+SCHEMA_G+".PST_JOB_WORK set PJW_CUBIC_AMOUNT="+pjwCubicAmount_array[0]+",PJW_MILE="+pjwMile_array[0]+",PJW_HOURS_OF_WORK="+pjwHoursOfWork_array[0]+", PJW_TUBE="+pjwTube_array[0]+",PJW_CONCRETE_SPOIL="+pjwConcreteSpoil_array[0]+"";
+			 if(pbdId_array[0]!='-1')
+				 query=query+" ,PBD_ID="+pbdId_array[0];
+			 else
+				 query=query+" ,PBD_ID=null ";
+			 query=query+" where PJ_ID="+pjId+" and PRP_ID="+prpId_input+""; 
+			 querys.push(query);
+		 }   
+	 // }
 	 
-   // alert(querys)
+   //alert(querys.length)
     if(mode=='edit'){
-		PSTAjax.executeQuery(querys,{
-			callback:function(data){  
-				postFormAction();
-			}
-		});
+    	if(querys.length>0){
+    	//	alert(querys[0]);
+    		PSTAjax.executeQuery(querys,{
+    			callback:function(data){  
+    				postFormAction();
+    			}
+    		});
+    	}else{
+    		postFormAction();
+    	}
     }else{
     	postFormAction();   
-    	}
+    }
 }
 function postFormAction(){
 	var target="job"; 
