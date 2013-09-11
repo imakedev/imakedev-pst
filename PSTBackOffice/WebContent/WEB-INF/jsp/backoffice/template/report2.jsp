@@ -162,7 +162,7 @@ function exportReport2(){
  <form id="roadPumpForm" name="roadPumpForm" class="well" style="border:2px solid #B3D2EE;background: #F9F9F9" >
           
             <div align="left">
-            <strong>สรุปค่าคิวรถออกงานประจำเดือน</strong>
+            <strong>สรุปค่าคิวประจำคน</strong>
             </div>
             <div align="left" style="padding: 10px 10px">
             	<span style="font-size: 13px;">เลือกเดือน:</span> 
