@@ -179,13 +179,14 @@ function openMailDialog(todo_id,todo_ref){
                       	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Report<b class="caret"></b></a>
                       	<ul class="dropdown-menu"> 
                            <li><a  href="javascript:void(0);"  onclick="togle_page('report/page/report1','report_link')"  style="text-align: left;">สรุปค่าแรงพนักงานรายวัน</a></li>
-                          <li><a  href="javascript:void(0);"  onclick="togle_page('report/page/report2','report_link')"  style="text-align: left;">สรุปค่าคิวรถออกงานประจำเดือน</a></li>
+                          <li><a  href="javascript:void(0);"  onclick="togle_page('report/page/report2','report_link')"  style="text-align: left;">สรุปค่าคิวประจำคน</a></li>
                           <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report3','report_link')"  style="text-align: left;">รายงานการออกงานประจำวัน</a></li>
                           <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report4','report_link')"  style="text-align: left;">สถิติเบรคดาวน์ประจำเดือน</a></li>
                            <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report5','report_link')"  style="text-align: left;">รายงานสรุปคิวคอนกรีตประจำเดือน</a></li>
                            <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report6','report_link')"  style="text-align: left;">รายงานเงินประเมิณประจำเดือน</a></li>
                             <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report7','report_link')"  style="text-align: left;">รายงานคะแนนประเมิณประจำเดือน</a></li>
                              <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report8','report_link')"  style="text-align: left;">สรุปยอดรหัสการจ่ายประจำเดือน</a></li>
+                             <li><a  href="javascript:void(0);" onclick="togle_page('report/page/report9','report_link')"  style="text-align: left;">รายงานสรุปค่าคิวรถออกงานประจำเดือน</a></li>
                          </ul>
                       </li> 
                        <li class="dropdown" id="user_link"> 
