@@ -35,7 +35,6 @@ public class ConcreteController {
 		 concreteForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 		 concreteForm.getPstConcrete().setPagging(concreteForm.getPaging());
 	        VResultMessage vresultMessage = pstService.searchPstConcrete(concreteForm.getPstConcrete());
-	        //System.out.println("vresultMessage-->"+vresultMessage.getResultListObj());
 	        model.addAttribute("pstConcretes", vresultMessage.getResultListObj());
 	        concreteForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	        concreteForm.setPageCount(IMakeDevUtils.calculatePage(concreteForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
@@ -47,12 +46,6 @@ public class ConcreteController {
 	    public String doSearch(HttpServletRequest request, @ModelAttribute(value="concreteForm") ConcreteForm concreteForm, BindingResult result, Model model)
 	    {
 	        String mode = concreteForm.getMode();
-	       /* if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE_ITEMS))
-	        {
-	        	concreteForm.getPstConcrete().setIds(concreteForm.getPesIdArray());
-	        	pstService.deletePstEmployeeStatus(concreteForm.getPstConcrete(), ServiceConstant.PST_EMPLOYEE_STATUS_ITEMS_DELETE);
-	        	concreteForm.getPaging().setPageNo(1);
-	        } else*/
 	        if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE)){
 	        	pstService.deletePstConcrete(concreteForm.getPstConcrete(),  ServiceConstant.PST_CONCRETE_DELETE);
 	        	concreteForm.getPaging().setPageNo(1);
@@ -113,12 +106,6 @@ public class ConcreteController {
 	                message = "Update success !";
 	                message_class="success";
 	            }
-	        /*PstEmployeeStatus pstBreakDown = pstService.findPstEmployeeStatusById(id);
-	        concreteForm.setPstEmployeeStatus(pstBreakDown);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        model.addAttribute("concreteForm", concreteForm);*/
-	       // concreteForm concreteForm = null; 
 	       concreteForm = new ConcreteForm(); 
 	       concreteForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	       concreteForm.getPstConcrete().setPagging(concreteForm.getPaging());
@@ -130,7 +117,6 @@ public class ConcreteController {
 		        model.addAttribute("message", message); 
 		        model.addAttribute("message_class", message_class);
 		        return "backoffice/template/concrete_search";
-	        // return "backoffice/template/employee_status_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)

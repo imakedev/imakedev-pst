@@ -807,7 +807,8 @@ public class ReportController {
 				+ ".PST_CONCRETE concrete on job.pconcrete_id=concrete.pconcrete_id"
 				+ "	 left join " + SCHEMA
 				+ ".PST_BREAK_DOWN b_down on j_work.pbd_id=b_down.pbd_id"
-				+ "  	where j_work.prp_id=" + prpId + ""
+				//+ "  	where j_work.prp_id=" + prpId + ""
+				+ "  	where job.prp_id=" + prpId + ""
 				+ " and job.pj_created_time between '" + from_sql + "' and '"
 				+ to_sql + "' " + " order by job.pj_created_time");
 		List<Object[]> status = pstService.searchObject(query.toString());
@@ -1024,7 +1025,8 @@ public class ReportController {
 						+ " "
 						+ SCHEMA
 						+ ".PST_JOB p_job on ( j_work.pj_id =p_job.pj_id )"
-						+ "  where j_work.prp_id=r_pump.prp_id   and p_job.pj_created_time between '"
+						//+ "  where j_work.prp_id=r_pump.prp_id   and p_job.pj_created_time between '"
+						+ "  where p_job.prp_id=r_pump.prp_id   and p_job.pj_created_time between '"
 						+ from_sql + "' and '" + to_sql + "' "
 						+ " and j_work.pbd_id is not null)as break_down_1 "
 						+ " FROM " + SCHEMA
@@ -1045,7 +1047,8 @@ public class ReportController {
 						+ ".PST_JOB p_job on ( j_work.pj_id =p_job.pj_id ) "
 						+ "   left join "
 						+ SCHEMA
-						+ ".PST_ROAD_PUMP r_pump on  j_work.prp_id=r_pump.prp_id  "
+					//	+ ".PST_ROAD_PUMP r_pump on  j_work.prp_id=r_pump.prp_id  "
+					+ ".PST_ROAD_PUMP r_pump on  p_job.prp_id=r_pump.prp_id  "
 						+ " where j_work.pbd_id=b_down.pbd_id  and  j_work.pbd_id is not null and p_job.pj_created_time "
 						+ " between '" + from_sql + "' and '" + to_sql + "'"
 						+ " ) break_down_sum ");
@@ -1057,7 +1060,8 @@ public class ReportController {
 					+ ".PST_JOB_WORK j_work  left join " + "  " + SCHEMA
 					+ ".PST_JOB p_job on ( j_work.pj_id =p_job.pj_id )"
 					+ " left join " + SCHEMA
-					+ ".PST_ROAD_PUMP r_pump on  j_work.prp_id=r_pump.prp_id"
+				//	+ ".PST_ROAD_PUMP r_pump on  j_work.prp_id=r_pump.prp_id"
+				+ ".PST_ROAD_PUMP r_pump on  p_job.prp_id=r_pump.prp_id"
 					+ "  where j_work.pbd_id=b_down.pbd_id and r_pump.prp_id="
 					+ (Integer) objects[0] + " "
 					+ " and p_job.pj_created_time between '" + from_sql
@@ -1332,13 +1336,16 @@ public class ReportController {
 		double[] sum_y_array = new double[status_size];
 		for (int i = day_from; i <= day_to; i++) {
 			query.setLength(0);
-			query.append(" select (SELECT count(j_work.prp_id) FROM "
+			//query.append(" select (SELECT count(j_work.prp_id) FROM "
+			query.append(" select (SELECT count(job.prp_id) FROM "
 					+ SCHEMA
 					+ ".PST_JOB_WORK j_work "
 					+ " left join "
 					+ SCHEMA
-					+ ".PST_JOB job on (j_work.pj_id=job.pj_id and j_work.prp_id =job.prp_id ) "
-					+ " where	j_work.prp_id=  r_pump.prp_id and job.pj_created_time between '"
+					//+ ".PST_JOB job on (j_work.pj_id=job.pj_id and j_work.prp_id =job.prp_id ) "
+					+ ".PST_JOB job on (j_work.pj_id=job.pj_id ) "
+					//+ " where	j_work.prp_id=  r_pump.prp_id and job.pj_created_time between '"
+					+ " where	job.prp_id=  r_pump.prp_id and job.pj_created_time between '"
 					+ year
 					+ "-"
 					+ month
@@ -1357,8 +1364,10 @@ public class ReportController {
 					+ ".PST_JOB_WORK j_work "
 					+ " left join "
 					+ SCHEMA
-					+ ".PST_JOB job on (j_work.pj_id=job.pj_id and j_work.prp_id =job.prp_id ) "
-					+ " where	j_work.prp_id=  r_pump.prp_id and job.pj_created_time between '"
+					//+ ".PST_JOB job on (j_work.pj_id=job.pj_id and j_work.prp_id =job.prp_id ) "
+					+ ".PST_JOB job on (j_work.pj_id=job.pj_id  ) "
+					//+ " where	j_work.prp_id=  r_pump.prp_id and job.pj_created_time between '"
+					+ " where	job.prp_id=  r_pump.prp_id and job.pj_created_time between '"
 					+ year
 					+ "-"
 					+ month
@@ -1377,8 +1386,10 @@ public class ReportController {
 					+ ".PST_JOB_WORK j_work "
 					+ " left join "
 					+ SCHEMA
-					+ ".PST_JOB job on (j_work.pj_id=job.pj_id and j_work.prp_id =job.prp_id )"
-					+ " where j_work.prp_id=  r_pump.prp_id and job.pj_created_time between '"
+					//+ ".PST_JOB job on (j_work.pj_id=job.pj_id and j_work.prp_id =job.prp_id )"
+					+ ".PST_JOB job on (j_work.pj_id=job.pj_id)"
+//					+ " where j_work.prp_id=  r_pump.prp_id and job.pj_created_time between '"
+					+ " where job.prp_id=  r_pump.prp_id and job.pj_created_time between '"
 					+ year
 					+ "-"
 					+ month
@@ -1397,7 +1408,8 @@ public class ReportController {
 					+ ".PST_JOB_WORK j_work "
 					+ " left join "
 					+ SCHEMA
-					+ ".PST_JOB job on (j_work.pj_id=job.pj_id and j_work.prp_id =job.prp_id ) "
+					//+ ".PST_JOB job on (j_work.pj_id=job.pj_id and j_work.prp_id =job.prp_id ) "
+					+ ".PST_JOB job on (j_work.pj_id=job.pj_id ) "
 					+ " where job.pj_created_time between '" + year + "-"
 					+ month + "-" + i + " 00:00:00' and '" + year + "-" + month
 					+ "-" + i + " 23:59:59'	)as amount_all_x,"

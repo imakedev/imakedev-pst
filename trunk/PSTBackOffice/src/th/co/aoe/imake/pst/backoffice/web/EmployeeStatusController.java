@@ -32,9 +32,6 @@ public class EmployeeStatusController {
 	 public String init(Model model)
 	    {
 		 EmployeeStatusForm employeeStatusForm = null;
-	      /*  if(model.containsAttribute("employeeStatusForm"))
-	        	employeeStatusForm = (EmployeeStatusForm)model.asMap().get("employeeStatusForm");
-	        else*/
 		 employeeStatusForm = new EmployeeStatusForm();
 	        
 		 employeeStatusForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
@@ -119,12 +116,6 @@ public class EmployeeStatusController {
 	                message = "Update success !";
 	                message_class="success";
 	            }
-	        /*PstEmployeeStatus pstBreakDown = pstService.findPstEmployeeStatusById(id);
-	        employeeStatusForm.setPstEmployeeStatus(pstBreakDown);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        model.addAttribute("employeeStatusForm", employeeStatusForm);*/
-	       // EmployeeStatusForm employeeStatusForm = null; 
 	       employeeStatusForm = new EmployeeStatusForm(); 
 	       employeeStatusForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	       employeeStatusForm.getPstEmployeeStatus().setPagging(employeeStatusForm.getPaging());
@@ -138,7 +129,6 @@ public class EmployeeStatusController {
 		        model.addAttribute("message", message); 
 		        model.addAttribute("message_class", message_class);
 		        return "backoffice/template/employee_status_search";
-	        // return "backoffice/template/employee_status_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)

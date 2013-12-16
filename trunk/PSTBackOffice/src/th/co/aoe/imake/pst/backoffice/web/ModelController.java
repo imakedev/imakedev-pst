@@ -73,12 +73,6 @@ public class ModelController {
 	    public String doSearch(HttpServletRequest request, @ModelAttribute(value="modelForm") ModelForm modelForm, BindingResult result, Model model)
 	    {
 	        String mode = modelForm.getMode();
-	       /* if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE_ITEMS))
-	        {
-	        	modelForm.getPstModel().setIds(modelForm.getPesIdArray());
-	        	pstService.deletePstEmployeeStatus(modelForm.getPstModel(), ServiceConstant.PST_EMPLOYEE_STATUS_ITEMS_DELETE);
-	        	modelForm.getPaging().setPageNo(1);
-	        } else*/
 	        String page="model_search_section";
 	        if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE)){
 	        	pstService.deletePstModel(modelForm.getPstModel(),  ServiceConstant.PST_MODEL_DELETE);
@@ -143,24 +137,10 @@ public class ModelController {
 	                message = "Update success !";
 	                message_class="success";
 	            }
-	        /*PstEmployeeStatus pstBreakDown = pstService.findPstEmployeeStatusById(id);
-	        modelForm.setPstEmployeeStatus(pstBreakDown);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        model.addAttribute("modelForm", modelForm);*/
-	       // modelForm modelForm = null; 
-	     /*  modelForm = new ModelForm(); 
-	       modelForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
-	       modelForm.getPstModel().setPagging(modelForm.getPaging());
-		        VResultMessage vresultMessage = pstService.searchPstModel(modelForm.getPstModel());
-		        model.addAttribute("pstModels", vresultMessage.getResultListObj());
-		        modelForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
-		        modelForm.setPageCount(IMakeDevUtils.calculatePage(modelForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));*/
 		        model.addAttribute("modelForm", modelForm);
 		        model.addAttribute("message", message); 
 		        model.addAttribute("message_class", message_class);
 		        return "backoffice/template/model_search_section";
-	        // return "backoffice/template/employee_status_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)

@@ -47,12 +47,6 @@ public class RoadPumpTypeController {
 	    public String doSearch(HttpServletRequest request, @ModelAttribute(value="roadPumpTypeForm") RoadPumpTypeForm roadPumpTypeForm, BindingResult result, Model model)
 	    {
 	        String mode = roadPumpTypeForm.getMode();
-	       /* if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE_ITEMS))
-	        {
-	        	roadPumpTypeForm.getPstRoadPumpType().setIds(roadPumpTypeForm.getPesIdArray());
-	        	pstService.deletePstEmployeeType(roadPumpTypeForm.getPstRoadPumpType(), ServiceConstant.PST_EMPLOYEE_TYPE_ITEMS_DELETE);
-	        	roadPumpTypeForm.getPaging().setPageNo(1);
-	        } else*/
 	        if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE)){
 	        	pstService.deletePstRoadPumpType(roadPumpTypeForm.getPstRoadPumpType(),  ServiceConstant.PST_ROAD_PUMP_TYPE_DELETE);
 	        	roadPumpTypeForm.getPaging().setPageNo(1);
@@ -113,12 +107,6 @@ public class RoadPumpTypeController {
 	                message = "Update success !";
 	                message_class="success";
 	            }
-	        /*PstEmployeeType pstBreakDown = pstService.findPstEmployeeTypeById(id);
-	        roadPumpTypeForm.setPstEmployeeType(pstBreakDown);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        model.addAttribute("roadPumpTypeForm", roadPumpTypeForm);*/
-	       // roadPumpTypeForm roadPumpTypeForm = null; 
 	       roadPumpTypeForm = new RoadPumpTypeForm(); 
 	       roadPumpTypeForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	       roadPumpTypeForm.getPstRoadPumpType().setPagging(roadPumpTypeForm.getPaging());
@@ -130,7 +118,6 @@ public class RoadPumpTypeController {
 		        model.addAttribute("message", message); 
 		        model.addAttribute("message_class", message_class);
 		        return "backoffice/template/roadPumpType_search";
-	        // return "backoffice/template/employee_status_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)

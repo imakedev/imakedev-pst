@@ -36,9 +36,6 @@ public class EmployeeWorkMappingController {
 	 public String init(Model model)
 	    {
 		 EmployeeWorkMappingForm employeeWorkMappingForm = null;
-	      /*  if(model.containsAttribute("employeeWorkMappingForm"))
-	        	employeeWorkMappingForm = (EmployeeWorkMappingForm)model.asMap().get("employeeWorkMappingForm");
-	        else*/
 		 employeeWorkMappingForm = new EmployeeWorkMappingForm();
 	        
 		 employeeWorkMappingForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
@@ -56,8 +53,6 @@ public class EmployeeWorkMappingController {
 	        model.addAttribute("pstRoadPumpNos", pstService.listPstRoadPumpNo());
 	        model.addAttribute("pstEmployeeStatuses", pstService.listPstEmployeeStatuses()); 
 	        model.addAttribute("message", ""); 
-	       // if( != null && missCandidate.getMcaBirthDate() != null)
-	        
 	        return "backoffice/template/employee_check";
 	    }
 	 @RequestMapping(value={"/search"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
@@ -66,17 +61,6 @@ public class EmployeeWorkMappingController {
 	        String mode = employeeWorkMappingForm.getMode();
 	        String message = "";
 	        String  message_class="";
-	        /*if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE_ITEMS))
-	        {
-	        	employeeWorkMappingForm.getPstEmployeeWorkMapping().setIds(employeeWorkMappingForm.getPbdIdArray());
-	        	pstService.deletePstEmployeeWorkMapping(employeeWorkMappingForm.getPstEmployeeWorkMapping(), ServiceConstant.PST_BREAK_DOWN_ITEMS_DELETE);
-	        	employeeWorkMappingForm.getPaging().setPageNo(1);
-	        } else
-	        if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE)){
-	        	pstService.deletePstEmployeeWorkMapping(employeeWorkMappingForm.getPstEmployeeWorkMapping(),  ServiceConstant.PST_BREAK_DOWN_DELETE);
-	        	employeeWorkMappingForm.getPaging().setPageNo(1);
-	        }*/
-	      
 	          if(mode != null && mode.equals(IMakeDevUtils.MODE_DO_BACK))
 	        {
 	            if(model.containsAttribute("employeeWorkMappingForm"))
@@ -100,7 +84,6 @@ public class EmployeeWorkMappingController {
 	  	  employeeWorkMappingForm.getPstEmployeeWorkMapping().setPrpNos(employeeWorkMappingForm.getPrpNos());
 	  	  employeeWorkMappingForm.getPstEmployeeWorkMapping().setPesIds(employeeWorkMappingForm.getPesIds());
             	pstService.setPstEmployeeWorkMapping(employeeWorkMappingForm.getPstEmployeeWorkMapping());
-               // id = employeeWorkMappingForm.getPstEmployeeWorkMapping().getUpdateRecord();
                 message = "Update success !";
                 message_class="success";
             }
@@ -111,7 +94,6 @@ public class EmployeeWorkMappingController {
 	       
 	        employeeWorkMappingForm.setPageCount(IMakeDevUtils.calculatePage(employeeWorkMappingForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 	        model.addAttribute("pstEmployeeWorkMappings", vresultMessage.getResultListObj());
-	     // if( != null && missCandidate.getMcaBirthDate() != null) 
 	        model.addAttribute("employeeWorkMappingForm", employeeWorkMappingForm);
 	        model.addAttribute("pstRoadPumpNos", pstService.listPstRoadPumpNo());
 	        model.addAttribute("pstEmployeeStatuses", pstService.listPstEmployeeStatuses()); 
@@ -119,21 +101,6 @@ public class EmployeeWorkMappingController {
 	        model.addAttribute("message_class", message_class);
 	        return "backoffice/template/employee_check";
 	    }
-	  /*@RequestMapping(value={"/item/{maId}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
-	    public String getItem(@PathVariable String maId, Model model)
-	    {
-		  EmployeeWorkMappingForm employeeWorkMappingForm = null;
-	        if(model.containsAttribute("employeeWorkMappingForm"))
-	        	employeeWorkMappingForm = (EmployeeWorkMappingForm)model.asMap().get("employeeWorkMappingForm");
-	        else
-	        	employeeWorkMappingForm = new EmployeeWorkMappingForm();
-	        employeeWorkMappingForm.setMode(IMakeDevUtils.MODE_EDIT);
-	        PstEmployeeWorkMapping pstEmployeeWorkMapping = pstService.findPstEmployeeWorkMappingById(Long.parseLong(maId));
-	        employeeWorkMappingForm.setPstEmployeeWorkMapping(pstEmployeeWorkMapping);
-	        model.addAttribute("employeeWorkMappingForm", employeeWorkMappingForm);
-	        model.addAttribute("display", "display: none");
-	        return "backoffice/template/break_down_management";
-	    }*/
 	  @RequestMapping(value={"/action/{section}"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
 	    public String doAction(HttpServletRequest request, @PathVariable String section, @ModelAttribute(value="employeeWorkMappingForm") EmployeeWorkMappingForm employeeWorkMappingForm, BindingResult result, Model model)
 	    {
@@ -141,17 +108,8 @@ public class EmployeeWorkMappingController {
 	        String message = "";
 	        String  message_class="";
 	        mode="edit";
-	       // Long id = null;
 	       
 	       if(mode != null)
-	          /*  if(mode.equals(IMakeDevUtils.MODE_NEW))
-	            {
-	                id = pstService.savePstEmployeeWorkMapping(employeeWorkMappingForm.getPstEmployeeWorkMapping());
-	                employeeWorkMappingForm.getPstEmployeeWorkMapping().setPbdId(id);
-	                employeeWorkMappingForm.setMode(IMakeDevUtils.MODE_EDIT);
-	                message = "Save success !";
-	                message_class="success";
-	            } else*/
 	            if(mode.equals(IMakeDevUtils.MODE_EDIT))
 	            {
 	            	if(employeeWorkMappingForm != null && employeeWorkMappingForm.getPewmDateTime() != null
@@ -164,16 +122,9 @@ public class EmployeeWorkMappingController {
 						}
 			        
 	            	pstService.setPstEmployeeWorkMapping(employeeWorkMappingForm.getPstEmployeeWorkMapping());
-	               // id = employeeWorkMappingForm.getPstEmployeeWorkMapping().getUpdateRecord();
 	                message = "Update success !";
 	                message_class="success";
 	            } 
-	        /*PstEmployeeWorkMapping pstEmployeeWorkMapping = pstService.findPstEmployeeWorkMappingById(id);
-	        employeeWorkMappingForm.setPstEmployeeWorkMapping(pstEmployeeWorkMapping);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        model.addAttribute("employeeWorkMappingForm", employeeWorkMappingForm);*/
-	       // EmployeeWorkMappingForm employeeWorkMappingForm = null; 
 	       employeeWorkMappingForm = new EmployeeWorkMappingForm(); 
 	       employeeWorkMappingForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	       employeeWorkMappingForm.getPstEmployeeWorkMapping().setPagging(employeeWorkMappingForm.getPaging());
@@ -189,16 +140,5 @@ public class EmployeeWorkMappingController {
 		        model.addAttribute("pstRoadPumpNos", pstService.listPstRoadPumpNo());
 		        model.addAttribute("pstEmployeeStatuses", pstService.listPstEmployeeStatuses()); 
 		        return "backoffice/template/employee_check";
-	        // return "backoffice/template/break_down_management";
 	    }
-	 /* @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
-	    public String getNewForm(Model model)
-	    {
-		  EmployeeWorkMappingForm employeeWorkMappingForm = new EmployeeWorkMappingForm(); 
-		  employeeWorkMappingForm.setMode(IMakeDevUtils.MODE_NEW);
-		  model.addAttribute("employeeWorkMappingForm", employeeWorkMappingForm);
-	        model.addAttribute("display", "display: none");   
-	        return "backoffice/template/break_down_management";
-	    }*/
-
 }

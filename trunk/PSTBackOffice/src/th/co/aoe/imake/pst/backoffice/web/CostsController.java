@@ -113,11 +113,6 @@ public class CostsController {
 	                message = "Update success !";
 	                message_class="success";
 	            }
-	      /* PstCost pstCost = pstService.findPstCostById(id);
-	       costForm.setPstCost(pstCost);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        model.addAttribute("costForm", costForm);*/
 	        costForm =  new CostForm();
 			 costForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 			 costForm.getPstCost().setPagging(costForm.getPaging());
@@ -131,7 +126,6 @@ public class CostsController {
 		        model.addAttribute("message", message);
 		        model.addAttribute("message_class", message_class);
 		        return "backoffice/template/costs_search";
-	       // return "backoffice/template/costs_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)

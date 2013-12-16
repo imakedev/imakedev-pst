@@ -23,18 +23,12 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import th.co.aoe.imake.pst.backoffice.service.PSTService;
-//import org.apache.log4j.Logger;
 
 @Controller
 @SessionAttributes(value={"UserMissContact"})
 public class WelcomeController
 {
-	//private static int PAGE_SIZE=20;
-	/*private static ResourceBundle bundle;
-	static{
-			bundle =  ResourceBundle.getBundle( "config" );		
-		
-	}*/
+	
     @RequestMapping(value={"/"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
     public String getNewForm(HttpServletRequest request,HttpServletResponse response,  Model model)
     {
@@ -57,14 +51,8 @@ public class WelcomeController
 		String userid=null;
 		if(authen!=null)
 			userid=authen.getName();
-       // Gson gson=new Gson();
-		// return gson.toJson(missTheme);
 		return userid;
     }
-  /*private static SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
-    private static SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    //private static Logger logger = Logger.getRootLogger();
-    private static final Logger logger = LoggerFactory.getLogger(ServiceConstant.LOG_APPENDER);*/
     @Autowired
     private PSTService missExamService;
 

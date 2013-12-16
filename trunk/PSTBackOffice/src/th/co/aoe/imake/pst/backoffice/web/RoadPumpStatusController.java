@@ -48,12 +48,6 @@ public class RoadPumpStatusController {
 	    public String doSearch(HttpServletRequest request, @ModelAttribute(value="roadPumpStatusForm") RoadPumpStatusForm roadPumpStatusForm, BindingResult result, Model model)
 	    {
 	        String mode = roadPumpStatusForm.getMode();
-	       /* if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE_ITEMS))
-	        {
-	        	roadPumpStatusForm.getPstRoadPumpStatus().setIds(roadPumpStatusForm.getPesIdArray());
-	        	pstService.deletePstEmployeeStatus(roadPumpStatusForm.getPstRoadPumpStatus(), ServiceConstant.PST_EMPLOYEE_STATUS_ITEMS_DELETE);
-	        	roadPumpStatusForm.getPaging().setPageNo(1);
-	        } else*/
 	        if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE)){
 	        	pstService.deletePstRoadPumpStatus(roadPumpStatusForm.getPstRoadPumpStatus(),  ServiceConstant.PST_ROAD_PUMP_STATUS_DELETE);
 	        	roadPumpStatusForm.getPaging().setPageNo(1);
@@ -114,12 +108,6 @@ public class RoadPumpStatusController {
 	                message = "Update success !";
 	                message_class="success";
 	            }
-	        /*PstEmployeeStatus pstBreakDown = pstService.findPstEmployeeStatusById(id);
-	        roadPumpStatusForm.setPstEmployeeStatus(pstBreakDown);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        model.addAttribute("roadPumpStatusForm", roadPumpStatusForm);*/
-	       // roadPumpStatusForm roadPumpStatusForm = null; 
 	       roadPumpStatusForm = new RoadPumpStatusForm(); 
 	       roadPumpStatusForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	       roadPumpStatusForm.getPstRoadPumpStatus().setPagging(roadPumpStatusForm.getPaging());
@@ -131,7 +119,6 @@ public class RoadPumpStatusController {
 		        model.addAttribute("message", message); 
 		        model.addAttribute("message_class", message_class);
 		        return "backoffice/template/roadPumpStatus_search";
-	        // return "backoffice/template/employee_status_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)
