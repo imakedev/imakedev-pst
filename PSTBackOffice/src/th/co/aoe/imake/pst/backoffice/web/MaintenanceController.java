@@ -16,14 +16,12 @@ public class MaintenanceController {
 	@RequestMapping(value={"/init"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	public String init(Model model)
 	    {
-	       // return "backoffice/template/maintenance_check_search";
 		  return "backoffice/template/empty";
 	    }
 	@RequestMapping(value={"/page/{pagename}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	 public String page(Model model,@PathVariable String pagename)
 	    {
 	       return "backoffice/template/"+pagename;
-		 // return "backoffice/template/empty";
 	    }
 	@RequestMapping(value={"/history/{prpId}"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	 public String page(Model model,@PathVariable Long prpId)

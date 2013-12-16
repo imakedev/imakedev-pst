@@ -35,7 +35,4 @@ public class PSTAjax {
 	public int executeMaintenance(PstMaintenance[] pstMaintenance,PstMaintenanceTran pstMaintenanceTran,String mode){
 		return pstService.executeMaintenance(pstMaintenance,pstMaintenanceTran,mode);
 	} 
-	/*public int executeQueryDelete(String[] queryUpdate){
-		return pstService.executeQueryDelete(queryUpdate);
-	}*/
 }

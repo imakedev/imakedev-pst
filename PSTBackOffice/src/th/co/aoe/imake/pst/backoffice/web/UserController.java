@@ -48,12 +48,6 @@ public class UserController {
 	    public String doSearch(HttpServletRequest request, @ModelAttribute(value="userForm") UserForm userForm, BindingResult result, Model model)
 	    {
 	        String mode = userForm.getMode();
-	       /* if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE_ITEMS))
-	        {
-	        	userForm.getUser().setIds(userForm.getPesIdArray());
-	        	pstService.deletePstEmployeeStatus(userForm.getUser(), ServiceConstant.PST_EMPLOYEE_STATUS_ITEMS_DELETE);
-	        	userForm.getPaging().setPageNo(1);
-	        } else*/
 	        if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE)){
 	        	pstService.deleteUser(userForm.getUser(),  ServiceConstant.USER_DELETE);
 	        	userForm.getPaging().setPageNo(1);
@@ -114,12 +108,6 @@ public class UserController {
 	                message = "Update success !";
 	                message_class="success";
 	            }
-	        /*PstEmployeeStatus pstBreakDown = pstService.findPstEmployeeStatusById(id);
-	        userForm.setPstEmployeeStatus(pstBreakDown);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        model.addAttribute("userForm", userForm);*/
-	       // userForm userForm = null; 
 	       userForm = new UserForm(); 
 	       userForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	       userForm.getUser().setPagging(userForm.getPaging());
@@ -131,7 +119,6 @@ public class UserController {
 		        model.addAttribute("message", message); 
 		        model.addAttribute("message_class", message_class);
 		        return "backoffice/template/user_search";
-	        // return "backoffice/template/employee_status_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)

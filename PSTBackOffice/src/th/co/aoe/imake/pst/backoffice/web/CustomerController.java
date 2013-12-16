@@ -286,12 +286,6 @@ public class CustomerController {
 	            else
 	            	customerForm = new CustomerForm();
 	        } 
-	       /* PstCustomerDivision division =new PstCustomerDivision();
-			 division.setPcdId(pcdId);
-			 PstCustomer  customer =new PstCustomer();
-			 customer.setPcId(pcId);
-			 division.setPstCustomer(customer);*/
-			 
 	        customerForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	        customerForm.getPstCustomerContact().setPagging(customerForm.getPaging());
 	        VResultMessage vresultMessage = pstService.searchPstCustomerContact(customerForm.getPstCustomerContact());

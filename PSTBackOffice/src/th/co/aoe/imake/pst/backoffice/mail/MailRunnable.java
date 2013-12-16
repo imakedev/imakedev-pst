@@ -24,10 +24,8 @@ import javax.mail.internet.MimeMultipart;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.sun.mail.smtp.SMTPTransport;
-//import org.apache.log4j.Logger;
 
 public class MailRunnable implements Runnable {
-//	private static final Logger logger = LoggerFactory.getLogger(ServiceConstant.LOG_APPENDER);
 	String subject = null;
 	String messagebody = null;
 	String sessionId= null;
@@ -70,62 +68,24 @@ public class MailRunnable implements Runnable {
 	public void run() { 
 		File temp  = null;
 		Properties props = new Properties();
-		    // XXX - could use Session.getTransport() and Transport.connect()
-		    // XXX - assume we're using SMTP
-		    //if (mailhost != null)		
-	/*	String protocal =protocal_;
-		String host =host_;
-		String useAuthen = useAuthen_;
-		String email = email_;
-		String password = password_; */
 	    boolean isAuthen = false;
-			//props.put("mail.transport.protocol", protocal);//"smtp");
 	    props.put("protocol", protocal);//"smtp");
 			if(tls!=null && tls.toLowerCase().equals("1"))
 				props.put("mail.smtp.starttls.enable","true");
 			props.put("mail.smtp.host", host);//"smtp.gmail.com");
 			props.put("mail.smtp.port",port);
 			
-			 
-			//props.put("mail.smtp.ssl.enable", "true");
 			if(useAuthen!=null && useAuthen.equals("1")){
 				isAuthen = true;
 			}
 			if(isAuthen)
 			  props.put("mail.smtp.auth", "true");
-			// Get a Session object 
-		   
 		    
-		   /* Construct the message and send it.
-		     */
-		   // MimeMessage msg = new MimeMessage(session); 
-		    
-		  /*  try {
-				msg.setFrom(new InternetAddress(email));//"chatchai@vlink.co.th"));
-			} catch (AddressException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (MessagingException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}*/
-			
-		//	String[] recipients=null;
-			//if(ntcNewsLetterRecipient!=null && ntcNewsLetterRecipient.size()>0){
 			 	int size = recipients.size();
-				//recipients= new String[1];
 			 	for (int i = 0; i < size; i++) {
 					
-					 //Session session = Session.getInstance(props, null);
 					 Session session = Session.getDefaultInstance(props, null);
 					    session.setDebug(true);
-				//	NtcNewsLetterRecipient ntcNewsLetterRecipient = (NtcNewsLetterRecipient)ntcNewsLetterRecipientList.get(i);
-				//	recipients[0] = "siripornc@pttep.com";//ntcNewsLetterRecipient.getNnlrAddress().trim();
-				/*		recipients[0] = "chatchai@vlink.co.th";//ntcNewsLetterRecipient.getNnlrAddress().trim();
-					logger.debug(" sent mail loopxx  email "+recipients[0]);*/
-			/*else{
-				recipients= new String[0];
-			}*/
 			MimeMessage msgArray[] = null;// new MimeMessage(session); 
 			try {
 				msgArray = new MimeMessage[1];//recipients.length];  
@@ -153,8 +113,6 @@ public class MailRunnable implements Runnable {
 					FileOutputStream fos = null;
 					
 					try {
-					//	byte []filesize = multipart.getBytes();
-						//if(filesize.length>0){
 						 MimeBodyPart mbp2 = new MimeBodyPart();
 						 temp = File.createTempFile(genToken(),".howto"); 
 						 temp.deleteOnExit();
@@ -165,7 +123,6 @@ public class MailRunnable implements Runnable {
 						 	mbp2.attachFile(temp);
 							mbp2.setFileName("Report.pdf");
 							mp.addBodyPart(mbp2);
-					//	}
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -180,45 +137,7 @@ public class MailRunnable implements Runnable {
 						 
 					} 
 				}
-				/*MimeBodyPart attachFilePart = new
-				 *  MimeBodyPart();
-				FileDataSource fds = new FileDataSource("");
-				attachFilePart.setDataHandler(new DataHandler(fds));
-				attachFilePart.setFileName(fds.getName())*/
-				/*if(multipartRequest!=null){							 
-				MultipartFile multipart = multipartRequest.getFile("file");
-					if(multipart!=null){
-						FileOutputStream fos = null;
-						
-						try {
-							byte []filesize = multipart.getBytes();
-							if(filesize.length>0){
-							 MimeBodyPart mbp2 = new MimeBodyPart();
-							 temp = File.createTempFile(sessionId,".howto"); 
-							 temp.deleteOnExit();
-							 fos = new FileOutputStream(temp.getAbsolutePath());
-							
-							 fos.write(filesize); 
-							 
-							 	mbp2.attachFile(temp);
-								mbp2.setFileName(multipart.getOriginalFilename());
-								mp.addBodyPart(mbp2);
-							}
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}finally{
-							if(fos!=null)
-								try {
-									fos.close();
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}	
-							 
-						} 
-					}
-				}*/
+				
 				InternetAddress addressFrom=null;
 				try {
 					if(personal_name!=null && personal_name.length()>0)
@@ -229,11 +148,6 @@ public class MailRunnable implements Runnable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				
-		    	//for (int i = 0; i < recipients.length; i++) {
-				 
-				  
 					addressTo[0] = new InternetAddress(((String)recipients.get(i)).trim(),false);
 				
 					msgArray[0] = new MimeMessage(session);
@@ -268,7 +182,6 @@ public class MailRunnable implements Runnable {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 					 }
-				//} 
 			} catch (AddressException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -291,18 +204,10 @@ public class MailRunnable implements Runnable {
 						t.connect(host, email, password);
 					else
 						t.connect();
-						//for (int i = 0; i < msgArray.length; i++) {
-							//logger.debug("Chatchai Debug==>"+msgArray[0].getAllRecipients().toString());
-						//	t.sendMessage(arg0, arg1)send(msgArray[i]);
 							t.sendMessage(msgArray[0], msgArray[0].getAllRecipients());
-						
-						//}
 						
 				} catch (MessagingException e) {
 					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					//e.printStackTrace();
-					//continue;
 					e.printStackTrace();
 				} 
 				  finally {			 
@@ -313,16 +218,11 @@ public class MailRunnable implements Runnable {
 						e.printStackTrace();
 					}
 					if(temp!=null){
-						/*logger.error(" delete file================= "+temp.getAbsolutePath());
-						logger.error(" recipients_cc.size()="+ recipients_cc.size());
-						logger.error(" recipients_bcc.size()="+ recipients_bcc.size());*/
 						if(temp.exists() && temp.isFile())
 							temp.delete();
 					}
 			    } 
 			}
-		//}
-	
 	}
 	 private String genToken(){
 	  		StringBuffer sb = new StringBuffer();

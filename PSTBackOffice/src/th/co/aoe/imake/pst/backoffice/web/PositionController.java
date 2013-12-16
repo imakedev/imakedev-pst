@@ -47,12 +47,6 @@ public class PositionController {
 	    public String doSearch(HttpServletRequest request, @ModelAttribute(value="positionForm") PositionForm positionForm, BindingResult result, Model model)
 	    {
 	        String mode = positionForm.getMode();
-	       /* if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE_ITEMS))
-	        {
-	        	positionForm.getPstPosition().setIds(positionForm.getPesIdArray());
-	        	pstService.deletePstEmployeeStatus(positionForm.getPstPosition(), ServiceConstant.PST_EMPLOYEE_STATUS_ITEMS_DELETE);
-	        	positionForm.getPaging().setPageNo(1);
-	        } else*/
 	        if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE)){
 	        	pstService.deletePstPosition(positionForm.getPstPosition(),  ServiceConstant.PST_POSITION_DELETE);
 	        	positionForm.getPaging().setPageNo(1);
@@ -113,12 +107,6 @@ public class PositionController {
 	                message = "Update success !";
 	                message_class="success";
 	            }
-	        /*PstEmployeeStatus pstBreakDown = pstService.findPstEmployeeStatusById(id);
-	        positionForm.setPstEmployeeStatus(pstBreakDown);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        model.addAttribute("positionForm", positionForm);*/
-	       // positionForm positionForm = null; 
 	       positionForm = new PositionForm(); 
 	       positionForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	       positionForm.getPstPosition().setPagging(positionForm.getPaging());
@@ -130,7 +118,6 @@ public class PositionController {
 		        model.addAttribute("message", message); 
 		        model.addAttribute("message_class", message_class);
 		        return "backoffice/template/position_search";
-	        // return "backoffice/template/employee_status_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)

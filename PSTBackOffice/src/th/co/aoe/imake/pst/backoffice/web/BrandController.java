@@ -138,24 +138,10 @@ public class BrandController {
 	                message = "Update success !";
 	                message_class="success";
 	            }
-	        /*PstEmployeeStatus pstBreakDown = pstService.findPstEmployeeStatusById(id);
-	        brandForm.setPstEmployeeStatus(pstBreakDown);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        model.addAttribute("brandForm", brandForm);*/
-	       // brandForm brandForm = null; 
-	      /* brandForm = new BrandForm(); 
-	       brandForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
-	       brandForm.getPstBrand().setPagging(brandForm.getPaging());
-		        VResultMessage vresultMessage = pstService.searchPstBrand(brandForm.getPstBrand());
-		        model.addAttribute("pstBrands", vresultMessage.getResultListObj());
-		        brandForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
-		        brandForm.setPageCount(IMakeDevUtils.calculatePage(brandForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));*/
 		        model.addAttribute("brandForm", brandForm);
 		        model.addAttribute("message", message); 
 		        model.addAttribute("message_class", message_class);
 		        return "backoffice/template/brand_head";
-	        // return "backoffice/template/employee_status_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)

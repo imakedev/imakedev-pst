@@ -50,12 +50,6 @@ public class WorkTypeController {
 	    public String doSearch(HttpServletRequest request, @ModelAttribute(value="workTypeForm") WorkTypeForm workTypeForm, BindingResult result, Model model)
 	    {
 	        String mode = workTypeForm.getMode();
-	       /* if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE_ITEMS))
-	        {
-	        	workTypeForm.getPstWorkType().setIds(workTypeForm.getPesIdArray());
-	        	pstService.deletePstEmployeeStatus(workTypeForm.getPstWorkType(), ServiceConstant.PST_EMPLOYEE_STATUS_ITEMS_DELETE);
-	        	workTypeForm.getPaging().setPageNo(1);
-	        } else*/
 	        if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE)){
 	        	pstService.deletePstWorkType(workTypeForm.getPstWorkType(),  ServiceConstant.PST_WORK_TYPE_DELETE);
 	        	workTypeForm.getPaging().setPageNo(1);
@@ -118,12 +112,6 @@ public class WorkTypeController {
 	                message = "Update success !";
 	                message_class="success";
 	            }
-	        /*PstEmployeeStatus pstBreakDown = pstService.findPstEmployeeStatusById(id);
-	        workTypeForm.setPstEmployeeStatus(pstBreakDown);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        model.addAttribute("workTypeForm", workTypeForm);*/
-	       // workTypeForm workTypeForm = null; 
 	       workTypeForm = new WorkTypeForm(); 
 	       workTypeForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	       workTypeForm.getPstWorkType().setPagging(workTypeForm.getPaging());
@@ -136,7 +124,6 @@ public class WorkTypeController {
 		        model.addAttribute("message_class", message_class);
 		        model.addAttribute("pstDepartments",  pstService.listPstDepartments());
 		        return "backoffice/template/workType_search";
-	        // return "backoffice/template/employee_status_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)

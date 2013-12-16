@@ -36,15 +36,12 @@ public class RoadPumpController {
 		 roadPumpForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 		 roadPumpForm.getPstRoadPump().setPagging(roadPumpForm.getPaging());
 	        VResultMessage vresultMessage = pstService.searchPstRoadPump(roadPumpForm.getPstRoadPump());
-	      //  logger.debug("vresultMessage="+vresultMessage);
-	       // logger.debug("getResultListObj="+vresultMessage.getResultListObj());
 	        model.addAttribute("pstRoadPumps", vresultMessage.getResultListObj());
 	        roadPumpForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	        roadPumpForm.setPageCount(IMakeDevUtils.calculatePage(roadPumpForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
 	        @SuppressWarnings("rawtypes")
 	        List list=pstService.listPstRoadPumpStatuses();
 	        model.addAttribute("pstRoadPumpStatuses",list);
-	        //logger.info("list==>"+list);
 	        model.addAttribute("roadPumpForm", roadPumpForm);
 	        return "backoffice/template/road_pump_search";
 	    }
@@ -104,18 +101,6 @@ public class RoadPumpController {
 	        model.addAttribute("pstModelPumpList", pstRoadPumpMaster.getPstModelPumpList());
 	        model.addAttribute("roadPumpForm", roadPumpForm);
 	        model.addAttribute("display", "display: none");
-	        /*  roadPumpForm =  new RoadPumpForm();
-			 roadPumpForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
-			 roadPumpForm.getPstRoadPump().setPagging(roadPumpForm.getPaging());
-		        VResultMessage vresultMessage = pstService.searchPstRoadPump(roadPumpForm.getPstRoadPump()); 
-		        model.addAttribute("pstRoadPumps", vresultMessage.getResultListObj());
-		        roadPumpForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
-		        roadPumpForm.setPageCount(IMakeDevUtils.calculatePage(roadPumpForm.getPaging().getPageSize(), Integer.parseInt(vresultMessage.getMaxRow())));
-		      
-		        model.addAttribute("pstRoadPumpStatuses",pstService.listPstRoadPumpStatuses());
-		     
-		        model.addAttribute("roadPumpForm", roadPumpForm);
-		        return "backoffice/template/road_pump_search";*/
 	        return "backoffice/template/road_pump_management";
 	    }
 	  @RequestMapping(value={"/action/{section}"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
@@ -155,20 +140,6 @@ public class RoadPumpController {
 		        model.addAttribute("display", "display: none");
 		        model.addAttribute("roadPumpForm", roadPumpForm);
 		        return "backoffice/template/road_pump_search";
-	     /*  PstRoadPump pstRoadPump = pstService.findPstRoadPumpById(id);
-	       roadPumpForm.setPstRoadPump(pstRoadPump);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        PstRoadPump pstRoadPumpMaster= pstService.listPstRoadPumpMaster();
-	        
-	        model.addAttribute("pstRoadPumpStatusList", pstRoadPumpMaster.getPstRoadPumpStatusList());
-	        model.addAttribute("pstRoadPumpTypeList", pstRoadPumpMaster.getPstRoadPumpTypeList());
-	        model.addAttribute("pstBrandRoadList", pstRoadPumpMaster.getPstBrandRoadList());
-	        model.addAttribute("pstBrandPumpList", pstRoadPumpMaster.getPstBrandPumpList());
-	        model.addAttribute("pstModelRoadList", pstRoadPumpMaster.getPstModelRoadList());
-	        model.addAttribute("pstModelPumpList", pstRoadPumpMaster.getPstModelPumpList());
-	        model.addAttribute("roadPumpForm", roadPumpForm);
-	        return "backoffice/template/road_pump_management";*/
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)

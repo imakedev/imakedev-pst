@@ -47,12 +47,6 @@ public class DepartmentController {
 	    public String doSearch(HttpServletRequest request, @ModelAttribute(value="departmentForm") DepartmentForm departmentForm, BindingResult result, Model model)
 	    {
 	        String mode = departmentForm.getMode();
-	       /* if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE_ITEMS))
-	        {
-	        	departmentForm.getPstDepartment().setIds(departmentForm.getPesIdArray());
-	        	pstService.deletePstEmployeeStatus(departmentForm.getPstDepartment(), ServiceConstant.PST_EMPLOYEE_STATUS_ITEMS_DELETE);
-	        	departmentForm.getPaging().setPageNo(1);
-	        } else*/
 	        if(mode != null && mode.equals(IMakeDevUtils.MODE_DELETE)){
 	        	pstService.deletePstDepartment(departmentForm.getPstDepartment(),  ServiceConstant.PST_DEPARTMENT_DELETE);
 	        	departmentForm.getPaging().setPageNo(1);
@@ -113,12 +107,6 @@ public class DepartmentController {
 	                message = "Update success !";
 	                message_class="success";
 	            }
-	        /*PstEmployeeStatus pstBreakDown = pstService.findPstEmployeeStatusById(id);
-	        departmentForm.setPstEmployeeStatus(pstBreakDown);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        model.addAttribute("departmentForm", departmentForm);*/
-	       // departmentForm departmentForm = null; 
 	       departmentForm = new DepartmentForm(); 
 	       departmentForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	       departmentForm.getPstDepartment().setPagging(departmentForm.getPaging());
@@ -130,7 +118,6 @@ public class DepartmentController {
 		        model.addAttribute("message", message); 
 		        model.addAttribute("message_class", message_class);
 		        return "backoffice/template/department_search";
-	        // return "backoffice/template/employee_status_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)

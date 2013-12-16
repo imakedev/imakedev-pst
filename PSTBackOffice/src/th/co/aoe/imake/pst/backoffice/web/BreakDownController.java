@@ -31,9 +31,6 @@ public class BreakDownController {
 	 public String init(Model model)
 	    {
 		 BreakdownForm breakdownForm = null;
-	      /*  if(model.containsAttribute("breakdownForm"))
-	        	breakdownForm = (BreakdownForm)model.asMap().get("breakdownForm");
-	        else*/
 	        	breakdownForm = new BreakdownForm();
 	        
 	        breakdownForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
@@ -118,13 +115,7 @@ public class BreakDownController {
 	                message = "Update success !";
 	                message_class="success";
 	            }
-	        /*PstBreakDown pstBreakDown = pstService.findPstBreakDownById(id);
-	        breakdownForm.setPstBreakDown(pstBreakDown);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        model.addAttribute("breakdownForm", breakdownForm);*/
-	       // BreakdownForm breakdownForm = null; 
-		        	breakdownForm = new BreakdownForm(); 
+		        breakdownForm = new BreakdownForm(); 
 		        breakdownForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 		        breakdownForm.getPstBreakDown().setPagging(breakdownForm.getPaging());
 		        VResultMessage vresultMessage = pstService.searchPstBreakDown(breakdownForm.getPstBreakDown());
@@ -137,7 +128,6 @@ public class BreakDownController {
 		        model.addAttribute("message", message); 
 		        model.addAttribute("message_class", message_class);
 		        return "backoffice/template/break_down_search";
-	        // return "backoffice/template/break_down_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)

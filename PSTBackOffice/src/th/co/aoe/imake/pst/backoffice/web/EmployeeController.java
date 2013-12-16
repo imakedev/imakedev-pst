@@ -36,9 +36,6 @@ public class EmployeeController {
 	 public String init(Model model)
 	    {
 		 EmployeeForm employeeForm = null;
-	      /*  if(model.containsAttribute("employeeForm"))
-	        	employeeForm = (EmployeeForm)model.asMap().get("employeeForm");
-	        else*/
 		 employeeForm = new EmployeeForm();
 	        
 		 employeeForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
@@ -52,9 +49,7 @@ public class EmployeeController {
 	        model.addAttribute("employeeForm", employeeForm);
 	        @SuppressWarnings("rawtypes")
 	        List listPositions=pstService.listPstPositions();
-	     //   List listTitles=pstService.listPstTitles();
 	        model.addAttribute("positions",listPositions);
-	     //   model.addAttribute("titles",listTitles);
 	        model.addAttribute("message", ""); 
 	        return "backoffice/template/employee_search";
 	    }
@@ -95,9 +90,7 @@ public class EmployeeController {
 	        model.addAttribute("employeeForm", employeeForm);
 	        @SuppressWarnings("rawtypes")
 	        List listPositions=pstService.listPstPositions();
-	       // List listTitles=pstService.listPstTitles();
 	        model.addAttribute("positions",listPositions);
-	        //model.addAttribute("titles",listTitles);
 	        model.addAttribute("message", ""); 
 	        return "backoffice/template/employee_search";
 	    }
@@ -146,12 +139,6 @@ public class EmployeeController {
 	                message = "Update success !";
 	                message_class="success";
 	            }
-	        /*PstEmployee pstBreakDown = pstService.findPstEmployeeById(id);
-	        employeeForm.setPstEmployee(pstBreakDown);
-	        model.addAttribute("message", message);
-	        model.addAttribute("display", "display: block");
-	        model.addAttribute("employeeForm", employeeForm);*/
-	       // EmployeeForm employeeForm = null; 
 	       employeeForm = new EmployeeForm(); 
 	       employeeForm.getPaging().setPageSize(IMakeDevUtils.PAGE_SIZE);
 	       employeeForm.getPstEmployee().setPagging(employeeForm.getPaging());
@@ -165,12 +152,9 @@ public class EmployeeController {
 		        model.addAttribute("message", message); 
 		        @SuppressWarnings("rawtypes")
 		        List listPositions=pstService.listPstPositions();
-		       // List listTitles=pstService.listPstTitles();
 		        model.addAttribute("positions",listPositions);
-		     //   model.addAttribute("titles",listTitles);
 		        model.addAttribute("message_class", message_class);
 		        return "backoffice/template/employee_search";
-	        // return "backoffice/template/employee_management";
 	    }
 	  @RequestMapping(value={"/new"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	    public String getNewForm(Model model)
